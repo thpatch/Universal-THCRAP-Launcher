@@ -13,17 +13,13 @@ using System.Diagnostics;
 
 namespace Universal_THCRAP_Launcher
 {
-   
-
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
         }
-
-        [STAThread]
+        
         void ErrorAndExit(string errorMessage)
         {
             MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -31,8 +27,7 @@ namespace Universal_THCRAP_Launcher
         }
 
         Configuration configuration = new Configuration();
-
-        [STAThread]
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             const string msg_Error1 = "thcrap_loader.exe couldn't be found.\nMake sure you put the application next to it!";
@@ -96,8 +91,7 @@ namespace Universal_THCRAP_Launcher
             string output = JsonConvert.SerializeObject(configuration, Formatting.Indented);
             File.WriteAllText("config.js", output);
         }
-
-        [STAThread]
+        
         private void StartThcrap()
         {
             string s = "";
@@ -122,7 +116,10 @@ namespace Universal_THCRAP_Launcher
 
         private new void KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                StartThcrap();
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

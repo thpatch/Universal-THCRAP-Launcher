@@ -47,6 +47,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(153, 355);
             this.listBox1.TabIndex = 1;
+            this.listBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress);
             // 
             // splitContainer1
             // 
@@ -72,6 +73,7 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(152, 355);
             this.listBox2.TabIndex = 2;
+            this.listBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress);
             // 
             // checkBox1
             // 

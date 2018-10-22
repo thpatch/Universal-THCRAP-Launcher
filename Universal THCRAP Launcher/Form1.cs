@@ -43,12 +43,9 @@ namespace Universal_THCRAP_Launcher
             {
                 jsFiles[i] = jsFiles[i].Replace(Directory.GetCurrentDirectory() + "\\", "");
             }
-
-            if (jsFiles.Contains("games.js"))
-                jsFiles.Remove("games.js");
-
-            if (jsFiles.Contains("config.js"))
-                jsFiles.Remove("config.js");
+           
+            jsFiles.Remove("games.js");
+            jsFiles.Remove("config.js");
 
             if (jsFiles.Count == 0) ErrorAndExit(msg_Error3);
 

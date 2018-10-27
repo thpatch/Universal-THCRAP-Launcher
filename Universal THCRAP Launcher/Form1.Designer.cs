@@ -1,11 +1,14 @@
-﻿namespace Universal_THCRAP_Launcher
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Universal_THCRAP_Launcher
 {
     partial class Form1
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -130,11 +133,11 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button1;
+        private ListBox listBox1;
+        private SplitContainer splitContainer1;
+        private ListBox listBox2;
+        private CheckBox checkBox1;
+        private Button button1;
     }
 }
 

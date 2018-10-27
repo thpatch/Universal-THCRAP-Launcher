@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using Newtonsoft.Json;
 using System.Diagnostics;
-using static System.Windows.Forms.MessageBox;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using Newtonsoft.Json;
+using Universal_THCRAP_Launcher.Properties;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -20,14 +15,15 @@ namespace Universal_THCRAP_Launcher
         {
             InitializeComponent();
         }
-        
+
         void ErrorAndExit(string errorMessage)
         {
             MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
         }
 
-        public Configuration Configuration1 { get; private set; } = new Configuration(true,5,false,true,true,"","");
+        public Configuration Configuration1 { get; private set; } =
+            new Configuration(true, 5, false, true, true, ".js", "th");
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -72,16 +68,21 @@ namespace Universal_THCRAP_Launcher
 
             //MessageBox.Show((string)listBox1.SelectedItem);
 
-            Configuration1.UthcraplLastConfig = (string)listBox1.SelectedItem;
-            Configuration1.UthcraplLastGame = (string)listBox2.SelectedItem;
+            Configuration1.UthcraplLastConfig = (string) listBox1.SelectedItem;
+            Configuration1.UthcraplLastGame = (string) listBox2.SelectedItem;
 
-            if (File.Exists("config.js")) 
+            //MessageBox.Show(Configuration1.UthcraplLastConfig);
+
+            if (File.Exists("config.js"))
             {
                 file = File.ReadAllText("config.js");
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(file);
                 checkBox1.Checked = Configuration1.UthcraplExitAfterStartup;
-                listBox1.SelectedIndex = listBox1.FindString(Configuration1.UthcraplLastConfig);
-                listBox2.SelectedIndex = listBox2.FindString(Configuration1.UthcraplLastGame);
+                if (Configuration1.UthcraplLastConfig != null || Configuration1.UthcraplLastGame != null)
+                {
+                    listBox1.SelectedIndex = listBox1.FindString(Configuration1.UthcraplLastConfig);
+                    listBox2.SelectedIndex = listBox2.FindString(Configuration1.UthcraplLastGame);
+                }
             }
 
             UpdateConfigFile();
@@ -89,12 +90,12 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateConfigFile()
         {
-            Configuration1.UthcraplLastConfig = (string)listBox1.SelectedItem;
-            Configuration1.UthcraplLastGame = (string)listBox2.SelectedItem;
+            Configuration1.UthcraplLastConfig = (string) listBox1.SelectedItem;
+            Configuration1.UthcraplLastGame = (string) listBox2.SelectedItem;
             string output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented);
             File.WriteAllText("config.js", output);
         }
-        
+
         private void StartThcrap()
         {
             string s = "";
@@ -123,37 +124,37 @@ namespace Universal_THCRAP_Launcher
 
         private void button1_MouseHover(object sender, EventArgs e)
         {
-            button1.BackgroundImage = Properties.Resources.Shinmera_Banner_5_mini_size_hover;
+            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
         }
 
         private void button1_MouseLeave(object sender, EventArgs e)
         {
-            button1.BackgroundImage = Properties.Resources.Shinmera_Banner_5_mini_size;
+            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
         }
     }
 
 #pragma warning disable IDE1006 // Naming Styles
     public class Configuration
     {
-        public Configuration(bool background_updates, int time_between_updates, bool update_at_exit, bool update_others, bool uthcraplExitAfterStartup, string uthcraplLastConfig, string uthcraplLastGame)
+        public Configuration(bool background_updates, int time_between_updates, bool update_at_exit, bool update_others,
+            bool uthcraplExitAfterStartup, string uthcraplLastConfig, string uthcraplLastGame)
         {
             this.background_updates = background_updates;
             this.time_between_updates = time_between_updates;
             this.update_at_exit = update_at_exit;
             this.update_others = update_others;
-            this.UthcraplExitAfterStartup = uthcraplExitAfterStartup;
-            this.UthcraplLastConfig = uthcraplLastConfig ?? throw new ArgumentNullException(nameof(uthcraplLastConfig));
-            this.UthcraplLastGame = uthcraplLastGame ?? throw new ArgumentNullException(nameof(uthcraplLastGame));
+            UthcraplExitAfterStartup = uthcraplExitAfterStartup;
+            UthcraplLastConfig = uthcraplLastConfig;
+            UthcraplLastGame = uthcraplLastGame;
         }
-        
+
         public bool background_updates { get; set; }
         public int time_between_updates { get; set; }
         public bool update_at_exit { get; set; }
         public bool update_others { get; set; }
         public bool UthcraplExitAfterStartup { get; set; }
-        public string UthcraplLastConfig { get; set; } 
+        public string UthcraplLastConfig { get; set; }
         public string UthcraplLastGame { get; set; }
 #pragma warning restore IDE1006 // Naming Styles
     }
-
 }

@@ -37,9 +37,11 @@ namespace Universal_THCRAP_Launcher
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.sort_az_button1 = new System.Windows.Forms.Button();
+            this.sort_az_button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -59,7 +61,7 @@ namespace Universal_THCRAP_Launcher
             // splitContainer1
             // 
             this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(11, 55);
+            this.splitContainer1.Location = new System.Drawing.Point(11, 89);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -88,7 +90,7 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(13, 422);
+            this.checkBox1.Location = new System.Drawing.Point(11, 452);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(138, 17);
             this.checkBox1.TabIndex = 3;
@@ -179,25 +181,39 @@ namespace Universal_THCRAP_Launcher
             this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
             this.button1.MouseHover += new System.EventHandler(this.button1_MouseHover);
             // 
-            // label1
+            // sort_az_button1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.Location = new System.Drawing.Point(12, 448);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(306, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Coded with ♥ at https://github.com/Tudi20/Universal-THCRAP-Launcher ";
-            this.toolTip1.SetToolTip(this.label1, "Click to get to the github page.");
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.sort_az_button1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Decending;
+            this.sort_az_button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.sort_az_button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sort_az_button1.Location = new System.Drawing.Point(11, 55);
+            this.sort_az_button1.Name = "sort_az_button1";
+            this.sort_az_button1.Size = new System.Drawing.Size(25, 25);
+            this.sort_az_button1.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.sort_az_button1, "Sort in alphabetical order.");
+            this.sort_az_button1.UseVisualStyleBackColor = true;
+            this.sort_az_button1.Click += new System.EventHandler(this.sort_az_button1_Click);
+            // 
+            // sort_az_button2
+            // 
+            this.sort_az_button2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Decending;
+            this.sort_az_button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.sort_az_button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sort_az_button2.Location = new System.Drawing.Point(169, 55);
+            this.sort_az_button2.Name = "sort_az_button2";
+            this.sort_az_button2.Size = new System.Drawing.Size(25, 25);
+            this.sort_az_button2.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.sort_az_button2, "Sort in alphabetical order.");
+            this.sort_az_button2.UseVisualStyleBackColor = true;
+            this.sort_az_button2.Click += new System.EventHandler(this.sort_az_button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 471);
+            this.ClientSize = new System.Drawing.Size(334, 498);
+            this.Controls.Add(this.sort_az_button2);
+            this.Controls.Add(this.sort_az_button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
@@ -205,6 +221,7 @@ namespace Universal_THCRAP_Launcher
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(350, 537);
             this.Name = "Form1";
             this.Text = "Universal THCRAP Launcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -228,6 +245,8 @@ namespace Universal_THCRAP_Launcher
         private Button button1;
         private Label label1;
         private ToolTip toolTip1;
+        private Button sort_az_button1;
+        private Button sort_az_button2;
     }
 }
 

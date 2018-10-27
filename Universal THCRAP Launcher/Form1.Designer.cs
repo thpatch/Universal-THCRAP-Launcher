@@ -95,7 +95,7 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1.Location = new System.Drawing.Point(11, 452);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(138, 17);
-            this.checkBox1.TabIndex = 3;
+            this.checkBox1.TabIndex = 7;
             this.checkBox1.Text = "Close when game starts";
             this.toolTip1.SetToolTip(this.checkBox1, "If checked, the applicated will close itself when starting thcrap.");
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -109,7 +109,7 @@ namespace Universal_THCRAP_Launcher
             this.label1.Location = new System.Drawing.Point(10, 478);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(306, 12);
-            this.label1.TabIndex = 4;
+            this.label1.TabIndex = 8;
             this.label1.Text = "Coded with ♥ at https://github.com/Tudi20/Universal-THCRAP-Launcher ";
             this.toolTip1.SetToolTip(this.label1, "Click to get to the github page.");
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -122,7 +122,7 @@ namespace Universal_THCRAP_Launcher
             this.star_button2.Location = new System.Drawing.Point(200, 55);
             this.star_button2.Name = "star_button2";
             this.star_button2.Size = new System.Drawing.Size(25, 25);
-            this.star_button2.TabIndex = 8;
+            this.star_button2.TabIndex = 6;
             this.toolTip1.SetToolTip(this.star_button2, "Filter for favourites.");
             this.star_button2.UseVisualStyleBackColor = true;
             this.star_button2.Click += new System.EventHandler(this.star_button2_Click);
@@ -135,8 +135,11 @@ namespace Universal_THCRAP_Launcher
             this.star_button1.Location = new System.Drawing.Point(42, 55);
             this.star_button1.Name = "star_button1";
             this.star_button1.Size = new System.Drawing.Size(25, 25);
-            this.star_button1.TabIndex = 7;
-            this.star_button1.TabIndex = 7;
+            this.star_button1.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.star_button1, "Filter for favourites.");
+
+            this.star_button1.UseVisualStyleBackColor = true;
+            this.star_button1.Click += new System.EventHandler(this.star_button1_Click);
             // 
             // sort_az_button2
             // 
@@ -146,7 +149,7 @@ namespace Universal_THCRAP_Launcher
             this.sort_az_button2.Location = new System.Drawing.Point(169, 55);
             this.sort_az_button2.Name = "sort_az_button2";
             this.sort_az_button2.Size = new System.Drawing.Size(25, 25);
-            this.sort_az_button2.TabIndex = 6;
+            this.sort_az_button2.TabIndex = 5;
             this.toolTip1.SetToolTip(this.sort_az_button2, "Sort in alphabetical order.");
             this.sort_az_button2.UseVisualStyleBackColor = true;
             this.sort_az_button2.Click += new System.EventHandler(this.sort_az_button2_Click);
@@ -159,7 +162,7 @@ namespace Universal_THCRAP_Launcher
             this.sort_az_button1.Location = new System.Drawing.Point(11, 55);
             this.sort_az_button1.Name = "sort_az_button1";
             this.sort_az_button1.Size = new System.Drawing.Size(25, 25);
-            this.sort_az_button1.TabIndex = 5;
+            this.sort_az_button1.TabIndex = 3;
             this.toolTip1.SetToolTip(this.sort_az_button1, "Sort in alphabetical order.");
             this.sort_az_button1.UseVisualStyleBackColor = true;
             this.sort_az_button1.Click += new System.EventHandler(this.sort_az_button1_Click);

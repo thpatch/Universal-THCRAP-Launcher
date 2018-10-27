@@ -56,7 +56,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox1.Location = new System.Drawing.Point(0, 1);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(153, 355);
-            this.listBox1.TabIndex = 5;
+            this.listBox1.TabIndex = 1;
             this.toolTip1.SetToolTip(this.listBox1, "Choose the run configuration (patch stack).");
             this.listBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress);
             // 
@@ -83,7 +83,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox2.Location = new System.Drawing.Point(0, 1);
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(152, 355);
-            this.listBox2.TabIndex = 6;
+            this.listBox2.TabIndex = 2;
             this.toolTip1.SetToolTip(this.listBox2, "Choose the game (executable).");
             this.listBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress);
             // 
@@ -122,7 +122,7 @@ namespace Universal_THCRAP_Launcher
             this.star_button2.Location = new System.Drawing.Point(200, 55);
             this.star_button2.Name = "star_button2";
             this.star_button2.Size = new System.Drawing.Size(25, 25);
-            this.star_button2.TabIndex = 4;
+            this.star_button2.TabIndex = 6;
             this.toolTip1.SetToolTip(this.star_button2, "Filter for favourites.");
             this.star_button2.UseVisualStyleBackColor = true;
             this.star_button2.Click += new System.EventHandler(this.star_button2_Click);
@@ -135,7 +135,7 @@ namespace Universal_THCRAP_Launcher
             this.star_button1.Location = new System.Drawing.Point(42, 55);
             this.star_button1.Name = "star_button1";
             this.star_button1.Size = new System.Drawing.Size(25, 25);
-            this.star_button1.TabIndex = 2;
+            this.star_button1.TabIndex = 4;
             this.toolTip1.SetToolTip(this.star_button1, "Filter for favourites.\r\nPress the F button to change favourite status.");
             this.star_button1.UseVisualStyleBackColor = true;
             this.star_button1.Click += new System.EventHandler(this.star_button1_Click);
@@ -148,7 +148,7 @@ namespace Universal_THCRAP_Launcher
             this.sort_az_button2.Location = new System.Drawing.Point(169, 55);
             this.sort_az_button2.Name = "sort_az_button2";
             this.sort_az_button2.Size = new System.Drawing.Size(25, 25);
-            this.sort_az_button2.TabIndex = 3;
+            this.sort_az_button2.TabIndex = 5;
             this.toolTip1.SetToolTip(this.sort_az_button2, "Sort in alphabetical order.");
             this.sort_az_button2.UseVisualStyleBackColor = true;
             this.sort_az_button2.Click += new System.EventHandler(this.sort_az_button2_Click);
@@ -161,7 +161,7 @@ namespace Universal_THCRAP_Launcher
             this.sort_az_button1.Location = new System.Drawing.Point(11, 55);
             this.sort_az_button1.Name = "sort_az_button1";
             this.sort_az_button1.Size = new System.Drawing.Size(25, 25);
-            this.sort_az_button1.TabIndex = 1;
+            this.sort_az_button1.TabIndex = 3;
             this.toolTip1.SetToolTip(this.sort_az_button1, "Sort in alphabetical order.");
             this.sort_az_button1.UseVisualStyleBackColor = true;
             this.sort_az_button1.Click += new System.EventHandler(this.sort_az_button1_Click);

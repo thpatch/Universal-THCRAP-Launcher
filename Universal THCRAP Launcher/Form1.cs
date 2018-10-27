@@ -26,6 +26,8 @@ namespace Universal_THCRAP_Launcher
         public Configuration Configuration1 { get; private set; } =
             new Configuration(true, 5, false, true, true, ".js", "th");
 
+        private int[] resizeConsts;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             const string msg_Error1 =
@@ -87,7 +89,36 @@ namespace Universal_THCRAP_Launcher
             }
 
             UpdateConfigFile();
+
+            resizeConsts = new int[7];
+            resizeConsts[0] = Size.Width - button1.Width;
+            resizeConsts[1] = Size.Width - splitContainer1.Width;
+            resizeConsts[2] = Size.Height - splitContainer1.Height;
+            resizeConsts[3] = Size.Height - checkBox1.Location.Y;
+            resizeConsts[4] = Size.Height - label1.Location.Y;
+            resizeConsts[5] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
+            resizeConsts[6] = sort_az_button2.Location.X - listBox1.Size.Width;
+
+            SortListBoxItems(ref listBox1);
+            SortListBoxItems(ref listBox2);
+
             Debug.WriteLine("Form1 Loaded");
+        }
+
+        private void SortListBoxItems(ref ListBox lb)
+        {
+            List<object> items;
+            items = lb.Items.OfType<object>().ToList();
+            lb.Items.Clear();
+            lb.Items.AddRange(items.OrderBy(i => i).ToArray());
+        }
+
+        private void SortListBoxItemsDesc(ref ListBox lb)
+        {
+            List<object> items;
+            items = lb.Items.OfType<object>().ToList();
+            lb.Items.Clear();
+            lb.Items.AddRange(items.OrderByDescending(i => i).ToArray());
         }
 
         private void UpdateConfigFile()
@@ -138,17 +169,52 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            button1.Size = new Size(Size.Width - 43, button1.Size.Height);
-            splitContainer1.Size = new Size(Size.Width - 38, Size.Height - 154);
+            button1.Size = new Size(Size.Width - resizeConsts[0], button1.Size.Height);
+            splitContainer1.Size = new Size(Size.Width - resizeConsts[1], Size.Height - resizeConsts[2]);
             listBox1.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
             listBox2.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
-            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - 88);
-            label1.Location = new Point(label1.Location.X, Size.Height - 62);
+            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - resizeConsts[3]);
+            label1.Location = new Point(label1.Location.X, Size.Height - resizeConsts[4]);
+            sort_az_button1.Location = new Point(sort_az_button1.Location.X, splitContainer1.Location.Y - resizeConsts[5]);
+            sort_az_button2.Location = new Point(listBox1.Size.Width + resizeConsts[6], splitContainer1.Location.Y - resizeConsts[5]);
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
+        }
+
+        readonly Image Sort_Ascending = new Bitmap(Resources.Sort_Ascending);
+        readonly Image Sort_Descending = new Bitmap(Resources.Sort_Decending);
+
+        private void sort_az_button1_Click(object sender, EventArgs e)
+        {
+            if (sort_az_button1.BackgroundImage.Equals(Sort_Ascending))
+            {
+                SortListBoxItems(ref listBox1);
+                sort_az_button1.BackgroundImage = Sort_Descending;
+            }
+            else
+            {
+                SortListBoxItemsDesc(ref listBox1);
+                sort_az_button1.BackgroundImage = Sort_Ascending;
+            }
+            Refresh();
+        }
+
+        private void sort_az_button2_Click(object sender, EventArgs e)
+        {
+            if (sort_az_button2.BackgroundImage.Equals(Sort_Ascending))
+            {
+                SortListBoxItems(ref listBox2);
+                sort_az_button2.BackgroundImage = Sort_Descending;
+            }
+            else
+            {
+                SortListBoxItemsDesc(ref listBox2);
+                sort_az_button2.BackgroundImage = Sort_Ascending;
+            }
+            Refresh();
         }
     }
 

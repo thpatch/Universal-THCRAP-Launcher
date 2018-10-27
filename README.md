@@ -10,5 +10,5 @@ To use it just put it alongside thcrap_loader.exe!
 
 ## Images
 ![Screenshot of program](https://i.imgur.com/gNQ1ixh.png)
-![Using the Program](https://i.imgur.com/sjY5f6A.gifv)
+![Using the Program](https://i.imgur.com/sjY5f6A.gif)
 ![OPening German with Keyboard](https://i.imgur.com/t7kAdem.gif)

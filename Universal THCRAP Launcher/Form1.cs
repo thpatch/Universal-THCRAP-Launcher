@@ -138,11 +138,17 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - 66);
             button1.Size = new Size(Size.Width - 43, button1.Size.Height);
-            splitContainer1.Size = new Size(Size.Width - 38, Size.Height - 132);
+            splitContainer1.Size = new Size(Size.Width - 38, Size.Height - 154);
             listBox1.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
             listBox2.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
+            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - 88);
+            label1.Location = new Point(label1.Location.X, Size.Height - 62);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
         }
     }
 

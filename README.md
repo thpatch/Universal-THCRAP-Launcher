@@ -9,6 +9,6 @@ To use it just put it alongside thcrap_loader.exe!
  - Run `Universal THCRAP Launcher.exe`.
 
 ## Images
-![Screenshot of program](https://i.imgur.com/of65zrS.png)
+![Screenshot of program](https://i.imgur.com/gNQ1ixh.png)
 ![Program in Work](https://i.imgur.com/UxKl4hQ.gif)
 ![OPening German with Keyboard](https://i.imgur.com/t7kAdem.gif)

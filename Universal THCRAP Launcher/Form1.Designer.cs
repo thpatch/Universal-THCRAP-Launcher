@@ -31,6 +31,7 @@ namespace Universal_THCRAP_Launcher
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -38,6 +39,7 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -89,6 +91,7 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1.Size = new System.Drawing.Size(138, 17);
             this.checkBox1.TabIndex = 3;
             this.checkBox1.Text = "Close when game starts";
+            this.toolTip1.SetToolTip(this.checkBox1, "If checked, the applicated will close itself when starting thcrap.");
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -102,6 +105,7 @@ namespace Universal_THCRAP_Launcher
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(307, 38);
             this.button1.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.button1, "Start thcrap with the selected settings.");
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
@@ -118,6 +122,7 @@ namespace Universal_THCRAP_Launcher
             this.label1.Size = new System.Drawing.Size(306, 12);
             this.label1.TabIndex = 4;
             this.label1.Text = "Coded with ♥ at https://github.com/Tudi20/Universal-THCRAP-Launcher ";
+            this.toolTip1.SetToolTip(this.label1, "Click to get to the github page.");
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form1
@@ -154,6 +159,7 @@ namespace Universal_THCRAP_Launcher
         private CheckBox checkBox1;
         private Button button1;
         private Label label1;
+        private ToolTip toolTip1;
     }
 }
 

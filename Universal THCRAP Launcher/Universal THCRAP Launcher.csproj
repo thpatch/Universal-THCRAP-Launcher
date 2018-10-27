@@ -119,6 +119,8 @@
     <EmbeddedResource Include="Resources\Shinmera_Banner_5_mini_size_hover.png" />
     <EmbeddedResource Include="Resources\Sort-Ascending.png" />
     <EmbeddedResource Include="Resources\Sort-Decending.png" />
+    <EmbeddedResource Include="Resources\Star.png" />
+    <EmbeddedResource Include="Resources\Star_hollow.png" />
     <Content Include="TH Reimu.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

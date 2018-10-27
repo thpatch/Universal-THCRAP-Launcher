@@ -39,9 +39,11 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.sort_az_button1 = new System.Windows.Forms.Button();
+            this.star_button2 = new System.Windows.Forms.Button();
+            this.star_button1 = new System.Windows.Forms.Button();
             this.sort_az_button2 = new System.Windows.Forms.Button();
+            this.sort_az_button1 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -110,6 +112,58 @@ namespace Universal_THCRAP_Launcher
             this.toolTip1.SetToolTip(this.label1, "Click to get to the github page.");
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
+            // star_button2
+            // 
+            this.star_button2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Star;
+            this.star_button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.star_button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.star_button2.Location = new System.Drawing.Point(200, 55);
+            this.star_button2.Name = "star_button2";
+            this.star_button2.Size = new System.Drawing.Size(25, 25);
+            this.star_button2.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.star_button2, "Filter for favourites.\\nPress the F button to add to favourites.");
+            this.star_button2.UseVisualStyleBackColor = true;
+            this.star_button2.Click += new System.EventHandler(this.star_button2_Click);
+            // 
+            // star_button1
+            // 
+            this.star_button1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Star;
+            this.star_button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.star_button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.star_button1.Location = new System.Drawing.Point(42, 55);
+            this.star_button1.Name = "star_button1";
+            this.star_button1.Size = new System.Drawing.Size(25, 25);
+            this.star_button1.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.star_button1, "Filter for favourites.\\nPress the F button to add to favourites.");
+            this.star_button1.UseVisualStyleBackColor = true;
+            this.star_button1.Click += new System.EventHandler(this.star_button1_Click);
+            // 
+            // sort_az_button2
+            // 
+            this.sort_az_button2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Decending;
+            this.sort_az_button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.sort_az_button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sort_az_button2.Location = new System.Drawing.Point(169, 55);
+            this.sort_az_button2.Name = "sort_az_button2";
+            this.sort_az_button2.Size = new System.Drawing.Size(25, 25);
+            this.sort_az_button2.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.sort_az_button2, "Sort in alphabetical order.");
+            this.sort_az_button2.UseVisualStyleBackColor = true;
+            this.sort_az_button2.Click += new System.EventHandler(this.sort_az_button2_Click);
+            // 
+            // sort_az_button1
+            // 
+            this.sort_az_button1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Decending;
+            this.sort_az_button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.sort_az_button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sort_az_button1.Location = new System.Drawing.Point(11, 55);
+            this.sort_az_button1.Name = "sort_az_button1";
+            this.sort_az_button1.Size = new System.Drawing.Size(25, 25);
+            this.sort_az_button1.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.sort_az_button1, "Sort in alphabetical order.");
+            this.sort_az_button1.UseVisualStyleBackColor = true;
+            this.sort_az_button1.Click += new System.EventHandler(this.sort_az_button1_Click);
+            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.MenuHighlight;
@@ -127,37 +181,13 @@ namespace Universal_THCRAP_Launcher
             this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
             this.button1.MouseHover += new System.EventHandler(this.button1_MouseHover);
             // 
-            // sort_az_button1
-            // 
-            this.sort_az_button1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Decending;
-            this.sort_az_button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.sort_az_button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sort_az_button1.Location = new System.Drawing.Point(11, 55);
-            this.sort_az_button1.Name = "sort_az_button1";
-            this.sort_az_button1.Size = new System.Drawing.Size(25, 25);
-            this.sort_az_button1.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.sort_az_button1, "Sort in alphabetical order.");
-            this.sort_az_button1.UseVisualStyleBackColor = true;
-            this.sort_az_button1.Click += new System.EventHandler(this.sort_az_button1_Click);
-            // 
-            // sort_az_button2
-            // 
-            this.sort_az_button2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Decending;
-            this.sort_az_button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.sort_az_button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sort_az_button2.Location = new System.Drawing.Point(169, 55);
-            this.sort_az_button2.Name = "sort_az_button2";
-            this.sort_az_button2.Size = new System.Drawing.Size(25, 25);
-            this.sort_az_button2.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.sort_az_button2, "Sort in alphabetical order.");
-            this.sort_az_button2.UseVisualStyleBackColor = true;
-            this.sort_az_button2.Click += new System.EventHandler(this.sort_az_button2_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 498);
+            this.Controls.Add(this.star_button2);
+            this.Controls.Add(this.star_button1);
             this.Controls.Add(this.sort_az_button2);
             this.Controls.Add(this.sort_az_button1);
             this.Controls.Add(this.label1);
@@ -193,6 +223,8 @@ namespace Universal_THCRAP_Launcher
         private ToolTip toolTip1;
         private Button sort_az_button1;
         private Button sort_az_button2;
+        private Button star_button1;
+        private Button star_button2;
     }
 }
 

@@ -23,37 +23,44 @@ namespace Universal_THCRAP_Launcher
             Application.Exit();
         }
 
+         List<string> _jsFiles = new List<string>();
+         List<string> _gamesList = new List<string>();
+
         public Configuration Configuration1 { get; private set; } =
             new Configuration(true, 5, false, true, true, ".js", "th");
 
-        private int[] resizeConsts;
+        public Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
+
+        private int[] _resizeConsts;
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            const string msg_Error1 =
+
+            const string msgError1 =
                 "thcrap_loader.exe couldn't be found.\nMake sure you put the application next to it!";
-            const string msg_Error2 =
+            bool fileExists = !File.Exists("thcrap_loader.exe");
+            if (fileExists)
+                ErrorAndExit(msgError1);
+
+            const string msgError2 =
                 "games.js couldn't be found.\nMake sure you run thcrap_configure.exe first!";
-            const string msg_Error3 =
+            if (!File.Exists("games.js")) ErrorAndExit(msgError2);
+
+            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
+
+            for (int i = 0; i < _jsFiles.Count; i++)
+                _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + "\\", "");
+
+            _jsFiles.Remove("games.js");
+            _jsFiles.Remove("config.js");
+            _jsFiles.Remove("favourites.js");
+
+            const string msgError3 =
                 "No config files could be found.\nMake sure you run thcrap_configure.exe first!";
+            if (_jsFiles.Count == 0) ErrorAndExit(msgError3);
 
-            if (!File.Exists("thcrap_loader.exe")) ErrorAndExit(msg_Error1);
-            if (!File.Exists("games.js")) ErrorAndExit(msg_Error2);
-
-            List<string> jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
-
-            for (int i = 0; i < jsFiles.Count; i++)
-                jsFiles[i] = jsFiles[i].Replace(Directory.GetCurrentDirectory() + "\\", "");
-
-            jsFiles.Remove("games.js");
-            jsFiles.Remove("config.js");
-
-            if (jsFiles.Count == 0) ErrorAndExit(msg_Error3);
-
-            foreach (var item in jsFiles)
-            {
+            foreach (var item in _jsFiles)
                 listBox1.Items.Add(item);
-            }
 
             FileStream fs = new FileStream("games.js", FileMode.Open);
             StreamReader sr = new StreamReader(fs);
@@ -63,8 +70,12 @@ namespace Universal_THCRAP_Launcher
 
             Dictionary<string, string> games = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
 
+
             foreach (var item in games)
+            {
+                _gamesList.Add(item.Key);
                 listBox2.Items.Add(item.Key);
+            }
 
             listBox1.SelectedIndex = 0;
             listBox2.SelectedIndex = 0;
@@ -88,22 +99,42 @@ namespace Universal_THCRAP_Launcher
                 }
             }
 
+            if (File.Exists("favourites.js"))
+            {
+                file = File.ReadAllText("favourites.js");
+                Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
+                foreach (var VARIABLE in Favourites1.Patches)
+                {
+                    int index = listBox1.FindStringExact(VARIABLE);
+                    listBox1.Items[index] += " ★";
+                }
+
+                foreach (var VARIABLE in Favourites1.Games)
+                {
+                    int index = listBox2.FindStringExact(VARIABLE);
+                    listBox2.Items[index] += " ★";
+                }
+            }
+
             UpdateConfigFile();
 
-            resizeConsts = new int[7];
-            resizeConsts[0] = Size.Width - button1.Width;
-            resizeConsts[1] = Size.Width - splitContainer1.Width;
-            resizeConsts[2] = Size.Height - splitContainer1.Height;
-            resizeConsts[3] = Size.Height - checkBox1.Location.Y;
-            resizeConsts[4] = Size.Height - label1.Location.Y;
-            resizeConsts[5] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
-            resizeConsts[6] = sort_az_button2.Location.X - listBox1.Size.Width;
+            _resizeConsts = new int[8];
+            _resizeConsts[0] = Size.Width - button1.Width;
+            _resizeConsts[1] = Size.Width - splitContainer1.Width;
+            _resizeConsts[2] = Size.Height - splitContainer1.Height;
+            _resizeConsts[3] = Size.Height - checkBox1.Location.Y;
+            _resizeConsts[4] = Size.Height - label1.Location.Y;
+            _resizeConsts[5] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
+            _resizeConsts[6] = sort_az_button2.Location.X - listBox1.Size.Width;
+            _resizeConsts[7] = star_button2.Location.X - sort_az_button2.Location.X;
 
             SortListBoxItems(ref listBox1);
             SortListBoxItems(ref listBox2);
 
             Debug.WriteLine("Form1 Loaded");
         }
+
+        
 
         private void SortListBoxItems(ref ListBox lb)
         {
@@ -127,6 +158,27 @@ namespace Universal_THCRAP_Launcher
             Configuration1.UthcraplLastGame = (string) listBox2.SelectedItem;
             string output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented);
             File.WriteAllText("config.js", output);
+
+            Favourites1.Patches.Clear();
+            Favourites1.Games.Clear();
+
+            foreach (string s in listBox1.Items)
+                if (s.Contains("★"))
+                {
+                    string v = s.Replace(" ★", "");
+                    Favourites1.Patches.Add(v);
+                }
+
+            foreach (string s in listBox2.Items)
+                if (s.Contains("★"))
+                {
+                    string v = s.Replace(" ★", "");
+                    Favourites1.Games.Add(v);
+                }
+
+            output = JsonConvert.SerializeObject(Favourites1,Formatting.Indented);
+            File.WriteAllText("favourites.js", output);
+            
             Debug.WriteLine("Config file Updated!");
         }
 
@@ -150,71 +202,137 @@ namespace Universal_THCRAP_Launcher
         {
             if (e.KeyChar == (char) Keys.Enter)
                 StartThcrap();
-        }
+            if (e.KeyChar == 'f' || e.KeyChar == 'F')
+                if (sender.GetType().FullName == "System.Windows.Forms.ListBox")
+                {
+                    ListBox lb = (ListBox) sender;
+                    if (!lb.SelectedItem.ToString().Contains("★"))
+                    {
+                        if (lb.Equals(listBox1))
+                            Favourites1.Patches.Add(lb.Items[lb.SelectedIndex].ToString());
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
+                        if (lb.Equals(listBox2))
+                            Favourites1.Games.Add(lb.Items[lb.SelectedIndex].ToString());
+                        lb.Items[lb.SelectedIndex] += " ★";
+                    }
+                    else
+                        lb.Items[lb.SelectedIndex] = lb.Items[lb.SelectedIndex].ToString().Replace(" ★", "");
+                }
             UpdateConfigFile();
         }
 
-        private void button1_MouseHover(object sender, EventArgs e)
-        {
-            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
-        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
 
-        private void button1_MouseLeave(object sender, EventArgs e)
-        {
-            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
-        }
+        private void button1_MouseHover(object sender, EventArgs e) => button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
+
+        private void button1_MouseLeave(object sender, EventArgs e) => button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            button1.Size = new Size(Size.Width - resizeConsts[0], button1.Size.Height);
-            splitContainer1.Size = new Size(Size.Width - resizeConsts[1], Size.Height - resizeConsts[2]);
+            button1.Size = new Size(Size.Width - _resizeConsts[0], button1.Size.Height);
+            splitContainer1.Size = new Size(Size.Width - _resizeConsts[1], Size.Height - _resizeConsts[2]);
             listBox1.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
             listBox2.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
-            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - resizeConsts[3]);
-            label1.Location = new Point(label1.Location.X, Size.Height - resizeConsts[4]);
-            sort_az_button1.Location = new Point(sort_az_button1.Location.X, splitContainer1.Location.Y - resizeConsts[5]);
-            sort_az_button2.Location = new Point(listBox1.Size.Width + resizeConsts[6], splitContainer1.Location.Y - resizeConsts[5]);
+            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - _resizeConsts[3]);
+            label1.Location = new Point(label1.Location.X, Size.Height - _resizeConsts[4]);
+            sort_az_button1.Location = new Point(sort_az_button1.Location.X, splitContainer1.Location.Y - _resizeConsts[5]);
+            sort_az_button2.Location = new Point(listBox1.Size.Width + _resizeConsts[6], splitContainer1.Location.Y - _resizeConsts[5]);
+            star_button1.Location = new Point(star_button1.Location.X, splitContainer1.Location.Y - _resizeConsts[5]);
+            star_button2.Location = new Point(sort_az_button2.Location.X + _resizeConsts[7], splitContainer1.Location.Y - _resizeConsts[5]);
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
-        }
+        private void label1_Click(object sender, EventArgs e) => Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
 
-        readonly Image Sort_Ascending = new Bitmap(Resources.Sort_Ascending);
-        readonly Image Sort_Descending = new Bitmap(Resources.Sort_Decending);
+        private readonly Image _sortAscending = new Bitmap(Resources.Sort_Ascending);
+        private readonly Image _sortDescending = new Bitmap(Resources.Sort_Decending);
 
         private void sort_az_button1_Click(object sender, EventArgs e)
         {
-            if (sort_az_button1.BackgroundImage.Equals(Sort_Ascending))
+            if (sort_az_button1.BackgroundImage.Equals(_sortAscending))
             {
                 SortListBoxItems(ref listBox1);
-                sort_az_button1.BackgroundImage = Sort_Descending;
+                sort_az_button1.BackgroundImage = _sortDescending;
             }
             else
             {
                 SortListBoxItemsDesc(ref listBox1);
-                sort_az_button1.BackgroundImage = Sort_Ascending;
+                sort_az_button1.BackgroundImage = _sortAscending;
             }
             Refresh();
         }
 
         private void sort_az_button2_Click(object sender, EventArgs e)
         {
-            if (sort_az_button2.BackgroundImage.Equals(Sort_Ascending))
+            if (sort_az_button2.BackgroundImage.Equals(_sortAscending))
             {
                 SortListBoxItems(ref listBox2);
-                sort_az_button2.BackgroundImage = Sort_Descending;
+                sort_az_button2.BackgroundImage = _sortDescending;
             }
             else
             {
                 SortListBoxItemsDesc(ref listBox2);
-                sort_az_button2.BackgroundImage = Sort_Ascending;
+                sort_az_button2.BackgroundImage = _sortAscending;
             }
             Refresh();
+        }
+
+        private readonly Image _star = new Bitmap(Resources.Star);
+        private readonly Image _starHollow = new Bitmap(Resources.Star_Hollow);
+
+        private void star_button1_Click(object sender, EventArgs e)
+        {
+            if (!star_button1.BackgroundImage.Equals(_starHollow))
+            {
+                star_button1.BackgroundImage = _starHollow;
+                for (int n = listBox1.Items.Count - 1; n >= 0; --n)
+                {
+                    string filterItem = "★";
+                    if (!listBox1.Items[n].ToString().Contains(filterItem))
+                        listBox1.Items.RemoveAt(n);
+                }
+            }
+            else
+            {
+                star_button1.BackgroundImage = _star;
+                listBox1.Items.Clear();
+                foreach (string s in _jsFiles)
+                {
+                    listBox1.Items.Add(s);
+                }
+                foreach (var VARIABLE in Favourites1.Patches)
+                {
+                    int index = listBox1.FindStringExact(VARIABLE);
+                    listBox1.Items[index] += " ★";
+                }
+            }
+        }
+
+        private void star_button2_Click(object sender, EventArgs e)
+        {
+            if (!star_button2.BackgroundImage.Equals(_starHollow))
+            {
+                star_button2.BackgroundImage = _starHollow;
+                for (int n = listBox2.Items.Count - 1; n >= 0; --n)
+                {
+                    string filterItem = "★";
+                    if (!listBox2.Items[n].ToString().Contains(filterItem))
+                        listBox2.Items.RemoveAt(n);
+                }
+            }
+            else
+            {
+                star_button2.BackgroundImage = _star;
+                listBox2.Items.Clear();
+                foreach (string s in _gamesList)
+                {
+                    listBox2.Items.Add(s);
+                }
+                foreach (var VARIABLE in Favourites1.Games)
+                {
+                    int index = listBox2.FindStringExact(VARIABLE);
+                    listBox2.Items[index] += " ★";
+                }
+            }
         }
     }
 
@@ -241,5 +359,17 @@ namespace Universal_THCRAP_Launcher
         public string UthcraplLastConfig { get; set; }
         public string UthcraplLastGame { get; set; }
 #pragma warning restore IDE1006 // Naming Styles
+    }
+
+    public class Favourites
+    {
+        public Favourites(List<string> patches, List<string> games)
+        {
+            Patches = patches;
+            Games = games;
+        }
+
+        public List<string> Patches { get; set; }
+        public List<string> Games { get; set; }
     }
 }

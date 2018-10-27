@@ -121,7 +121,7 @@ namespace Universal_THCRAP_Launcher
             this.star_button2.Name = "star_button2";
             this.star_button2.Size = new System.Drawing.Size(25, 25);
             this.star_button2.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.star_button2, "Filter for favourites.\\nPress the F button to add to favourites.");
+            this.toolTip1.SetToolTip(this.star_button2, "Filter for favourites.\\nPress the F button to change favourite status.");
             this.star_button2.UseVisualStyleBackColor = true;
             this.star_button2.Click += new System.EventHandler(this.star_button2_Click);
             // 
@@ -134,7 +134,7 @@ namespace Universal_THCRAP_Launcher
             this.star_button1.Name = "star_button1";
             this.star_button1.Size = new System.Drawing.Size(25, 25);
             this.star_button1.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.star_button1, "Filter for favourites.\\nPress the F button to add to favourites.");
+            this.toolTip1.SetToolTip(this.star_button1, "Filter for favourites.\\nPress the F button to change favourite status.");
             this.star_button1.UseVisualStyleBackColor = true;
             this.star_button1.Click += new System.EventHandler(this.star_button1_Click);
             // 

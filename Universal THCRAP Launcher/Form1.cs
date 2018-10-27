@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -86,6 +87,7 @@ namespace Universal_THCRAP_Launcher
             }
 
             UpdateConfigFile();
+            Debug.WriteLine("Form1 Loaded");
         }
 
         private void UpdateConfigFile()
@@ -94,6 +96,7 @@ namespace Universal_THCRAP_Launcher
             Configuration1.UthcraplLastGame = (string) listBox2.SelectedItem;
             string output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented);
             File.WriteAllText("config.js", output);
+            Debug.WriteLine("Config file Updated!");
         }
 
         private void StartThcrap()
@@ -105,6 +108,7 @@ namespace Universal_THCRAP_Launcher
             //MessageBox.Show(args);
             Process process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
             process.Start();
+            Debug.WriteLine("Starting thcrap with {0}", s);
             if (checkBox1.Checked)
                 Application.Exit();
         }
@@ -130,6 +134,15 @@ namespace Universal_THCRAP_Launcher
         private void button1_MouseLeave(object sender, EventArgs e)
         {
             button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - 66);
+            button1.Size = new Size(Size.Width - 43, button1.Size.Height);
+            splitContainer1.Size = new Size(Size.Width - 38, Size.Height - 132);
+            listBox1.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
+            listBox2.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
         }
     }
 

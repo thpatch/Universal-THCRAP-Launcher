@@ -188,6 +188,7 @@ namespace Universal_THCRAP_Launcher
             s += listBox1.SelectedItem;
             s += " ";
             s += listBox2.SelectedItem;
+            s = s.Replace(" ★", "");
             //MessageBox.Show(args);
             Process process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
             process.Start();

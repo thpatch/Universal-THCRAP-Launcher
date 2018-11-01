@@ -58,6 +58,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox1.Size = new System.Drawing.Size(153, 355);
             this.listBox1.TabIndex = 1;
             this.toolTip1.SetToolTip(this.listBox1, "Choose the run configuration (patch stack).");
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
             this.listBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress);
             // 
             // splitContainer1
@@ -85,6 +86,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox2.Size = new System.Drawing.Size(152, 355);
             this.listBox2.TabIndex = 2;
             this.toolTip1.SetToolTip(this.listBox2, "Choose the game (executable).");
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
             this.listBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress);
             // 
             // checkBox1
@@ -205,6 +207,7 @@ namespace Universal_THCRAP_Launcher
             this.Text = "Universal THCRAP Launcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

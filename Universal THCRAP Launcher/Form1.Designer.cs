@@ -101,7 +101,8 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1.Text = "Close when game starts";
             this.toolTip1.SetToolTip(this.checkBox1, "If checked, the applicated will close itself when starting thcrap.");
             this.checkBox1.UseVisualStyleBackColor = true;
-            //
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;

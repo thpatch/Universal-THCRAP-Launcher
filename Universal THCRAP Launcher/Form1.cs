@@ -60,7 +60,7 @@ namespace Universal_THCRAP_Launcher
             //Load patch stacks
             _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
 
-            //Give error if there are no patch configuratzions
+            //Give error if there are no patch configurations
             const string msgError3 =
                 "No config files could be found.\nMake sure you run thcrap_configure.exe first!";
             if (_jsFiles.Count == 0) ErrorAndExit(msgError3);

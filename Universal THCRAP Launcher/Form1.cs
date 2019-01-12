@@ -12,7 +12,7 @@ namespace Universal_THCRAP_Launcher
 {
     public partial class Form1 : Form
     {
-        private const string ConfigFile = "uthcrapl_config.js";
+        private const string ConfigFile = "utl_config.js";
         private readonly List<string> _gamesList = new List<string>();
 
         private readonly Image _sortAscending = new Bitmap(Resources.Sort_Ascending);
@@ -277,7 +277,7 @@ namespace Universal_THCRAP_Launcher
         private void UpdateConfigFile()
         {
             UpdateConfig();
-            var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented);
+            var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
             File.WriteAllText(ConfigFile, output);
 
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
@@ -312,10 +312,7 @@ namespace Universal_THCRAP_Launcher
                 Application.Exit();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            StartThcrap();
-        }
+        private void button1_Click(object sender, EventArgs e) => StartThcrap();
 
         /// <summary>
         ///     Handles starting thcrap with enter and favouring when pressing f
@@ -355,10 +352,7 @@ namespace Universal_THCRAP_Launcher
             UpdateConfigFile();
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            UpdateConfigFile();
-        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
 
         private void button1_MouseHover(object sender, EventArgs e)
         {
@@ -388,10 +382,7 @@ namespace Universal_THCRAP_Launcher
                 splitContainer1.Location.Y - _resizeConstants[5]);
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
-        }
+        private void label1_Click(object sender, EventArgs e) => Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
 
         private void sort_az_button1_Click(object sender, EventArgs e)
         {
@@ -520,10 +511,7 @@ namespace Universal_THCRAP_Launcher
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            Configuration1.ExitAfterStartup = checkBox1.Checked;
-        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) => Configuration1.ExitAfterStartup = checkBox1.Checked;
     }
 
     public class Configuration

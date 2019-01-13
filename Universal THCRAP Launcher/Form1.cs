@@ -70,6 +70,11 @@ namespace Universal_THCRAP_Launcher
             const string msgError3 =
                 "No config files could be found.\nMake sure you run thcrap_configure.exe first!";
             if (_jsFiles.Count == 0) ErrorAndExit(msgError3);
+            
+            //Give error if Newtonsoft.Json.dll isn't found.
+            const string msgError4 =
+                @"Newtonsoft.Json.dll is missing. Please make sure you have copied it over as well.";
+            if (!File.Exists("Newtonsoft.Json.dll")) ErrorAndExit(msgError4);
 
             //Load executables
             var file = File.ReadAllText("games.js");

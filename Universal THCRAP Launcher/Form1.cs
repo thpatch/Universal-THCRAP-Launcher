@@ -141,7 +141,7 @@ namespace Universal_THCRAP_Launcher
             #region Set stuff
 
             //Create constants for resizing
-            _resizeConstants = new int[8];
+            _resizeConstants = new int[9];
             _resizeConstants[0] = Size.Width - button1.Width;
             _resizeConstants[1] = Size.Width - splitContainer1.Width;
             _resizeConstants[2] = Size.Height - splitContainer1.Height;
@@ -150,6 +150,7 @@ namespace Universal_THCRAP_Launcher
             _resizeConstants[5] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
             _resizeConstants[6] = sort_az_button2.Location.X - listBox1.Size.Width;
             _resizeConstants[7] = star_button2.Location.X - sort_az_button2.Location.X;
+            _resizeConstants[8] = filterByType_button.Location.X - star_button2.Location.X;
 
             #endregion
 
@@ -380,6 +381,8 @@ namespace Universal_THCRAP_Launcher
                 new Point(star_button1.Location.X, splitContainer1.Location.Y - _resizeConstants[5]);
             star_button2.Location = new Point(sort_az_button2.Location.X + _resizeConstants[7],
                 splitContainer1.Location.Y - _resizeConstants[5]);
+            filterByType_button.Location = new Point(
+                star_button2.Location.X + _resizeConstants[8], filterByType_button.Location.Y);
         }
 
         private void label1_Click(object sender, EventArgs e) => Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");

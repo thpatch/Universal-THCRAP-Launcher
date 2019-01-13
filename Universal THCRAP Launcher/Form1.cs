@@ -512,6 +512,11 @@ namespace Universal_THCRAP_Launcher
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) => Configuration1.ExitAfterStartup = checkBox1.Checked;
+
+        private void filterByType_button_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class Configuration

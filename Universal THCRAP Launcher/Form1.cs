@@ -8,7 +8,9 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using IWshRuntimeLibrary;
 using Universal_THCRAP_Launcher.Properties;
+using File = System.IO.File;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -615,6 +617,19 @@ namespace Universal_THCRAP_Launcher
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) =>
             Process.Start(Directory.GetCurrentDirectory());
+
+        private void createShortcutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var shDesktop = (object)"Desktop";
+            var shell = new WshShell();
+            var shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Universal THCRAP Launcher.lnk";
+            var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+            shortcut.Description = "Shortcut for UTL";
+            shortcut.TargetPath = Assembly.GetEntryAssembly().Location;
+            shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
+            shortcut.Save();
+        }
+        
     }
 
     public class Configuration

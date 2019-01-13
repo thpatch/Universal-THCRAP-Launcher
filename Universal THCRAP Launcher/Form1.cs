@@ -158,23 +158,23 @@ namespace Universal_THCRAP_Launcher
                     if (i == 0)
                     {
                         SortListBoxItems(ref listBox1);
-                        sort_az_button1.BackgroundImage = _sortDescending;
+                        sort_az_button1.BackgroundImage = _sortAscending;
                     }
                     else
                     {
                         SortListBoxItems(ref listBox2);
-                        sort_az_button2.BackgroundImage = _sortDescending;
+                        sort_az_button2.BackgroundImage = _sortAscending;
                     }
                 }
                 else if (i == 0)
                 {
                     SortListBoxItemsDesc(ref listBox1);
-                    sort_az_button1.BackgroundImage = _sortAscending;
+                    sort_az_button1.BackgroundImage = _sortDescending;
                 }
                 else
                 {
                     SortListBoxItemsDesc(ref listBox2);
-                    sort_az_button2.BackgroundImage = _sortAscending;
+                    sort_az_button2.BackgroundImage = _sortDescending;
                 }
 
             //Default favourite button state
@@ -183,7 +183,7 @@ namespace Universal_THCRAP_Launcher
                 {
                     if (i == 0)
                     {
-                        star_button1.BackgroundImage = _starHollow;
+                        star_button1.BackgroundImage = _star;
                         for (var n = listBox1.Items.Count - 1; n >= 0; --n)
                         {
                             const string filterItem = "★";
@@ -193,7 +193,7 @@ namespace Universal_THCRAP_Launcher
                     }
                     else
                     {
-                        star_button2.BackgroundImage = _starHollow;
+                        star_button2.BackgroundImage = _star;
                         for (var n = listBox2.Items.Count - 1; n >= 0; --n)
                         {
                             const string filterItem = "★";
@@ -204,8 +204,8 @@ namespace Universal_THCRAP_Launcher
                 }
                 else
                 {
-                    if (i == 0) star_button1.BackgroundImage = _star;
-                    else star_button2.BackgroundImage = _star;
+                    if (i == 0) star_button1.BackgroundImage = _starHollow;
+                    else star_button2.BackgroundImage = _starHollow;
                 }
 
             //Default exe type button state
@@ -406,17 +406,17 @@ namespace Universal_THCRAP_Launcher
 
         private void sort_az_button1_Click(object sender, EventArgs e)
         {
-            if (sort_az_button1.BackgroundImage.Equals(_sortAscending))
+            if (sort_az_button1.BackgroundImage.Equals(_sortDescending))
             {
                 SortListBoxItems(ref listBox1);
-                sort_az_button1.BackgroundImage = _sortDescending;
+                sort_az_button1.BackgroundImage = _sortAscending;
                 Configuration1.IsDescending[0] = "false";
             }
             else
             {
                 SortListBoxItemsDesc(ref listBox1);
                 Configuration1.IsDescending[0] = "true";
-                sort_az_button1.BackgroundImage = _sortAscending;
+                sort_az_button1.BackgroundImage = _sortDescending;
             }
 
             ReadConfig();
@@ -424,17 +424,17 @@ namespace Universal_THCRAP_Launcher
 
         private void sort_az_button2_Click(object sender, EventArgs e)
         {
-            if (sort_az_button2.BackgroundImage.Equals(_sortAscending))
+            if (sort_az_button2.BackgroundImage.Equals(_sortDescending))
             {
                 SortListBoxItems(ref listBox2);
-                sort_az_button2.BackgroundImage = _sortDescending;
+                sort_az_button2.BackgroundImage = _sortAscending;
                 Configuration1.IsDescending[1] = "false";
             }
             else
             {
-                Configuration1.IsDescending[1] = "true";
                 SortListBoxItemsDesc(ref listBox2);
-                sort_az_button2.BackgroundImage = _sortAscending;
+                Configuration1.IsDescending[1] = "true";
+                sort_az_button2.BackgroundImage = _sortDescending;
             }
 
             ReadConfig();
@@ -451,9 +451,9 @@ namespace Universal_THCRAP_Launcher
 
         private void star_button1_Click(object sender, EventArgs e)
         {
-            if (!star_button1.BackgroundImage.Equals(_starHollow))
+            if (!star_button1.BackgroundImage.Equals(_star))
             {
-                star_button1.BackgroundImage = _starHollow;
+                star_button1.BackgroundImage = _star;
                 for (var n = listBox1.Items.Count - 1; n >= 0; --n)
                 {
                     const char filterItem = '★';
@@ -465,7 +465,7 @@ namespace Universal_THCRAP_Launcher
             }
             else
             {
-                star_button1.BackgroundImage = _star;
+                star_button1.BackgroundImage = _starHollow;
                 listBox1.Items.Clear();
                 foreach (var s in _jsFiles) listBox1.Items.Add(s);
 
@@ -478,9 +478,9 @@ namespace Universal_THCRAP_Launcher
 
         private void star_button2_Click(object sender, EventArgs e)
         {
-            if (!star_button2.BackgroundImage.Equals(_starHollow))
+            if (!star_button2.BackgroundImage.Equals(_star))
             {
-                star_button2.BackgroundImage = _starHollow;
+                star_button2.BackgroundImage = _star;
                 for (var n = listBox2.Items.Count - 1; n >= 0; --n)
                 {
                     const string filterItem = "★";
@@ -492,7 +492,7 @@ namespace Universal_THCRAP_Launcher
             }
             else
             {
-                star_button2.BackgroundImage = _star;
+                star_button2.BackgroundImage = _starHollow;
                 listBox2.Items.Clear();
                 foreach (var s in _gamesList) listBox2.Items.Add(s);
 

@@ -72,7 +72,7 @@ namespace Universal_THCRAP_Launcher
             const string msgError3 =
                 "No config files could be found.\nMake sure you run thcrap_configure.exe first!";
             if (_jsFiles.Count == 0) ErrorAndExit(msgError3);
-            
+
             //Give error if Newtonsoft.Json.dll isn't found.
             const string msgError4 =
                 @"Newtonsoft.Json.dll is missing. Please make sure you have copied it over as well.";
@@ -120,7 +120,7 @@ namespace Universal_THCRAP_Launcher
             _jsFiles.Remove(ConfigFile);
 
             #endregion
-            
+
             #region Set stuff
 
             //Create constants for resizing
@@ -140,7 +140,7 @@ namespace Universal_THCRAP_Launcher
             //Change Form settings
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
-            
+
             //Display patch stacks
             foreach (var item in _jsFiles)
                 listBox1.Items.Add(item);
@@ -222,7 +222,7 @@ namespace Universal_THCRAP_Launcher
             //Default exe type button state
             filterByType_button.BackgroundImage = _gameAndCustom;
             for (var i = 0; i < Configuration1.FilterExeType; i++) filterByType_button_Click(null, new EventArgs());
-            
+
             #endregion
 
             if (menuStrip1 == null) return;
@@ -264,7 +264,7 @@ namespace Universal_THCRAP_Launcher
             var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
 
             Configuration1.Window = window;
-            
+
             Favourites1.Patches.Clear();
             Favourites1.Games.Clear();
 
@@ -352,9 +352,11 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
 
-        private void button1_MouseHover(object sender, EventArgs e) => button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
+        private void button1_MouseHover(object sender, EventArgs e) =>
+            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
 
-        private void button1_MouseLeave(object sender, EventArgs e) => button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
+        private void button1_MouseLeave(object sender, EventArgs e) =>
+            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
 
         private void Form1_Resize(object sender, EventArgs e)
         {
@@ -446,7 +448,7 @@ namespace Universal_THCRAP_Launcher
                 foreach (var s in _jsFiles) listBox1.Items.Add(s);
 
                 AddStars(listBox1, Favourites1.Patches);
-                onlyFav[0] = "false"; 
+                onlyFav[0] = "false";
             }
 
             Configuration1.OnlyFavourites = onlyFav;
@@ -527,7 +529,7 @@ namespace Universal_THCRAP_Launcher
                     if (!item.Contains("_custom"))
                         listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
-                if(sender != null) Configuration1.FilterExeType = 1;
+                if (sender != null) Configuration1.FilterExeType = 1;
                 return;
             }
 
@@ -539,7 +541,7 @@ namespace Universal_THCRAP_Launcher
                     if (item.Contains("_custom"))
                         listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
-                if(sender != null) Configuration1.FilterExeType = 2;
+                if (sender != null) Configuration1.FilterExeType = 2;
                 return;
             }
 
@@ -549,7 +551,7 @@ namespace Universal_THCRAP_Launcher
                 listBox2.Items.Clear();
                 foreach (var item in _gamesList) listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
-                if(sender != null) Configuration1.FilterExeType = 0;
+                if (sender != null) Configuration1.FilterExeType = 0;
             }
         }
 
@@ -626,7 +628,11 @@ namespace Universal_THCRAP_Launcher
                 @"Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
             var p = Process.Start("thcrap_configure.exe");
             if (p == null)
-            { MessageBox.Show(@"Something went wrong...", @"Error"); return; }
+            {
+                MessageBox.Show(@"Something went wrong...", @"Error");
+                return;
+            }
+
             Hide();
             while (!p.HasExited) Thread.Sleep(1);
             Show();
@@ -639,16 +645,15 @@ namespace Universal_THCRAP_Launcher
 
         private void createShortcutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var shDesktop = (object)"Desktop";
+            var shDesktop = (object) "Desktop";
             var shell = new WshShell();
-            var shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Universal THCRAP Launcher.lnk";
-            var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+            var shortcutAddress = (string) shell.SpecialFolders.Item(ref shDesktop) + @"\Universal THCRAP Launcher.lnk";
+            var shortcut = (IWshShortcut) shell.CreateShortcut(shortcutAddress);
             shortcut.Description = "Shortcut for UTL";
             shortcut.TargetPath = Assembly.GetEntryAssembly().Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
             shortcut.Save();
         }
-        
     }
 
     public class Configuration

@@ -130,6 +130,7 @@
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>Alt + F4: Close Application (default Windows shortcut)
 Ctrl + R: Restart Application
+Ctrl + O: Open selected Patch Configuration      
 F1: Show Keyboard Shortcuts (this)
 F2: Favorite the selected item in the selected list</value>
   </data>

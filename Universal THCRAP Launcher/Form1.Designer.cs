@@ -355,6 +355,8 @@ namespace Universal_THCRAP_Launcher
             this.openSelectedPatchConfigurationToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
             this.openSelectedPatchConfigurationToolStripMenuItem.Text = "Open Selected Patch Configuration";
             this.openSelectedPatchConfigurationToolStripMenuItem.Click += new System.EventHandler(this.openSelectedPatchConfigurationToolStripMenuItem_Click);
+            this.openSelectedPatchConfigurationToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + O";
+            this.openSelectedPatchConfigurationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             // 
             // Form1
             // 

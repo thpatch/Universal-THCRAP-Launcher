@@ -46,6 +46,8 @@ namespace Universal_THCRAP_Launcher
             this.filterByType_button = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keyboardShortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,8 +60,6 @@ namespace Universal_THCRAP_Launcher
             this.openTHCRAPConfigureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openGamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -72,7 +72,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(0, 1);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(153, 329);
+            this.listBox1.Size = new System.Drawing.Size(153, 303);
             this.listBox1.TabIndex = 1;
             this.toolTip1.SetToolTip(this.listBox1, "Choose the run configuration (patch stack).");
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
@@ -91,7 +91,7 @@ namespace Universal_THCRAP_Launcher
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listBox2);
-            this.splitContainer1.Size = new System.Drawing.Size(312, 330);
+            this.splitContainer1.Size = new System.Drawing.Size(312, 306);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -100,7 +100,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(0, 1);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(152, 329);
+            this.listBox2.Size = new System.Drawing.Size(152, 303);
             this.listBox2.TabIndex = 2;
             this.toolTip1.SetToolTip(this.listBox2, "Choose the game (executable).");
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
@@ -111,7 +111,7 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(11, 452);
+            this.checkBox1.Location = new System.Drawing.Point(11, 435);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(138, 17);
             this.checkBox1.TabIndex = 8;
@@ -226,6 +226,18 @@ namespace Universal_THCRAP_Launcher
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // createShortcutToolStripMenuItem
+            // 
+            this.createShortcutToolStripMenuItem.Name = "createShortcutToolStripMenuItem";
+            this.createShortcutToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.createShortcutToolStripMenuItem.Text = "Create Shortcut to Desktop";
+            this.createShortcutToolStripMenuItem.Click += new System.EventHandler(this.createShortcutToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+            // 
             // restartToolStripMenuItem
             // 
             this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
@@ -325,23 +337,11 @@ namespace Universal_THCRAP_Launcher
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
-            // createShortcutToolStripMenuItem
-            // 
-            this.createShortcutToolStripMenuItem.Name = "createShortcutToolStripMenuItem";
-            this.createShortcutToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.createShortcutToolStripMenuItem.Text = "Create Shortcut to Desktop";
-            this.createShortcutToolStripMenuItem.Click += new System.EventHandler(this.createShortcutToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 479);
+            this.ClientSize = new System.Drawing.Size(334, 461);
             this.Controls.Add(this.filterByType_button);
             this.Controls.Add(this.star_button2);
             this.Controls.Add(this.star_button1);

@@ -7,8 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using IWshRuntimeLibrary;
+using Newtonsoft.Json;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
 
@@ -120,9 +120,27 @@ namespace Universal_THCRAP_Launcher
             _jsFiles.Remove(ConfigFile);
 
             #endregion
+            
+            #region Set stuff
+
+            //Create constants for resizing
+            _resizeConstants = new int[7];
+            _resizeConstants[0] = Size.Width - button1.Width;
+            _resizeConstants[1] = Size.Width - splitContainer1.Width;
+            _resizeConstants[2] = Size.Height - splitContainer1.Height;
+            _resizeConstants[3] = Size.Height - checkBox1.Location.Y;
+            _resizeConstants[4] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
+            _resizeConstants[5] = sort_az_button2.Location.X - listBox1.Size.Width;
+            _resizeConstants[6] = star_button2.Location.X - sort_az_button2.Location.X;
+
+            #endregion
 
             #region Display
 
+            //Change Form settings
+            SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
+            Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
+            
             //Display patch stacks
             foreach (var item in _jsFiles)
                 listBox1.Items.Add(item);
@@ -139,20 +157,6 @@ namespace Universal_THCRAP_Launcher
             //Update Display favourites
             AddStars(listBox1, Favourites1.Patches);
             AddStars(listBox2, Favourites1.Games);
-
-            #endregion
-
-            #region Set stuff
-
-            //Create constants for resizing
-            _resizeConstants = new int[7];
-            _resizeConstants[0] = Size.Width - button1.Width;
-            _resizeConstants[1] = Size.Width - splitContainer1.Width;
-            _resizeConstants[2] = Size.Height - splitContainer1.Height;
-            _resizeConstants[3] = Size.Height - checkBox1.Location.Y;
-            _resizeConstants[4] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
-            _resizeConstants[5] = sort_az_button2.Location.X - listBox1.Size.Width;
-            _resizeConstants[6] = star_button2.Location.X - sort_az_button2.Location.X;
 
             #endregion
 
@@ -256,7 +260,10 @@ namespace Universal_THCRAP_Launcher
             if (listBox2.SelectedIndex != -1)
                 Configuration1.LastGame = ((string) listBox2.SelectedItem).Replace(" ★", "");
 
+            var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
 
+            Configuration1.Window = window;
+            
             Favourites1.Patches.Clear();
             Favourites1.Games.Clear();
 
@@ -369,37 +376,41 @@ namespace Universal_THCRAP_Launcher
 
         private void sort_az_button1_Click(object sender, EventArgs e)
         {
+            var isDesc = Configuration1.IsDescending;
             if (sort_az_button1.BackgroundImage.Equals(_sortDescending))
             {
                 SortListBoxItems(ref listBox1);
                 sort_az_button1.BackgroundImage = _sortAscending;
-                Configuration1.IsDescending[0] = "false";
+                isDesc[0] = "false";
             }
             else
             {
                 SortListBoxItemsDesc(ref listBox1);
-                Configuration1.IsDescending[0] = "true";
+                isDesc[0] = "true";
                 sort_az_button1.BackgroundImage = _sortDescending;
             }
 
+            Configuration1.IsDescending = isDesc;
             ReadConfig();
         }
 
         private void sort_az_button2_Click(object sender, EventArgs e)
         {
+            var isDesc = Configuration1.IsDescending;
             if (sort_az_button2.BackgroundImage.Equals(_sortDescending))
             {
                 SortListBoxItems(ref listBox2);
                 sort_az_button2.BackgroundImage = _sortAscending;
-                Configuration1.IsDescending[1] = "false";
+                isDesc[1] = "false";
             }
             else
             {
                 SortListBoxItemsDesc(ref listBox2);
-                Configuration1.IsDescending[1] = "true";
+                isDesc[1] = "true";
                 sort_az_button2.BackgroundImage = _sortDescending;
             }
 
+            Configuration1.IsDescending = isDesc;
             ReadConfig();
         }
 
@@ -414,6 +425,7 @@ namespace Universal_THCRAP_Launcher
 
         private void star_button1_Click(object sender, EventArgs e)
         {
+            var onlyFav = Configuration1.OnlyFavourites;
             if (!star_button1.BackgroundImage.Equals(_star))
             {
                 star_button1.BackgroundImage = _star;
@@ -424,7 +436,7 @@ namespace Universal_THCRAP_Launcher
                         listBox1.Items.RemoveAt(n);
                 }
 
-                Configuration1.OnlyFavourites[0] = "true";
+                onlyFav[0] = "true";
             }
             else
             {
@@ -433,14 +445,16 @@ namespace Universal_THCRAP_Launcher
                 foreach (var s in _jsFiles) listBox1.Items.Add(s);
 
                 AddStars(listBox1, Favourites1.Patches);
-
-                Configuration1.OnlyFavourites[0] = "false";
-                ReadConfig();
+                onlyFav[0] = "false"; 
             }
+
+            Configuration1.OnlyFavourites = onlyFav;
+            ReadConfig();
         }
 
         private void star_button2_Click(object sender, EventArgs e)
         {
+            var onlyFav = Configuration1.OnlyFavourites;
             if (!star_button2.BackgroundImage.Equals(_star))
             {
                 star_button2.BackgroundImage = _star;
@@ -451,7 +465,7 @@ namespace Universal_THCRAP_Launcher
                         listBox2.Items.RemoveAt(n);
                 }
 
-                Configuration1.OnlyFavourites[1] = "true";
+                onlyFav[1] = "true";
             }
             else
             {
@@ -460,10 +474,11 @@ namespace Universal_THCRAP_Launcher
                 foreach (var s in _gamesList) listBox2.Items.Add(s);
 
                 AddStars(listBox2, Favourites1.Games);
-
-                Configuration1.OnlyFavourites[1] = "false";
-                ReadConfig();
+                onlyFav[1] = "false";
             }
+
+            Configuration1.OnlyFavourites = onlyFav;
+            ReadConfig();
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -634,20 +649,18 @@ namespace Universal_THCRAP_Launcher
 
     public class Configuration
     {
-        public Configuration()
-        {
-            LastGame = "th";
-            LastConfig = ".js";
-            ExitAfterStartup = true;
-            IsDescending = new List<string> {"false", "false"};
-            OnlyFavourites = new List<string> {"false", "false"};
-        }
-
         public bool ExitAfterStartup { get; set; }
         public string LastConfig { get; set; }
         public string LastGame { get; set; }
-        public List<string> IsDescending { get; }
-        public List<string> OnlyFavourites { get; }
+        public List<string> IsDescending { get; set; }
+        public List<string> OnlyFavourites { get; set; }
+        public Window Window { get; set; }
+    }
+
+    public class Window
+    {
+        public int[] Location { get; set; } = {0, 0};
+        public int[] Size { get; set; } = {350, 500};
     }
 
     public class Favourites

@@ -221,7 +221,8 @@ namespace Universal_THCRAP_Launcher
 
             //Default exe type button state
             filterByType_button.BackgroundImage = _gameAndCustom;
-
+            for (var i = 0; i < Configuration1.FilterExeType; i++) filterByType_button_Click(null, new EventArgs());
+            
             #endregion
 
             if (menuStrip1 == null) return;
@@ -526,6 +527,7 @@ namespace Universal_THCRAP_Launcher
                     if (!item.Contains("_custom"))
                         listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
+                if(sender != null) Configuration1.FilterExeType = 1;
                 return;
             }
 
@@ -537,6 +539,7 @@ namespace Universal_THCRAP_Launcher
                     if (item.Contains("_custom"))
                         listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
+                if(sender != null) Configuration1.FilterExeType = 2;
                 return;
             }
 
@@ -546,6 +549,7 @@ namespace Universal_THCRAP_Launcher
                 listBox2.Items.Clear();
                 foreach (var item in _gamesList) listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
+                if(sender != null) Configuration1.FilterExeType = 0;
             }
         }
 
@@ -654,6 +658,7 @@ namespace Universal_THCRAP_Launcher
         public string LastGame { get; set; }
         public List<string> IsDescending { get; set; }
         public List<string> OnlyFavourites { get; set; }
+        public byte FilterExeType { get; set; }
         public Window Window { get; set; }
     }
 

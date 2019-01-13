@@ -132,5 +132,14 @@
   <ItemGroup>
     <None Include="Resources\AbstractCactus_Icon_01.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Custom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Game.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GameAndCustom.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

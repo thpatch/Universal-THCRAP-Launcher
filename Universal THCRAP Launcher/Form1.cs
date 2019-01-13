@@ -654,6 +654,11 @@ namespace Universal_THCRAP_Launcher
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
             shortcut.Save();
         }
+
+        private void openSelectedPatchConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class Configuration

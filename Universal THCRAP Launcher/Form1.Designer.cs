@@ -45,21 +45,23 @@ namespace Universal_THCRAP_Launcher
             this.button1 = new System.Windows.Forms.Button();
             this.filterByType_button = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.appToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.keyboardShortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thcrapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openTHCRAPConfigureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.requestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.requestAFeatureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.releasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.thcrapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openTHCRAPConfigureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openGamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.keyboardShortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSelectedPatchConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -206,26 +208,26 @@ namespace Universal_THCRAP_Launcher
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.keyboardShortcutsToolStripMenuItem,
+            this.appToolStripMenuItem,
+            this.thcrapToolStripMenuItem,
             this.gitHubToolStripMenuItem,
-            this.thcrapToolStripMenuItem});
+            this.keyboardShortcutsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(334, 24);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // fileToolStripMenuItem
+            // appToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.appToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createShortcutToolStripMenuItem,
             this.toolStripSeparator1,
             this.restartToolStripMenuItem,
             this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.appToolStripMenuItem.Name = "appToolStripMenuItem";
+            this.appToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.appToolStripMenuItem.Text = "App";
             // 
             // createShortcutToolStripMenuItem
             // 
@@ -257,14 +259,45 @@ namespace Universal_THCRAP_Launcher
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // keyboardShortcutsToolStripMenuItem
+            // thcrapToolStripMenuItem
             // 
-            this.keyboardShortcutsToolStripMenuItem.Name = "keyboardShortcutsToolStripMenuItem";
-            this.keyboardShortcutsToolStripMenuItem.ShortcutKeyDisplayString = "F1";
-            this.keyboardShortcutsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.keyboardShortcutsToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
-            this.keyboardShortcutsToolStripMenuItem.Text = "Keyboard Shortcuts";
-            this.keyboardShortcutsToolStripMenuItem.Click += new System.EventHandler(this.keyboardShortcutsToolStripMenuItem_Click);
+            this.thcrapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openTHCRAPConfigureToolStripMenuItem,
+            this.openMenuItem});
+            this.thcrapToolStripMenuItem.Name = "thcrapToolStripMenuItem";
+            this.thcrapToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.thcrapToolStripMenuItem.Text = "THCRAP";
+            // 
+            // openTHCRAPConfigureToolStripMenuItem
+            // 
+            this.openTHCRAPConfigureToolStripMenuItem.Name = "openTHCRAPConfigureToolStripMenuItem";
+            this.openTHCRAPConfigureToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.openTHCRAPConfigureToolStripMenuItem.Text = "Open THCRAP Configure";
+            this.openTHCRAPConfigureToolStripMenuItem.Click += new System.EventHandler(this.openTHCRAPConfigureToolStripMenuItem_Click);
+            // 
+            // openMenuItem
+            // 
+            this.openMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFolderToolStripMenuItem,
+            this.openGamesListToolStripMenuItem,
+            this.openSelectedPatchConfigurationToolStripMenuItem});
+            this.openMenuItem.Name = "openMenuItem";
+            this.openMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.openMenuItem.Text = "Open...";
+            // 
+            // openFolderToolStripMenuItem
+            // 
+            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
+            this.openFolderToolStripMenuItem.Text = "Open Folder";
+            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
+            // 
+            // openGamesListToolStripMenuItem
+            // 
+            this.openGamesListToolStripMenuItem.Name = "openGamesListToolStripMenuItem";
+            this.openGamesListToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
+            this.openGamesListToolStripMenuItem.Text = "Open Games List";
+            this.openGamesListToolStripMenuItem.Click += new System.EventHandler(this.openGamesListToolStripMenuItem_Click);
             // 
             // gitHubToolStripMenuItem
             // 
@@ -307,36 +340,21 @@ namespace Universal_THCRAP_Launcher
             this.releasesToolStripMenuItem.Text = "Releases";
             this.releasesToolStripMenuItem.Click += new System.EventHandler(this.releasesToolStripMenuItem_Click);
             // 
-            // thcrapToolStripMenuItem
+            // keyboardShortcutsToolStripMenuItem
             // 
-            this.thcrapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openTHCRAPConfigureToolStripMenuItem,
-            this.openGamesListToolStripMenuItem,
-            this.openFolderToolStripMenuItem});
-            this.thcrapToolStripMenuItem.Name = "thcrapToolStripMenuItem";
-            this.thcrapToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.thcrapToolStripMenuItem.Text = "THCRAP";
+            this.keyboardShortcutsToolStripMenuItem.Name = "keyboardShortcutsToolStripMenuItem";
+            this.keyboardShortcutsToolStripMenuItem.ShortcutKeyDisplayString = "F1";
+            this.keyboardShortcutsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.keyboardShortcutsToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
+            this.keyboardShortcutsToolStripMenuItem.Text = "Keyboard Shortcuts";
+            this.keyboardShortcutsToolStripMenuItem.Click += new System.EventHandler(this.keyboardShortcutsToolStripMenuItem_Click);
             // 
-            // openTHCRAPConfigureToolStripMenuItem
+            // openSelectedPatchConfigurationToolStripMenuItem
             // 
-            this.openTHCRAPConfigureToolStripMenuItem.Name = "openTHCRAPConfigureToolStripMenuItem";
-            this.openTHCRAPConfigureToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.openTHCRAPConfigureToolStripMenuItem.Text = "Open THCRAP Configure";
-            this.openTHCRAPConfigureToolStripMenuItem.Click += new System.EventHandler(this.openTHCRAPConfigureToolStripMenuItem_Click);
-            // 
-            // openGamesListToolStripMenuItem
-            // 
-            this.openGamesListToolStripMenuItem.Name = "openGamesListToolStripMenuItem";
-            this.openGamesListToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.openGamesListToolStripMenuItem.Text = "Open Games List";
-            this.openGamesListToolStripMenuItem.Click += new System.EventHandler(this.openGamesListToolStripMenuItem_Click);
-            // 
-            // openFolderToolStripMenuItem
-            // 
-            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.openFolderToolStripMenuItem.Text = "Open Folder";
-            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
+            this.openSelectedPatchConfigurationToolStripMenuItem.Name = "openSelectedPatchConfigurationToolStripMenuItem";
+            this.openSelectedPatchConfigurationToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
+            this.openSelectedPatchConfigurationToolStripMenuItem.Text = "Open Selected Patch Configuration";
+            this.openSelectedPatchConfigurationToolStripMenuItem.Click += new System.EventHandler(this.openSelectedPatchConfigurationToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -390,7 +408,7 @@ namespace Universal_THCRAP_Launcher
         private Button star_button2;
         private Button filterByType_button;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem appToolStripMenuItem;
         private ToolStripMenuItem restartToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem keyboardShortcutsToolStripMenuItem;
@@ -405,6 +423,8 @@ namespace Universal_THCRAP_Launcher
         private ToolStripMenuItem openFolderToolStripMenuItem;
         private ToolStripMenuItem createShortcutToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem openMenuItem;
+        private ToolStripMenuItem openSelectedPatchConfigurationToolStripMenuItem;
     }
 }
 

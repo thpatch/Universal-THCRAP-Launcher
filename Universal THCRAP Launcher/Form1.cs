@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Universal_THCRAP_Launcher.Properties;
@@ -136,16 +138,14 @@ namespace Universal_THCRAP_Launcher
             #region Set stuff
 
             //Create constants for resizing
-            _resizeConstants = new int[9];
+            _resizeConstants = new int[7];
             _resizeConstants[0] = Size.Width - button1.Width;
             _resizeConstants[1] = Size.Width - splitContainer1.Width;
             _resizeConstants[2] = Size.Height - splitContainer1.Height;
             _resizeConstants[3] = Size.Height - checkBox1.Location.Y;
-            _resizeConstants[4] = Size.Height - label1.Location.Y;
-            _resizeConstants[5] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
-            _resizeConstants[6] = sort_az_button2.Location.X - listBox1.Size.Width;
-            _resizeConstants[7] = star_button2.Location.X - sort_az_button2.Location.X;
-            _resizeConstants[8] = filterByType_button.Location.X - star_button2.Location.X;
+            _resizeConstants[4] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
+            _resizeConstants[5] = sort_az_button2.Location.X - listBox1.Size.Width;
+            _resizeConstants[6] = star_button2.Location.X - sort_az_button2.Location.X;
 
             #endregion
 
@@ -212,6 +212,10 @@ namespace Universal_THCRAP_Launcher
             filterByType_button.BackgroundImage = _gameAndCustom;
 
             #endregion
+
+            if (menuStrip1 == null) return;
+            menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
+                x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
             Debug.WriteLine("Form1 Loaded");
         }
@@ -331,55 +335,11 @@ namespace Universal_THCRAP_Launcher
 
         private void button1_Click(object sender, EventArgs e) => StartThcrap();
 
-        /// <summary>
-        ///     Handles starting thcrap with enter and favouring when pressing f
-        /// </summary>
-        private void KeyPress(object sender, KeyPressEventArgs e)
-        {
-            switch (e.KeyChar)
-            {
-                case (char) Keys.Enter:
-                    StartThcrap();
-                    break;
-                case 'f':
-                case 'F':
-                {
-                    if (sender.GetType().FullName == "System.Windows.Forms.ListBox")
-                    {
-                        var lb = (ListBox) sender;
-                        if (!lb.SelectedItem.ToString().Contains("★"))
-                        {
-                            if (lb.Equals(listBox1))
-                                Favourites1.Patches.Add(lb.Items[lb.SelectedIndex].ToString());
-
-                            if (lb.Equals(listBox2))
-                                Favourites1.Games.Add(lb.Items[lb.SelectedIndex].ToString());
-                            lb.Items[lb.SelectedIndex] += " ★";
-                        }
-                        else
-                        {
-                            lb.Items[lb.SelectedIndex] = lb.Items[lb.SelectedIndex].ToString().Replace(" ★", "");
-                        }
-                    }
-
-                    break;
-                }
-            }
-
-            UpdateConfigFile();
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
 
-        private void button1_MouseHover(object sender, EventArgs e)
-        {
-            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
-        }
+        private void button1_MouseHover(object sender, EventArgs e) => button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
 
-        private void button1_MouseLeave(object sender, EventArgs e)
-        {
-            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
-        }
+        private void button1_MouseLeave(object sender, EventArgs e) => button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
 
         private void Form1_Resize(object sender, EventArgs e)
         {
@@ -388,21 +348,17 @@ namespace Universal_THCRAP_Launcher
             listBox1.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
             listBox2.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
             checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - _resizeConstants[3]);
-            label1.Location = new Point(label1.Location.X, Size.Height - _resizeConstants[4]);
             sort_az_button1.Location =
-                new Point(sort_az_button1.Location.X, splitContainer1.Location.Y - _resizeConstants[5]);
-            sort_az_button2.Location = new Point(listBox1.Size.Width + _resizeConstants[6],
-                splitContainer1.Location.Y - _resizeConstants[5]);
+                new Point(sort_az_button1.Location.X, splitContainer1.Location.Y - _resizeConstants[4]);
+            sort_az_button2.Location = new Point(listBox1.Size.Width + _resizeConstants[5],
+                splitContainer1.Location.Y - _resizeConstants[4]);
             star_button1.Location =
-                new Point(star_button1.Location.X, splitContainer1.Location.Y - _resizeConstants[5]);
-            star_button2.Location = new Point(sort_az_button2.Location.X + _resizeConstants[7],
-                splitContainer1.Location.Y - _resizeConstants[5]);
+                new Point(star_button1.Location.X, splitContainer1.Location.Y - _resizeConstants[4]);
+            star_button2.Location = new Point(sort_az_button2.Location.X + _resizeConstants[6],
+                splitContainer1.Location.Y - _resizeConstants[4]);
             filterByType_button.Location = new Point(
-                star_button2.Location.X + _resizeConstants[8], filterByType_button.Location.Y);
+                star_button2.Location.X + _resizeConstants[6], splitContainer1.Location.Y - _resizeConstants[4]);
         }
-
-        private void label1_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
 
         private void sort_az_button1_Click(object sender, EventArgs e)
         {
@@ -529,6 +485,9 @@ namespace Universal_THCRAP_Launcher
                     if (lb.SelectedIndex != -1)
                         Configuration1.LastGame = lb.SelectedItem.ToString().Replace(" ★", "");
                     break;
+                default:
+                    Debug.WriteLine("Invalid ListBox!");
+                    break;
             }
         }
 
@@ -567,6 +526,90 @@ namespace Universal_THCRAP_Launcher
                 AddStars(listBox2, Favourites1.Games);
             }
         }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.F2 when sender.GetType().FullName != "System.Windows.Forms.ListBox":
+                case Keys.Enter when sender.GetType().FullName != "System.Windows.Forms.ListBox":
+                    return;
+                case Keys.Enter:
+                    UpdateConfigFile();
+                    StartThcrap();
+                    break;
+                case Keys.F2:
+                    var lb = (ListBox) sender;
+                    if (!lb.SelectedItem.ToString().Contains("★"))
+                    {
+                        if (lb.Equals(listBox1))
+                            Favourites1.Patches.Add(lb.Items[lb.SelectedIndex].ToString());
+
+                        if (lb.Equals(listBox2))
+                            Favourites1.Games.Add(lb.Items[lb.SelectedIndex].ToString());
+                        lb.Items[lb.SelectedIndex] += " ★";
+                    }
+                    else
+                    {
+                        lb.Items[lb.SelectedIndex] = lb.Items[lb.SelectedIndex].ToString().Replace(" ★", "");
+                    }
+
+                    UpdateConfigFile();
+                    break;
+            }
+        }
+
+        private static void RestartProgram()
+        {
+            Process.Start(Assembly.GetEntryAssembly().Location);
+            Application.Exit();
+        }
+
+        private void keyboardShortcutsToolStripMenuItem_Click(object sender, EventArgs e) => ShowKeyboardShortcuts();
+
+        private void ShowKeyboardShortcuts()
+        {
+            MessageBox.Show(Resources.KeyboardShortcuts,
+                @"Keyboard Shortcuts", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e) => RestartProgram();
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+
+        private void releasesToolStripMenuItem_Click(object sender, EventArgs e) =>
+            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher/releases");
+
+        private void reportBugToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start(
+            "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
+            "new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D");
+
+        private void requestAFeatureToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start(
+            "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
+            "new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D");
+
+        private void requestToolStripMenuItem_Click(object sender, EventArgs e) =>
+            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/new");
+
+        private void gitHubToolStripMenuItem_Click(object sender, EventArgs e) =>
+            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
+
+        private void openTHCRAPConfigureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(@"The Launcher will disappear until you're configuring...",
+                @"Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var p = Process.Start("thcrap_configure.exe");
+            if (p == null)
+            { MessageBox.Show(@"Something went wrong...", @"Error"); return; }
+            Hide();
+            while (!p.HasExited) Thread.Sleep(1);
+            Show();
+        }
+
+        private void openGamesListToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("games.js");
+
+        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) =>
+            Process.Start(Directory.GetCurrentDirectory());
     }
 
     public class Configuration

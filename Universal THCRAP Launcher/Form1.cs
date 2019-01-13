@@ -128,17 +128,8 @@ namespace Universal_THCRAP_Launcher
             checkBox1.Checked = Configuration1.ExitAfterStartup;
 
             //Update Display favourites
-            foreach (var variable in Favourites1.Patches)
-            {
-                var index = listBox1.FindStringExact(variable);
-                listBox1.Items[index] += " ★";
-            }
-
-            foreach (var variable in Favourites1.Games)
-            {
-                var index = listBox2.FindStringExact(variable);
-                listBox2.Items[index] += " ★";
-            }
+            AddStars(listBox1, Favourites1.Patches);
+            AddStars(listBox2, Favourites1.Games);
 
             #endregion
 
@@ -165,8 +156,15 @@ namespace Universal_THCRAP_Launcher
                 if (Configuration1.IsDescending[i] == "false")
                 {
                     if (i == 0)
+                    {
                         SortListBoxItems(ref listBox1);
-                    else SortListBoxItems(ref listBox2);
+                        sort_az_button1.BackgroundImage = _sortDescending;
+                    }
+                    else
+                    {
+                        SortListBoxItems(ref listBox2);
+                        sort_az_button2.BackgroundImage = _sortDescending;
+                    }
                 }
                 else if (i == 0)
                 {
@@ -182,6 +180,7 @@ namespace Universal_THCRAP_Launcher
             //Default favourite button state
             for (var i = 0; i < 2; i++)
                 if (Configuration1.OnlyFavourites[i] == "true")
+                {
                     if (i == 0)
                     {
                         star_button1.BackgroundImage = _starHollow;
@@ -202,6 +201,12 @@ namespace Universal_THCRAP_Launcher
                                 listBox2.Items.RemoveAt(n);
                         }
                     }
+                }
+                else
+                {
+                    if (i == 0) star_button1.BackgroundImage = _star;
+                    else star_button2.BackgroundImage = _star;
+                }
 
             //Default exe type button state
             filterByType_button.BackgroundImage = _gameAndCustom;
@@ -329,7 +334,7 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         ///     Handles starting thcrap with enter and favouring when pressing f
         /// </summary>
-        private new void KeyPress(object sender, KeyPressEventArgs e)
+        private void KeyPress(object sender, KeyPressEventArgs e)
         {
             switch (e.KeyChar)
             {
@@ -435,6 +440,15 @@ namespace Universal_THCRAP_Launcher
             ReadConfig();
         }
 
+        private static void AddStars(ListBox listBox, IEnumerable<string> list)
+        {
+            foreach (var variable in list)
+            {
+                var index = listBox.FindStringExact(variable);
+                if (index != -1) listBox.Items[index] += " ★";
+            }
+        }
+
         private void star_button1_Click(object sender, EventArgs e)
         {
             if (!star_button1.BackgroundImage.Equals(_starHollow))
@@ -442,7 +456,7 @@ namespace Universal_THCRAP_Launcher
                 star_button1.BackgroundImage = _starHollow;
                 for (var n = listBox1.Items.Count - 1; n >= 0; --n)
                 {
-                    var filterItem = "★";
+                    const char filterItem = '★';
                     if (!listBox1.Items[n].ToString().Contains(filterItem))
                         listBox1.Items.RemoveAt(n);
                 }
@@ -455,11 +469,7 @@ namespace Universal_THCRAP_Launcher
                 listBox1.Items.Clear();
                 foreach (var s in _jsFiles) listBox1.Items.Add(s);
 
-                foreach (var variable in Favourites1.Patches)
-                {
-                    var index = listBox1.FindStringExact(variable);
-                    listBox1.Items[index] += " ★";
-                }
+                AddStars(listBox1, Favourites1.Patches);
 
                 Configuration1.OnlyFavourites[0] = "false";
                 ReadConfig();
@@ -486,11 +496,7 @@ namespace Universal_THCRAP_Launcher
                 listBox2.Items.Clear();
                 foreach (var s in _gamesList) listBox2.Items.Add(s);
 
-                foreach (var variable in Favourites1.Games)
-                {
-                    var index = listBox2.FindStringExact(variable);
-                    listBox2.Items[index] += " ★";
-                }
+                AddStars(listBox2, Favourites1.Games);
 
                 Configuration1.OnlyFavourites[1] = "false";
                 ReadConfig();
@@ -538,6 +544,7 @@ namespace Universal_THCRAP_Launcher
                 foreach (var item in _gamesList)
                     if (!item.Contains("_custom"))
                         listBox2.Items.Add(item);
+                AddStars(listBox2, Favourites1.Games);
                 return;
             }
 
@@ -548,6 +555,7 @@ namespace Universal_THCRAP_Launcher
                 foreach (var item in _gamesList)
                     if (item.Contains("_custom"))
                         listBox2.Items.Add(item);
+                AddStars(listBox2, Favourites1.Games);
                 return;
             }
 
@@ -556,6 +564,7 @@ namespace Universal_THCRAP_Launcher
                 filterByType_button.BackgroundImage = _gameAndCustom;
                 listBox2.Items.Clear();
                 foreach (var item in _gamesList) listBox2.Items.Add(item);
+                AddStars(listBox2, Favourites1.Games);
             }
         }
     }

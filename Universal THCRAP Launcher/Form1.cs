@@ -13,6 +13,10 @@ namespace Universal_THCRAP_Launcher
     public partial class Form1 : Form
     {
         private const string ConfigFile = "utl_config.js";
+        private readonly Image _custom = new Bitmap(Resources.Custom);
+        private readonly Image _game = new Bitmap(Resources.Game);
+
+        private readonly Image _gameAndCustom = new Bitmap(Resources.GameAndCustom);
         private readonly List<string> _gamesList = new List<string>();
 
         private readonly Image _sortAscending = new Bitmap(Resources.Sort_Ascending);
@@ -154,6 +158,8 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
+            #region Set default state for the sort/filter buttons
+
             //Default sort
             for (var i = 0; i < 2; i++)
                 if (Configuration1.IsDescending[i] == "false")
@@ -196,6 +202,11 @@ namespace Universal_THCRAP_Launcher
                                 listBox2.Items.RemoveAt(n);
                         }
                     }
+
+            //Default exe type button state
+            filterByType_button.BackgroundImage = _gameAndCustom;
+
+            #endregion
 
             Debug.WriteLine("Form1 Loaded");
         }
@@ -385,7 +396,8 @@ namespace Universal_THCRAP_Launcher
                 star_button2.Location.X + _resizeConstants[8], filterByType_button.Location.Y);
         }
 
-        private void label1_Click(object sender, EventArgs e) => Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
+        private void label1_Click(object sender, EventArgs e) =>
+            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
 
         private void sort_az_button1_Click(object sender, EventArgs e)
         {
@@ -461,7 +473,7 @@ namespace Universal_THCRAP_Launcher
                 star_button2.BackgroundImage = _starHollow;
                 for (var n = listBox2.Items.Count - 1; n >= 0; --n)
                 {
-                    var filterItem = "★";
+                    const string filterItem = "★";
                     if (!listBox2.Items[n].ToString().Contains(filterItem))
                         listBox2.Items.RemoveAt(n);
                 }
@@ -514,11 +526,37 @@ namespace Universal_THCRAP_Launcher
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e) => Configuration1.ExitAfterStartup = checkBox1.Checked;
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) =>
+            Configuration1.ExitAfterStartup = checkBox1.Checked;
 
         private void filterByType_button_Click(object sender, EventArgs e)
         {
+            if (filterByType_button.BackgroundImage.Equals(_gameAndCustom))
+            {
+                filterByType_button.BackgroundImage = _game;
+                listBox2.Items.Clear();
+                foreach (var item in _gamesList)
+                    if (!item.Contains("_custom"))
+                        listBox2.Items.Add(item);
+                return;
+            }
 
+            if (filterByType_button.BackgroundImage.Equals(_game))
+            {
+                filterByType_button.BackgroundImage = _custom;
+                listBox2.Items.Clear();
+                foreach (var item in _gamesList)
+                    if (item.Contains("_custom"))
+                        listBox2.Items.Add(item);
+                return;
+            }
+
+            if (!filterByType_button.BackgroundImage.Equals(_custom)) return;
+            {
+                filterByType_button.BackgroundImage = _gameAndCustom;
+                listBox2.Items.Clear();
+                foreach (var item in _gamesList) listBox2.Items.Add(item);
+            }
         }
     }
 

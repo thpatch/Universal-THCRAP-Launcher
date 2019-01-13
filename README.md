@@ -12,8 +12,8 @@ To use it just put it alongside thcrap_loader.exe!
  - Extract the files from `universal-thcrap-launcher.rar`.
  - Place the files next to `thcrap_configure.exe`.
  - Run `Universal THCRAP Launcher.exe`.
-
+ 
 ## Images
-![Screenshot of program](https://i.imgur.com/gNQ1ixh.png)
-![Using the Program](https://i.imgur.com/sjY5f6A.gif)
-![OPening German with Keyboard](https://i.imgur.com/t7kAdem.gif)
+![Screenshot of program](https://i.imgur.com/yPmqYGu.png)
+![Using the Program](https://i.imgur.com/B1KyHDF.gif)
+![Opening German with Keyboard](https://i.imgur.com/t7kAdem.gif)

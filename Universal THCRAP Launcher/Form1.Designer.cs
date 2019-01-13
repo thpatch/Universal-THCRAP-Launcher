@@ -58,6 +58,8 @@ namespace Universal_THCRAP_Launcher
             this.openTHCRAPConfigureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openGamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -216,6 +218,8 @@ namespace Universal_THCRAP_Launcher
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createShortcutToolStripMenuItem,
+            this.toolStripSeparator1,
             this.restartToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -227,7 +231,7 @@ namespace Universal_THCRAP_Launcher
             this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
             this.restartToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+R";
             this.restartToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.restartToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.restartToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.restartToolStripMenuItem.Text = "Restart";
             this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
             // 
@@ -236,7 +240,7 @@ namespace Universal_THCRAP_Launcher
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -321,6 +325,18 @@ namespace Universal_THCRAP_Launcher
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
+            // createShortcutToolStripMenuItem
+            // 
+            this.createShortcutToolStripMenuItem.Name = "createShortcutToolStripMenuItem";
+            this.createShortcutToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.createShortcutToolStripMenuItem.Text = "Create Shortcut to Desktop";
+            this.createShortcutToolStripMenuItem.Click += new System.EventHandler(this.createShortcutToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -386,6 +402,8 @@ namespace Universal_THCRAP_Launcher
         private ToolStripMenuItem openTHCRAPConfigureToolStripMenuItem;
         private ToolStripMenuItem openGamesListToolStripMenuItem;
         private ToolStripMenuItem openFolderToolStripMenuItem;
+        private ToolStripMenuItem createShortcutToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }
 

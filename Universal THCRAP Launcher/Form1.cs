@@ -246,7 +246,7 @@ namespace Universal_THCRAP_Launcher
 
         private void DeleteOutdatedConfig()
         {
-            if (File.Exists("uthcrapl_confis.js")) File.Delete("uthcrapl_confis.js");
+            if (File.Exists("uthcrapl_config.js")) File.Delete("uthcrapl_config.js");
         }
 
         private void Form1_Resize(object sender, EventArgs e)

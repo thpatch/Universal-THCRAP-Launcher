@@ -244,7 +244,7 @@ namespace Universal_THCRAP_Launcher
             UpdateConfigFile();
         }
 
-        private void DeleteOutdatedConfig()
+        private static void DeleteOutdatedConfig()
         {
             if (File.Exists("uthcrapl_config.js")) File.Delete("uthcrapl_config.js");
         }

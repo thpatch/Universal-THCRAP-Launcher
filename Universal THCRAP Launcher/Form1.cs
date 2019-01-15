@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
@@ -24,11 +25,13 @@ namespace Universal_THCRAP_Launcher
         private static void ErrorAndExit(string errorMessage)
         {
             MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage}");
             Application.Exit();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             Configuration1 = new Configuration();
             //Give error if not next to thcrap_loader.exe
             const string msgError1 =
@@ -140,24 +143,40 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
-            Debug.WriteLine("Form1 Loaded");
+            Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");
         }
 
         private void SetDefaultSettings()
         {
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Entered SetDefaultSettings()");
             //Default Configuration setting
-            if (Configuration1.LastGame == null) Configuration1.LastGame = _gamesList[0];
-            if (Configuration1.LastConfig == null) Configuration1.LastConfig = _jsFiles[0];
+            if (Configuration1.LastGame == null)
+            {
+                Configuration1.LastGame = _gamesList[0];
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
+            }
+
+            if (Configuration1.LastConfig == null)
+            {
+                Configuration1.LastConfig = _jsFiles[0];
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
+            }
             if (Configuration1.IsDescending == null)
             {
                 string[] a = {"false", "false"};
                 Configuration1.IsDescending = a;
+                Trace.WriteLine(
+                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
+                    Configuration1.IsDescending[1]);
             }
 
             if (Configuration1.OnlyFavourites == null)
             {
                 string[] a = {"false", "false"};
                 Configuration1.OnlyFavourites = a;
+                Trace.WriteLine(
+                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites has been set to {Configuration1.OnlyFavourites[0]}, " +
+                    Configuration1.OnlyFavourites[1]);
             }
 
             if (Configuration1.Window == null)
@@ -165,6 +184,9 @@ namespace Universal_THCRAP_Launcher
                 var window = new Window
                     {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
                 Configuration1.Window = window;
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
             }
 
 
@@ -172,6 +194,7 @@ namespace Universal_THCRAP_Launcher
             for (var i = 0; i < 2; i++)
                 if (Configuration1.IsDescending[i] == "false")
                 {
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was false for listBox{i}");
                     if (i == 0)
                     {
                         SortListBoxItems(ref listBox1);
@@ -185,6 +208,7 @@ namespace Universal_THCRAP_Launcher
                 }
                 else if (i == 0)
                 {
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was true for listBox{i}");
                     SortListBoxItemsDesc(ref listBox1);
                     sort_az_button1.BackgroundImage = _sortDescending;
                 }
@@ -198,6 +222,7 @@ namespace Universal_THCRAP_Launcher
             for (var i = 0; i < 2; i++)
                 if (Configuration1.OnlyFavourites[i] == "true")
                 {
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
                     if (i == 0)
                     {
                         star_button1.BackgroundImage = _star;
@@ -221,13 +246,20 @@ namespace Universal_THCRAP_Launcher
                 }
                 else
                 {
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was false for listBox{i}");
                     if (i == 0) star_button1.BackgroundImage = _starHollow;
                     else star_button2.BackgroundImage = _starHollow;
                 }
 
             //Default exe type button state
             filterByType_button.BackgroundImage = _gameAndCustom;
-            for (var i = 0; i < Configuration1.FilterExeType; i++) filterByType_button_Click(null, new EventArgs());
+            for (var i = 0; i < Configuration1.FilterExeType; i++)
+            {
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
+                filterByType_button_Click("DefaultSettings", new EventArgs());
+            }
+
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Exited SetDefaultSettings()");
         }
 
 
@@ -353,7 +385,7 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         ///     Writes the configuration and favourites to file
         /// </summary>
-        private void UpdateConfigFile()
+        private void UpdateConfigFile([CallerMemberName] string caller = "")
         {
             UpdateConfig();
             var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
@@ -362,7 +394,7 @@ namespace Universal_THCRAP_Launcher
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
             File.WriteAllText("favourites.js", output);
 
-            Debug.WriteLine("Config file Updated!");
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Config file has been successfully updated. Caller method was " + caller);
         }
 
         /// <summary>
@@ -608,7 +640,7 @@ namespace Universal_THCRAP_Launcher
                     if (!item.Contains("_custom"))
                         listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
-                if (sender != null) Configuration1.FilterExeType = 1;
+                if (sender != "DefaultSettings") Configuration1.FilterExeType = 1;
                 return;
             }
 
@@ -620,7 +652,7 @@ namespace Universal_THCRAP_Launcher
                     if (item.Contains("_custom"))
                         listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
-                if (sender != null) Configuration1.FilterExeType = 2;
+                if (sender != "DefaultSettings") Configuration1.FilterExeType = 2;
                 return;
             }
 
@@ -630,7 +662,7 @@ namespace Universal_THCRAP_Launcher
                 listBox2.Items.Clear();
                 foreach (var item in _gamesList) listBox2.Items.Add(item);
                 AddStars(listBox2, Favourites1.Games);
-                if (sender != null) Configuration1.FilterExeType = 0;
+                if (sender != "DefaultSettings") Configuration1.FilterExeType = 0;
             }
         }
 

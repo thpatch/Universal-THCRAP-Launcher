@@ -63,6 +63,8 @@ namespace Universal_THCRAP_Launcher
             const string msgError2 =
                 "games.js couldn't be found.\nMake sure you run thcrap_configure.exe first!";
             if (!File.Exists("games.js")) ErrorAndExit(msgError2);
+            
+            DeleteOutdatedConfig();
 
             #region Load data from files
 
@@ -94,23 +96,15 @@ namespace Universal_THCRAP_Launcher
                 file = File.ReadAllText(ConfigFile);
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(file, settings);
             }
-
-            if (Configuration1.IsDescending.Count == 0)
-                for (var i = 0; i < 2; i++)
-                    Configuration1.IsDescending.Add("false");
-
-            if (Configuration1.OnlyFavourites.Count == 0)
-                for (var i = 0; i < 2; i++)
-                    Configuration1.OnlyFavourites.Add("false");
+            
             //Load favourites
             if (File.Exists("favourites.js"))
             {
                 file = File.ReadAllText("favourites.js");
                 Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
             }
-
             #endregion
-
+            
             #region  Fix patch stack list
 
             for (var i = 0; i < _jsFiles.Count; i++)
@@ -138,10 +132,6 @@ namespace Universal_THCRAP_Launcher
 
             #region Display
 
-            //Change Form settings
-            SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
-            Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
-
             //Display patch stacks
             foreach (var item in _jsFiles)
                 listBox1.Items.Add(item);
@@ -151,7 +141,13 @@ namespace Universal_THCRAP_Launcher
                 _gamesList.Add(item.Key);
                 listBox2.Items.Add(item.Key);
             }
-
+            
+            SetDefaultSettings();
+            
+            //Change Form settings
+            SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
+            Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
+            
             //Display config
             checkBox1.Checked = Configuration1.ExitAfterStartup;
 
@@ -161,8 +157,38 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
-            #region Set default state for the sort/filter buttons
 
+            if (menuStrip1 == null) return;
+            menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
+                x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
+
+            Debug.WriteLine("Form1 Loaded");
+        }
+
+        private void SetDefaultSettings()
+        {
+            //Default Configuration setting
+            if (Configuration1.LastGame == null) Configuration1.LastGame = _gamesList[0];
+            if (Configuration1.LastConfig == null) Configuration1.LastConfig = _jsFiles[0];
+            if (Configuration1.IsDescending == null)
+            {
+                string[] a = {"false", "false"};
+                Configuration1.IsDescending = a;
+            }
+
+            if (Configuration1.OnlyFavourites == null)
+            {
+                string[] a = {"false", "false"};
+                Configuration1.OnlyFavourites = a;
+            }
+
+            if (Configuration1.Window == null)
+            {
+                var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
+                Configuration1.Window = window;
+            }
+            
+            
             //Default sort
             for (var i = 0; i < 2; i++)
                 if (Configuration1.IsDescending[i] == "false")
@@ -224,15 +250,10 @@ namespace Universal_THCRAP_Launcher
             filterByType_button.BackgroundImage = _gameAndCustom;
             for (var i = 0; i < Configuration1.FilterExeType; i++) filterByType_button_Click(null, new EventArgs());
 
-            #endregion
-
-            if (menuStrip1 == null) return;
-            menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
-                x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
-
-            Debug.WriteLine("Form1 Loaded");
+            
         }
-        
+
+
         private void Form1_Shown(object sender, EventArgs e)
         {
             ReadConfig();
@@ -244,6 +265,11 @@ namespace Universal_THCRAP_Launcher
                 listBox2.SelectedIndex = 0;
 
             UpdateConfigFile();
+        }
+
+        private void DeleteOutdatedConfig()
+        {
+                if(File.Exists("uthcrapl_confis.js")) File.Delete("uthcrapl_confis.js");
         }
         
         private void Form1_Resize(object sender, EventArgs e)
@@ -327,7 +353,6 @@ namespace Universal_THCRAP_Launcher
                 Configuration1.LastGame = ((string) listBox2.SelectedItem).Replace(" ★", "");
 
             var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
-
             Configuration1.Window = window;
 
             Favourites1.Patches.Clear();
@@ -677,8 +702,8 @@ namespace Universal_THCRAP_Launcher
         public bool ExitAfterStartup { get; set; }
         public string LastConfig { get; set; }
         public string LastGame { get; set; }
-        public List<string> IsDescending { get; set; }
-        public List<string> OnlyFavourites { get; set; }
+        public string[] IsDescending { get; set; }
+        public string[] OnlyFavourites { get; set; }
         public byte FilterExeType { get; set; }
         public Window Window { get; set; }
     }

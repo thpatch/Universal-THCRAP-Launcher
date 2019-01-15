@@ -129,8 +129,10 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAABAAYAAAAAAAEAIABDDQAAZgAAAICAAAABACAAKAgBAKkNAABAQAAAAQAgAChCAADRFQEAMDAAAAEA
-        IACoJQAA+VcBACAgAAABACAAqBAAAKF9AQAQEAAAAQAgAGgEAABJjgEAiVBORw0KGgoAAAANSUhEUgAA
+      <!-- ReSharper disable MarkupTextTypo -->
+      AAABAAYAAAAAAAEAIABDDQAAZgAAAICAAAABACAAKAgBAKkNAABAQAAAAQAgAChCAADRFQEAMDAAAAEA
+      
+      IACoJQAA+VcBACAgAAABACAAqBAAAKF9AQAQEAAAAQAgAGgEAABJjgEAiVBORw0KGgoAAAANSUhEUgAA
         AQAAAAEACAYAAABccqhmAAANCklEQVR42u3de2xW9R3H8fPAg4AICAJKK+AAW0Qa8ALBjQ5GH9hEgVVU
         phJlXoiZ2RbYxWXGTTBMzVSm2S24CdsYOLV2KROHlAYs3mCyTkGhKoqOi7pJpCKbtX325/5xny/Zl5PT
         5vt+/fs5l995Cp+c5Pc75+SSTq6YJL3lBrncLBW/W1l5r8ofLfYfpPKzF14jTz+5+suZ/j719Rtl/uCq
@@ -1848,6 +1850,7 @@
         AAAAAAAAAAAAAAD/C0E82oZtXJn6w7/E/87Gxf+tnpv/vq+s/62em/+Ziov/alqZ/yIa0tEAAP87AAAA
         AAAAAACAAQAAgAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AIAAAADAAwAA
+        <!-- ReSharper restore MarkupTextTypo -->
 </value>
   </data>
 </root>

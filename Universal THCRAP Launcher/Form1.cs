@@ -150,6 +150,12 @@ namespace Universal_THCRAP_Launcher
         {
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Entered SetDefaultSettings()");
             //Default Configuration setting
+            if (Configuration1 == null)
+            {
+                Configuration1 = new Configuration();
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1 was null. Reinitializing it.");
+            }
+            
             if (Configuration1.LastGame == null)
             {
                 Configuration1.LastGame = _gamesList[0];

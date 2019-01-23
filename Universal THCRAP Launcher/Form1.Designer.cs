@@ -145,7 +145,6 @@ namespace Universal_THCRAP_Launcher
             this.star_button1.Size = new System.Drawing.Size(25, 25);
             this.star_button1.TabIndex = 2;
             this.toolTip1.SetToolTip(this.star_button1, "Filter for favourites.");
-
             this.star_button1.UseVisualStyleBackColor = true;
             this.star_button1.Click += new System.EventHandler(this.star_button1_Click);
             // 

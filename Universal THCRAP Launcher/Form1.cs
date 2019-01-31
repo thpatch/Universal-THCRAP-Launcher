@@ -17,30 +17,6 @@ namespace Universal_THCRAP_Launcher
 {
     public partial class Form1 : Form
     {
-        #region Global variables
-
-        private const string ConfigFile = "utl_config.js";
-        private readonly Image _custom = new Bitmap(Resources.Custom);
-        private readonly Image _game = new Bitmap(Resources.Game);
-
-        private readonly Image _gameAndCustom = new Bitmap(Resources.GameAndCustom);
-        private readonly List<string> _gamesList = new List<string>();
-
-        private readonly Image _sortAscending = new Bitmap(Resources.Sort_Ascending);
-        private readonly Image _sortDescending = new Bitmap(Resources.Sort_Decending);
-
-        private readonly Image _star = new Bitmap(Resources.Star);
-        private readonly Image _starHollow = new Bitmap(Resources.Star_Hollow);
-
-        private List<string> _jsFiles = new List<string>();
-
-        private int[] _resizeConstants;
-
-        private Configuration Configuration1 { get; set; }
-        private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
-
-        #endregion
-
         public Form1()
         {
             InitializeComponent();
@@ -55,7 +31,6 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
             Configuration1 = new Configuration();
             //Give error if not next to thcrap_loader.exe
             const string msgError1 =
@@ -179,18 +154,21 @@ namespace Universal_THCRAP_Launcher
                 Configuration1 = new Configuration();
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1 was null. Reinitializing it.");
             }
-            
+
             if (Configuration1.LastGame == null)
             {
                 Configuration1.LastGame = _gamesList[0];
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
+                Trace.WriteLine(
+                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
             }
 
             if (Configuration1.LastConfig == null)
             {
                 Configuration1.LastConfig = _jsFiles[0];
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
+                Trace.WriteLine(
+                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
             }
+
             if (Configuration1.IsDescending == null)
             {
                 string[] a = {"false", "false"};
@@ -214,9 +192,12 @@ namespace Universal_THCRAP_Launcher
                 var window = new Window
                     {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
                 Configuration1.Window = window;
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+                Trace.WriteLine(
+                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
+                Trace.WriteLine(
+                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+                Trace.WriteLine(
+                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
             }
 
 
@@ -224,7 +205,8 @@ namespace Universal_THCRAP_Launcher
             for (var i = 0; i < 2; i++)
                 if (Configuration1.IsDescending[i] == "false")
                 {
-                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was false for listBox{i}");
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was false for listBox{i}");
                     if (i == 0)
                     {
                         SortListBoxItems(ref listBox1);
@@ -238,7 +220,8 @@ namespace Universal_THCRAP_Launcher
                 }
                 else if (i == 0)
                 {
-                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was true for listBox{i}");
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was true for listBox{i}");
                     SortListBoxItemsDesc(ref listBox1);
                     sort_az_button1.BackgroundImage = _sortDescending;
                 }
@@ -252,7 +235,8 @@ namespace Universal_THCRAP_Launcher
             for (var i = 0; i < 2; i++)
                 if (Configuration1.OnlyFavourites[i] == "true")
                 {
-                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
                     if (i == 0)
                     {
                         star_button1.BackgroundImage = _star;
@@ -276,7 +260,8 @@ namespace Universal_THCRAP_Launcher
                 }
                 else
                 {
-                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was false for listBox{i}");
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was false for listBox{i}");
                     if (i == 0) star_button1.BackgroundImage = _starHollow;
                     else star_button2.BackgroundImage = _starHollow;
                 }
@@ -424,7 +409,9 @@ namespace Universal_THCRAP_Launcher
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
             File.WriteAllText("favourites.js", output);
 
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Config file has been successfully updated. Caller method was " + caller);
+            Trace.WriteLine(
+                $"[{DateTime.Now.ToShortTimeString()}] Config file has been successfully updated. Caller method was " +
+                caller);
         }
 
         /// <summary>
@@ -536,7 +523,30 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
 
-        
+        #region Global variables
+
+        private const string ConfigFile = "utl_config.js";
+        private readonly Image _custom = new Bitmap(Resources.Custom);
+        private readonly Image _game = new Bitmap(Resources.Game);
+
+        private readonly Image _gameAndCustom = new Bitmap(Resources.GameAndCustom);
+        private readonly List<string> _gamesList = new List<string>();
+
+        private readonly Image _sortAscending = new Bitmap(Resources.Sort_Ascending);
+        private readonly Image _sortDescending = new Bitmap(Resources.Sort_Decending);
+
+        private readonly Image _star = new Bitmap(Resources.Star);
+        private readonly Image _starHollow = new Bitmap(Resources.Star_Hollow);
+
+        private List<string> _jsFiles = new List<string>();
+
+        private int[] _resizeConstants;
+
+        private Configuration Configuration1 { get; set; }
+        private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
+
+        #endregion
+
 
         #region Sorting/Filtering Button functions
 

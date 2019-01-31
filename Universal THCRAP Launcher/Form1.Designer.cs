@@ -76,7 +76,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox1.Location = new System.Drawing.Point(0, 1);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(153, 303);
-            this.listBox1.TabIndex = 1;
+            this.listBox1.TabIndex = 8;
             this.toolTip1.SetToolTip(this.listBox1, "Choose the run configuration (patch stack).");
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
             this.listBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
@@ -104,7 +104,7 @@ namespace Universal_THCRAP_Launcher
             this.listBox2.Location = new System.Drawing.Point(0, 1);
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(152, 303);
-            this.listBox2.TabIndex = 2;
+            this.listBox2.TabIndex = 9;
             this.toolTip1.SetToolTip(this.listBox2, "Choose the game (executable).");
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
             this.listBox2.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
@@ -117,7 +117,7 @@ namespace Universal_THCRAP_Launcher
             this.checkBox1.Location = new System.Drawing.Point(11, 435);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(138, 17);
-            this.checkBox1.TabIndex = 8;
+            this.checkBox1.TabIndex = 10;
             this.checkBox1.Text = "Close when game starts";
             this.toolTip1.SetToolTip(this.checkBox1, "If checked, the applicated will close itself when starting thcrap.");
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -144,7 +144,7 @@ namespace Universal_THCRAP_Launcher
             this.star_button1.Location = new System.Drawing.Point(42, 85);
             this.star_button1.Name = "star_button1";
             this.star_button1.Size = new System.Drawing.Size(25, 25);
-            this.star_button1.TabIndex = 2;
+            this.star_button1.TabIndex = 4;
             this.toolTip1.SetToolTip(this.star_button1, "Filter for favourites.");
             this.star_button1.UseVisualStyleBackColor = true;
             this.star_button1.Click += new System.EventHandler(this.star_button1_Click);
@@ -181,11 +181,11 @@ namespace Universal_THCRAP_Launcher
             this.button1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Shinmera_Banner_5_mini_size;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = Color.Red;
+            this.button1.ForeColor = System.Drawing.Color.Red;
             this.button1.Location = new System.Drawing.Point(14, 40);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(307, 38);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 2;
             this.toolTip1.SetToolTip(this.button1, "Start thcrap with the selected settings.");
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -215,7 +215,7 @@ namespace Universal_THCRAP_Launcher
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(334, 24);
-            this.menuStrip1.TabIndex = 10;
+            this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // appToolStripMenuItem

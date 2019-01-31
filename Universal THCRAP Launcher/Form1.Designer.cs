@@ -55,13 +55,13 @@ namespace Universal_THCRAP_Launcher
             this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openGamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSelectedPatchConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.requestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.requestAFeatureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.releasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keyboardShortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openSelectedPatchConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -180,7 +180,7 @@ namespace Universal_THCRAP_Launcher
             this.button1.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.button1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Shinmera_Banner_5_mini_size;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.button1.ForeColor = System.Drawing.Color.Red;
             this.button1.Location = new System.Drawing.Point(14, 40);
             this.button1.Name = "button1";
@@ -288,16 +288,25 @@ namespace Universal_THCRAP_Launcher
             // openFolderToolStripMenuItem
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // openGamesListToolStripMenuItem
             // 
             this.openGamesListToolStripMenuItem.Name = "openGamesListToolStripMenuItem";
-            this.openGamesListToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
+            this.openGamesListToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
             this.openGamesListToolStripMenuItem.Text = "Open Games List";
             this.openGamesListToolStripMenuItem.Click += new System.EventHandler(this.openGamesListToolStripMenuItem_Click);
+            // 
+            // openSelectedPatchConfigurationToolStripMenuItem
+            // 
+            this.openSelectedPatchConfigurationToolStripMenuItem.Name = "openSelectedPatchConfigurationToolStripMenuItem";
+            this.openSelectedPatchConfigurationToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + O";
+            this.openSelectedPatchConfigurationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openSelectedPatchConfigurationToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+            this.openSelectedPatchConfigurationToolStripMenuItem.Text = "Open Selected Patch Configuration";
+            this.openSelectedPatchConfigurationToolStripMenuItem.Click += new System.EventHandler(this.openSelectedPatchConfigurationToolStripMenuItem_Click);
             // 
             // gitHubToolStripMenuItem
             // 
@@ -348,15 +357,6 @@ namespace Universal_THCRAP_Launcher
             this.keyboardShortcutsToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
             this.keyboardShortcutsToolStripMenuItem.Text = "Keyboard Shortcuts";
             this.keyboardShortcutsToolStripMenuItem.Click += new System.EventHandler(this.keyboardShortcutsToolStripMenuItem_Click);
-            // 
-            // openSelectedPatchConfigurationToolStripMenuItem
-            // 
-            this.openSelectedPatchConfigurationToolStripMenuItem.Name = "openSelectedPatchConfigurationToolStripMenuItem";
-            this.openSelectedPatchConfigurationToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.openSelectedPatchConfigurationToolStripMenuItem.Text = "Open Selected Patch Configuration";
-            this.openSelectedPatchConfigurationToolStripMenuItem.Click += new System.EventHandler(this.openSelectedPatchConfigurationToolStripMenuItem_Click);
-            this.openSelectedPatchConfigurationToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + O";
-            this.openSelectedPatchConfigurationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             // 
             // Form1
             // 

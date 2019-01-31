@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Universal_THCRAP_Launcher
@@ -180,7 +181,7 @@ namespace Universal_THCRAP_Launcher
             this.button1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Shinmera_Banner_5_mini_size;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = System.Drawing.Color.Red;
+            this.button1.ForeColor = Color.Red;
             this.button1.Location = new System.Drawing.Point(14, 40);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(307, 38);

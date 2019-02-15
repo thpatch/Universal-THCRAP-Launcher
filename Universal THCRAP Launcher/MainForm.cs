@@ -47,13 +47,13 @@ namespace Universal_THCRAP_Launcher
 
             if (I18N.LangNumber() == 0)
                 MessageBox.Show(
-                    $"No language files found!\nPut en.json in {Directory.GetCurrentDirectory() + I18N.i18nDir} !");
+                    $"No language files found!\nPut en.json in {Directory.GetCurrentDirectory() + I18N.I18NDir} !");
             
             //Give error if Newtonsoft.Json.dll isn't found.
             if (!File.Exists("Newtonsoft.Json.dll"))
             {
                 //Read parser-less, the error message.
-                string[] lines = File.ReadAllLines(I18N.i18nDir + Configuration.Lang);
+                string[] lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
                 foreach (var item in lines)
                     if (item.Contains("jsonParser"))
                         ErrorAndExit(item.Split('"')[3]);
@@ -787,22 +787,22 @@ namespace Universal_THCRAP_Launcher
 
     public static class I18N
     {
-        public const string i18nDir = @"\i18n\utl\";
+        public static readonly string I18NDir = Directory.GetCurrentDirectory() + @"\i18n\utl\";
 
         public static dynamic LangResource { get; private set; }
         
 
         public static int LangNumber()
         {
-            if (Directory.Exists(Directory.GetCurrentDirectory() + i18nDir))
-                return Directory.GetFiles(i18nDir).Length;
+            if (Directory.Exists(I18NDir))
+                return Directory.GetFiles(I18NDir).Length;
 
             return 0;
         }
 
         public static void GetLangResource(string fileName)
         {
-            string raw = File.ReadAllText(i18nDir + fileName);
+            string raw = File.ReadAllText(I18NDir + fileName);
             LangResource = JsonConvert.DeserializeObject(raw);
         }
     }

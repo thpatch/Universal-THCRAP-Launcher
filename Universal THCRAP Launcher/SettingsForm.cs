@@ -21,7 +21,7 @@ namespace Universal_THCRAP_Launcher
 
             #region Load languages
 
-            foreach (var file in Directory.GetFiles(I18N.i18nDir))
+            foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
                 dynamic langFile = JsonConvert.DeserializeObject(raw);

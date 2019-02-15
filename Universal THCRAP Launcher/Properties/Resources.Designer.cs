@@ -91,19 +91,6 @@ namespace Universal_THCRAP_Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alt + F4: Close Application (default Windows shortcut)
-        ///Ctrl + R: Restart Application
-        ///Ctrl + O: Open selected Patch Configuration      
-        ///F1: Show Keyboard Shortcuts (this)
-        ///F2: Favorite the selected item in the selected list.
-        /// </summary>
-        internal static string KeyboardShortcuts {
-            get {
-                return ResourceManager.GetString("KeyboardShortcuts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Shinmera_Banner_5_mini_size {

@@ -53,14 +53,14 @@ namespace Universal_THCRAP_Launcher
             if (!File.Exists("Newtonsoft.Json.dll"))
             {
                 //Read parser-less, the error message.
-                string[] lines = File.ReadAllLines(I18N.i18nDir + Configuration1.Lang);
+                string[] lines = File.ReadAllLines(I18N.i18nDir + Configuration.Lang);
                 foreach (var item in lines)
                     if (item.Contains("jsonParser"))
                         ErrorAndExit(item.Split('"')[3]);
             }
 
             //Load language
-            I18N.GetLangResource(Configuration1.Lang);
+            I18N.GetLangResource(Configuration.Lang);
 
             //Give error if not next to thcrap_loader.exe
             var fileExists = File.Exists("thcrap_loader.exe");
@@ -190,10 +190,10 @@ namespace Universal_THCRAP_Launcher
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1 was null. Reinitializing it.");
             }
 
-            if (Configuration1.Lang == null)
+            if (Configuration.Lang == null)
             {
-                Configuration1.Lang = "en.json";
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Lang has been set to {Configuration1.Lang}");
+                Configuration.Lang = "en.json";
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
             }
 
             if (Configuration1.LastGame == null)
@@ -815,7 +815,7 @@ namespace Universal_THCRAP_Launcher
         public string[] OnlyFavourites { get; set; }
         public byte FilterExeType { get; set; }
         public Window Window { get; set; }
-        public string Lang { get; set; }
+        public static string Lang { get; set; }
     }
 
     public class Window

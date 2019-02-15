@@ -15,16 +15,16 @@ using File = System.IO.File;
 
 namespace Universal_THCRAP_Launcher
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
 
         private static void ErrorAndExit(string errorMessage)
         {
-            MessageBox.Show(errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(errorMessage, I18N.LangResource.errors.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage}");
             Application.Exit();
         }
@@ -32,17 +32,43 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Load(object sender, EventArgs e)
         {
             Configuration1 = new Configuration();
+
+            //Load config
+            if (File.Exists(ConfigFile))
+            {
+                var settings = new JsonSerializerSettings
+                {
+                    ObjectCreationHandling = ObjectCreationHandling.Replace
+                };
+                string raw = File.ReadAllText(ConfigFile);
+                Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
+            }
+            SetDefaultSettings();
+
+            if (I18N.LangNumber() == 0)
+                MessageBox.Show(
+                    $"No language files found!\nPut en.json in {Directory.GetCurrentDirectory() + I18N.i18nDir} !");
+            
+            //Give error if Newtonsoft.Json.dll isn't found.
+            if (!File.Exists("Newtonsoft.Json.dll"))
+            {
+                //Read parser-less, the error message.
+                string[] lines = File.ReadAllLines(I18N.i18nDir + Configuration1.Lang);
+                foreach (var item in lines)
+                    if (item.Contains("jsonParser"))
+                        ErrorAndExit(item.Split('"')[3]);
+            }
+
+            //Load language
+            I18N.GetLangResource(Configuration1.Lang);
+
             //Give error if not next to thcrap_loader.exe
-            const string msgError1 =
-                "thcrap_loader.exe couldn't be found.\nMake sure you put the application next to it!";
             var fileExists = File.Exists("thcrap_loader.exe");
             if (!fileExists)
-                ErrorAndExit(msgError1);
+                ErrorAndExit(I18N.LangResource.errors.missing.thcrap_loader);
 
             //Give error if no games.js file
-            const string msgError2 =
-                "games.js couldn't be found.\nMake sure you run thcrap_configure.exe first!";
-            if (!File.Exists("games.js")) ErrorAndExit(msgError2);
+            if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
 
             DeleteOutdatedConfig();
 
@@ -52,30 +78,11 @@ namespace Universal_THCRAP_Launcher
             _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
 
             //Give error if there are no patch configurations
-            const string msgError3 =
-                "No config files could be found.\nMake sure you run thcrap_configure.exe first!";
-            if (_jsFiles.Count == 0) ErrorAndExit(msgError3);
-
-            //Give error if Newtonsoft.Json.dll isn't found.
-            const string msgError4 =
-                @"Newtonsoft.Json.dll is missing. Please make sure you have copied it over as well.";
-            if (!File.Exists("Newtonsoft.Json.dll")) ErrorAndExit(msgError4);
+            if (_jsFiles.Count == 0) ErrorAndExit(I18N.LangResource.errors.missing.patchStacks);
 
             //Load executables
             var file = File.ReadAllText("games.js");
             var games = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
-
-            //Load config
-
-            if (File.Exists(ConfigFile))
-            {
-                var settings = new JsonSerializerSettings
-                {
-                    ObjectCreationHandling = ObjectCreationHandling.Replace
-                };
-                file = File.ReadAllText(ConfigFile);
-                Configuration1 = JsonConvert.DeserializeObject<Configuration>(file, settings);
-            }
 
             //Load favourites
             if (File.Exists("favourites.js"))
@@ -97,17 +104,16 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
-            #region Set stuff
+            #region _resizeConstants setter
 
             //Create constants for resizing
             _resizeConstants = new int[7];
-            _resizeConstants[0] = Size.Width - button1.Width;
+            _resizeConstants[0] = Size.Width - startButton.Width;
             _resizeConstants[1] = Size.Width - splitContainer1.Width;
             _resizeConstants[2] = Size.Height - splitContainer1.Height;
-            _resizeConstants[3] = Size.Height - checkBox1.Location.Y;
-            _resizeConstants[4] = splitContainer1.Location.Y - sort_az_button1.Location.Y;
-            _resizeConstants[5] = sort_az_button2.Location.X - listBox1.Size.Width;
-            _resizeConstants[6] = star_button2.Location.X - sort_az_button2.Location.X;
+            _resizeConstants[3] = splitContainer1.Location.Y - sortAZButton1.Location.Y;
+            _resizeConstants[4] = sortAZButton2.Location.X - patchListBox.Size.Width;
+            _resizeConstants[5] = filterFavButton2.Location.X - sortAZButton2.Location.X;
 
             #endregion
 
@@ -115,25 +121,21 @@ namespace Universal_THCRAP_Launcher
 
             //Display patch stacks
             foreach (var item in _jsFiles)
-                listBox1.Items.Add(item);
+                patchListBox.Items.Add(item);
             //Display executables
             foreach (var item in games)
             {
                 _gamesList.Add(item.Key);
-                listBox2.Items.Add(item.Key);
+                gameListBox.Items.Add(item.Key);
             }
-
-            SetDefaultSettings();
 
             //Change Form settings
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
 
-            checkBox1.Checked = Configuration1.ExitAfterStartup;
-
             //Update Display favourites
-            AddStars(listBox1, Favourites1.Patches);
-            AddStars(listBox2, Favourites1.Games);
+            AddStars(patchListBox, Favourites1.Patches);
+            AddStars(gameListBox, Favourites1.Games);
 
             #endregion
 
@@ -142,7 +144,40 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
+            UpdateLanguage();
+
             Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");
+        }
+
+        private void UpdateLanguage()
+        {
+            dynamic objLangRes = I18N.LangResource.mainForm;
+
+            Text = objLangRes.utl;
+            foreach (ToolStripMenuItem ts in menuStrip1.Items)
+            {
+                UpdateTS(ts, objLangRes.menuStrip);
+            }
+
+            toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton);
+            toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ);
+            toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ);
+            toolTip1.SetToolTip(filterFavButton1, objLangRes.tooltips.filterFav);
+            toolTip1.SetToolTip(filterFavButton2, objLangRes.tooltips.filterFav);
+            toolTip1.SetToolTip(filterByType_button, objLangRes.tooltips.filterByType);
+            toolTip1.SetToolTip(patchListBox, objLangRes.tooltips.patchLB);
+            toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB);
+        }
+
+        private void UpdateTS(ToolStripMenuItem ts, dynamic langRes)
+        {
+            ts.Text = langRes[0];
+            for (int i = 0; i < ts.DropDownItems.Count; i++)
+            {
+                if (((ToolStripMenuItem) ts.DropDownItems[i]).HasDropDownItems)
+                    UpdateTS(ts, langRes[i + 1]);
+                else ts.DropDownItems[i].Text = langRes[i + 1];
+            }
         }
 
         private void SetDefaultSettings()
@@ -153,6 +188,12 @@ namespace Universal_THCRAP_Launcher
             {
                 Configuration1 = new Configuration();
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1 was null. Reinitializing it.");
+            }
+
+            if (Configuration1.Lang == null)
+            {
+                Configuration1.Lang = "en.json";
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Lang has been set to {Configuration1.Lang}");
             }
 
             if (Configuration1.LastGame == null)
@@ -209,26 +250,26 @@ namespace Universal_THCRAP_Launcher
                         $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was false for listBox{i}");
                     if (i == 0)
                     {
-                        SortListBoxItems(ref listBox1);
-                        sort_az_button1.BackgroundImage = _sortAscending;
+                        SortListBoxItems(ref patchListBox);
+                        sortAZButton1.BackgroundImage = _sortAscending;
                     }
                     else
                     {
-                        SortListBoxItems(ref listBox2);
-                        sort_az_button2.BackgroundImage = _sortAscending;
+                        SortListBoxItems(ref gameListBox);
+                        sortAZButton2.BackgroundImage = _sortAscending;
                     }
                 }
                 else if (i == 0)
                 {
                     Trace.WriteLine(
                         $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was true for listBox{i}");
-                    SortListBoxItemsDesc(ref listBox1);
-                    sort_az_button1.BackgroundImage = _sortDescending;
+                    SortListBoxItemsDesc(ref patchListBox);
+                    sortAZButton1.BackgroundImage = _sortDescending;
                 }
                 else
                 {
-                    SortListBoxItemsDesc(ref listBox2);
-                    sort_az_button2.BackgroundImage = _sortDescending;
+                    SortListBoxItemsDesc(ref gameListBox);
+                    sortAZButton2.BackgroundImage = _sortDescending;
                 }
 
             //Default favourite button state
@@ -239,22 +280,22 @@ namespace Universal_THCRAP_Launcher
                         $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
                     if (i == 0)
                     {
-                        star_button1.BackgroundImage = _star;
-                        for (var n = listBox1.Items.Count - 1; n >= 0; --n)
+                        filterFavButton1.BackgroundImage = _star;
+                        for (var n = patchListBox.Items.Count - 1; n >= 0; --n)
                         {
                             const string filterItem = "★";
-                            if (!listBox1.Items[n].ToString().Contains(filterItem))
-                                listBox1.Items.RemoveAt(n);
+                            if (!patchListBox.Items[n].ToString().Contains(filterItem))
+                                patchListBox.Items.RemoveAt(n);
                         }
                     }
                     else
                     {
-                        star_button2.BackgroundImage = _star;
-                        for (var n = listBox2.Items.Count - 1; n >= 0; --n)
+                        filterFavButton2.BackgroundImage = _star;
+                        for (var n = gameListBox.Items.Count - 1; n >= 0; --n)
                         {
                             const string filterItem = "★";
-                            if (!listBox2.Items[n].ToString().Contains(filterItem))
-                                listBox2.Items.RemoveAt(n);
+                            if (!gameListBox.Items[n].ToString().Contains(filterItem))
+                                gameListBox.Items.RemoveAt(n);
                         }
                     }
                 }
@@ -262,8 +303,8 @@ namespace Universal_THCRAP_Launcher
                 {
                     Trace.WriteLine(
                         $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was false for listBox{i}");
-                    if (i == 0) star_button1.BackgroundImage = _starHollow;
-                    else star_button2.BackgroundImage = _starHollow;
+                    if (i == 0) filterFavButton1.BackgroundImage = _starHollow;
+                    else filterFavButton2.BackgroundImage = _starHollow;
                 }
 
             //Default exe type button state
@@ -276,17 +317,16 @@ namespace Universal_THCRAP_Launcher
 
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Exited SetDefaultSettings()");
         }
-
-
+        
         private void Form1_Shown(object sender, EventArgs e)
         {
             ReadConfig();
             //Set default selection index
-            if (listBox1.SelectedIndex == -1 && listBox1.Items.Count > 0)
-                listBox1.SelectedIndex = 0;
+            if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0)
+                patchListBox.SelectedIndex = 0;
 
-            if (listBox2.SelectedIndex == -1 && listBox2.Items.Count > 0)
-                listBox2.SelectedIndex = 0;
+            if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0)
+                gameListBox.SelectedIndex = 0;
 
             UpdateConfigFile();
         }
@@ -298,21 +338,20 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            button1.Size = new Size(Size.Width - _resizeConstants[0], button1.Size.Height);
+            startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
             splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
-            listBox1.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
-            listBox2.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
-            checkBox1.Location = new Point(checkBox1.Location.X, Size.Height - _resizeConstants[3]);
-            sort_az_button1.Location =
-                new Point(sort_az_button1.Location.X, splitContainer1.Location.Y - _resizeConstants[4]);
-            sort_az_button2.Location = new Point(listBox1.Size.Width + _resizeConstants[5],
-                splitContainer1.Location.Y - _resizeConstants[4]);
-            star_button1.Location =
-                new Point(star_button1.Location.X, splitContainer1.Location.Y - _resizeConstants[4]);
-            star_button2.Location = new Point(sort_az_button2.Location.X + _resizeConstants[6],
-                splitContainer1.Location.Y - _resizeConstants[4]);
+            patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
+            gameListBox.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
+            sortAZButton1.Location =
+                new Point(sortAZButton1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
+            sortAZButton2.Location = new Point(patchListBox.Size.Width + _resizeConstants[4],
+                splitContainer1.Location.Y - _resizeConstants[3]);
+            filterFavButton1.Location =
+                new Point(filterFavButton1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
+            filterFavButton2.Location = new Point(sortAZButton2.Location.X + _resizeConstants[5],
+                splitContainer1.Location.Y - _resizeConstants[3]);
             filterByType_button.Location = new Point(
-                star_button2.Location.X + _resizeConstants[6], splitContainer1.Location.Y - _resizeConstants[4]);
+                filterFavButton2.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
         }
 
         private static void AddStars(ListBox listBox, IEnumerable<string> list)
@@ -343,23 +382,22 @@ namespace Universal_THCRAP_Launcher
         /// </summary>
         private void ReadConfig()
         {
-            checkBox1.Checked = Configuration1.ExitAfterStartup;
 
             var s = Configuration1.LastConfig;
             if (Favourites1.Patches.Contains(s))
                 s += " ★";
-            listBox1.SelectedIndex = listBox1.FindStringExact(s);
+            patchListBox.SelectedIndex = patchListBox.FindStringExact(s);
             s = Configuration1.LastGame;
 
             if (Favourites1.Games.Contains(s))
                 s += " ★";
 
-            listBox2.SelectedIndex = listBox2.FindStringExact(s);
+            gameListBox.SelectedIndex = gameListBox.FindStringExact(s);
 
-            if (listBox1.SelectedIndex == -1 && listBox1.Items.Count > 0)
-                listBox1.SelectedIndex = 0;
-            if (listBox2.SelectedIndex == -1 && listBox2.Items.Count > 0)
-                listBox2.SelectedIndex = 0;
+            if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0)
+                patchListBox.SelectedIndex = 0;
+            if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0)
+                gameListBox.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -367,14 +405,14 @@ namespace Universal_THCRAP_Launcher
         /// </summary>
         private void UpdateConfig()
         {
-            if (listBox1.SelectedIndex == -1 && listBox1.Items.Count > 0)
-                listBox1.SelectedIndex = 0;
-            if (listBox1.SelectedIndex != -1)
-                Configuration1.LastConfig = ((string) listBox1.SelectedItem).Replace(" ★", "");
-            if (listBox2.SelectedIndex == -1 && listBox2.Items.Count > 0)
-                listBox2.SelectedIndex = 0;
-            if (listBox2.SelectedIndex != -1)
-                Configuration1.LastGame = ((string) listBox2.SelectedItem).Replace(" ★", "");
+            if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0)
+                patchListBox.SelectedIndex = 0;
+            if (patchListBox.SelectedIndex != -1)
+                Configuration1.LastConfig = ((string) patchListBox.SelectedItem).Replace(" ★", "");
+            if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0)
+                gameListBox.SelectedIndex = 0;
+            if (gameListBox.SelectedIndex != -1)
+                Configuration1.LastGame = ((string) gameListBox.SelectedItem).Replace(" ★", "");
 
             var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
             Configuration1.Window = window;
@@ -382,14 +420,14 @@ namespace Universal_THCRAP_Launcher
             Favourites1.Patches.Clear();
             Favourites1.Games.Clear();
 
-            foreach (string s in listBox1.Items)
+            foreach (string s in patchListBox.Items)
                 if (s.Contains("★"))
                 {
                     var v = s.Replace(" ★", "");
                     Favourites1.Patches.Add(v);
                 }
 
-            foreach (string s in listBox2.Items)
+            foreach (string s in gameListBox.Items)
                 if (s.Contains("★"))
                 {
                     var v = s.Replace(" ★", "");
@@ -400,7 +438,7 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         ///     Writes the configuration and favourites to file
         /// </summary>
-        private void UpdateConfigFile([CallerMemberName] string caller = "")
+        public void UpdateConfigFile([CallerMemberName] string caller = "")
         {
             UpdateConfig();
             var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
@@ -419,34 +457,32 @@ namespace Universal_THCRAP_Launcher
         /// </summary>
         private void StartThcrap()
         {
-            if (listBox1.SelectedIndex == -1 || listBox2.SelectedIndex == -1)
+            if (patchListBox.SelectedIndex == -1 || gameListBox.SelectedIndex == -1)
             {
-                const string error =
-                    "No run configuration (patch stack) or game (executable) selected!\nPlease select one!";
-                MessageBox.Show(error, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(I18N.LangResource.errors.noneSelected, I18N.LangResource.errors.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             var s = "";
-            s += listBox1.SelectedItem;
+            s += patchListBox.SelectedItem;
             s += " ";
-            s += listBox2.SelectedItem;
+            s += gameListBox.SelectedItem;
             s = s.Replace(" ★", "");
             //MessageBox.Show(args);
             var process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
             process.Start();
             Debug.WriteLine("Starting thcrap with {0}", s);
-            if (checkBox1.Checked)
+            if (Configuration1.ExitAfterStartup)
                 Application.Exit();
         }
 
-        private void button1_Click(object sender, EventArgs e) => StartThcrap();
+        private void startButton_Click(object sender, EventArgs e) => StartThcrap();
 
-        private void button1_MouseHover(object sender, EventArgs e) =>
-            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
+        private void startButton_MouseHover(object sender, EventArgs e) =>
+            startButton.BackgroundImage = Resources.Shinmera_Banner_5_mini_size_hover;
 
-        private void button1_MouseLeave(object sender, EventArgs e) =>
-            button1.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
+        private void startButton_MouseLeave(object sender, EventArgs e) =>
+            startButton.BackgroundImage = Resources.Shinmera_Banner_5_mini_size;
 
         private void SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -468,15 +504,12 @@ namespace Universal_THCRAP_Launcher
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e) =>
-            Configuration1.ExitAfterStartup = checkBox1.Checked;
-
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (ModifierKeys != Keys.None)
             {
-                listBox1.SelectedItem = Configuration1.LastConfig;
-                listBox2.SelectedItem = Configuration1.LastGame;
+                patchListBox.SelectedItem = Configuration1.LastConfig;
+                gameListBox.SelectedItem = Configuration1.LastGame;
             }
 
             switch (e.KeyCode)
@@ -492,10 +525,10 @@ namespace Universal_THCRAP_Launcher
                     var lb = (ListBox) sender;
                     if (!lb.SelectedItem.ToString().Contains("★"))
                     {
-                        if (lb.Equals(listBox1))
+                        if (lb.Equals(patchListBox))
                             Favourites1.Patches.Add(lb.Items[lb.SelectedIndex].ToString());
 
-                        if (lb.Equals(listBox2))
+                        if (lb.Equals(gameListBox))
                             Favourites1.Games.Add(lb.Items[lb.SelectedIndex].ToString());
                         lb.Items[lb.SelectedIndex] += " ★";
                     }
@@ -517,11 +550,11 @@ namespace Universal_THCRAP_Launcher
 
         private static void ShowKeyboardShortcuts()
         {
-            MessageBox.Show(Resources.KeyboardShortcuts,
-                @"Keyboard Shortcuts", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(I18N.LangResource.popup.kbSh.text,
+                I18N.LangResource.popup.kbSh.caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
+        private void MainForm_Closing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
 
         #region Global variables
 
@@ -542,76 +575,75 @@ namespace Universal_THCRAP_Launcher
 
         private int[] _resizeConstants;
 
-        private Configuration Configuration1 { get; set; }
+        public static Configuration Configuration1 { get; set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
 
         #endregion
 
-
         #region Sorting/Filtering Button functions
 
-        private void sort_az_button1_Click(object sender, EventArgs e)
+        private void sortAZButton1_Click(object sender, EventArgs e)
         {
             var isDesc = Configuration1.IsDescending;
-            if (sort_az_button1.BackgroundImage.Equals(_sortDescending))
+            if (sortAZButton1.BackgroundImage.Equals(_sortDescending))
             {
-                SortListBoxItems(ref listBox1);
-                sort_az_button1.BackgroundImage = _sortAscending;
+                SortListBoxItems(ref patchListBox);
+                sortAZButton1.BackgroundImage = _sortAscending;
                 isDesc[0] = "false";
             }
             else
             {
-                SortListBoxItemsDesc(ref listBox1);
+                SortListBoxItemsDesc(ref patchListBox);
                 isDesc[0] = "true";
-                sort_az_button1.BackgroundImage = _sortDescending;
+                sortAZButton1.BackgroundImage = _sortDescending;
             }
 
             Configuration1.IsDescending = isDesc;
             ReadConfig();
         }
 
-        private void sort_az_button2_Click(object sender, EventArgs e)
+        private void sortAZButton2_Click(object sender, EventArgs e)
         {
             var isDesc = Configuration1.IsDescending;
-            if (sort_az_button2.BackgroundImage.Equals(_sortDescending))
+            if (sortAZButton2.BackgroundImage.Equals(_sortDescending))
             {
-                SortListBoxItems(ref listBox2);
-                sort_az_button2.BackgroundImage = _sortAscending;
+                SortListBoxItems(ref gameListBox);
+                sortAZButton2.BackgroundImage = _sortAscending;
                 isDesc[1] = "false";
             }
             else
             {
-                SortListBoxItemsDesc(ref listBox2);
+                SortListBoxItemsDesc(ref gameListBox);
                 isDesc[1] = "true";
-                sort_az_button2.BackgroundImage = _sortDescending;
+                sortAZButton2.BackgroundImage = _sortDescending;
             }
 
             Configuration1.IsDescending = isDesc;
             ReadConfig();
         }
 
-        private void star_button1_Click(object sender, EventArgs e)
+        private void filterButton1_Click(object sender, EventArgs e)
         {
             var onlyFav = Configuration1.OnlyFavourites;
-            if (!star_button1.BackgroundImage.Equals(_star))
+            if (!filterFavButton1.BackgroundImage.Equals(_star))
             {
-                star_button1.BackgroundImage = _star;
-                for (var n = listBox1.Items.Count - 1; n >= 0; --n)
+                filterFavButton1.BackgroundImage = _star;
+                for (var n = patchListBox.Items.Count - 1; n >= 0; --n)
                 {
                     const char filterItem = '★';
-                    if (!listBox1.Items[n].ToString().Contains(filterItem))
-                        listBox1.Items.RemoveAt(n);
+                    if (!patchListBox.Items[n].ToString().Contains(filterItem))
+                        patchListBox.Items.RemoveAt(n);
                 }
 
                 onlyFav[0] = "true";
             }
             else
             {
-                star_button1.BackgroundImage = _starHollow;
-                listBox1.Items.Clear();
-                foreach (var s in _jsFiles) listBox1.Items.Add(s);
+                filterFavButton1.BackgroundImage = _starHollow;
+                patchListBox.Items.Clear();
+                foreach (var s in _jsFiles) patchListBox.Items.Add(s);
 
-                AddStars(listBox1, Favourites1.Patches);
+                AddStars(patchListBox, Favourites1.Patches);
                 onlyFav[0] = "false";
             }
 
@@ -619,28 +651,28 @@ namespace Universal_THCRAP_Launcher
             ReadConfig();
         }
 
-        private void star_button2_Click(object sender, EventArgs e)
+        private void filterButton2_Click(object sender, EventArgs e)
         {
             var onlyFav = Configuration1.OnlyFavourites;
-            if (!star_button2.BackgroundImage.Equals(_star))
+            if (!filterFavButton2.BackgroundImage.Equals(_star))
             {
-                star_button2.BackgroundImage = _star;
-                for (var n = listBox2.Items.Count - 1; n >= 0; --n)
+                filterFavButton2.BackgroundImage = _star;
+                for (var n = gameListBox.Items.Count - 1; n >= 0; --n)
                 {
                     const string filterItem = "★";
-                    if (!listBox2.Items[n].ToString().Contains(filterItem))
-                        listBox2.Items.RemoveAt(n);
+                    if (!gameListBox.Items[n].ToString().Contains(filterItem))
+                        gameListBox.Items.RemoveAt(n);
                 }
 
                 onlyFav[1] = "true";
             }
             else
             {
-                star_button2.BackgroundImage = _starHollow;
-                listBox2.Items.Clear();
-                foreach (var s in _gamesList) listBox2.Items.Add(s);
+                filterFavButton2.BackgroundImage = _starHollow;
+                gameListBox.Items.Clear();
+                foreach (var s in _gamesList) gameListBox.Items.Add(s);
 
-                AddStars(listBox2, Favourites1.Games);
+                AddStars(gameListBox, Favourites1.Games);
                 onlyFav[1] = "false";
             }
 
@@ -653,11 +685,11 @@ namespace Universal_THCRAP_Launcher
             if (filterByType_button.BackgroundImage.Equals(_gameAndCustom))
             {
                 filterByType_button.BackgroundImage = _game;
-                listBox2.Items.Clear();
+                gameListBox.Items.Clear();
                 foreach (var item in _gamesList)
                     if (!item.Contains("_custom"))
-                        listBox2.Items.Add(item);
-                AddStars(listBox2, Favourites1.Games);
+                        gameListBox.Items.Add(item);
+                AddStars(gameListBox, Favourites1.Games);
                 if (sender != "DefaultSettings") Configuration1.FilterExeType = 1;
                 return;
             }
@@ -665,11 +697,11 @@ namespace Universal_THCRAP_Launcher
             if (filterByType_button.BackgroundImage.Equals(_game))
             {
                 filterByType_button.BackgroundImage = _custom;
-                listBox2.Items.Clear();
+                gameListBox.Items.Clear();
                 foreach (var item in _gamesList)
                     if (item.Contains("_custom"))
-                        listBox2.Items.Add(item);
-                AddStars(listBox2, Favourites1.Games);
+                        gameListBox.Items.Add(item);
+                AddStars(gameListBox, Favourites1.Games);
                 if (sender != "DefaultSettings") Configuration1.FilterExeType = 2;
                 return;
             }
@@ -677,9 +709,9 @@ namespace Universal_THCRAP_Launcher
             if (!filterByType_button.BackgroundImage.Equals(_custom)) return;
             {
                 filterByType_button.BackgroundImage = _gameAndCustom;
-                listBox2.Items.Clear();
-                foreach (var item in _gamesList) listBox2.Items.Add(item);
-                AddStars(listBox2, Favourites1.Games);
+                gameListBox.Items.Clear();
+                foreach (var item in _gamesList) gameListBox.Items.Add(item);
+                AddStars(gameListBox, Favourites1.Games);
                 if (sender != "DefaultSettings") Configuration1.FilterExeType = 0;
             }
         }
@@ -688,37 +720,34 @@ namespace Universal_THCRAP_Launcher
 
         #region Tool Strip functions
 
-        private void keyboardShortcutsToolStripMenuItem_Click(object sender, EventArgs e) => ShowKeyboardShortcuts();
+        private void keyboardShortcutsTS_Click(object sender, EventArgs e) => ShowKeyboardShortcuts();
 
-        private void restartToolStripMenuItem_Click(object sender, EventArgs e) => RestartProgram();
+        private void restartTS_Click(object sender, EventArgs e) => RestartProgram();
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+        private void exitTS_Click(object sender, EventArgs e) => Application.Exit();
 
-        private void releasesToolStripMenuItem_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher/releases");
-
-        private void reportBugToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start(
+        private void bugReportTS_Click(object sender, EventArgs e) => Process.Start(
             "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
             "new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D");
 
-        private void requestAFeatureToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start(
+        private void featureRequestTS_Click(object sender, EventArgs e) => Process.Start(
             "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
             "new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D");
 
-        private void requestToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void otherTS_Click(object sender, EventArgs e) =>
             Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/new");
 
-        private void gitHubToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void gitHubPageTS_Click(object sender, EventArgs e) =>
             Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
 
-        private void openTHCRAPConfigureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openConfigureTS_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(@"The Launcher will disappear until you're configuring...",
-                @"Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(I18N.LangResource.popup.hideLauncher.text,
+                I18N.LangResource.popup.hideLauncher.caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             var p = Process.Start("thcrap_configure.exe");
             if (p == null)
             {
-                MessageBox.Show(@"Something went wrong...", @"Error");
+                MessageBox.Show(I18N.LangResource.errors.oops, I18N.LangResource.errors.error);
                 return;
             }
 
@@ -727,27 +756,54 @@ namespace Universal_THCRAP_Launcher
             Show();
         }
 
-        private void openGamesListToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("games.js");
+        private void openGamesListTS_Click(object sender, EventArgs e) => Process.Start("games.js");
 
-        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) =>
+        private void openFolderTS_Click(object sender, EventArgs e) =>
             Process.Start(Directory.GetCurrentDirectory());
 
-        private void createShortcutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void createShortcutTS_Click(object sender, EventArgs e)
         {
             var shDesktop = (object) "Desktop";
             var shell = new WshShell();
-            var shortcutAddress = (string) shell.SpecialFolders.Item(ref shDesktop) + @"\Universal THCRAP Launcher.lnk";
+            var shortcutAddress = (string) shell.SpecialFolders.Item(ref shDesktop) + I18N.LangResource.shCreate.file + ".lnk";
             var shortcut = (IWshShortcut) shell.CreateShortcut(shortcutAddress);
-            shortcut.Description = "Shortcut for UTL";
+            shortcut.Description = I18N.LangResource.shCreate.desc;
             shortcut.TargetPath = Assembly.GetEntryAssembly().Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
             shortcut.Save();
         }
 
-        private void openSelectedPatchConfigurationToolStripMenuItem_Click(object sender, EventArgs e) =>
-            Process.Start(Directory.GetCurrentDirectory() + @"/" + listBox1.SelectedItem.ToString().Replace(" ★", ""));
+        private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) =>
+            Process.Start(Directory.GetCurrentDirectory() + @"/" + patchListBox.SelectedItem.ToString().Replace(" ★", ""));
+        
 
+        private void settingsTS_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.ShowDialog();
+        }
         #endregion
+    }
+
+    public static class I18N
+    {
+        public const string i18nDir = @"/i18n/utl/";
+
+        public static dynamic LangResource { get; private set; }
+        
+
+        public static int LangNumber()
+        {
+            if (Directory.Exists(i18nDir))
+                return Directory.GetFiles(i18nDir).Length;
+            return 0;
+        }
+
+        public static void GetLangResource(string fileName)
+        {
+            string raw = File.ReadAllText(i18nDir + fileName);
+            LangResource = JsonConvert.DeserializeObject(raw);
+        }
     }
 
     public class Configuration
@@ -759,6 +815,7 @@ namespace Universal_THCRAP_Launcher
         public string[] OnlyFavourites { get; set; }
         public byte FilterExeType { get; set; }
         public Window Window { get; set; }
+        public string Lang { get; set; }
     }
 
     public class Window

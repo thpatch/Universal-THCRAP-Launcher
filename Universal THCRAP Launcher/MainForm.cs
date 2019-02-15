@@ -803,7 +803,15 @@ namespace Universal_THCRAP_Launcher
         public static void GetLangResource(string fileName)
         {
             string raw = File.ReadAllText(I18NDir + fileName);
-            LangResource = JsonConvert.DeserializeObject(raw);
+            try
+            {
+                LangResource = JsonConvert.DeserializeObject(raw);
+            }
+            catch (JsonReaderException e)
+            {
+                MessageBox.Show(e.Message);
+                Application.Exit();
+            }
         }
     }
 

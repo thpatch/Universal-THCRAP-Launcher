@@ -809,7 +809,7 @@ namespace Universal_THCRAP_Launcher
             }
             catch (JsonReaderException e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "JSON Parser Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }

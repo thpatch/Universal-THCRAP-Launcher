@@ -787,15 +787,16 @@ namespace Universal_THCRAP_Launcher
 
     public static class I18N
     {
-        public const string i18nDir = @"/i18n/utl/";
+        public const string i18nDir = @"\i18n\utl\";
 
         public static dynamic LangResource { get; private set; }
         
 
         public static int LangNumber()
         {
-            if (Directory.Exists(i18nDir))
+            if (Directory.Exists(Directory.GetCurrentDirectory() + i18nDir))
                 return Directory.GetFiles(i18nDir).Length;
+
             return 0;
         }
 

@@ -144,7 +144,7 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
-            UpdateLanguage();
+            //UpdateLanguage();
 
             Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");
         }
@@ -154,29 +154,33 @@ namespace Universal_THCRAP_Launcher
             dynamic objLangRes = I18N.LangResource.mainForm;
 
             Text = objLangRes.utl;
-            foreach (ToolStripMenuItem ts in menuStrip1.Items)
+            for (int i = 0; i < menuStrip1.Items.Count - 1; i++)
             {
-                UpdateTS(ts, objLangRes.menuStrip);
+                menuStrip1.Items[i].Text = objLangRes[i][0].ToString();
+                if(menuStrip1.Items[i].GetType() == typeof(ToolStripMenuItem))
+                    if(((ToolStripMenuItem)menuStrip1.Items[i]).HasDropDown)
+                        UpdateTS(((ToolStripMenuItem)menuStrip1.Items[i]).DropDownItems, objLangRes[i].ToObject<dynamic[]>());
             }
+            
 
-            toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton);
-            toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ);
-            toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ);
-            toolTip1.SetToolTip(filterFavButton1, objLangRes.tooltips.filterFav);
-            toolTip1.SetToolTip(filterFavButton2, objLangRes.tooltips.filterFav);
-            toolTip1.SetToolTip(filterByType_button, objLangRes.tooltips.filterByType);
-            toolTip1.SetToolTip(patchListBox, objLangRes.tooltips.patchLB);
-            toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB);
+            toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton.ToString());
+            toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ.ToString());
+            toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ.ToString());
+            toolTip1.SetToolTip(filterFavButton1, objLangRes.tooltips.filterFav.ToString());
+            toolTip1.SetToolTip(filterFavButton2, objLangRes.tooltips.filterFav.ToString());
+            toolTip1.SetToolTip(filterByType_button, objLangRes.tooltips.filterByType.ToString());
+            toolTip1.SetToolTip(patchListBox, objLangRes.tooltips.patchLB.ToString());
+            toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB.ToString());
         }
 
-        private void UpdateTS(ToolStripMenuItem ts, dynamic langRes)
+        private void UpdateTS(ToolStripItemCollection ts, dynamic langRes)
         {
-            ts.Text = langRes[0];
-            for (int i = 0; i < ts.DropDownItems.Count; i++)
+            for (int i = 0; i < ts.Count - 1; i++)
             {
-                if (((ToolStripMenuItem) ts.DropDownItems[i]).HasDropDownItems)
-                    UpdateTS(ts, langRes[i + 1]);
-                else ts.DropDownItems[i].Text = langRes[i + 1];
+                ts[i].Text = langRes[i].ToString();
+                if(ts[i].GetType() == typeof(ToolStripMenuItem))
+                    if(((ToolStripMenuItem)ts[i]).HasDropDown)
+                        UpdateTS(((ToolStripMenuItem)ts[i]).DropDownItems, langRes[i].ToObject<dynamic[]>());
             }
         }
 
@@ -514,6 +518,9 @@ namespace Universal_THCRAP_Launcher
 
             switch (e.KeyCode)
             {
+                case Keys.F3:
+                    UpdateLanguage();
+                    break;
                 case Keys.F2 when sender.GetType().FullName != "System.Windows.Forms.ListBox":
                 case Keys.Enter when sender.GetType().FullName != "System.Windows.Forms.ListBox":
                     return;

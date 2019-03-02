@@ -50,7 +50,6 @@
             // languageComboBox
             // 
             this.languageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.languageComboBox.Enabled = true;
             this.languageComboBox.FormattingEnabled = true;
             this.languageComboBox.Items.AddRange(new object[] {
             "English (English)"});
@@ -74,6 +73,7 @@
             // 
             this.langCreditsLabel.AutoSize = true;
             this.langCreditsLabel.Location = new System.Drawing.Point(11, 41);
+            this.langCreditsLabel.MaximumSize = new System.Drawing.Size(276, 0);
             this.langCreditsLabel.Name = "langCreditsLabel";
             this.langCreditsLabel.Size = new System.Drawing.Size(110, 13);
             this.langCreditsLabel.TabIndex = 14;

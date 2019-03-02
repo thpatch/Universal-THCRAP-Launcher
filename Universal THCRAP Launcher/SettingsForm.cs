@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -13,29 +14,34 @@ namespace Universal_THCRAP_Launcher
             InitializeComponent();
         }
 
-        private readonly Dictionary<string, string> _languages = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _langFileToName = new Dictionary<string, string>();
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             UpdateLang();
 
             #region Load languages
+            
+            if (I18N.LangNumber() > 0) languageComboBox.Items.Clear();
 
             foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
                 dynamic langFile = JsonConvert.DeserializeObject(raw);
-                _languages.Add($"{langFile.metadata.native} ({langFile.metadata.english})",file);
+                _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})",file);
+                _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
                 languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
             }
             #endregion
             #region Select appropiate lang
+
             if (Configuration.Lang == null)
-                if (languageComboBox.Contains(new Control("English (English)")))
-                    languageComboBox.SelectedItem = "English (English)";
-                else
-                    languageComboBox.SelectedIndex = 0;
-            else languageComboBox.SelectedItem = Configuration.Lang;
+                languageComboBox.SelectedIndex = 0;
+
+            else languageComboBox.SelectedItem = _langFileToName[I18N.I18NDir + Configuration.Lang];
+            Debug.WriteLine("Configuration.Lang = " + Configuration.Lang);
+            Debug.WriteLine("Language Selected: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
             #endregion
         }
 
@@ -58,8 +64,7 @@ namespace Universal_THCRAP_Launcher
 
         private void languageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string file;
-            _languages.TryGetValue(languageComboBox.SelectedItem.ToString(), out file);
+            _langNameToFile.TryGetValue(languageComboBox.SelectedItem.ToString(), out var file);
             I18N.GetLangResource(file);
         }
 

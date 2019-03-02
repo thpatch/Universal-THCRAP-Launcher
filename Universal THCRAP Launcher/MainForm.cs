@@ -61,7 +61,7 @@ namespace Universal_THCRAP_Launcher
             }
 
             //Load language
-            I18N.GetLangResource(Configuration.Lang);
+            I18N.GetLangResource(I18N.I18NDir + Configuration.Lang);
 
             //Give error if not next to thcrap_loader.exe
             var fileExists = File.Exists("thcrap_loader.exe");
@@ -489,6 +489,8 @@ namespace Universal_THCRAP_Launcher
         {
             UpdateConfig();
             var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
+            output = output.Remove(output.Length - 3);
+            output += ",\n  \"Lang\": " + JsonConvert.SerializeObject(Configuration.Lang, Formatting.Indented, new JsonSerializerSettings()) + "\n}";
             File.WriteAllText(ConfigFile, output);
 
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
@@ -850,16 +852,17 @@ namespace Universal_THCRAP_Launcher
             return 0;
         }
 
-        public static void GetLangResource(string fileName)
+        public static void GetLangResource(string filePath)
         {
-            string raw = File.ReadAllText(I18NDir + fileName);
+            string raw = File.ReadAllText(filePath);
             try
             {
                 LangResource = JsonConvert.DeserializeObject(raw);
+                Configuration.Lang = filePath.Replace(I18NDir, "");
             }
             catch (JsonReaderException e)
             {
-                MessageBox.Show(e.Message, "JSON Parser Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(e.Message, @"JSON Parser Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }

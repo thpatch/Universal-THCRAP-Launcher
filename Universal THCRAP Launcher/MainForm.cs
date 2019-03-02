@@ -64,6 +64,7 @@ namespace Universal_THCRAP_Launcher
 
             //Load language
             Configuration.Lang = dconfig?.Lang;
+            if (Configuration.Lang == null) Configuration.Lang = "en.json";
             I18N.GetLangResource(I18N.I18NDir + Configuration.Lang);
 
             //Give error if not next to thcrap_loader.exe

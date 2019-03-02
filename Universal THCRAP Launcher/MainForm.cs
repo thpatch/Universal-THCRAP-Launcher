@@ -10,6 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
 
@@ -40,7 +41,7 @@ namespace Universal_THCRAP_Launcher
                 {
                     ObjectCreationHandling = ObjectCreationHandling.Replace
                 };
-                string raw = File.ReadAllText(ConfigFile);
+                var raw = File.ReadAllText(ConfigFile);
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
             }
             SetDefaultSettings();
@@ -53,7 +54,7 @@ namespace Universal_THCRAP_Launcher
             if (!File.Exists("Newtonsoft.Json.dll"))
             {
                 //Read parser-less, the error message.
-                string[] lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
+                var lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
                 foreach (var item in lines)
                     if (item.Contains("jsonParser"))
                         ErrorAndExit(item.Split('"')[3]);
@@ -151,18 +152,9 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateLanguage()
         {
-            dynamic objLangRes = I18N.LangResource.mainForm;
+            var objLangRes = I18N.LangResource.mainForm;
 
             Text = objLangRes.utl;
-            for (int i = 0; i < menuStrip1.Items.Count - 1; i++)
-            {
-                menuStrip1.Items[i].Text = objLangRes[i][0].ToString();
-                if(menuStrip1.Items[i].GetType() == typeof(ToolStripMenuItem))
-                    if(((ToolStripMenuItem)menuStrip1.Items[i]).HasDropDown)
-                        UpdateTS(((ToolStripMenuItem)menuStrip1.Items[i]).DropDownItems, objLangRes[i].ToObject<dynamic[]>());
-            }
-            
-
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton.ToString());
             toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ.ToString());
             toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ.ToString());
@@ -171,18 +163,69 @@ namespace Universal_THCRAP_Launcher
             toolTip1.SetToolTip(filterByType_button, objLangRes.tooltips.filterByType.ToString());
             toolTip1.SetToolTip(patchListBox, objLangRes.tooltips.patchLB.ToString());
             toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB.ToString());
+
+            // - TODO: Refactor this code
+            menuStrip1.Items[0].Text = objLangRes.menuStrip[0][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[0]).DropDownItems.Count; i++)
+            {
+                ((ToolStripMenuItem) menuStrip1.Items[0]).DropDownItems[i].Text = objLangRes.menuStrip[0][i + 1];
+            }
+            menuStrip1.Items[1].Text = objLangRes.menuStrip[1][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems.Count; i++)
+            {
+                if (objLangRes.menuStrip[1][i + 1] is JValue)
+                {
+                    ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i].Text = objLangRes.menuStrip[1][i + 1];
+                    
+                }
+                if (objLangRes.menuStrip[1][i + 1] is JArray)
+                {
+                    ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i]).Text =
+                        objLangRes.menuStrip[1][i + 1][0];
+                    for (var j = 0;
+                        j < ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i])
+                        .DropDownItems.Count;
+                        j++)
+                    {
+                        ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i])
+                            .DropDownItems[j].Text = objLangRes.menuStrip[1][i + 1][j + 1];
+                    }
+                }
+            }
+            menuStrip1.Items[2].Text = objLangRes.menuStrip[2][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems.Count; i++)
+            {
+                if (objLangRes.menuStrip[2][i + 1] is JValue)
+                {
+                    ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i].Text = objLangRes.menuStrip[2][i + 1];
+                    
+                }
+                if (objLangRes.menuStrip[2][i + 1] is JArray)
+                {
+                    ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i]).Text =
+                        objLangRes.menuStrip[2][i + 1][0];
+                    for (var j = 0;
+                        j < ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i])
+                        .DropDownItems.Count;
+                        j++)
+                    {
+                        ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i])
+                            .DropDownItems[j].Text = objLangRes.menuStrip[2][i + 1][j + 1];
+                    }
+                }
+            }
+            menuStrip1.Items[3].Text = objLangRes.menuStrip[3][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems.Count; i++)
+            {
+                ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems[i].Text = objLangRes.menuStrip[3][i + 1];
+            }
+            // TODO END
+
+
+
         }
 
-        private void UpdateTS(ToolStripItemCollection ts, dynamic langRes)
-        {
-            for (int i = 0; i < ts.Count - 1; i++)
-            {
-                ts[i].Text = langRes[i].ToString();
-                if(ts[i].GetType() == typeof(ToolStripMenuItem))
-                    if(((ToolStripMenuItem)ts[i]).HasDropDown)
-                        UpdateTS(((ToolStripMenuItem)ts[i]).DropDownItems, langRes[i].ToObject<dynamic[]>());
-            }
-        }
+        
 
         private void SetDefaultSettings()
         {
@@ -786,7 +829,7 @@ namespace Universal_THCRAP_Launcher
 
         private void settingsTS_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm();
+            var settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
         }
         #endregion
@@ -852,3 +895,4 @@ namespace Universal_THCRAP_Launcher
         public List<string> Games { get; }
     }
 }
+

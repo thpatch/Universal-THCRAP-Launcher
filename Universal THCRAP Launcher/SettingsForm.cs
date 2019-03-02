@@ -43,6 +43,9 @@ namespace Universal_THCRAP_Launcher
             Debug.WriteLine("Configuration.Lang = " + Configuration.Lang);
             Debug.WriteLine("Language Selected: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
             #endregion
+            
+            UpdateLang();
+            UpdateCredits();
         }
 
         private void UpdateLang()
@@ -50,13 +53,22 @@ namespace Universal_THCRAP_Launcher
             Text = I18N.LangResource.settingsForm.settings;
             languageLabel.Text = I18N.LangResource.settingsForm.language + ':';
             closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit;
+        }
+
+        private void UpdateCredits()
+        {
             string credits = "";
             foreach (var author in I18N.LangResource.metadata.authors)
             {
                 credits += author + ", ";
             }
             credits = credits.TrimEnd(' ', ',');
-            langCreditsLabel.Text = String.Format(I18N.LangResource.settingsForm.langCredits, credits);
+            int place = credits.LastIndexOf(',');
+            if (place != -1)
+            {
+                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and);
+            }
+            langCreditsLabel.Text = string.Format((string)I18N.LangResource.settingsForm.langCredits, credits);
         }
 
         private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) =>
@@ -66,6 +78,8 @@ namespace Universal_THCRAP_Launcher
         {
             _langNameToFile.TryGetValue(languageComboBox.SelectedItem.ToString(), out var file);
             I18N.GetLangResource(file);
+            UpdateLang();
+            UpdateCredits();
         }
 
 

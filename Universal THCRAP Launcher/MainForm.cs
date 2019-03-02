@@ -33,6 +33,7 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Load(object sender, EventArgs e)
         {
             Configuration1 = new Configuration();
+            dynamic dconfig = null;
 
             //Load config
             if (File.Exists(ConfigFile))
@@ -43,6 +44,7 @@ namespace Universal_THCRAP_Launcher
                 };
                 var raw = File.ReadAllText(ConfigFile);
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
+                dconfig = JsonConvert.DeserializeObject(raw, settings);
             }
             SetDefaultSettings();
 
@@ -61,6 +63,7 @@ namespace Universal_THCRAP_Launcher
             }
 
             //Load language
+            Configuration.Lang = dconfig?.Lang;
             I18N.GetLangResource(I18N.I18NDir + Configuration.Lang);
 
             //Give error if not next to thcrap_loader.exe
@@ -145,7 +148,9 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
-            //UpdateLanguage();
+            
+            
+            UpdateLanguage();
 
             Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");
         }
@@ -220,9 +225,6 @@ namespace Universal_THCRAP_Launcher
                 ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems[i].Text = objLangRes.menuStrip[3][i + 1];
             }
             // TODO END
-
-
-
         }
 
         
@@ -485,7 +487,7 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         ///     Writes the configuration and favourites to file
         /// </summary>
-        public void UpdateConfigFile([CallerMemberName] string caller = "")
+        private void UpdateConfigFile([CallerMemberName] string caller = "")
         {
             UpdateConfig();
             var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
@@ -833,6 +835,7 @@ namespace Universal_THCRAP_Launcher
         {
             var settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
+            UpdateLanguage();
         }
         #endregion
     }

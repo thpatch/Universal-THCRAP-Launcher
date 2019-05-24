@@ -10,8 +10,10 @@ using System.Threading;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
+using System.Net;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -24,7 +26,7 @@ namespace Universal_THCRAP_Launcher
 
         private static void ErrorAndExit(string errorMessage)
         {
-            MessageBox.Show(errorMessage, I18N.LangResource.errors.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(text: errorMessage, caption: I18N.LangResource.errors.error, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage}");
             Application.Exit();
         }
@@ -32,6 +34,7 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Load(object sender, EventArgs e)
         {
             Configuration1 = new Configuration();
+            dynamic dconfig = null;
 
             //Load config
             if (File.Exists(ConfigFile))
@@ -40,27 +43,40 @@ namespace Universal_THCRAP_Launcher
                 {
                     ObjectCreationHandling = ObjectCreationHandling.Replace
                 };
-                string raw = File.ReadAllText(ConfigFile);
+                var raw = File.ReadAllText(ConfigFile);
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
+                dconfig = JsonConvert.DeserializeObject(raw, settings);
             }
             SetDefaultSettings();
 
             if (I18N.LangNumber() == 0)
-                MessageBox.Show(
-                    $"No language files found!\nPut en.json in {Directory.GetCurrentDirectory() + I18N.i18nDir} !");
+            {
+                string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/i18n/langs/en.json");
+                File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+            }
             
             //Give error if Newtonsoft.Json.dll isn't found.
             if (!File.Exists("Newtonsoft.Json.dll"))
             {
                 //Read parser-less, the error message.
-                string[] lines = File.ReadAllLines(I18N.i18nDir + Configuration1.Lang);
+                if (Configuration.Lang == null) Configuration.Lang = "en.json";
+                var lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
                 foreach (var item in lines)
-                    if (item.Contains("jsonParser"))
-                        ErrorAndExit(item.Split('"')[3]);
+                {
+                    string error = "Error";
+                    if (item.Contains("\"error\"")) error = item.Split('"')[3];
+                    if (item.Contains("\"jsonParser\""))
+                    {
+                        MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Application.Exit();
+                    }
+                }
             }
 
             //Load language
-            I18N.GetLangResource(Configuration1.Lang);
+            Configuration.Lang = dconfig?.Lang;
+            if (Configuration.Lang == null) Configuration.Lang = "en.json";
+            I18N.GetLangResource(I18N.I18NDir + Configuration.Lang);
 
             //Give error if not next to thcrap_loader.exe
             var fileExists = File.Exists("thcrap_loader.exe");
@@ -144,6 +160,10 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
+            string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/i18n/langs/" + Configuration.Lang);
+            File.WriteAllText(I18N.I18NDir + @"\en.json", newlang);
+            
+
             UpdateLanguage();
 
             Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");
@@ -151,34 +171,77 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateLanguage()
         {
-            dynamic objLangRes = I18N.LangResource.mainForm;
+            var objLangRes = I18N.LangResource.mainForm;
 
             Text = objLangRes.utl;
-            foreach (ToolStripMenuItem ts in menuStrip1.Items)
-            {
-                UpdateTS(ts, objLangRes.menuStrip);
-            }
+            toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton.ToString());
+            toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ.ToString());
+            toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ.ToString());
+            toolTip1.SetToolTip(filterFavButton1, objLangRes.tooltips.filterFav.ToString());
+            toolTip1.SetToolTip(filterFavButton2, objLangRes.tooltips.filterFav.ToString());
+            toolTip1.SetToolTip(filterByType_button, objLangRes.tooltips.filterByType.ToString());
+            toolTip1.SetToolTip(patchListBox, objLangRes.tooltips.patchLB.ToString());
+            toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB.ToString());
 
-            toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton);
-            toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ);
-            toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ);
-            toolTip1.SetToolTip(filterFavButton1, objLangRes.tooltips.filterFav);
-            toolTip1.SetToolTip(filterFavButton2, objLangRes.tooltips.filterFav);
-            toolTip1.SetToolTip(filterByType_button, objLangRes.tooltips.filterByType);
-            toolTip1.SetToolTip(patchListBox, objLangRes.tooltips.patchLB);
-            toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB);
+            // - TODO: Refactor this code
+            menuStrip1.Items[0].Text = objLangRes.menuStrip[0][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[0]).DropDownItems.Count; i++)
+            {
+                ((ToolStripMenuItem) menuStrip1.Items[0]).DropDownItems[i].Text = objLangRes.menuStrip[0][i + 1];
+            }
+            menuStrip1.Items[1].Text = objLangRes.menuStrip[1][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems.Count; i++)
+            {
+                if (objLangRes.menuStrip[1][i + 1] is JValue)
+                {
+                    ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i].Text = objLangRes.menuStrip[1][i + 1];
+                    
+                }
+                if (objLangRes.menuStrip[1][i + 1] is JArray)
+                {
+                    ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i]).Text =
+                        objLangRes.menuStrip[1][i + 1][0];
+                    for (var j = 0;
+                        j < ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i])
+                        .DropDownItems.Count;
+                        j++)
+                    {
+                        ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i])
+                            .DropDownItems[j].Text = objLangRes.menuStrip[1][i + 1][j + 1];
+                    }
+                }
+            }
+            menuStrip1.Items[2].Text = objLangRes.menuStrip[2][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems.Count; i++)
+            {
+                if (objLangRes.menuStrip[2][i + 1] is JValue)
+                {
+                    ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i].Text = objLangRes.menuStrip[2][i + 1];
+                    
+                }
+                if (objLangRes.menuStrip[2][i + 1] is JArray)
+                {
+                    ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i]).Text =
+                        objLangRes.menuStrip[2][i + 1][0];
+                    for (var j = 0;
+                        j < ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i])
+                        .DropDownItems.Count;
+                        j++)
+                    {
+                        ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i])
+                            .DropDownItems[j].Text = objLangRes.menuStrip[2][i + 1][j + 1];
+                    }
+                }
+            }
+            menuStrip1.Items[3].Text = objLangRes.menuStrip[3][0];
+            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems.Count; i++)
+            {
+                ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems[i].Text = objLangRes.menuStrip[3][i + 1];
+            }
+            // TODO END
         }
 
-        private void UpdateTS(ToolStripMenuItem ts, dynamic langRes)
-        {
-            ts.Text = langRes[0];
-            for (int i = 0; i < ts.DropDownItems.Count; i++)
-            {
-                if (((ToolStripMenuItem) ts.DropDownItems[i]).HasDropDownItems)
-                    UpdateTS(ts, langRes[i + 1]);
-                else ts.DropDownItems[i].Text = langRes[i + 1];
-            }
-        }
+        
 
         private void SetDefaultSettings()
         {
@@ -190,10 +253,10 @@ namespace Universal_THCRAP_Launcher
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1 was null. Reinitializing it.");
             }
 
-            if (Configuration1.Lang == null)
+            if (Configuration.Lang == null)
             {
-                Configuration1.Lang = "en.json";
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.Lang has been set to {Configuration1.Lang}");
+                Configuration.Lang = "en.json";
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
             }
 
             if (Configuration1.LastGame == null)
@@ -438,10 +501,12 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         ///     Writes the configuration and favourites to file
         /// </summary>
-        public void UpdateConfigFile([CallerMemberName] string caller = "")
+        private void UpdateConfigFile([CallerMemberName] string caller = "")
         {
             UpdateConfig();
             var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
+            output = output.Remove(output.Length - 3);
+            output += ",\n  \"Lang\": " + JsonConvert.SerializeObject(Configuration.Lang, Formatting.Indented, new JsonSerializerSettings()) + "\n}";
             File.WriteAllText(ConfigFile, output);
 
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
@@ -514,6 +579,9 @@ namespace Universal_THCRAP_Launcher
 
             switch (e.KeyCode)
             {
+                case Keys.F3:
+                    UpdateLanguage();
+                    break;
                 case Keys.F2 when sender.GetType().FullName != "System.Windows.Forms.ListBox":
                 case Keys.Enter when sender.GetType().FullName != "System.Windows.Forms.ListBox":
                     return;
@@ -779,30 +847,52 @@ namespace Universal_THCRAP_Launcher
 
         private void settingsTS_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm();
+            var settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
+            UpdateLanguage();
         }
         #endregion
+
+        static string ReadTextFromUrl(string url)
+        {
+            // Assume UTF8, but detect BOM - could also honor response charset I suppose
+            using (var client = new WebClient())
+            using (var stream = client.OpenRead(url))
+            using (var textReader = new StreamReader(stream, System.Text.Encoding.UTF8, true))
+            {
+                return textReader.ReadToEnd();
+            }
+        }
     }
 
     public static class I18N
     {
-        public const string i18nDir = @"/i18n/utl/";
+        public static readonly string I18NDir = Directory.GetCurrentDirectory() + @"\i18n\utl\";
 
         public static dynamic LangResource { get; private set; }
         
 
         public static int LangNumber()
         {
-            if (Directory.Exists(i18nDir))
-                return Directory.GetFiles(i18nDir).Length;
+            if (Directory.Exists(I18NDir))
+                return Directory.GetFiles(I18NDir).Length;
+
             return 0;
         }
 
-        public static void GetLangResource(string fileName)
+        public static void GetLangResource(string filePath)
         {
-            string raw = File.ReadAllText(i18nDir + fileName);
-            LangResource = JsonConvert.DeserializeObject(raw);
+            string raw = File.ReadAllText(filePath);
+            try
+            {
+                LangResource = JsonConvert.DeserializeObject(raw);
+                Configuration.Lang = filePath.Replace(I18NDir, "");
+            }
+            catch (JsonReaderException e)
+            {
+                MessageBox.Show(e.Message, @"JSON Parser Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
         }
     }
 
@@ -815,7 +905,7 @@ namespace Universal_THCRAP_Launcher
         public string[] OnlyFavourites { get; set; }
         public byte FilterExeType { get; set; }
         public Window Window { get; set; }
-        public string Lang { get; set; }
+        public static string Lang { get; set; }
     }
 
     public class Window
@@ -835,4 +925,6 @@ namespace Universal_THCRAP_Launcher
         public List<string> Patches { get; }
         public List<string> Games { get; }
     }
+
 }
+

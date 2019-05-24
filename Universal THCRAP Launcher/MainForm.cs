@@ -51,13 +51,15 @@ namespace Universal_THCRAP_Launcher
 
             if (I18N.LangNumber() == 0)
             {
-                ReadTextFromUrl("");
+                string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/i18n/langs/en.json");
+                File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
             }
             
             //Give error if Newtonsoft.Json.dll isn't found.
             if (!File.Exists("Newtonsoft.Json.dll"))
             {
                 //Read parser-less, the error message.
+                if (Configuration.Lang == null) Configuration.Lang = "en.json";
                 var lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
                 foreach (var item in lines)
                 {
@@ -158,8 +160,10 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
+            string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/i18n/langs/" + Configuration.Lang);
+            File.WriteAllText(I18N.I18NDir + @"\en.json", newlang);
             
-            
+
             UpdateLanguage();
 
             Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");

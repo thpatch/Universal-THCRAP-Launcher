@@ -9,7 +9,9 @@
 		"language": "Nyelv",
 		"closeOnExit": "Bezárás a játék indulásakor",
 		"langCredits": "Fordította: {0}",
-		"and": "és"
+		"and": "és",
+		"downloadAll": "Összes nyelv letöltése",
+		"downloading:": "letöltés"
 	},
 	"errors": {
 		"error": "Hiba",

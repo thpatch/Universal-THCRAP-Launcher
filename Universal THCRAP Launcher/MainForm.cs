@@ -407,9 +407,10 @@ namespace Universal_THCRAP_Launcher
             }
             catch(Exception e)
             {
-                MessageBox.Show("1. If you're a developer: Don't forget to set the working directory to thcrap's directory.\n\n" +
-                    "2. If you're a dev in the right working directory this is for you:\n=====\n" + e.ToString() + "\n=====\n\n3. If you're an end user," +
-                    " try reinstalling again carefully following the instructions this time or try pinging Tudi20 in Discord.");
+                MessageBox.Show("1. If you're a developer: Don't forget to set the working directory to thcrap's directory.\n" +
+                    "Your current working directory is: " + Environment.CurrentDirectory + "\n\n2. If you're a dev in the right " +
+                    "working directory this is for you:\n=====\n" + e.ToString() + "\n=====\n\n3. If you're an end user, " +
+                    "try reinstalling again carefully following the instructions this time or try pinging Tudi20 in Discord.");
                 Application.Exit();
             }
         }

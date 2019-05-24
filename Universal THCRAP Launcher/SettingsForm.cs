@@ -10,9 +10,11 @@ namespace Universal_THCRAP_Launcher
 {
     public partial class SettingsForm : Form
     {
-        public SettingsForm()
+        MainForm mf;
+        public SettingsForm(MainForm mainForm)
         {
             InitializeComponent();
+            mf = mainForm;
         }
 
         private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
@@ -27,14 +29,14 @@ namespace Universal_THCRAP_Launcher
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
 
             #region Load languages
-            
+
             if (I18N.LangNumber() > 0) languageComboBox.Items.Clear();
 
             foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
                 dynamic langFile = JsonConvert.DeserializeObject(raw);
-                _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})",file);
+                _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
                 _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
                 languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
             }
@@ -118,6 +120,15 @@ namespace Universal_THCRAP_Launcher
             btn_dwnlAllLangs.Enabled = true;
         }
 
-        private void CB_hidePatchExtension_CheckedChanged(object sender, EventArgs e) => MainForm.Configuration1.HidePatchExtension = cB_hidePatchExtension.Checked;
+        private void CB_hidePatchExtension_CheckedChanged(object sender, EventArgs e)
+        {
+            MainForm.Configuration1.HidePatchExtension = cB_hidePatchExtension.Checked;
+            mf.PopulatePatchList();
+        }
+
+        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            mf.UpdateConfigFile();
+        }
     }
 }

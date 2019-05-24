@@ -415,8 +415,6 @@ namespace Universal_THCRAP_Launcher
         }
 
         #endregion
-
-        private ListBox patchListBox;
         private SplitContainer splitContainer1;
         private ListBox gameListBox;
         private Button startButton;
@@ -448,6 +446,7 @@ namespace Universal_THCRAP_Launcher
         private ToolStripMenuItem bugReportTS;
         private ToolStripMenuItem featureRequestTS;
         private ToolStripMenuItem otherTS;
+        private ListBox patchListBox;
     }
 }
 

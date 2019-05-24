@@ -90,12 +90,6 @@ namespace Universal_THCRAP_Launcher
 
             #region Load data from files
 
-            //Load patch stacks
-            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
-
-            //Give error if there are no patch configurations
-            if (_jsFiles.Count == 0) ErrorAndExit(I18N.LangResource.errors.missing.patchStacks);
-
             //Load executables
             var file = File.ReadAllText("games.js");
             var games = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
@@ -107,26 +101,13 @@ namespace Universal_THCRAP_Launcher
                 Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
             }
 
+            PopulatePatchList();
             #endregion
 
-            #region  Fix patch stack list
+            #region _resizeConstants setter
 
-            for (var i = 0; i < _jsFiles.Count; i++)
-                _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + "\\", "");
-            _jsFiles.Remove("games.js");
-            _jsFiles.Remove("config.js");
-            _jsFiles.Remove("favourites.js");
-            _jsFiles.Remove(ConfigFile);
-            if (Configuration1.HidePatchExtension)
-                for (var i = 0; i < _jsFiles.Count; i++)
-                    _jsFiles[i] = _jsFiles[i].Replace(".js", "");
-
-                #endregion
-
-                #region _resizeConstants setter
-
-                //Create constants for resizing
-                _resizeConstants = new int[7];
+            //Create constants for resizing
+            _resizeConstants = new int[7];
             _resizeConstants[0] = Size.Width - startButton.Width;
             _resizeConstants[1] = Size.Width - splitContainer1.Width;
             _resizeConstants[2] = Size.Height - splitContainer1.Height;
@@ -138,9 +119,6 @@ namespace Universal_THCRAP_Launcher
 
             #region Display
 
-            //Display patch stacks
-            foreach (var item in _jsFiles)
-                patchListBox.Items.Add(item);
             //Display executables
             foreach (var item in games)
             {
@@ -153,7 +131,6 @@ namespace Universal_THCRAP_Launcher
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
 
             //Update Display favourites
-            AddStars(patchListBox, Favourites1.Patches);
             AddStars(gameListBox, Favourites1.Games);
 
             #endregion
@@ -170,6 +147,39 @@ namespace Universal_THCRAP_Launcher
             UpdateLanguage();
 
             Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");
+        }
+
+        public void PopulatePatchList()
+        {
+            _jsFiles.Clear();
+            //Load patch stacks
+            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
+
+            //Give error if there are no patch configurations
+            if (_jsFiles.Count == 0) ErrorAndExit(I18N.LangResource.errors.missing.patchStacks);
+
+
+            #region  Fix patch stack list
+
+            for (var i = 0; i < _jsFiles.Count; i++)
+                _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + "\\", "");
+            _jsFiles.Remove("games.js");
+            _jsFiles.Remove("config.js");
+            _jsFiles.Remove("favourites.js");
+            _jsFiles.Remove(ConfigFile);
+            if (Configuration1.HidePatchExtension)
+                for (var i = 0; i < _jsFiles.Count; i++)
+                    _jsFiles[i] = _jsFiles[i].Replace(".js", "");
+            #endregion
+            patchListBox.Items.Clear();
+
+            //Display patch stacks
+            foreach (var item in _jsFiles)
+                patchListBox.Items.Add(item);
+
+            AddStars(patchListBox, Favourites1.Patches);
+
+            if (patchListBox.SelectedIndex == -1) patchListBox.SelectedIndex = 0;
         }
 
         private void UpdateLanguage()
@@ -517,7 +527,7 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         ///     Writes the configuration and favourites to file
         /// </summary>
-        private void UpdateConfigFile([CallerMemberName] string caller = "")
+        public void UpdateConfigFile([CallerMemberName] string caller = "")
         {
             UpdateConfig();
             var output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
@@ -864,7 +874,7 @@ namespace Universal_THCRAP_Launcher
 
         private void settingsTS_Click(object sender, EventArgs e)
         {
-            var settingsForm = new SettingsForm();
+            var settingsForm = new SettingsForm(this);
             settingsForm.ShowDialog();
             UpdateLanguage();
         }
@@ -923,7 +933,7 @@ namespace Universal_THCRAP_Launcher
         public byte FilterExeType { get; set; }
         public Window Window { get; set; }
         public static string Lang { get; set; }
-        public bool HidePatchExtension { get; internal set; }
+        public bool HidePatchExtension { get; set; }
     }
 
     public class Window

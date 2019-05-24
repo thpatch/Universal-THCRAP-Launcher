@@ -300,6 +300,12 @@ namespace Universal_THCRAP_Launcher
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.HidePatchExtension has been set to {Configuration1.HidePatchExtension}");
             }
 
+            if (Configuration1.ExitAfterStartup == null)
+            {
+                Configuration1.ExitAfterStartup = true;
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.ExitAfterStartup has been set to {Configuration1.ExitAfterStartup}");
+            }
+
             if (Configuration1.Window == null)
             {
                 var window = new Window

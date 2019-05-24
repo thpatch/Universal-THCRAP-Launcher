@@ -95,6 +95,8 @@
             // cB_hidePatchExtension
             // 
             this.cB_hidePatchExtension.AutoSize = true;
+            this.cB_hidePatchExtension.Checked = true;
+            this.cB_hidePatchExtension.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cB_hidePatchExtension.Location = new System.Drawing.Point(12, 175);
             this.cB_hidePatchExtension.Name = "cB_hidePatchExtension";
             this.cB_hidePatchExtension.Size = new System.Drawing.Size(159, 17);

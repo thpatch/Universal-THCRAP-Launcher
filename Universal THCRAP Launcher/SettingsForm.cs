@@ -23,6 +23,9 @@ namespace Universal_THCRAP_Launcher
         {
             UpdateLang();
 
+            cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
+            closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
+
             #region Load languages
             
             if (I18N.LangNumber() > 0) languageComboBox.Items.Clear();

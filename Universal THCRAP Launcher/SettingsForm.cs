@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.Net;
+using System.Threading;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -107,8 +108,8 @@ namespace Universal_THCRAP_Launcher
 
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {
-            btn_dwnlAllLangs.Enabled = false;
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading;
+            btn_dwnlAllLangs.Enabled = false;
             string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
             dynamic obj_gh = JsonConvert.DeserializeObject(gh);
             foreach (var item in obj_gh)

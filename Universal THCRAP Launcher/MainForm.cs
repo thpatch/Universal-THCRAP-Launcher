@@ -1,19 +1,19 @@
-﻿using System;
+﻿using IWshRuntimeLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
-using IWshRuntimeLibrary;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
-using System.Net;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -33,6 +33,10 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
+                "Version: " + Application.ProductVersion.TrimStart(new char[] { '0', '.' }) +
+                "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n\n" +
+                "[" + DateTime.Now.ToShortTimeString() + "] Program opened.");
             Configuration1 = new Configuration();
             dynamic dconfig = null;
 
@@ -54,7 +58,7 @@ namespace Universal_THCRAP_Launcher
                 string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
                 File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
             }
-            
+
             //Give error if Newtonsoft.Json.dll isn't found.
             if (!File.Exists("Newtonsoft.Json.dll"))
             {
@@ -138,11 +142,11 @@ namespace Universal_THCRAP_Launcher
 
             if (menuStrip1 == null) return;
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
-                x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
+                x.MouseHover += (obj, arg) => ((ToolStripDropDownItem)obj).ShowDropDown());
 
             string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + Configuration.Lang);
             File.WriteAllText(I18N.I18NDir + @"\en.json", newlang);
-            
+
 
             UpdateLanguage();
 
@@ -186,7 +190,7 @@ namespace Universal_THCRAP_Launcher
         {
             var objLangRes = I18N.LangResource.mainForm;
 
-            Text = objLangRes.utl;
+            Text = objLangRes.utl + " " + Application.ProductVersion.TrimStart(new char[] {'0', '.'});
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton.ToString());
             toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ.ToString());
             toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ.ToString());
@@ -198,67 +202,66 @@ namespace Universal_THCRAP_Launcher
 
             // - TODO: Refactor this code
             menuStrip1.Items[0].Text = objLangRes.menuStrip[0][0];
-            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[0]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[0]).DropDownItems.Count; i++)
             {
-                ((ToolStripMenuItem) menuStrip1.Items[0]).DropDownItems[i].Text = objLangRes.menuStrip[0][i + 1];
+                ((ToolStripMenuItem)menuStrip1.Items[0]).DropDownItems[i].Text = objLangRes.menuStrip[0][i + 1];
             }
             menuStrip1.Items[1].Text = objLangRes.menuStrip[1][0];
-            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems.Count; i++)
             {
                 if (objLangRes.menuStrip[1][i + 1] is JValue)
                 {
-                    ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i].Text = objLangRes.menuStrip[1][i + 1];
-                    
+                    ((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems[i].Text = objLangRes.menuStrip[1][i + 1];
+
                 }
                 if (objLangRes.menuStrip[1][i + 1] is JArray)
                 {
-                    ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i]).Text =
+                    ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems[i]).Text =
                         objLangRes.menuStrip[1][i + 1][0];
                     for (var j = 0;
-                        j < ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i])
+                        j < ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems[i])
                         .DropDownItems.Count;
                         j++)
                     {
-                        ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[1]).DropDownItems[i])
+                        ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems[i])
                             .DropDownItems[j].Text = objLangRes.menuStrip[1][i + 1][j + 1];
                     }
                 }
             }
             menuStrip1.Items[2].Text = objLangRes.menuStrip[2][0];
-            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems.Count; i++)
             {
                 if (objLangRes.menuStrip[2][i + 1] is JValue)
                 {
-                    ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i].Text = objLangRes.menuStrip[2][i + 1];
-                    
+                    ((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems[i].Text = objLangRes.menuStrip[2][i + 1];
+
                 }
                 if (objLangRes.menuStrip[2][i + 1] is JArray)
                 {
-                    ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i]).Text =
+                    ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems[i]).Text =
                         objLangRes.menuStrip[2][i + 1][0];
                     for (var j = 0;
-                        j < ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i])
+                        j < ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems[i])
                         .DropDownItems.Count;
                         j++)
                     {
-                        ((ToolStripMenuItem) ((ToolStripMenuItem) menuStrip1.Items[2]).DropDownItems[i])
+                        ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems[i])
                             .DropDownItems[j].Text = objLangRes.menuStrip[2][i + 1][j + 1];
                     }
                 }
             }
             menuStrip1.Items[3].Text = objLangRes.menuStrip[3][0];
-            for (var i = 0; i < ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[3]).DropDownItems.Count; i++)
             {
-                ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems[i].Text = objLangRes.menuStrip[3][i + 1];
+                ((ToolStripMenuItem)menuStrip1.Items[3]).DropDownItems[i].Text = objLangRes.menuStrip[3][i + 1];
             }
             // ---
         }
 
-        
+
 
         private void SetDefaultSettings()
         {
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Entered SetDefaultSettings()");
             //Default Configuration setting
             if (Configuration1 == null)
             {
@@ -288,7 +291,7 @@ namespace Universal_THCRAP_Launcher
 
             if (Configuration1.IsDescending == null)
             {
-                string[] a = {"false", "false"};
+                string[] a = { "false", "false" };
                 Configuration1.IsDescending = a;
                 Trace.WriteLine(
                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
@@ -297,7 +300,7 @@ namespace Universal_THCRAP_Launcher
 
             if (Configuration1.OnlyFavourites == null)
             {
-                string[] a = {"false", "false"};
+                string[] a = { "false", "false" };
                 Configuration1.OnlyFavourites = a;
                 Trace.WriteLine(
                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites has been set to {Configuration1.OnlyFavourites[0]}, " +
@@ -319,7 +322,7 @@ namespace Universal_THCRAP_Launcher
             if (Configuration1.Window == null)
             {
                 var window = new Window
-                    {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
+                { Size = new[] { Size.Width, Size.Height }, Location = new[] { Location.X, Location.Y } };
                 Configuration1.Window = window;
                 Trace.WriteLine(
                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
@@ -334,8 +337,7 @@ namespace Universal_THCRAP_Launcher
             for (var i = 0; i < 2; i++)
                 if (Configuration1.IsDescending[i] == "false")
                 {
-                    Trace.WriteLine(
-                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was false for listBox{i}");
+                    
                     if (i == 0)
                     {
                         SortListBoxItems(ref patchListBox);
@@ -349,8 +351,7 @@ namespace Universal_THCRAP_Launcher
                 }
                 else if (i == 0)
                 {
-                    Trace.WriteLine(
-                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending was true for listBox{i}");
+                    
                     SortListBoxItemsDesc(ref patchListBox);
                     sortAZButton1.BackgroundImage = _sortDescending;
                 }
@@ -402,10 +403,8 @@ namespace Universal_THCRAP_Launcher
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
                 filterByType_button_Click("DefaultSettings", new EventArgs());
             }
-
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Exited SetDefaultSettings()");
         }
-        
+
         private void Form1_Shown(object sender, EventArgs e)
         {
             ReadConfig();
@@ -497,13 +496,13 @@ namespace Universal_THCRAP_Launcher
             if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0)
                 patchListBox.SelectedIndex = 0;
             if (patchListBox.SelectedIndex != -1)
-                Configuration1.LastConfig = ((string) patchListBox.SelectedItem).Replace(" ★", "");
+                Configuration1.LastConfig = ((string)patchListBox.SelectedItem).Replace(" ★", "");
             if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0)
                 gameListBox.SelectedIndex = 0;
             if (gameListBox.SelectedIndex != -1)
-                Configuration1.LastGame = ((string) gameListBox.SelectedItem).Replace(" ★", "");
+                Configuration1.LastGame = ((string)gameListBox.SelectedItem).Replace(" ★", "");
 
-            var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
+            var window = new Window { Size = new[] { Size.Width, Size.Height }, Location = new[] { Location.X, Location.Y } };
             Configuration1.Window = window;
 
             Favourites1.Patches.Clear();
@@ -561,7 +560,7 @@ namespace Universal_THCRAP_Launcher
             s += gameListBox.SelectedItem;
             s = s.Replace(" ★", "");
             //MessageBox.Show(args);
-            var process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
+            var process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s } };
             process.Start();
             Debug.WriteLine("Starting thcrap with {0}", s);
             if (Configuration1.ExitAfterStartup)
@@ -579,7 +578,7 @@ namespace Universal_THCRAP_Launcher
         private void SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ModifierKeys != Keys.None) return;
-            var lb = (ListBox) sender;
+            var lb = (ListBox)sender;
             switch (lb.Name)
             {
                 case "listBox1":
@@ -617,7 +616,7 @@ namespace Universal_THCRAP_Launcher
                     StartThcrap();
                     break;
                 case Keys.F2:
-                    var lb = (ListBox) sender;
+                    var lb = (ListBox)sender;
                     if (!lb.SelectedItem.ToString().Contains("★"))
                     {
                         if (lb.Equals(patchListBox))
@@ -649,7 +648,11 @@ namespace Universal_THCRAP_Launcher
                 I18N.LangResource.popup.kbSh.caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void MainForm_Closing(object sender, FormClosingEventArgs e) => UpdateConfigFile();
+        private void MainForm_Closing(object sender, FormClosingEventArgs e)
+        {
+            UpdateConfigFile();
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Program closed.");
+        }
 
         #region Global variables
 
@@ -858,10 +861,10 @@ namespace Universal_THCRAP_Launcher
 
         private void createShortcutTS_Click(object sender, EventArgs e)
         {
-            var shDesktop = (object) "Desktop";
+            var shDesktop = (object)"Desktop";
             var shell = new WshShell();
-            var shortcutAddress = (string) shell.SpecialFolders.Item(ref shDesktop) + I18N.LangResource.shCreate.file + ".lnk";
-            var shortcut = (IWshShortcut) shell.CreateShortcut(shortcutAddress);
+            var shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + I18N.LangResource.shCreate.file + ".lnk";
+            var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
             shortcut.Description = I18N.LangResource.shCreate.desc;
             shortcut.TargetPath = Assembly.GetEntryAssembly().Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
@@ -870,7 +873,7 @@ namespace Universal_THCRAP_Launcher
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) =>
             Process.Start(Directory.GetCurrentDirectory() + @"/" + patchListBox.SelectedItem.ToString().Replace(" ★", ""));
-        
+
 
         private void settingsTS_Click(object sender, EventArgs e)
         {
@@ -897,7 +900,7 @@ namespace Universal_THCRAP_Launcher
         public static readonly string I18NDir = Directory.GetCurrentDirectory() + @"\i18n\utl\";
 
         public static dynamic LangResource { get; private set; }
-        
+
 
         public static int LangNumber()
         {
@@ -938,8 +941,8 @@ namespace Universal_THCRAP_Launcher
 
     public class Window
     {
-        public int[] Location { get; set; } = {0, 0};
-        public int[] Size { get; set; } = {350, 500};
+        public int[] Location { get; set; } = { 0, 0 };
+        public int[] Size { get; set; } = { 350, 500 };
     }
 
     public class Favourites

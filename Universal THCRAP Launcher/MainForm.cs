@@ -117,13 +117,16 @@ namespace Universal_THCRAP_Launcher
             _jsFiles.Remove("config.js");
             _jsFiles.Remove("favourites.js");
             _jsFiles.Remove(ConfigFile);
+            if (Configuration1.HidePatchExtension)
+                for (var i = 0; i < _jsFiles.Count; i++)
+                    _jsFiles[i] = _jsFiles[i].Replace(".js", "");
 
-            #endregion
+                #endregion
 
-            #region _resizeConstants setter
+                #region _resizeConstants setter
 
-            //Create constants for resizing
-            _resizeConstants = new int[7];
+                //Create constants for resizing
+                _resizeConstants = new int[7];
             _resizeConstants[0] = Size.Width - startButton.Width;
             _resizeConstants[1] = Size.Width - splitContainer1.Width;
             _resizeConstants[2] = Size.Height - splitContainer1.Height;
@@ -289,6 +292,12 @@ namespace Universal_THCRAP_Launcher
                 Trace.WriteLine(
                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites has been set to {Configuration1.OnlyFavourites[0]}, " +
                     Configuration1.OnlyFavourites[1]);
+            }
+
+            if (Configuration1.HidePatchExtension == null)
+            {
+                Configuration1.HidePatchExtension = true;
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.HidePatchExtension has been set to {Configuration1.HidePatchExtension}");
             }
 
             if (Configuration1.Window == null)
@@ -531,6 +540,7 @@ namespace Universal_THCRAP_Launcher
 
             var s = "";
             s += patchListBox.SelectedItem;
+            if (Configuration1.HidePatchExtension) s += ".js";
             s += " ";
             s += gameListBox.SelectedItem;
             s = s.Replace(" ★", "");
@@ -907,6 +917,7 @@ namespace Universal_THCRAP_Launcher
         public byte FilterExeType { get; set; }
         public Window Window { get; set; }
         public static string Lang { get; set; }
+        public bool HidePatchExtension { get; internal set; }
     }
 
     public class Window

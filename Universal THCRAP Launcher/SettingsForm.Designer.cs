@@ -34,6 +34,7 @@
             this.languageLabel = new System.Windows.Forms.Label();
             this.langCreditsLabel = new System.Windows.Forms.Label();
             this.btn_dwnlAllLangs = new System.Windows.Forms.Button();
+            this.cB_hidePatchExtension = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // closeOnExitCheckBox
@@ -41,7 +42,7 @@
             this.closeOnExitCheckBox.AutoSize = true;
             this.closeOnExitCheckBox.Checked = true;
             this.closeOnExitCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.closeOnExitCheckBox.Location = new System.Drawing.Point(12, 129);
+            this.closeOnExitCheckBox.Location = new System.Drawing.Point(12, 153);
             this.closeOnExitCheckBox.Name = "closeOnExitCheckBox";
             this.closeOnExitCheckBox.Size = new System.Drawing.Size(138, 17);
             this.closeOnExitCheckBox.TabIndex = 11;
@@ -83,19 +84,31 @@
             // 
             // btn_dwnlAllLangs
             // 
-            this.btn_dwnlAllLangs.Location = new System.Drawing.Point(156, 125);
+            this.btn_dwnlAllLangs.Location = new System.Drawing.Point(15, 124);
             this.btn_dwnlAllLangs.Name = "btn_dwnlAllLangs";
-            this.btn_dwnlAllLangs.Size = new System.Drawing.Size(135, 23);
+            this.btn_dwnlAllLangs.Size = new System.Drawing.Size(270, 23);
             this.btn_dwnlAllLangs.TabIndex = 15;
             this.btn_dwnlAllLangs.Text = "Download All Languages";
             this.btn_dwnlAllLangs.UseVisualStyleBackColor = true;
             this.btn_dwnlAllLangs.Click += new System.EventHandler(this.Btn_dwnlAllLangs_Click);
             // 
+            // cB_hidePatchExtension
+            // 
+            this.cB_hidePatchExtension.AutoSize = true;
+            this.cB_hidePatchExtension.Location = new System.Drawing.Point(12, 175);
+            this.cB_hidePatchExtension.Name = "cB_hidePatchExtension";
+            this.cB_hidePatchExtension.Size = new System.Drawing.Size(159, 17);
+            this.cB_hidePatchExtension.TabIndex = 16;
+            this.cB_hidePatchExtension.Text = "Hide extension on patch list.";
+            this.cB_hidePatchExtension.UseVisualStyleBackColor = true;
+            this.cB_hidePatchExtension.CheckedChanged += new System.EventHandler(this.CB_hidePatchExtension_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 154);
+            this.ClientSize = new System.Drawing.Size(297, 204);
+            this.Controls.Add(this.cB_hidePatchExtension);
             this.Controls.Add(this.btn_dwnlAllLangs);
             this.Controls.Add(this.langCreditsLabel);
             this.Controls.Add(this.languageLabel);
@@ -121,5 +134,6 @@
         private System.Windows.Forms.Label languageLabel;
         private System.Windows.Forms.Label langCreditsLabel;
         private System.Windows.Forms.Button btn_dwnlAllLangs;
+        private System.Windows.Forms.CheckBox cB_hidePatchExtension;
     }
 }

@@ -11,7 +11,9 @@
 		"langCredits": "Fordította: {0}",
 		"and": "és",
 		"downloadAll": "Összes nyelv letöltése",
-		"downloading:": "letöltés"
+		"downloading:": "Letöltés...",
+		"hidePatchExtension":"Konfiguráció (patch stack) kiterjesztésének elrejtése"
+
 	},
 	"errors": {
 		"error": "Hiba",

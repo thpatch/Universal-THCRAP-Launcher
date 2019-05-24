@@ -11,7 +11,8 @@
 		"langCredits": "Translated by {0}.",
 		"and": "and",
 		"downloadAll": "Download All Languages",
-		"downloading": "Downloading..."
+		"downloading": "Downloading...",
+		"hidePatchExtension": "Hide extension on patch list"
 	},
 	"errors": {
 		"error": "Error",

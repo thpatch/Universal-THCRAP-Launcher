@@ -56,6 +56,7 @@ namespace Universal_THCRAP_Launcher
             languageLabel.Text = I18N.LangResource.settingsForm.language + ':';
             closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit;
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
+            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension;
         }
 
         private void UpdateCredits()
@@ -113,5 +114,7 @@ namespace Universal_THCRAP_Launcher
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
             btn_dwnlAllLangs.Enabled = true;
         }
+
+        private void CB_hidePatchExtension_CheckedChanged(object sender, EventArgs e) => MainForm.Configuration1.HidePatchExtension = cB_hidePatchExtension.Checked;
     }
 }

@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
+using System.Net;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -50,9 +51,7 @@ namespace Universal_THCRAP_Launcher
 
             if (I18N.LangNumber() == 0)
             {
-                MessageBox.Show(
-                    $"No language files found!\nPut en.json in {I18N.I18NDir} !");
-                Application.Exit();
+                ReadTextFromUrl("");
             }
             
             //Give error if Newtonsoft.Json.dll isn't found.
@@ -849,6 +848,17 @@ namespace Universal_THCRAP_Launcher
             UpdateLanguage();
         }
         #endregion
+
+        static string ReadTextFromUrl(string url)
+        {
+            // Assume UTF8, but detect BOM - could also honor response charset I suppose
+            using (var client = new WebClient())
+            using (var stream = client.OpenRead(url))
+            using (var textReader = new StreamReader(stream, System.Text.Encoding.UTF8, true))
+            {
+                return textReader.ReadToEnd();
+            }
+        }
     }
 
     public static class I18N
@@ -911,5 +921,6 @@ namespace Universal_THCRAP_Launcher
         public List<string> Patches { get; }
         public List<string> Games { get; }
     }
+
 }
 

@@ -25,7 +25,7 @@ namespace Universal_THCRAP_Launcher
 
         private static void ErrorAndExit(string errorMessage)
         {
-            MessageBox.Show(errorMessage, I18N.LangResource.errors.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(text: errorMessage, caption: I18N.LangResource.errors.error, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage}");
             Application.Exit();
         }
@@ -61,8 +61,15 @@ namespace Universal_THCRAP_Launcher
                 //Read parser-less, the error message.
                 var lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
                 foreach (var item in lines)
-                    if (item.Contains("jsonParser"))
-                        ErrorAndExit(item.Split('"')[3]);
+                {
+                    string error = "Error";
+                    if (item.Contains("\"error\"")) error = item.Split('"')[3];
+                    if (item.Contains("\"jsonParser\""))
+                    {
+                        MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Application.Exit();
+                    }
+                }
             }
 
             //Load language

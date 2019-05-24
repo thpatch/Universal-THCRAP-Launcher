@@ -238,7 +238,7 @@ namespace Universal_THCRAP_Launcher
             {
                 ((ToolStripMenuItem) menuStrip1.Items[3]).DropDownItems[i].Text = objLangRes.menuStrip[3][i + 1];
             }
-            // TODO END
+            // ---
         }
 
         
@@ -401,6 +401,7 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Resize(object sender, EventArgs e)
         {
+            if (this == null) return;
             startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
             splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
             patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);

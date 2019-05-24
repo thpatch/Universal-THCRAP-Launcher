@@ -49,8 +49,11 @@ namespace Universal_THCRAP_Launcher
             SetDefaultSettings();
 
             if (I18N.LangNumber() == 0)
+            {
                 MessageBox.Show(
-                    $"No language files found!\nPut en.json in {Directory.GetCurrentDirectory() + I18N.I18NDir} !");
+                    $"No language files found!\nPut en.json in {I18N.I18NDir} !");
+                Application.Exit();
+            }
             
             //Give error if Newtonsoft.Json.dll isn't found.
             if (!File.Exists("Newtonsoft.Json.dll"))

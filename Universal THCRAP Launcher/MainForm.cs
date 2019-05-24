@@ -34,9 +34,10 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Load(object sender, EventArgs e)
         {
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
-                "Version: " + Application.ProductVersion.TrimStart(new char[] { '0', '.' }) +
-                "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n\n" +
-                "[" + DateTime.Now.ToShortTimeString() + "] Program opened.");
+                "\nVersion: " + Application.ProductVersion.TrimStart(new char[] { '0', '.' }) +
+                "\nBuild Date: " + Properties.Resources.BuildDate +
+            "――――――――――――――――――――――――――――――――――――――――――――――――――\n\n" +
+                "[" + DateTime.Now + "] Program opened.");
             Configuration1 = new Configuration();
             dynamic dconfig = null;
 
@@ -150,7 +151,7 @@ namespace Universal_THCRAP_Launcher
 
             UpdateLanguage();
 
-            Trace.WriteLine($"[{DateTime.Now}] Form1 Loaded");
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Form1 Loaded");
         }
 
         public void PopulatePatchList()
@@ -390,8 +391,6 @@ namespace Universal_THCRAP_Launcher
                 }
                 else
                 {
-                    Trace.WriteLine(
-                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was false for listBox{i}");
                     if (i == 0) filterFavButton1.BackgroundImage = _starHollow;
                     else filterFavButton2.BackgroundImage = _starHollow;
                 }
@@ -590,7 +589,7 @@ namespace Universal_THCRAP_Launcher
                         Configuration1.LastGame = lb.SelectedItem.ToString().Replace(" ★", "");
                     break;
                 default:
-                    Debug.WriteLine("Invalid ListBox!");
+                    //Debug.WriteLine("Invalid ListBox!");
                     break;
             }
         }
@@ -893,6 +892,7 @@ namespace Universal_THCRAP_Launcher
                 return textReader.ReadToEnd();
             }
         }
+
     }
 
     public static class I18N

@@ -29,9 +29,17 @@ namespace Universal_THCRAP_Launcher
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
 
-            #region Load languages
+            LoadLangs();
+            UpdateLang();
+            UpdateCredits();
+        }
 
+        private void LoadLangs()
+        {
+            #region LoadLangs
             if (I18N.LangNumber() > 0) languageComboBox.Items.Clear();
+            _langFileToName.Clear();
+            _langNameToFile.Clear();
 
             foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
@@ -43,7 +51,6 @@ namespace Universal_THCRAP_Launcher
             }
             #endregion
             #region Select appropiate lang
-
             if (Configuration.Lang == null)
                 languageComboBox.SelectedIndex = 0;
 
@@ -51,9 +58,6 @@ namespace Universal_THCRAP_Launcher
             Debug.WriteLine("Configuration.Lang = " + Configuration.Lang);
             Debug.WriteLine("Language Selected: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
             #endregion
-
-            UpdateLang();
-            UpdateCredits();
         }
 
         private void UpdateLang()
@@ -119,6 +123,8 @@ namespace Universal_THCRAP_Launcher
             }
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
             btn_dwnlAllLangs.Enabled = true;
+
+            LoadLangs();
         }
 
         private void CB_hidePatchExtension_CheckedChanged(object sender, EventArgs e)

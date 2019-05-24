@@ -8,11 +8,11 @@
 		"settings": "Einstellungen",
 		"language": "Sprache",
 		"closeOnExit": "Schließen wenn das Spiel startet",
-		"langCredits": "Übersetzt von {0}.",
+		"langCredits": "Übersetzt von: {0}.",
 		"and": "und",
 		"downloadAll": "Alle Sprachen herunterladen",
 		"downloading": "Wird heruntergeladen...",
-		"hidePatchExtension": "Erweiterung auf Patch-liste verstecken"
+		"hidePatchExtension": "Erweiterung auf Patch-Liste verstecken"
 	},
 	"errors": {
 		"error": "Fehler",
@@ -20,7 +20,7 @@
 			"thcrap_loader": "thcrap_loader.exe konnte nicht gefunden werden.\nStellen sie sicher, die Anwendung ist neben thcrap_loader.exe!",
 			"gamesJs": "games.js konnte nicht gefunden werden.\nStellen sie sicher sie haben thcrap_confugre.exe als erstes ausgeführt!",
 			"patchStacks": "Keine Konfigurationsdateien oder Patch-Stapel gefunden.\nStellen sie sicher sie haben thcrap_confugre.exe als erstes ausgeführt!",
-			"jsonParser": "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well."
+			"jsonParser": "Newtonsoft.Json.dll fehlt. Stellen sie sicher diese Datei wurde auch kopiert."
 		},
 		"oops": "Etwas ist falsch gelaufen...",
 		"noneSelected":"Keine Ausführungskonfiguration (Patch-Stapel) oder Spiel (ausführbare Datei) ausgewählt!\nBitte wählen sie eines!"
@@ -32,7 +32,7 @@
 		},
 		"kbSh": {
 			"caption": "Tastenkürzel",
-			"text": "Alt + F4: Anwendung schließen (standard Windows Kürzel)\nCtrl + R: Anwendung neu staten\nCtrl + O: Öffne ausgewählte Patch-Konfiguration\nF1: Show Keyboard Shortcuts (this window)\nF2: Favorite the selected item in the selected list"
+			"text": "Alt + F4: Anwendung schließen (standard Windows Kürzel)\nCtrl + R: Anwendung neu staten\nCtrl + O: Öffne ausgewählte Patch-Konfiguration\nF1: Tastenkürzel antzeigen (dieses Fenster)\nF2: Ausgewähltes Element der Liste favorisieren."
 		}
 	},
 	"shCreate": {

@@ -788,7 +788,7 @@ namespace Universal_THCRAP_Launcher
                     if (!item.Contains("_custom"))
                         gameListBox.Items.Add(item);
                 AddStars(gameListBox, Favourites1.Games);
-                if (sender != "DefaultSettings") Configuration1.FilterExeType = 1;
+                if (sender.ToString() != "DefaultSettings") Configuration1.FilterExeType = 1;
                 return;
             }
 
@@ -800,7 +800,7 @@ namespace Universal_THCRAP_Launcher
                     if (item.Contains("_custom"))
                         gameListBox.Items.Add(item);
                 AddStars(gameListBox, Favourites1.Games);
-                if (sender != "DefaultSettings") Configuration1.FilterExeType = 2;
+                if (sender.ToString() != "DefaultSettings") Configuration1.FilterExeType = 2;
                 return;
             }
 
@@ -810,7 +810,7 @@ namespace Universal_THCRAP_Launcher
                 gameListBox.Items.Clear();
                 foreach (var item in _gamesList) gameListBox.Items.Add(item);
                 AddStars(gameListBox, Favourites1.Games);
-                if (sender != "DefaultSettings") Configuration1.FilterExeType = 0;
+                if (sender.ToString() != "DefaultSettings") Configuration1.FilterExeType = 0;
             }
         }
 

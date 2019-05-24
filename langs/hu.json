@@ -1,0 +1,84 @@
+﻿{
+	"metadata": {
+		"authors": ["Tudi20"],
+		"native": "Magyar",
+		"english": "Hungarian"
+	},
+	"settingsForm": {
+		"settings": "Beállítások",
+		"language": "Nyelv",
+		"closeOnExit": "Bezárás a játék indulásakor",
+		"langCredits": "Fordította: {0}",
+		"and": "és"
+	},
+	"errors": {
+		"error": "Hiba",
+		"missing": {
+			"thcrap_loader": "thcrap_loader.exe nem található.\nBizonyosodj meg róla, hogy az alkalmazás mellette van!",
+			"gamesJs": "games.js nem található.\nBizonyosodj meg róla, hogy elöször a(z) thcrap_configure.exe fájlt futtatod!",
+			"patchStacks": "Patch stackekből álló konfig fájlok nem találhatóak.\nBizonyosodj meg róla, hogy elöször a(z) thcrap_configure.exe fájlt futtatod!",
+			"jsonParser": "A(z) Newtonsoft.Json.dll hiányzik. Bizonyosodj meg róla, hogy azt is átmásoltad."
+		},
+		"oops": "Valami hiba történt...",
+		"noneSelected":"Egy konfiguráció (patch stack) vagy játék (executable) sincs kiváalasztva!\nKérlek, válassz ki egyet!"
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Megjegyzés",
+			"text": "Az indító eltűnik konfigurálás közben..."
+		},
+		"kbSh": {
+			"caption": "Gyorsgombok",
+			"text": "Alt + F4: Alklamazás bezárása (alapértelmezett Windows rövidítés)\nCtrl + R: Alkalmazás újraindítása\nCtrl + O: Kiválasztott patch konfiguráció megnyitása\nF1: Gyorsgombok mutatása (ez az ablak)\nF2: Kiválasztott elem kedvencnek jejölése a kiválasztott listán"
+		}
+	},
+	"shCreate": {
+		"file": "Univezális THCRAP Indító",
+		"desc": "Parancsikon UTL-hez"
+	},
+	"mainForm": {
+		"utl": "Univerzális THCRAP Indító",
+		"menuStrip": [
+			[
+				"Alkalmazás",
+				"Parancsikon létrehozása az asztalon",
+				"Beállítások...",
+				"-",
+				"Újraindítás",
+				"Kilépés"
+			],
+			[
+				"THCRAP",
+				"THCRAP Konfiguráció indítása",
+				[
+					"Megnyitás...",
+					"Mappa megnyitása",
+					"Játéklista megnyitása",
+					"Kiválasztott patch konfiguráció megnyitása"
+				]
+			],
+			[
+				"GitHub",
+				"GitHub oldal",
+				[
+					"Visszajelzés",
+					"Hiba jelentése",
+					"Funkció kérése",
+					"Egyéb"
+				]
+			],
+			[
+				"Súgó",
+				"Gyorsgombok"
+			]
+		],
+		"tooltips": {
+			"startButton": "Thcrap indítása a kiválasztott beállításokkal",
+			"sortAZ": "Rendezés ábécésorrendbe",
+			"filterFav": "Szűrés kedvencek alapján",
+			"filterByType": "Szűrés típus alapján",
+			"patchLB": "Futtatási konfiguráció kiválasztása (patch stack)",
+			"gameLB": "Játék kiválasztása (executable)"
+		}
+	}
+}

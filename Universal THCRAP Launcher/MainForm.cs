@@ -54,6 +54,8 @@ namespace Universal_THCRAP_Launcher
             }
             SetDefaultSettings();
 
+            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
+
             if (I18N.LangNumber() == 0)
             {
                 string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");

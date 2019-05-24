@@ -103,7 +103,7 @@ namespace Universal_THCRAP_Launcher
         {
             btn_dwnlAllLangs.Enabled = false;
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading;
-            string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=i18n");
+            string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
             dynamic obj_gh = JsonConvert.DeserializeObject(gh);
             foreach (var item in obj_gh)
             {

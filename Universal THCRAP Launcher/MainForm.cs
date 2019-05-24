@@ -51,7 +51,7 @@ namespace Universal_THCRAP_Launcher
 
             if (I18N.LangNumber() == 0)
             {
-                string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/i18n/langs/en.json");
+                string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
                 File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
             }
             
@@ -160,7 +160,7 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem) obj).ShowDropDown());
 
-            string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/i18n/langs/" + Configuration.Lang);
+            string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + Configuration.Lang);
             File.WriteAllText(I18N.I18NDir + @"\en.json", newlang);
             
 

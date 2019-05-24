@@ -1,0 +1,87 @@
+{
+	"metadata": {
+		"authors": ["VasteelXolotl"],
+		"native": "Polski",
+		"english": "Polish"
+	},
+	"settingsForm": {
+		"settings": "Ustawienia",
+		"language": "Język",
+		"closeOnExit": "Zamknij po uruchomieniu gry",
+		"langCredits": "Tłumaczenie: {0}.",
+		"and": "i",
+		"downloadAll": "Pobierz wszystkie języki",
+		"downloading": "Trwa pobieranie...",
+		"hidePatchExtension": "Ukryj rozszerzenia na liście"
+	},
+	"errors": {
+		"error": "Błąd",
+		"missing": {
+			"thcrap_loader": "Nie znaleziono pliku thcrap_loader.exe.\nUmieść oba programy w tym samym miejscu!",
+			"gamesJs": "Nie znaleziono pliku games.js.\nNajpierw włącz thcrap_configure.exe!",
+			"patchStacks": "Nie znaleziono plików konfiguracyjnych.\nNajpierw włącz thcrap_configure.exe!",
+			"jsonParser": "Nie znaleziono pliku Newtonsoft.Json.dll. Upewnij się, że jest w folderze tego programu."
+		},
+		"oops": "Coś poszło nie tak...",
+		"noneSelected":"Nie wybrano konfiguracji lub gry!"
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Uwaga",
+			"text": "Launcher znika podczas konfiguracji..."
+		},
+		"kbSh": {
+			"caption": "Skróty klawiaturowe",
+			"text": "Alt + F4: Zamknij aplikację (domyślny skrót Windows)\nCtrl + R: Zrestartuj aplikację\nCtrl + O: Otwórz wybraną konfigurację\nF1: Pokaż skróty klawiaturowe (to okno)\nF2: Dodaj zaznaczoną pozycję na liście do ulubionych"
+		}
+	},
+	"shCreate": {
+		"file": "Uniwersalny Launcher do THCRAP",
+		"desc": "Skrót do UTL"
+	},
+	"mainForm": {
+		"utl": "Uniwersalny Launcher do THCRAP",
+		"menuStrip": [
+			[
+				"Aplikacja",
+				"Stwórz skrót na pulpicie",
+				"Ustawienia...",
+				"-",
+				"Restart",
+				"Wyjście"
+			],
+			[
+				"THCRAP",
+				"Otwórz konfigurację THCRAP",
+				[
+					"Otwórz...",
+					"Otwórz folder",
+					"Otwórz listę gier",
+					"Otwórz wskazaną konfigurację"
+				]
+			],
+			[
+				"GitHub",
+				"Strona na GitHubie",
+				[
+					"Informacje zwrotne",
+					"Zgłoszenia błędów",
+					"Prośby o nowe funkcje",
+					"Inne"
+				]
+			],
+			[
+				"Pomoc",
+				"Skróty klawiaturowe"
+			]
+		],
+		"tooltips": {
+			"startButton": "Włącz THCRAP z wybranymi ustawieniami",
+			"sortAZ": "Sortuj alfabetycznie",
+			"filterFav": "Filtruj według ulubionych",
+			"filterByType": "Filter według typu",
+			"patchLB": "Wybierz konfigurację",
+			"gameLB": "Wybierz grę"
+		}
+	}
+}

@@ -9,7 +9,9 @@
 		"language": "Language",
 		"closeOnExit": "Close when game starts",
 		"langCredits": "Translated by {0}.",
-		"and": "and"
+		"and": "and",
+		"downloadAll": "Download All Languages",
+		"downloading": "Downloading..."
 	},
 	"errors": {
 		"error": "Error",

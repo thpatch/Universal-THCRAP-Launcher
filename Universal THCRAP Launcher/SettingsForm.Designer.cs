@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.closeOnExitCheckBox = new System.Windows.Forms.CheckBox();
             this.languageComboBox = new System.Windows.Forms.ComboBox();
             this.languageLabel = new System.Windows.Forms.Label();
             this.langCreditsLabel = new System.Windows.Forms.Label();
+            this.btn_dwnlAllLangs = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // closeOnExitCheckBox
@@ -39,7 +41,7 @@
             this.closeOnExitCheckBox.AutoSize = true;
             this.closeOnExitCheckBox.Checked = true;
             this.closeOnExitCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.closeOnExitCheckBox.Location = new System.Drawing.Point(12, 125);
+            this.closeOnExitCheckBox.Location = new System.Drawing.Point(12, 129);
             this.closeOnExitCheckBox.Name = "closeOnExitCheckBox";
             this.closeOnExitCheckBox.Size = new System.Drawing.Size(138, 17);
             this.closeOnExitCheckBox.TabIndex = 11;
@@ -56,7 +58,7 @@
             this.languageComboBox.Location = new System.Drawing.Point(77, 12);
             this.languageComboBox.MaxDropDownItems = 16;
             this.languageComboBox.Name = "languageComboBox";
-            this.languageComboBox.Size = new System.Drawing.Size(121, 21);
+            this.languageComboBox.Size = new System.Drawing.Size(208, 21);
             this.languageComboBox.TabIndex = 12;
             this.languageComboBox.SelectedIndexChanged += new System.EventHandler(this.languageComboBox_SelectedIndexChanged);
             // 
@@ -72,23 +74,35 @@
             // langCreditsLabel
             // 
             this.langCreditsLabel.AutoSize = true;
-            this.langCreditsLabel.Location = new System.Drawing.Point(11, 41);
+            this.langCreditsLabel.Location = new System.Drawing.Point(12, 36);
             this.langCreditsLabel.MaximumSize = new System.Drawing.Size(276, 0);
             this.langCreditsLabel.Name = "langCreditsLabel";
             this.langCreditsLabel.Size = new System.Drawing.Size(110, 13);
             this.langCreditsLabel.TabIndex = 14;
             this.langCreditsLabel.Text = "Translated by: Tudi20";
             // 
+            // btn_dwnlAllLangs
+            // 
+            this.btn_dwnlAllLangs.Location = new System.Drawing.Point(156, 125);
+            this.btn_dwnlAllLangs.Name = "btn_dwnlAllLangs";
+            this.btn_dwnlAllLangs.Size = new System.Drawing.Size(135, 23);
+            this.btn_dwnlAllLangs.TabIndex = 15;
+            this.btn_dwnlAllLangs.Text = "Download All Languages";
+            this.btn_dwnlAllLangs.UseVisualStyleBackColor = true;
+            this.btn_dwnlAllLangs.Click += new System.EventHandler(this.Btn_dwnlAllLangs_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 154);
+            this.ClientSize = new System.Drawing.Size(297, 154);
+            this.Controls.Add(this.btn_dwnlAllLangs);
             this.Controls.Add(this.langCreditsLabel);
             this.Controls.Add(this.languageLabel);
             this.Controls.Add(this.languageComboBox);
             this.Controls.Add(this.closeOnExitCheckBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
@@ -106,5 +120,6 @@
         private System.Windows.Forms.ComboBox languageComboBox;
         private System.Windows.Forms.Label languageLabel;
         private System.Windows.Forms.Label langCreditsLabel;
+        private System.Windows.Forms.Button btn_dwnlAllLangs;
     }
 }

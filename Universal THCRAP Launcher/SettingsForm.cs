@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -16,6 +17,7 @@ namespace Universal_THCRAP_Launcher
 
         private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _langFileToName = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _downNameToPatch = new Dictionary<string, string>();
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
@@ -43,7 +45,7 @@ namespace Universal_THCRAP_Launcher
             Debug.WriteLine("Configuration.Lang = " + Configuration.Lang);
             Debug.WriteLine("Language Selected: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
             #endregion
-            
+
             UpdateLang();
             UpdateCredits();
         }
@@ -53,6 +55,7 @@ namespace Universal_THCRAP_Launcher
             Text = I18N.LangResource.settingsForm.settings;
             languageLabel.Text = I18N.LangResource.settingsForm.language + ':';
             closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit;
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
         }
 
         private void UpdateCredits()
@@ -82,6 +85,33 @@ namespace Universal_THCRAP_Launcher
             UpdateCredits();
         }
 
+        static string ReadTextFromUrl(string url)
+        {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // Assume UTF8, but detect BOM - could also honor response charset I suppose
+            var client = new WebClient();
+            client.Headers.Add(HttpRequestHeader.UserAgent, "UTL");
+            var stream = client.OpenRead(url);
+            using (var textReader = new StreamReader(stream, System.Text.Encoding.UTF8, true))
+            {
+                return textReader.ReadToEnd();
+            }
+        }
 
+        private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
+        {
+            btn_dwnlAllLangs.Enabled = false;
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading;
+            string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=i18n");
+            dynamic obj_gh = JsonConvert.DeserializeObject(gh);
+            foreach (var item in obj_gh)
+            {
+                string langtxt = ReadTextFromUrl(item.download_url.ToString());
+                File.WriteAllText(I18N.I18NDir + item.name, langtxt);
+            }
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
+            btn_dwnlAllLangs.Enabled = true;
+        }
     }
 }

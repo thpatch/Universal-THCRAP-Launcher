@@ -264,143 +264,153 @@ namespace Universal_THCRAP_Launcher
         private void SetDefaultSettings()
         {
             //Default Configuration setting
-            if (Configuration1 == null)
+            try
             {
-                Configuration1 = new Configuration();
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1 was null. Reinitializing it.");
-            }
-
-            if (Configuration.Lang == null)
-            {
-                Configuration.Lang = "en.json";
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
-            }
-
-            if (Configuration1.LastGame == null)
-            {
-                Configuration1.LastGame = _gamesList[0];
-                Trace.WriteLine(
-                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
-            }
-
-            if (Configuration1.LastConfig == null)
-            {
-                Configuration1.LastConfig = _jsFiles[0];
-                Trace.WriteLine(
-                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
-            }
-
-            if (Configuration1.IsDescending == null)
-            {
-                string[] a = { "false", "false" };
-                Configuration1.IsDescending = a;
-                Trace.WriteLine(
-                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
-                    Configuration1.IsDescending[1]);
-            }
-
-            if (Configuration1.OnlyFavourites == null)
-            {
-                string[] a = { "false", "false" };
-                Configuration1.OnlyFavourites = a;
-                Trace.WriteLine(
-                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites has been set to {Configuration1.OnlyFavourites[0]}, " +
-                    Configuration1.OnlyFavourites[1]);
-            }
-
-            if (Configuration1.HidePatchExtension == null)
-            {
-                Configuration1.HidePatchExtension = true;
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.HidePatchExtension has been set to {Configuration1.HidePatchExtension}");
-            }
-
-            if (Configuration1.ExitAfterStartup == null)
-            {
-                Configuration1.ExitAfterStartup = true;
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.ExitAfterStartup has been set to {Configuration1.ExitAfterStartup}");
-            }
-
-            if (Configuration1.Window == null)
-            {
-                var window = new Window
-                { Size = new[] { Size.Width, Size.Height }, Location = new[] { Location.X, Location.Y } };
-                Configuration1.Window = window;
-                Trace.WriteLine(
-                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
-                Trace.WriteLine(
-                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
-                Trace.WriteLine(
-                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
-            }
-
-
-            //Default sort
-            for (var i = 0; i < 2; i++)
-                if (Configuration1.IsDescending[i] == "false")
+                if (Configuration1.ToString() == null)
                 {
-                    
-                    if (i == 0)
-                    {
-                        SortListBoxItems(ref patchListBox);
-                        sortAZButton1.BackgroundImage = _sortAscending;
-                    }
-                    else
-                    {
-                        SortListBoxItems(ref gameListBox);
-                        sortAZButton2.BackgroundImage = _sortAscending;
-                    }
-                }
-                else if (i == 0)
-                {
-                    
-                    SortListBoxItemsDesc(ref patchListBox);
-                    sortAZButton1.BackgroundImage = _sortDescending;
-                }
-                else
-                {
-                    SortListBoxItemsDesc(ref gameListBox);
-                    sortAZButton2.BackgroundImage = _sortDescending;
+                    Configuration1 = new Configuration();
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1 was null. Reinitializing it.");
                 }
 
-            //Default favourite button state
-            for (var i = 0; i < 2; i++)
-                if (Configuration1.OnlyFavourites[i] == "true")
+                if (Configuration.Lang == null)
                 {
+                    Configuration.Lang = "en.json";
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
+                }
+
+                if (Configuration1.LastGame == null)
+                {
+                    Configuration1.LastGame = _gamesList[0];
                     Trace.WriteLine(
-                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
-                    if (i == 0)
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
+                }
+
+                if (Configuration1.LastConfig == null)
+                {
+                    Configuration1.LastConfig = _jsFiles[0];
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
+                }
+
+                if (Configuration1.IsDescending == null)
+                {
+                    string[] a = { "false", "false" };
+                    Configuration1.IsDescending = a;
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
+                        Configuration1.IsDescending[1]);
+                }
+
+                if (Configuration1.OnlyFavourites == null)
+                {
+                    string[] a = { "false", "false" };
+                    Configuration1.OnlyFavourites = a;
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites has been set to {Configuration1.OnlyFavourites[0]}, " +
+                        Configuration1.OnlyFavourites[1]);
+                }
+
+                if (Configuration1.HidePatchExtension == null)
+                {
+                    Configuration1.HidePatchExtension = true;
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.HidePatchExtension has been set to {Configuration1.HidePatchExtension}");
+                }
+
+                if (Configuration1.ExitAfterStartup == null)
+                {
+                    Configuration1.ExitAfterStartup = true;
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.ExitAfterStartup has been set to {Configuration1.ExitAfterStartup}");
+                }
+
+                if (Configuration1.Window == null)
+                {
+                    var window = new Window
+                    { Size = new[] { Size.Width, Size.Height }, Location = new[] { Location.X, Location.Y } };
+                    Configuration1.Window = window;
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+                    Trace.WriteLine(
+                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+                }
+
+
+                //Default sort
+                for (var i = 0; i < 2; i++)
+                    if (Configuration1.IsDescending[i] == "false")
                     {
-                        filterFavButton1.BackgroundImage = _star;
-                        for (var n = patchListBox.Items.Count - 1; n >= 0; --n)
+
+                        if (i == 0)
                         {
-                            const string filterItem = "★";
-                            if (!patchListBox.Items[n].ToString().Contains(filterItem))
-                                patchListBox.Items.RemoveAt(n);
+                            SortListBoxItems(ref patchListBox);
+                            sortAZButton1.BackgroundImage = _sortAscending;
+                        }
+                        else
+                        {
+                            SortListBoxItems(ref gameListBox);
+                            sortAZButton2.BackgroundImage = _sortAscending;
+                        }
+                    }
+                    else if (i == 0)
+                    {
+
+                        SortListBoxItemsDesc(ref patchListBox);
+                        sortAZButton1.BackgroundImage = _sortDescending;
+                    }
+                    else
+                    {
+                        SortListBoxItemsDesc(ref gameListBox);
+                        sortAZButton2.BackgroundImage = _sortDescending;
+                    }
+
+                //Default favourite button state
+                for (var i = 0; i < 2; i++)
+                    if (Configuration1.OnlyFavourites[i] == "true")
+                    {
+                        Trace.WriteLine(
+                            $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
+                        if (i == 0)
+                        {
+                            filterFavButton1.BackgroundImage = _star;
+                            for (var n = patchListBox.Items.Count - 1; n >= 0; --n)
+                            {
+                                const string filterItem = "★";
+                                if (!patchListBox.Items[n].ToString().Contains(filterItem))
+                                    patchListBox.Items.RemoveAt(n);
+                            }
+                        }
+                        else
+                        {
+                            filterFavButton2.BackgroundImage = _star;
+                            for (var n = gameListBox.Items.Count - 1; n >= 0; --n)
+                            {
+                                const string filterItem = "★";
+                                if (!gameListBox.Items[n].ToString().Contains(filterItem))
+                                    gameListBox.Items.RemoveAt(n);
+                            }
                         }
                     }
                     else
                     {
-                        filterFavButton2.BackgroundImage = _star;
-                        for (var n = gameListBox.Items.Count - 1; n >= 0; --n)
-                        {
-                            const string filterItem = "★";
-                            if (!gameListBox.Items[n].ToString().Contains(filterItem))
-                                gameListBox.Items.RemoveAt(n);
-                        }
+                        if (i == 0) filterFavButton1.BackgroundImage = _starHollow;
+                        else filterFavButton2.BackgroundImage = _starHollow;
                     }
-                }
-                else
-                {
-                    if (i == 0) filterFavButton1.BackgroundImage = _starHollow;
-                    else filterFavButton2.BackgroundImage = _starHollow;
-                }
 
-            //Default exe type button state
-            filterByType_button.BackgroundImage = _gameAndCustom;
-            for (var i = 0; i < Configuration1.FilterExeType; i++)
+                //Default exe type button state
+                filterByType_button.BackgroundImage = _gameAndCustom;
+                for (var i = 0; i < Configuration1.FilterExeType; i++)
+                {
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
+                    filterByType_button_Click("DefaultSettings", new EventArgs());
+                }
+            }
+            catch(Exception e)
             {
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
-                filterByType_button_Click("DefaultSettings", new EventArgs());
+                MessageBox.Show("1. If you're a developer: Don't forget to set the working directory to thcrap's directory.\n\n" +
+                    "2. If you're a dev in the right working directory this is for you:\n=====\n" + e.ToString() + "\n=====\n\n3. If you're an end user," +
+                    " try reinstalling again carefully following the instructions this time or try pinging Tudi20 in Discord.");
+                Application.Exit();
             }
         }
 

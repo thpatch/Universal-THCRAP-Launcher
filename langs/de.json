@@ -15,15 +15,15 @@
 		"hidePatchExtension": "Erweiterung auf Patch-Liste verstecken"
         },
 		"errors": {
-				"error": "Fehler",
-				"missing": {
-					"thcrap_loader": "thcrap_loader.exe wurde nicht gefunden.\nBitte überprüfen, ob sich die Datei im gleichen Verzeichnis befindet.",
-					"gamesJs": "games.js wurde nicht gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
-					"patchStacks": "Keine Konfigurationsdateien oder Patch-Stacks gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
-					"jsonParser": "Newtonsoft.Json.dll wurde nicht gefunden. Bitte überprüfen, ob die Datei mit kopiert wurde."
-                },
-					"oops": "Etwas ist falsch gelaufen...",
-					"noneSelected":"Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!"
+			"error": "Fehler",
+			"missing": {
+				"thcrap_loader": "thcrap_loader.exe wurde nicht gefunden.\nBitte überprüfen, ob sich die Datei im gleichen Verzeichnis befindet.",
+				"gamesJs": "games.js wurde nicht gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
+				"patchStacks": "Keine Konfigurationsdateien oder Patch-Stacks gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
+				"jsonParser": "Newtonsoft.Json.dll wurde nicht gefunden. Bitte überprüfen, ob die Datei mit kopiert wurde."
+			},
+			"oops": "Etwas ist falsch gelaufen...",
+			"noneSelected":"Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!"
         },
 		"popup": {
 			"hideLauncher": {

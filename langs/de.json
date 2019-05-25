@@ -1,87 +1,87 @@
 {
 	"metadata": {
-		"authors": ["32th System"],
+		"authors": ["32th System", "Splashman", "Yaro"],
 		"native": "Deutsch",
 		"english": "German"
-	},
+        },
 	"settingsForm": {
 		"settings": "Einstellungen",
 		"language": "Sprache",
-		"closeOnExit": "Schließen wenn das Spiel startet",
+		"closeOnExit": "Beim Beenden schließen",
 		"langCredits": "Übersetzt von: {0}.",
 		"and": "und",
 		"downloadAll": "Alle Sprachen herunterladen",
 		"downloading": "Wird heruntergeladen...",
 		"hidePatchExtension": "Erweiterung auf Patch-Liste verstecken"
-	},
-	"errors": {
-		"error": "Fehler",
-		"missing": {
-			"thcrap_loader": "thcrap_loader.exe konnte nicht gefunden werden.\nStellen sie sicher, die Anwendung ist neben thcrap_loader.exe!",
-			"gamesJs": "games.js konnte nicht gefunden werden.\nStellen sie sicher sie haben thcrap_confugre.exe als erstes ausgeführt!",
-			"patchStacks": "Keine Konfigurationsdateien oder Patch-Stapel gefunden.\nStellen sie sicher sie haben thcrap_confugre.exe als erstes ausgeführt!",
-			"jsonParser": "Newtonsoft.Json.dll fehlt. Stellen sie sicher diese Datei wurde auch kopiert."
-		},
-		"oops": "Etwas ist falsch gelaufen...",
-		"noneSelected":"Keine Ausführungskonfiguration (Patch-Stapel) oder Spiel (ausführbare Datei) ausgewählt!\nBitte wählen sie eines!"
-	},
-	"popup": {
-		"hideLauncher": {
-			"caption": "Information",
-			"text": "Der Launcher verschwindet während der Konfiguration..."
-		},
-		"kbSh": {
-			"caption": "Tastenkürzel",
-			"text": "Alt + F4: Anwendung schließen (standard Windows Kürzel)\nCtrl + R: Anwendung neu staten\nCtrl + O: Öffne ausgewählte Patch-Konfiguration\nF1: Tastenkürzel antzeigen (dieses Fenster)\nF2: Ausgewähltes Element der Liste favorisieren."
+        },
+		"errors": {
+			"error": "Fehler",
+			"missing": {
+				"thcrap_loader": "thcrap_loader.exe wurde nicht gefunden.\nBitte überprüfen, ob sich die Datei im gleichen Verzeichnis befindet.",
+				"gamesJs": "games.js wurde nicht gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
+				"patchStacks": "Keine Konfigurationsdateien oder Patch-Stacks gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
+				"jsonParser": "Newtonsoft.Json.dll wurde nicht gefunden. Bitte überprüfen, ob die Datei mit kopiert wurde."
+			},
+			"oops": "Etwas ist falsch gelaufen...",
+			"noneSelected":"Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!"
+        },
+		"popup": {
+			"hideLauncher": {
+				"caption": "Information",
+				"text": "Der Launcher wird während der Konfiguration ausgeblendet..."
+                },
+				"kbSh": {
+					"caption": "Tastenkürzel",
+					"text": "Alt + F4: Anwendung schließen (Standard-Windows-Kürzel)\nCtrl + R: Anwendung neu starten\nCtrl + O: Ausgewählte Patch-Konfiguration öffnen\nF1: Tastenkürzel anzeigen (dieses Fenster)\nF2: Ausgewähltes Element der Liste favorisieren."
+                }
+        },
+		"shCreate": {
+			"file": "Universaler THCRAP-Launcher",
+			"desc": "Verknüpfung auf UTL"
+        },
+		"mainForm": {
+			"utl": "Universaler THCRAP-Launcher",
+			"menuStrip": [
+	 				[
+						"App",
+						"Verknüpfung auf Desktop erstellen",
+						"Einstellungen...",
+						"-",
+						"Neu starten",
+						"Schließen"
+					],
+					[
+						"THCRAP",
+						"thcrap-Konfiguration öffnen",
+							[
+								"Öffnen...",
+								"Ordner Öffnen",
+								"Spieleliste Öffnen",
+								"Ausgewählte Patch-Konfiguration Öffnen"
+							]
+					],
+					[
+						"GitHub",
+						"GitHub-Seite",
+						[
+							"Feedback",
+							"Fehlerbericht",
+							"Feature Vorschlagen",
+							"Anderes"
+						]
+					],
+					[
+						"Hilfe",
+						"Tastenkürzel"
+					]
+				],
+				"tooltips": {
+					"startButton": "thcrap mit ausgewählten Einstellungen starten",
+					"sortAZ": "In alphabetischer Reihenfolge sortieren",
+					"filterFav": "Favoriten filtern",
+					"filterByType": "Nach Typ filtern",
+					"patchLB": "Ausführungskonfiguration (Patch-Stack) auswählen",
+					"gameLB": "Spiel (ausführbare Datei) auswählen"
+				}
 		}
-	},
-	"shCreate": {
-		"file": "Universaler THCRAP Launcher",
-		"desc": "Verknüpfung auf UTL"
-	},
-	"mainForm": {
-		"utl": "Universaler THCRAP Launcher",
-		"menuStrip": [
-			[
-				"App",
-				"Verknüpfung auf Desktop erstellen",
-				"Einstellungen...",
-				"-",
-				"Neu Starten",
-				"Schließen"
-			],
-			[
-				"THCRAP",
-				"THCRAP Konfiguration öffnen",
-				[
-					"Öffnen...",
-					"Ordner Öffnen",
-					"Spieleliste Öffnen",
-					"Ausgewählte Patch-Konfiguration Öffnen"
-				]
-			],
-			[
-				"GitHub",
-				"GitHub Seite",
-				[
-					"Feedback",
-					"Fehlerbericht",
-					"Feature Vorschlagen",
-					"Anderes"
-				]
-			],
-			[
-				"Hilfe",
-				"Tastenkürzel"
-			]
-		],
-		"tooltips": {
-			"startButton": "thcrap mit ausgewählten Einstellungen starten",
-			"sortAZ": "In alphabetischer Reihenfolge sortieren",
-			"filterFav": "Favoriten filtern",
-			"filterByType": "Nach Typ filtern",
-			"patchLB": "Ausführungskonfiguration (Patch-Stapel) auswählen",
-			"gameLB": "Spiel (ausführbare Datei) auswählen"
-		}
-	}
 }

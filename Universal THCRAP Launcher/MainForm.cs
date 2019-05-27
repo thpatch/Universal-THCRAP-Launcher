@@ -24,10 +24,10 @@ namespace Universal_THCRAP_Launcher
             InitializeComponent();
         }
 
-        private static void ErrorAndExit(string errorMessage)
+        private static void ErrorAndExit(dynamic errorMessage)
         {
-            MessageBox.Show(text: errorMessage, caption: I18N.LangResource.errors.error, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage}");
+            MessageBox.Show(text: errorMessage.ToString(), caption: I18N.LangResource.errors.error.ToString(), buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage.ToString()}");
             Application.Exit();
         }
 
@@ -52,7 +52,7 @@ namespace Universal_THCRAP_Launcher
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
                 dconfig = JsonConvert.DeserializeObject(raw, settings);
             }
-            SetDefaultSettings();
+            
 
             if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
@@ -80,6 +80,8 @@ namespace Universal_THCRAP_Launcher
                 }
             }
 
+            
+
             //Load language
             Configuration.Lang = dconfig?.Lang;
             if (Configuration.Lang == null) Configuration.Lang = "en.json";
@@ -92,6 +94,8 @@ namespace Universal_THCRAP_Launcher
 
             //Give error if no games.js file
             if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
+
+            SetDefaultSettings();
 
             DeleteOutdatedConfig();
 

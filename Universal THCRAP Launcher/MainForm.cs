@@ -885,12 +885,13 @@ namespace Universal_THCRAP_Launcher
         {
             var shDesktop = (object)"Desktop";
             var shell = new WshShell();
-            var shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + I18N.LangResource.shCreate.file.ToString() + ".lnk";
+            string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + "\\" + (string)I18N.LangResource.shCreate.file + ".lnk";
             var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
-            shortcut.Description = I18N.LangResource.shCreate.desc.ToString();
+            shortcut.Description = (string)I18N.LangResource.shCreate.desc;
             shortcut.TargetPath = Assembly.GetEntryAssembly().Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
             shortcut.Save();
+            Trace.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
         }
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) =>

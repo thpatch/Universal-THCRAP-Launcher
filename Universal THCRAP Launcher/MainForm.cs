@@ -80,8 +80,6 @@ namespace Universal_THCRAP_Launcher
                 }
             }
 
-            
-
             //Load language
             Configuration.Lang = dconfig?.Lang;
             if (Configuration.Lang == null) Configuration.Lang = "en.json";
@@ -94,8 +92,6 @@ namespace Universal_THCRAP_Launcher
 
             //Give error if no games.js file
             if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
-
-            
 
             DeleteOutdatedConfig();
 
@@ -128,8 +124,6 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
-            
-
             #region Display
 
             //Display executables
@@ -149,8 +143,6 @@ namespace Universal_THCRAP_Launcher
             AddStars(gameListBox, Favourites1.Games);
 
             #endregion
-
-            
 
             if (menuStrip1 == null) return;
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>

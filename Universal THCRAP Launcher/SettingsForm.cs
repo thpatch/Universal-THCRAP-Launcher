@@ -42,9 +42,9 @@ namespace Universal_THCRAP_Launcher
             foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
-                Trace.WriteLine($"Language File: {file}. Here's the raw:\n{raw}");
+                //Trace.WriteLine($"Language File: {file}. Here's the raw:\n{raw}");
                 dynamic langFile = JsonConvert.DeserializeObject(raw);
-                Trace.WriteLine($"Loading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
+                Trace.WriteLine($"\tLoading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
                 if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
                 _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
                 if (!_langFileToName.ContainsKey(file))
@@ -53,6 +53,7 @@ namespace Universal_THCRAP_Launcher
                 languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
             }
             #endregion
+            Trace.WriteLine("Language loading ended.");
             #region Select appropiate lang
             if (Configuration.Lang == null)
                 languageComboBox.SelectedIndex = 0;

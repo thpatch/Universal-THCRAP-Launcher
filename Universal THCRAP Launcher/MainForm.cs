@@ -163,6 +163,8 @@ namespace Universal_THCRAP_Launcher
             UpdateLanguage();
 
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Form1 Loaded");
+            Trace.WriteLine($"Configuration:\n\tExitAfterStartup: {Configuration1.ExitAfterStartup}\n\tLastConfig: {Configuration1.LastConfig}\n\tLastGame: {Configuration1.LastGame}\n\tFilterExeType: {Configuration1.FilterExeType}, HidePatchExtension: {Configuration1.HidePatchExtension}, Lang: {Configuration.Lang}");
+            Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}\n\tOnlyFavourites: {Configuration1.OnlyFavourites[0]} | {Configuration1.OnlyFavourites[1]}\n\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}\n\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
 
         public void PopulatePatchList()

@@ -15,6 +15,13 @@ using System.Windows.Forms;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
 
+/* WARNING: This code has been made by a new developer with WinForms
+ * and the quality of code is very bad. If you want to be able to get thiw working, ensure:
+ * NuGet packages are working.
+ * Both "code behinds" have been loaded up in th editor once.
+ * For Debug's the working directory has been set to thcrap's directory.
+ */ 
+
 namespace Universal_THCRAP_Launcher
 {
     public partial class MainForm : Form
@@ -33,6 +40,7 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
                 "\nVersion: " + Application.ProductVersion.TrimStart(new char[] { '0', '.' }) +
                 "\nBuild Date: " + Properties.Resources.BuildDate +

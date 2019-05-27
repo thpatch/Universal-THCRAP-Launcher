@@ -95,7 +95,7 @@ namespace Universal_THCRAP_Launcher
             //Give error if no games.js file
             if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
 
-            SetDefaultSettings();
+            
 
             DeleteOutdatedConfig();
 
@@ -128,6 +128,8 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
+            
+
             #region Display
 
             //Display executables
@@ -136,6 +138,8 @@ namespace Universal_THCRAP_Launcher
                 _gamesList.Add(item.Key);
                 gameListBox.Items.Add(item.Key);
             }
+
+            SetDefaultSettings();
 
             //Change Form settings
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
@@ -146,6 +150,7 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
+            
 
             if (menuStrip1 == null) return;
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>

@@ -62,11 +62,11 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateLang()
         {
-            Text = I18N.LangResource.settingsForm.settings;
-            languageLabel.Text = I18N.LangResource.settingsForm.language + ':';
-            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit;
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
-            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension;
+            Text = I18N.LangResource.settingsForm.settings.ToString();
+            languageLabel.Text = I18N.LangResource.settingsForm.language.ToString() + ':';
+            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit.ToString();
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
+            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension.ToString();
         }
 
         private void UpdateCredits()
@@ -80,9 +80,9 @@ namespace Universal_THCRAP_Launcher
             int place = credits.LastIndexOf(',');
             if (place != -1)
             {
-                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and);
+                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and.ToString());
             }
-            langCreditsLabel.Text = string.Format((string)I18N.LangResource.settingsForm.langCredits, credits);
+            langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits.ToString(), credits);
         }
 
         private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) =>
@@ -112,7 +112,7 @@ namespace Universal_THCRAP_Launcher
 
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading;
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading.ToString();
             btn_dwnlAllLangs.Enabled = false;
             string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
             dynamic obj_gh = JsonConvert.DeserializeObject(gh);
@@ -121,7 +121,7 @@ namespace Universal_THCRAP_Launcher
                 string langtxt = ReadTextFromUrl(item.download_url.ToString());
                 File.WriteAllText(I18N.I18NDir + item.name, langtxt);
             }
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
             btn_dwnlAllLangs.Enabled = true;
 
             LoadLangs();

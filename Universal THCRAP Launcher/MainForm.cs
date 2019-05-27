@@ -438,6 +438,7 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (this == null) return;
+            
             startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
             splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
             patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
@@ -656,8 +657,8 @@ namespace Universal_THCRAP_Launcher
 
         private static void ShowKeyboardShortcuts()
         {
-            MessageBox.Show(I18N.LangResource.popup.kbSh.text,
-                I18N.LangResource.popup.kbSh.caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(I18N.LangResource.popup.kbSh.text.ToString(),
+                I18N.LangResource.popup.kbSh.caption.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void MainForm_Closing(object sender, FormClosingEventArgs e)

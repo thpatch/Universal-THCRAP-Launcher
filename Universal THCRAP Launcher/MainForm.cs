@@ -571,7 +571,7 @@ namespace Universal_THCRAP_Launcher
         {
             if (patchListBox.SelectedIndex == -1 || gameListBox.SelectedIndex == -1)
             {
-                MessageBox.Show(I18N.LangResource.errors.noneSelected, I18N.LangResource.errors.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(I18N.LangResource.errors.noneSelected.ToString(), I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -862,12 +862,12 @@ namespace Universal_THCRAP_Launcher
 
         private void openConfigureTS_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(I18N.LangResource.popup.hideLauncher.text,
-                I18N.LangResource.popup.hideLauncher.caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(I18N.LangResource.popup.hideLauncher.text.ToString(),
+                I18N.LangResource.popup.hideLauncher.caption.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
             var p = Process.Start("thcrap_configure.exe");
             if (p == null)
             {
-                MessageBox.Show(I18N.LangResource.errors.oops, I18N.LangResource.errors.error);
+                MessageBox.Show(I18N.LangResource.errors.oops.ToString(), I18N.LangResource.errors.error.ToString());
                 return;
             }
 
@@ -885,9 +885,9 @@ namespace Universal_THCRAP_Launcher
         {
             var shDesktop = (object)"Desktop";
             var shell = new WshShell();
-            var shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + I18N.LangResource.shCreate.file + ".lnk";
+            var shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + I18N.LangResource.shCreate.file.ToString() + ".lnk";
             var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
-            shortcut.Description = I18N.LangResource.shCreate.desc;
+            shortcut.Description = I18N.LangResource.shCreate.desc.ToString();
             shortcut.TargetPath = Assembly.GetEntryAssembly().Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
             shortcut.Save();

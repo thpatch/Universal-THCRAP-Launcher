@@ -120,14 +120,21 @@ namespace Universal_THCRAP_Launcher
                 btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading.ToString();
             else btn_dwnlAllLangs.Text = "Downloading...";
             btn_dwnlAllLangs.Enabled = false;
-            string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
-            dynamic obj_gh = JsonConvert.DeserializeObject(gh);
-            foreach (var item in obj_gh)
+            try
             {
-                string langtxt = ReadTextFromUrl(item.download_url.ToString());
-                File.WriteAllText(I18N.I18NDir + item.name, langtxt);
+                string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
+                dynamic obj_gh = JsonConvert.DeserializeObject(gh);
+                foreach (var item in obj_gh)
+                {
+                    string langtxt = ReadTextFromUrl(item.download_url.ToString());
+                    File.WriteAllText(I18N.I18NDir + item.name, langtxt);
+                }
             }
-
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex.ToString()}");
+                MessageBox.Show(I18N.LangResource.error.downloadError.ToString(),I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
             btn_dwnlAllLangs.Enabled = true;
 

@@ -12,7 +12,7 @@
 		"and": "és",
 		"downloadAll": "Összes nyelv letöltése",
 		"downloading:": "Letöltés...",
-		"hidePatchExtension":"Konfiguráció (patch stack) kiterjesztésének elrejtése"
+		"hidePatchExtension": "Konfiguráció (patch stack) kiterjesztésének elrejtése"
 
 	},
 	"errors": {
@@ -24,7 +24,8 @@
 			"jsonParser": "A(z) Newtonsoft.Json.dll hiányzik. Bizonyosodj meg róla, hogy azt is átmásoltad."
 		},
 		"oops": "Valami hiba történt...",
-		"noneSelected":"Egy konfiguráció (patch stack) vagy játék (executable) sincs kiváalasztva!\nKérlek, válassz ki egyet!"
+		"noneSelected": "Egy konfiguráció (patch stack) vagy játék (executable) sincs kiváalasztva!\nKérlek, válassz ki egyet!",
+		"downloadError": "Nem sikerült a nyelvi fájlok letöltése a GitHubról.\nEnnek lehetséges indokai:\n- Nem vagy csatlakozva az Internethez.\n- A program annyira elavult, hogy már nem létezik a GitHub repo.\n- Egy olyan jövőben vagy, ahol nincs GitHub vagy Internet."
 	},
 	"popup": {
 		"hideLauncher": {

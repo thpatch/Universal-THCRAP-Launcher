@@ -23,7 +23,7 @@
 			"jsonParser": "Nie znaleziono pliku Newtonsoft.Json.dll. Upewnij się, że jest w folderze tego programu."
 		},
 		"oops": "Coś poszło nie tak...",
-		"noneSelected":"Nie wybrano konfiguracji lub gry!"
+		"noneSelected": "Nie wybrano konfiguracji lub gry!"
 	},
 	"popup": {
 		"hideLauncher": {

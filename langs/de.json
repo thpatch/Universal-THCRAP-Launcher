@@ -23,7 +23,7 @@
 				"jsonParser": "Newtonsoft.Json.dll wurde nicht gefunden. Bitte überprüfen, ob die Datei mit kopiert wurde."
 			},
 			"oops": "Etwas ist falsch gelaufen...",
-			"noneSelected":"Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!"
+			"noneSelected": "Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!"
         },
 		"popup": {
 			"hideLauncher": {

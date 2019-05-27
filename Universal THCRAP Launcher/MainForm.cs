@@ -66,8 +66,15 @@ namespace Universal_THCRAP_Launcher
 
             if (I18N.LangNumber() == 0)
             {
-                string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
-                File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                try
+                {
+                    string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
+                    File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                } catch (Exception ex)
+                {
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down English language file.\nReason: {ex.ToString()}");
+                    ErrorAndExit("No language files found and couldn't connect to GitHub to download English language file. Either put one manually into " + I18N.I18NDir + "\nor find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json .\nOr use an older version of the program ¯\\_(ツ)_/¯.");
+                }
             }
 
             //Give error if Newtonsoft.Json.dll isn't found.
@@ -156,8 +163,15 @@ namespace Universal_THCRAP_Launcher
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem)obj).ShowDropDown());
 
-            string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + Configuration.Lang);
-            File.WriteAllText(I18N.I18NDir + "\\" + Configuration.Lang, newlang);
+            try
+            {
+                string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + Configuration.Lang);
+                File.WriteAllText(I18N.I18NDir + "\\" + Configuration.Lang, newlang);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for language update.\nReason: {ex.ToString()}");
+            }
 
 
             UpdateLanguage();

@@ -24,6 +24,7 @@
 			},
 			"oops": "Etwas ist falsch gelaufen...",
 			"noneSelected": "Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!"
+			"downloadError": "Sprachdateien konnten nicht von GitHub heruntergeladen werden. Dies könnte folgende Ursachen haben:\n- Du bist nicht mit dem Internet verbunden.\n- Das Programm ist veraltet und und das GitHub-Repository existiert nicht mehr.\n- Du lebst in einer Zeit, zu der GitHub oder das Internet nicht mehr existieren."
         },
 		"popup": {
 			"hideLauncher": {

@@ -157,7 +157,7 @@ namespace Universal_THCRAP_Launcher
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem)obj).ShowDropDown());
 
             string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + Configuration.Lang);
-            File.WriteAllText(I18N.I18NDir + @"\en.json", newlang);
+            File.WriteAllText(I18N.I18NDir + "\\" + Configuration.Lang, newlang);
 
 
             UpdateLanguage();

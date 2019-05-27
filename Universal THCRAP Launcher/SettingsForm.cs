@@ -24,14 +24,12 @@ namespace Universal_THCRAP_Launcher
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            UpdateLang();
-
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
-
-            LoadLangs();
+   
             UpdateLang();
             UpdateCredits();
+            LoadLangs();
         }
 
         private void LoadLangs()
@@ -40,11 +38,13 @@ namespace Universal_THCRAP_Launcher
             languageComboBox.Items.Clear();
             _langFileToName.Clear();
             _langNameToFile.Clear();
-
+            Trace.WriteLine("Loading languages...");
             foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
+                Trace.WriteLine($"Language File: {file}. Here's the raw:\n{raw}");
                 dynamic langFile = JsonConvert.DeserializeObject(raw);
+                Trace.WriteLine($"Loading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
                 if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
                 _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
                 if (!_langFileToName.ContainsKey(file))

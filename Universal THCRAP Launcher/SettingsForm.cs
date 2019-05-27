@@ -37,7 +37,7 @@ namespace Universal_THCRAP_Launcher
         private void LoadLangs()
         {
             #region LoadLangs
-            if (I18N.LangNumber() > 0) languageComboBox.Items.Clear();
+            languageComboBox.Items.Clear();
             _langFileToName.Clear();
             _langNameToFile.Clear();
 
@@ -49,6 +49,7 @@ namespace Universal_THCRAP_Launcher
                 _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
                 if (!_langFileToName.ContainsKey(file))
                 _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
+                if (!languageComboBox.Items.Contains($"{langFile.metadata.native} ({langFile.metadata.english})"))
                 languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
             }
             #endregion

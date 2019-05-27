@@ -44,7 +44,7 @@ namespace Universal_THCRAP_Launcher
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
                 "\nVersion: " + Application.ProductVersion.TrimStart(new char[] { '0', '.' }) +
                 "\nBuild Date: " + Properties.Resources.BuildDate +
-            "――――――――――――――――――――――――――――――――――――――――――――――――――\n\n" +
+            "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n\n" +
                 "[" + DateTime.Now + "] Program opened.");
             Configuration1 = new Configuration();
             dynamic dconfig = null;

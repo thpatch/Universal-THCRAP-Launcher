@@ -45,7 +45,9 @@ namespace Universal_THCRAP_Launcher
             {
                 string raw = File.ReadAllText(file);
                 dynamic langFile = JsonConvert.DeserializeObject(raw);
+                if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
                 _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
+                if (!_langFileToName.ContainsKey(file))
                 _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
                 languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
             }
@@ -112,7 +114,9 @@ namespace Universal_THCRAP_Launcher
 
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading.ToString();
+            if (I18N.LangResource.settingsForm.downloading != null)
+                btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading.ToString();
+            else btn_dwnlAllLangs.Text = "Downloading...";
             btn_dwnlAllLangs.Enabled = false;
             string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
             dynamic obj_gh = JsonConvert.DeserializeObject(gh);
@@ -121,6 +125,7 @@ namespace Universal_THCRAP_Launcher
                 string langtxt = ReadTextFromUrl(item.download_url.ToString());
                 File.WriteAllText(I18N.I18NDir + item.name, langtxt);
             }
+
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
             btn_dwnlAllLangs.Enabled = true;
 

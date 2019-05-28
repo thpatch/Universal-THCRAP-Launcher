@@ -15,6 +15,13 @@ using System.Windows.Forms;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
 
+/* WARNING: This code has been made by a new developer with WinForms
+ * and the quality of code is very bad. If you want to be able to get thiw working, ensure:
+ * NuGet packages are working.
+ * Both "code behinds" have been loaded up in th editor once.
+ * For Debug's the working directory has been set to thcrap's directory.
+ */ 
+
 namespace Universal_THCRAP_Launcher
 {
     public partial class MainForm : Form
@@ -24,20 +31,25 @@ namespace Universal_THCRAP_Launcher
             InitializeComponent();
         }
 
-        private static void ErrorAndExit(string errorMessage)
+        public static void ErrorAndExit(dynamic errorMessage)
         {
-            MessageBox.Show(text: errorMessage, caption: I18N.LangResource.errors.error, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage}");
+            MessageBox.Show(text: errorMessage.ToString(), caption: I18N.LangResource.errors.error.ToString(), buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
+            Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {errorMessage.ToString()}");
             Application.Exit();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
                 "\nVersion: " + Application.ProductVersion.TrimStart(new char[] { '0', '.' }) +
-                "\nBuild Date: " + Properties.Resources.BuildDate +
-            "――――――――――――――――――――――――――――――――――――――――――――――――――\n\n" +
-                "[" + DateTime.Now + "] Program opened.");
+                $"\nBuild Date: {Properties.Resources.BuildDate.Split('\r')[0]} ({Properties.Resources.BuildDate.Split('\n')[1]})" +
+                $"\nBuilt by: {Properties.Resources.BuildUser.Split('\n')[0]} ({Properties.Resources.BuildUser.Split('\n')[1]})" +
+                "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
+                "\nDirectory of Exe: " + new FileInfo((new Uri(Assembly.GetEntryAssembly().GetName().CodeBase)).AbsolutePath).Directory.FullName +
+                "\nCurrent Date: " + DateTime.Now +
+            "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n");
             Configuration1 = new Configuration();
             dynamic dconfig = null;
 
@@ -52,14 +64,21 @@ namespace Universal_THCRAP_Launcher
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
                 dconfig = JsonConvert.DeserializeObject(raw, settings);
             }
-            SetDefaultSettings();
+            
 
             if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
             if (I18N.LangNumber() == 0)
             {
-                string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
-                File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                try
+                {
+                    string lang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
+                    File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                } catch (Exception ex)
+                {
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down English language file.\nReason: {ex.ToString()}");
+                    ErrorAndExit("No language files found and couldn't connect to GitHub to download English language file. Either put one manually into " + I18N.I18NDir + "\nor find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json .\nOr use an older version of the program ¯\\_(ツ)_/¯.");
+                }
             }
 
             //Give error if Newtonsoft.Json.dll isn't found.
@@ -133,6 +152,8 @@ namespace Universal_THCRAP_Launcher
                 gameListBox.Items.Add(item.Key);
             }
 
+            SetDefaultSettings();
+
             //Change Form settings
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
@@ -142,18 +163,26 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
-
             if (menuStrip1 == null) return;
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                 x.MouseHover += (obj, arg) => ((ToolStripDropDownItem)obj).ShowDropDown());
 
-            string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + Configuration.Lang);
-            File.WriteAllText(I18N.I18NDir + @"\en.json", newlang);
+            try
+            {
+                string newlang = ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + Configuration.Lang);
+                File.WriteAllText(I18N.I18NDir + "\\" + Configuration.Lang, newlang);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for language update.\nReason: {ex.ToString()}");
+            }
 
 
             UpdateLanguage();
 
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Form1 Loaded");
+            Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
+            Trace.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}\n\tLastConfig: {Configuration1.LastConfig}\n\tLastGame: {Configuration1.LastGame}\n\tFilterExeType: {Configuration1.FilterExeType}\n\tHidePatchExtension: {Configuration1.HidePatchExtension}\n\tLang: {Configuration.Lang}");
+            Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}\n\tOnlyFavourites: {Configuration1.OnlyFavourites[0]} | {Configuration1.OnlyFavourites[1]}\n\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}\n\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
 
         public void PopulatePatchList()
@@ -438,6 +467,7 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (this == null) return;
+            
             startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
             splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
             patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
@@ -561,7 +591,7 @@ namespace Universal_THCRAP_Launcher
         {
             if (patchListBox.SelectedIndex == -1 || gameListBox.SelectedIndex == -1)
             {
-                MessageBox.Show(I18N.LangResource.errors.noneSelected, I18N.LangResource.errors.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(I18N.LangResource.errors.noneSelected.ToString(), I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -656,8 +686,8 @@ namespace Universal_THCRAP_Launcher
 
         private static void ShowKeyboardShortcuts()
         {
-            MessageBox.Show(I18N.LangResource.popup.kbSh.text,
-                I18N.LangResource.popup.kbSh.caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(I18N.LangResource.popup.kbSh.text.ToString(),
+                I18N.LangResource.popup.kbSh.caption.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void MainForm_Closing(object sender, FormClosingEventArgs e)
@@ -852,12 +882,12 @@ namespace Universal_THCRAP_Launcher
 
         private void openConfigureTS_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(I18N.LangResource.popup.hideLauncher.text,
-                I18N.LangResource.popup.hideLauncher.caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(I18N.LangResource.popup.hideLauncher.text.ToString(),
+                I18N.LangResource.popup.hideLauncher.caption.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
             var p = Process.Start("thcrap_configure.exe");
             if (p == null)
             {
-                MessageBox.Show(I18N.LangResource.errors.oops, I18N.LangResource.errors.error);
+                MessageBox.Show(I18N.LangResource.errors.oops.ToString(), I18N.LangResource.errors.error.ToString());
                 return;
             }
 
@@ -875,12 +905,13 @@ namespace Universal_THCRAP_Launcher
         {
             var shDesktop = (object)"Desktop";
             var shell = new WshShell();
-            var shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + I18N.LangResource.shCreate.file + ".lnk";
+            string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + "\\" + (string)I18N.LangResource.shCreate.file + ".lnk";
             var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
-            shortcut.Description = I18N.LangResource.shCreate.desc;
+            shortcut.Description = (string)I18N.LangResource.shCreate.desc;
             shortcut.TargetPath = Assembly.GetEntryAssembly().Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
             shortcut.Save();
+            Trace.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
         }
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) =>

@@ -24,32 +24,44 @@ namespace Universal_THCRAP_Launcher
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            UpdateLang();
-
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
-
-            LoadLangs();
+   
             UpdateLang();
             UpdateCredits();
+            LoadLangs();
         }
 
         private void LoadLangs()
         {
             #region LoadLangs
-            if (I18N.LangNumber() > 0) languageComboBox.Items.Clear();
+            languageComboBox.Items.Clear();
             _langFileToName.Clear();
             _langNameToFile.Clear();
-
+            Trace.WriteLine("Loading languages...");
             foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
-                dynamic langFile = JsonConvert.DeserializeObject(raw);
-                _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
-                _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
-                languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
+                //Trace.WriteLine($"Language File: {file}. Here's the raw:\n{raw}");
+                try
+                {
+                    dynamic langFile = JsonConvert.DeserializeObject(raw);
+                    Trace.WriteLine($"\tLoading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
+                    if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
+                        _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
+                    if (!_langFileToName.ContainsKey(file))
+                        _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
+                    if (!languageComboBox.Items.Contains($"{langFile.metadata.native} ({langFile.metadata.english})"))
+                        languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine($"Exception while parsing language file {file}\nException: {ex.ToString()}");
+                    MessageBox.Show(I18N.LangResource.errors.oops.ToString() + Environment.CurrentDirectory, I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             #endregion
+            Trace.WriteLine("Language loading ended.");
             #region Select appropiate lang
             if (Configuration.Lang == null)
                 languageComboBox.SelectedIndex = 0;
@@ -62,11 +74,11 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateLang()
         {
-            Text = I18N.LangResource.settingsForm.settings;
-            languageLabel.Text = I18N.LangResource.settingsForm.language + ':';
-            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit;
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
-            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension;
+            Text = I18N.LangResource.settingsForm.settings.ToString();
+            languageLabel.Text = I18N.LangResource.settingsForm.language.ToString() + ':';
+            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit.ToString();
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
+            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension.ToString();
         }
 
         private void UpdateCredits()
@@ -80,9 +92,9 @@ namespace Universal_THCRAP_Launcher
             int place = credits.LastIndexOf(',');
             if (place != -1)
             {
-                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and);
+                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and.ToString());
             }
-            langCreditsLabel.Text = string.Format((string)I18N.LangResource.settingsForm.langCredits, credits);
+            langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits.ToString(), credits);
         }
 
         private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) =>
@@ -112,16 +124,26 @@ namespace Universal_THCRAP_Launcher
 
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading;
+            if (I18N.LangResource.settingsForm.downloading != null)
+                btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading.ToString();
+            else btn_dwnlAllLangs.Text = "Downloading...";
             btn_dwnlAllLangs.Enabled = false;
-            string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
-            dynamic obj_gh = JsonConvert.DeserializeObject(gh);
-            foreach (var item in obj_gh)
+            try
             {
-                string langtxt = ReadTextFromUrl(item.download_url.ToString());
-                File.WriteAllText(I18N.I18NDir + item.name, langtxt);
+                string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
+                dynamic obj_gh = JsonConvert.DeserializeObject(gh);
+                foreach (var item in obj_gh)
+                {
+                    string langtxt = ReadTextFromUrl(item.download_url.ToString());
+                    File.WriteAllText(I18N.I18NDir + item.name, langtxt);
+                }
             }
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll;
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex.ToString()}");
+                MessageBox.Show(I18N.LangResource.error.downloadError.ToString(),I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
             btn_dwnlAllLangs.Enabled = true;
 
             LoadLangs();

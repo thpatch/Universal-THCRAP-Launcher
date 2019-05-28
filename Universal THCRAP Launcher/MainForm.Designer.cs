@@ -361,7 +361,6 @@ namespace Universal_THCRAP_Launcher
             this.helpTS.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.helpTS.Size = new System.Drawing.Size(44, 20);
             this.helpTS.Text = "Help";
-            this.helpTS.Click += new System.EventHandler(this.keyboardShortcutsTS_Click);
             // 
             // keyboardShortcutsTS
             // 

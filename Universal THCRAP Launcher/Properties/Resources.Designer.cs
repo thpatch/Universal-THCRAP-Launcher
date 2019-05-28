@@ -61,11 +61,22 @@ namespace Universal_THCRAP_Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 2019. 05. 28. 11:05:56,49   
+        ///.
         /// </summary>
         internal static string BuildDate {
             get {
                 return ResourceManager.GetString("BuildDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kláben Szabolcs Bence (Tudi20)
+        ///.
+        /// </summary>
+        internal static string BuildUser {
+            get {
+                return ResourceManager.GetString("BuildUser", resourceCulture);
             }
         }
         

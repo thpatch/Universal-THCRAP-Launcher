@@ -23,7 +23,8 @@
 			"jsonParser": "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well."
 		},
 		"oops": "Something went wrong...",
-		"noneSelected":"No run configuration (patch stack) or game (executable) selected!\nPlease select one!"
+		"noneSelected": "No run configuration (patch stack) or game (executable) selected!\nPlease select one!",
+		"downloadError": "Couldn't download language files from GitHub. You either:\n- Not Connected to the Internet\n- This program has become so deprecated that the GitHub Repository doesn't exist.\n- In a future where GitHub or the Internet doesn't exist."
 	},
 	"popup": {
 		"hideLauncher": {

@@ -1,0 +1,88 @@
+{
+	"metadata": {
+		"authors": ["AsyrafFile"],
+		"native": "Bahasa Melayu",
+		"english": "Malay"
+	},
+	"settingsForm": {
+		"settings": "Seting",
+		"language": "Bahasa",
+		"closeOnExit": "Tutup apabila permainan bermula",
+		"langCredits": "Diterjemahkan oleh {0}.",
+		"and": "dan",
+		"downloadAll": "Muat turun kesemua bahasa",
+		"downloading": "Memuat turun...",
+		"hidePatchExtension": "Sembunyikan sambungan dalam senarai tampalan"
+	},
+	"errors": {
+		"error": "Ralat",
+		"missing": {
+			"thcrap_loader": "Fail thcrap_loader.exe tidak dijumpai.\nPastikan letakkan fail itu disebelahnya!",
+			"gamesJs": "Fail games.js tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
+			"patchStacks": "Fail konfig yang mengandungi timbungan tampalan tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
+			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumapi. Pastikan fail itu juga disalin."
+		},
+		"oops": "Ada sesuatu bermasalah...",
+		"noneSelected": "Tiada konfigurasi (timbungan tampalan) atau permainan (fail boleh laku) dipilih!\nTolong pilih satu!",
+		"downloadError": "Tidak dapat memuat turun fail terjemaahan dari GitHub. Kamu berkemungkinan:\n- Tidak disabungkan ke Internet\n- Program ini telah menjadi lapuk disebabkan repositori ini dalam GitHub tidak lagi wujud.\n- Dimana GitHub atau Internet tidak lagi wujud."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Nota",
+			"text": "Pelancar tu hilang sendiri semasa konfigurasi..."
+		},
+		"kbSh": {
+			"caption": "Pintasan Papan Kekunci",
+			"text": "Alt + F4: Tutup aplikasi (Tetapan asal Windows)\nCtrl + R: Mula semula aplikasi\nCtrl + O: Buka konfigurasi tampalan yang dipilih\nF1: Tunjukan pintasan papan kekunci (Tetingkap ini)\nF2: Pilih item yang dipilih ke dalam senarai kegemaran."
+		}
+	},
+	"shCreate": {
+		"file": "Pelancar Universal THCRAP",
+		"desc": "Jalan Pintas untuk UTL"
+	},
+	"mainForm": {
+		"utl": "Pelancar Universal THCRAP",
+		"menuStrip": [
+			[
+				"Aplikasi",
+				"Cipta fail pintasan ke Desktop",
+				"Seting...",
+				"-",
+				"Mula semula",
+				"Keluar"
+			],
+			[
+				"THCRAP",
+				"Buka Konfigurasi THCRAP",
+				[
+					"Buka...",
+					"Buka fail folder",
+					"Buka Senari Permainan",
+					"Buka Konfigurasi Tampalan Terpilih"
+				]
+			],
+			[
+				"GitHub",
+				"Laman GitHub",
+				[
+					"Maklum Balas",
+					"Lapor Pepijat",
+					"Permintaan Ciri Baru",
+					"Lain-lain"
+				]
+			],
+			[
+				"Bantuan",
+				"Pintasan Papan Kekunci"
+			]
+		],
+		"tooltips": {
+			"startButton": "Mula THCRAP dengan seting yang terpilih",
+			"sortAZ": "Isih mengikut susunan abjad",
+			"filterFav": "Tapis mengikut kegemaran",
+			"filterByType": "Tapis mengikut jenis",
+			"patchLB": "Pilih konfigurasi untuk dijalankan (timbulan tampalan)",
+			"gameLB": "Pilih permainan (fail boleh laku)"
+		}
+	}
+}

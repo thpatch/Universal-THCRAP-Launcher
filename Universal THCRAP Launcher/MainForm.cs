@@ -34,18 +34,22 @@ namespace Universal_THCRAP_Launcher
         public static void ErrorAndExit(dynamic errorMessage)
         {
             MessageBox.Show(text: errorMessage.ToString(), caption: I18N.LangResource.errors.error.ToString(), buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage.ToString()}");
+            Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {errorMessage.ToString()}");
             Application.Exit();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
                 "\nVersion: " + Application.ProductVersion.TrimStart(new char[] { '0', '.' }) +
-                "\nBuild Date: " + Properties.Resources.BuildDate +
-            "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n\n" +
-                "[" + DateTime.Now + "] Program opened.");
+                $"\nBuild Date: {Properties.Resources.BuildDate.Split('\r')[0]} ({Properties.Resources.BuildDate.Split('\n')[1]})" +
+                $"\nBuilt by: {Properties.Resources.BuildUser.Split('\n')[0]} ({Properties.Resources.BuildUser.Split('\n')[1]})" +
+                "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
+                "\nDirectory of Exe: " + new FileInfo((new Uri(Assembly.GetEntryAssembly().GetName().CodeBase)).AbsolutePath).Directory.FullName +
+                "\nCurrent Date: " + DateTime.Now +
+            "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n");
             Configuration1 = new Configuration();
             dynamic dconfig = null;
 
@@ -176,8 +180,8 @@ namespace Universal_THCRAP_Launcher
 
             UpdateLanguage();
 
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Form1 Loaded");
-            Trace.WriteLine($"Configuration:\n\tExitAfterStartup: {Configuration1.ExitAfterStartup}\n\tLastConfig: {Configuration1.LastConfig}\n\tLastGame: {Configuration1.LastGame}\n\tFilterExeType: {Configuration1.FilterExeType}, HidePatchExtension: {Configuration1.HidePatchExtension}, Lang: {Configuration.Lang}");
+            Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
+            Trace.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}\n\tLastConfig: {Configuration1.LastConfig}\n\tLastGame: {Configuration1.LastGame}\n\tFilterExeType: {Configuration1.FilterExeType}\n\tHidePatchExtension: {Configuration1.HidePatchExtension}\n\tLang: {Configuration.Lang}");
             Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}\n\tOnlyFavourites: {Configuration1.OnlyFavourites[0]} | {Configuration1.OnlyFavourites[1]}\n\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}\n\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
 

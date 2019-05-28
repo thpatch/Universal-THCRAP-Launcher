@@ -8,10 +8,10 @@
 		"settings": "设置",
 		"language": "语言",
 		"closeOnExit": "游戏启动后结束本程序",
-		"langCredits": "翻译： {0}。",
+		"langCredits": "翻译者： {0}。",
 		"and": "&",
 		"downloadAll": "下载所有语言文件",
-		"downloading": "下载中……",
+		"downloading": "下载中......",
 		"hidePatchExtension": "隐藏补丁配置文件的扩展名"
 	},
 	"errors": {
@@ -46,7 +46,7 @@
 			[
 				"程序",
 				"在桌面创建快捷方式",
-				"设置……",
+				"设置...",
 				"-",
 				"重启本程序",
 				"退出"

@@ -43,14 +43,22 @@ namespace Universal_THCRAP_Launcher
             {
                 string raw = File.ReadAllText(file);
                 //Trace.WriteLine($"Language File: {file}. Here's the raw:\n{raw}");
-                dynamic langFile = JsonConvert.DeserializeObject(raw);
-                Trace.WriteLine($"\tLoading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
-                if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
-                _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
-                if (!_langFileToName.ContainsKey(file))
-                _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
-                if (!languageComboBox.Items.Contains($"{langFile.metadata.native} ({langFile.metadata.english})"))
-                languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
+                try
+                {
+                    dynamic langFile = JsonConvert.DeserializeObject(raw);
+                    Trace.WriteLine($"\tLoading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
+                    if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
+                        _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
+                    if (!_langFileToName.ContainsKey(file))
+                        _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
+                    if (!languageComboBox.Items.Contains($"{langFile.metadata.native} ({langFile.metadata.english})"))
+                        languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine($"Exception while parsing language file {file}\nException: {ex.ToString()}");
+                    MessageBox.Show(I18N.LangResource.errors.oops, I18N.LangResource.errors.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             #endregion
             Trace.WriteLine("Language loading ended.");

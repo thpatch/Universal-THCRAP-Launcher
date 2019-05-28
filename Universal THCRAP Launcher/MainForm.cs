@@ -31,7 +31,7 @@ namespace Universal_THCRAP_Launcher
             InitializeComponent();
         }
 
-        private static void ErrorAndExit(dynamic errorMessage)
+        public static void ErrorAndExit(dynamic errorMessage)
         {
             MessageBox.Show(text: errorMessage.ToString(), caption: I18N.LangResource.errors.error.ToString(), buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {errorMessage.ToString()}");

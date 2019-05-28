@@ -466,22 +466,27 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            if (this == null) return;
-            
-            startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
-            splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
-            patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
-            gameListBox.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
-            sortAZButton1.Location =
-                new Point(sortAZButton1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
-            sortAZButton2.Location = new Point(patchListBox.Size.Width + _resizeConstants[4],
-                splitContainer1.Location.Y - _resizeConstants[3]);
-            filterFavButton1.Location =
-                new Point(filterFavButton1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
-            filterFavButton2.Location = new Point(sortAZButton2.Location.X + _resizeConstants[5],
-                splitContainer1.Location.Y - _resizeConstants[3]);
-            filterByType_button.Location = new Point(
-                filterFavButton2.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+            try
+            {
+                startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
+                splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
+                patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
+                gameListBox.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
+                sortAZButton1.Location =
+                    new Point(sortAZButton1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
+                sortAZButton2.Location = new Point(patchListBox.Size.Width + _resizeConstants[4],
+                    splitContainer1.Location.Y - _resizeConstants[3]);
+                filterFavButton1.Location =
+                    new Point(filterFavButton1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
+                filterFavButton2.Location = new Point(sortAZButton2.Location.X + _resizeConstants[5],
+                    splitContainer1.Location.Y - _resizeConstants[3]);
+                filterByType_button.Location = new Point(
+                    filterFavButton2.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e.ToString()}");
+            }
         }
 
         private static void AddStars(ListBox listBox, IEnumerable<string> list)

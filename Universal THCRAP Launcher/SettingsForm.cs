@@ -57,7 +57,7 @@ namespace Universal_THCRAP_Launcher
                 catch (Exception ex)
                 {
                     Trace.WriteLine($"Exception while parsing language file {file}\nException: {ex.ToString()}");
-                    MessageBox.Show(I18N.LangResource.errors.oops.ToString(), I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(I18N.LangResource.errors.oops.ToString() + Environment.CurrentDirectory, I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             #endregion

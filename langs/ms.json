@@ -18,9 +18,9 @@
 		"error": "Ralat",
 		"missing": {
 			"thcrap_loader": "Fail thcrap_loader.exe tidak dijumpai.\nPastikan letakkan fail itu disebelahnya!",
-			"gamesJs": "Fail games.js tidak dijumpai. \nMake sure to run thcrap_configure.exe first!",
-			"patchStacks": "No config files of patch stacks could be found.\nMake sure to run thcrap_configure.exe first!",
-			"jsonParser": "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well."
+			"gamesJs": "Fail games.js tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
+			"patchStacks": "Fail konfig yang mengandungi timbungan tampalan tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
+			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumapi. Pastikan fail itu juga disalin."
 		},
 		"oops": "Something went wrong...",
 		"noneSelected": "No run configuration (patch stack) or game (executable) selected!\nPlease select one!",

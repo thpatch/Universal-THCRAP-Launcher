@@ -1,0 +1,88 @@
+{
+	"metadata": {
+		"authors": ["Ibnu"],
+		"native": "Bahasa Indonesia",
+		"english": "Indonesian"
+	},
+	"settingsForm": {
+		"settings": "Pengaturan",
+		"language": "Bahasa",
+		"closeOnExit": "Tutup saat mulai gim",
+		"langCredits": "Diterjemahkan oleh {0}.",
+		"and": "dan",
+		"downloadAll": "Unduh Semua Bahasa",
+		"downloading": "Mengunduh ....",
+		"hidePatchExtension": "Sembunyikan ekstensi dari daftar patch"
+	},
+	"errors": {
+		"error": "Kesalahan",
+		"missing": {
+			"thcrap_loader": "thcrap_loader.exe tidak dapat ditemukan.\nHarap letakkan aplikasi ini di folder yang terkait!",
+			"gamesJs": "games.js tidak dapat ditemukan.\nHarap jalankan thcrap_configure.exe terlebih dahulu!",
+			"patchStacks": "File tumpukan patch tidak dapat ditemukan.\nHarap jalankan thcrap_configure.exe terlebih dahulu!",
+			"jsonParser": "Newtonsoft.Json.dll tidak ditemukan. Pastikan filenya telah tersalin."
+		},
+		"oops": "Ada yang salah ....",
+		"noneSelected": "Tidak ada konfigurasi (tumpukan patch) atau gim (file eksekusi) terpilih!\nHarap pilih salah satu!",
+		"downloadError": "Tidak dapat mengunduh file bahsa dari GitHub. Sekiranya Anda:\n- Tidak terhubung ke Internet.\n- Program ini telah usang sehingga penyimpanan GitHub telah tidak ada lagi.\n- Di masa depan di mana GitHub dan Internet tidak ada lagi."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Catatan",
+			"text": "Peluncur hilang saat dilakukan pengaturan ...."
+		},
+		"kbSh": {
+			"caption": "Pintasan Keyboard",
+			"text": "Alt + F4: Tutup aplikasi (pintasan asal Windows)\nCtrl + R: Muat ulang aplikasi\nCtrl + O: Buka Konfigurasi Patch yang terpilih\nF1: Buka Jendela Pintasan (jendela ini)\nF2: Jadikan item terpilih sebagai Favorit"
+		}
+	},
+	"shCreate": {
+		"file": "Peluncur Universal THCRAP",
+		"desc": "Disingkat jadi PUT"
+	},
+	"mainForm": {
+		"utl": "Peluncur Universal THCRAP",
+		"menuStrip": [
+			[
+				"App",
+				"Buat pintasan Desktop",
+				"Pengaturan ....",
+				"-",
+				"Muat ulang",
+				"Keluar"
+			],
+			[
+				"THCRAP",
+				"Buka Konfigurasi THCRAP",
+				[
+					"Buka ....",
+					"Buka Folder",
+					"Buka Daftar Gim",
+					"Buka Konfigurasi Patch Terpilih"
+				]
+			],
+			[
+				"GitHub",
+				"Halaman GitHub",
+				[
+					"Umpan balik",
+					"Laporkan bug",
+					"Sarankan Fitur",
+					"Lainnya"
+				]
+			],
+			[
+				"Bantuan",
+				"Pintasan Keyboard"
+			]
+		],
+		"tooltips": {
+			"startButton": "Mulai thcrap dengan konfigurasi terpilih",
+			"sortAZ": "Urut berdasarkan Alfabet",
+			"filterFav": "Filter berdasarkan favorit",
+			"filterByType": "Filter berdasarkan Tipe",
+			"patchLB": "Pilih konfigurasi (tumpukan patch)",
+			"gameLB": "Pilih gim (file eksekusi)"
+		}
+	}
+}

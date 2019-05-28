@@ -5,20 +5,20 @@
 		"english": "Malay"
 	},
 	"settingsForm": {
-		"settings": "Settings",
-		"language": "Language",
-		"closeOnExit": "Close when game starts",
-		"langCredits": "Translated by {0}.",
-		"and": "and",
-		"downloadAll": "Download All Languages",
-		"downloading": "Downloading...",
-		"hidePatchExtension": "Hide extension on patch list"
+		"settings": "Seting",
+		"language": "Bahasa",
+		"closeOnExit": "Tutup apabila permainan bermula",
+		"langCredits": "Diterjemahkan oleh {0}.",
+		"and": "dan",
+		"downloadAll": "Muat turun kesemua bahasa",
+		"downloading": "Memuat turun...",
+		"hidePatchExtension": "Sembunyikan sambungan dalam senarai tampalan"
 	},
 	"errors": {
-		"error": "Error",
+		"error": "Ralat",
 		"missing": {
-			"thcrap_loader": "thcrap_loader.exe couldn't be found.\nMake sure to put the application next to it!",
-			"gamesJs": "games.js couldn't be found.\nMake sure to run thcrap_configure.exe first!",
+			"thcrap_loader": "Fail thcrap_loader.exe tidak dijumpai.\nPastikan letakkan fail itu disebelahnya!",
+			"gamesJs": "Fail games.js tidak dijumpai. \nMake sure to run thcrap_configure.exe first!",
 			"patchStacks": "No config files of patch stacks could be found.\nMake sure to run thcrap_configure.exe first!",
 			"jsonParser": "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well."
 		},

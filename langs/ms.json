@@ -22,67 +22,67 @@
 			"patchStacks": "Fail konfig yang mengandungi timbungan tampalan tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
 			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumapi. Pastikan fail itu juga disalin."
 		},
-		"oops": "Something went wrong...",
-		"noneSelected": "No run configuration (patch stack) or game (executable) selected!\nPlease select one!",
-		"downloadError": "Couldn't download language files from GitHub. You either:\n- Not Connected to the Internet\n- This program has become so deprecated that the GitHub Repository doesn't exist.\n- In a future where GitHub or the Internet doesn't exist."
+		"oops": "Ada sesuatu bermasalah...",
+		"noneSelected": "Tiada konfigurasi (timbungan tampalan) atau permainan (fail boleh laku) dipilih!\nTolong pilih satu!",
+		"downloadError": "Tidak dapat memuat turun fail terjemaahan dari GitHub. Kamu berkemungkinan:\n- Tidak disabungkan ke Internet\n- Program ini telah menjadi lapuk disebabkan repositori ini dalam GitHub tidak lagi wujud.\n- Dimana GitHub atau Internet tidak lagi wujud."
 	},
 	"popup": {
 		"hideLauncher": {
-			"caption": "Note",
-			"text": "The Launcher disappears during configuration..."
+			"caption": "Nota",
+			"text": "Pelancar tu hilang sendiri semasa konfigurasi..."
 		},
 		"kbSh": {
-			"caption": "Keyboard Shortcuts",
-			"text": "Alt + F4: Close Application (default Windows shortcut)\nCtrl + R: Restart Application\nCtrl + O: Open selected Patch Configuration\nF1: Show Keyboard Shortcuts (this window)\nF2: Favorite the selected item in the selected list"
+			"caption": "Pintasan Papan Kekunci",
+			"text": "Alt + F4: Tutup aplikasi (Tetapan asal Windows)\nCtrl + R: Mula semula aplikasi\nCtrl + O: Buka konfigurasi tampalan yang dipilih\nF1: Tunjukan pintasan papan kekunci (Tetingkap ini)\nF2: Pilih item yang dipilih ke dalam senarai kegemaran."
 		}
 	},
 	"shCreate": {
-		"file": "Universal THCRAP Launcher",
-		"desc": "Shortcut for UTL"
+		"file": "Pelancar Universal THCRAP",
+		"desc": "Jalan Pintas untuk UTL"
 	},
 	"mainForm": {
-		"utl": "Universal THCRAP Launcher",
+		"utl": "Pelancar Universal THCRAP",
 		"menuStrip": [
 			[
-				"App",
-				"Create Shortcut on Desktop",
-				"Settings...",
+				"Aplikasi",
+				"Cipta fail pintasan ke Desktop",
+				"Seting...",
 				"-",
-				"Restart",
-				"Exit"
+				"Mula semula",
+				"Keluar"
 			],
 			[
 				"THCRAP",
-				"Open THCRAP Configuration",
+				"Buka Konfigurasi THCRAP",
 				[
-					"Open...",
-					"Open Folder",
-					"Open Game List",
-					"Open Selected Patch Configuration"
+					"Buka...",
+					"Buka fail folder",
+					"Buka Senari Permainan",
+					"Buka Konfigurasi Tampalan Terpilih"
 				]
 			],
 			[
 				"GitHub",
-				"GitHub Page",
+				"Laman GitHub",
 				[
-					"Feedback",
-					"Bug Report",
-					"Feature Request",
-					"Other"
+					"Maklum Balas",
+					"Lapor Pepijat",
+					"Permintaan Ciri Baru",
+					"Lain-lain"
 				]
 			],
 			[
-				"Help",
-				"Keyboard Shortcuts"
+				"Bantuan",
+				"Pintasan Papan Kekunci"
 			]
 		],
 		"tooltips": {
-			"startButton": "Start thcrap with the selected settings",
-			"sortAZ": "Sort in alphabetical order",
-			"filterFav": "Filter by favourites",
-			"filterByType": "Filter by Type",
-			"patchLB": "Choose the run configuration (patch stack)",
-			"gameLB": "Choose the game (executable)"
+			"startButton": "Mula THCRAP dengan seting yang terpilih",
+			"sortAZ": "Isih mengikut susunan abjad",
+			"filterFav": "Tapis mengikut kegemaran",
+			"filterByType": "Tapis mengikut jenis",
+			"patchLB": "Pilih konfigurasi untuk dijalankan (timbulan tampalan)",
+			"gameLB": "Pilih permainan (fail boleh laku)"
 		}
 	}
 }

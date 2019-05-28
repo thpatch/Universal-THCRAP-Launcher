@@ -1,0 +1,88 @@
+{
+	"metadata": {
+		"authors": ["Yanstime"],
+		"native": "简体中文",
+		"english": "Chinese Simplified"
+	},
+	"settingsForm": {
+		"settings": "设置",
+		"language": "语言",
+		"closeOnExit": "游戏启动后结束本程序",
+		"langCredits": "翻译： {0}。",
+		"and": "&",
+		"downloadAll": "下载所有语言文件",
+		"downloading": "下载中……",
+		"hidePatchExtension": "隐藏补丁配置文件的扩展名"
+	},
+	"errors": {
+		"error": "错误",
+		"missing": {
+			"thcrap_loader": "找不到 thcrap_loader.exe 。\n请确认本程序是否放置于其所在的文件夹！",
+			"gamesJs": "无法找到 games.js 。\n请先运行 thcrap_configure.exe ！",
+			"patchStacks": "未找到任何配置文件或补丁组。\n请先运行 thcrap_configure.exe ！",
+			"jsonParser": "找不到 Newtonsoft.Json.dll 。请确认该文件是否一同被复制过来。"
+		},
+		"oops": "好像哪里出错了",
+		"noneSelected": "没有选中配置文件（补丁组）或游戏（程序）！\n请先选择一个再进行操作。",
+		"downloadError": "无法从 GitHub 下载语言文件。可能的原因：\n- 网络未连接\n- 程序太Low导致其repo不见了\n- 您所在的未来Github或者互联网已不存在。"
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "注意",
+			"text": "进行配置时，启动器窗口将会隐藏……"
+		},
+		"kbSh": {
+			"caption": "键盘快捷键",
+			"text": "Alt + F4: 关闭程序（Windows默认快捷键）\nCtrl + R: 重启本程序\nCtrl + O: 打开选中的补丁配置文件\nF1: 显示键盘快捷键（此窗口）\nF2: 选中条目标记/取消收藏"
+		}
+	},
+	"shCreate": {
+		"file": "Universal THCRAP Launcher",
+		"desc": "Shortcut for UTL"
+	},
+	"mainForm": {
+		"utl": "Universal THCRAP Launcher",
+		"menuStrip": [
+			[
+				"程序",
+				"在桌面创建快捷方式",
+				"设置……",
+				"-",
+				"重启本程序",
+				"退出"
+			],
+			[
+				"THCRAP",
+				"打开 THCRAP 配置程序",
+				[
+					"打开...",
+					"所在文件夹",
+					"游戏列表",
+					"选中的补丁配置文件"
+				]
+			],
+			[
+				"GitHub",
+				"GitHub 主页",
+				[
+					"反馈",
+					"报告 Bug",
+					"新功能提交",
+					"其他反馈"
+				]
+			],
+			[
+				"帮助",
+				"键盘快捷键"
+			]
+		],
+		"tooltips": {
+			"startButton": "以选中的配置信息启动thcrap",
+			"sortAZ": "按名称排序",
+			"filterFav": "按是否收藏过滤",
+			"filterByType": "按类型过滤",
+			"patchLB": "选择运行配置（补丁组）",
+			"gameLB": "选择目标游戏（程序）"
+		}
+	}
+}

@@ -28,7 +28,7 @@
 	},
 	"popup": {
 		"hideLauncher": {
-			"caption": "Note",
+			"caption": "Notice",
 			"text": "The Launcher disappears during configuration..."
 		},
 		"kbSh": {

@@ -57,7 +57,7 @@ namespace Universal_THCRAP_Launcher
                 catch (Exception ex)
                 {
                     Trace.WriteLine($"Exception while parsing language file {file}\nException: {ex.ToString()}");
-                    MessageBox.Show(I18N.LangResource.errors.oops.ToString() + Environment.CurrentDirectory, I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(I18N.LangResource.errors.oops?.ToString() + Environment.CurrentDirectory, I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             #endregion
@@ -74,11 +74,11 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateLang()
         {
-            Text = I18N.LangResource.settingsForm.settings.ToString();
-            languageLabel.Text = I18N.LangResource.settingsForm.language.ToString() + ':';
-            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit.ToString();
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
-            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension.ToString();
+            Text = I18N.LangResource.settingsForm.settings?.ToString();
+            languageLabel.Text = I18N.LangResource.settingsForm.language?.ToString() + ':';
+            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit?.ToString();
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll?.ToString();
+            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension?.ToString();
         }
 
         private void UpdateCredits()
@@ -86,15 +86,15 @@ namespace Universal_THCRAP_Launcher
             string credits = "";
             foreach (var author in I18N.LangResource.metadata.authors)
             {
-                credits += author + ", ";
+                credits += author?.ToString() + ", ";
             }
             credits = credits.TrimEnd(' ', ',');
             int place = credits.LastIndexOf(',');
             if (place != -1)
             {
-                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and);
+                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and?.ToString());
             }
-            langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits.ToString(), credits);
+            langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits?.ToString(), credits);
         }
 
         private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) =>
@@ -141,9 +141,9 @@ namespace Universal_THCRAP_Launcher
             catch (Exception ex)
             {
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex.ToString()}");
-                MessageBox.Show(I18N.LangResource.error.downloadError.ToString(),I18N.LangResource.errors.error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(I18N.LangResource.error.downloadError?.ToString(),I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll.ToString();
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll?.ToString();
             btn_dwnlAllLangs.Enabled = true;
 
             LoadLangs();

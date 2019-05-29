@@ -82,7 +82,9 @@
 			"filterFav": "Filter by favourites",
 			"filterByType": "Filter by Type",
 			"patchLB": "Choose the run configuration (patch stack)",
-			"gameLB": "Choose the game (executable)"
+			"gameLB": "Choose the game (executable)",
+			"patchFav": "Add patch to favourites",
+			"gamesFav": "Add game or exe to favourites"
 		}
 	}
 }

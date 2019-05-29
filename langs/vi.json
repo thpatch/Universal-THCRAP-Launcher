@@ -1,6 +1,6 @@
 {
 	"metadata": {
-		"authors": ["Akari no Kokoro"],
+		"authors": ["Another Oni"],
 		"native": "Tiếng Việt",
 		"english": "Vietnamese"
 	},
@@ -8,8 +8,8 @@
 		"settings": "Hiệu chỉnh",
 		"language": "Ngôn ngữ",
 		"closeOnExit": "Thoát khi game khởi động",
-		"langCredits": "Dịch bởi Another Oni.",
-		"and": "and",
+		"langCredits": "Dịch bởi {0}.",
+		"and": "và",
 		"downloadAll": "Tải tất cả ngôn ngữ",
 		"downloading": "Đang tải...",
 		"hidePatchExtension": "Ẩn extension trên danh sách patch"
@@ -38,7 +38,7 @@
 	},
 	"shCreate": {
 		"file": "Universal THCRAP Launcher",
-		"desc": "Shortcut for UTL"
+		"desc": "Shortcut cho UTL"
 	},
 	"mainForm": {
 		"utl": "Universal THCRAP Launcher",
@@ -53,7 +53,7 @@
 			],
 			[
 				"THCRAP",
-				"Open THCRAP Configuration",
+				"Chạy hiệu chỉnh THCRAP",
 				[
 					"Mở...",
 					"Mở thư mục",
@@ -63,7 +63,7 @@
 			],
 			[
 				"GitHub",
-				"GitHub Page",
+				"Trang GitHub",
 				[
 					"Phản hồi",
 					"Báo cáo lỗi",

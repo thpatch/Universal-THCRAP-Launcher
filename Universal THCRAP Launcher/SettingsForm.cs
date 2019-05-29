@@ -92,7 +92,7 @@ namespace Universal_THCRAP_Launcher
             int place = credits.LastIndexOf(',');
             if (place != -1)
             {
-                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and.ToString());
+                credits = credits.Remove(place, 1).Insert(place, " " + I18N.LangResource.settingsForm.and);
             }
             langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits.ToString(), credits);
         }
@@ -103,7 +103,7 @@ namespace Universal_THCRAP_Launcher
         private void languageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             _langNameToFile.TryGetValue(languageComboBox.SelectedItem.ToString(), out var file);
-            I18N.GetLangResource(file);
+            I18N.UpdateLangResource(file);
             UpdateLang();
             UpdateCredits();
         }

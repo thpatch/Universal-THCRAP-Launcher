@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -102,7 +103,7 @@ namespace Universal_THCRAP_Launcher
             //Load language
             Configuration.Lang = dconfig?.Lang;
             if (Configuration.Lang == null) Configuration.Lang = "en.json";
-            I18N.GetLangResource(I18N.I18NDir + Configuration.Lang);
+            I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
 
             //Give error if not next to thcrap_loader.exe
             var fileExists = File.Exists("thcrap_loader.exe");
@@ -959,12 +960,17 @@ namespace Universal_THCRAP_Launcher
             return 0;
         }
 
-        public static void GetLangResource(string filePath)
+        public static dynamic GetLangResource(string filePath)
         {
             string raw = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject(raw);
+        }
+
+        public static void UpdateLangResource(string filePath)
+        {
             try
             {
-                LangResource = JsonConvert.DeserializeObject(raw);
+                LangResource = GetLangResource(filePath);
                 Configuration.Lang = filePath.Replace(I18NDir, "");
             }
             catch (JsonReaderException e)

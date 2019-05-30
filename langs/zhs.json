@@ -82,7 +82,9 @@
 			"filterFav": "按是否收藏过滤",
 			"filterByType": "按类型过滤",
 			"patchLB": "选择运行配置（补丁组）",
-			"gameLB": "选择目标游戏（程序）"
+			"gameLB": "选择目标游戏（程序）",
+			"patchFav": "Add patch to favourites (or use F2 if it's the active selection)",
+			"gamesFav": "Add game or exe to favourites (or use F2 if it's the active selection)"
 		}
 	}
 }

@@ -23,7 +23,8 @@
 			"jsonParser": "Nie znaleziono pliku Newtonsoft.Json.dll. Upewnij się, że jest w folderze tego programu."
 		},
 		"oops": "Coś poszło nie tak...",
-		"noneSelected": "Nie wybrano konfiguracji lub gry!"
+		"noneSelected": "Nie wybrano konfiguracji lub gry!",
+		"downloadError": "Pobieranie plików językowych z GitHuba nie powiodło się. Prawdopodobnie nie masz połączenia z internetem,\n- lub żyjesz w przyszłości, w której nie istnieją ani GitHub, ani internet."
 	},
 	"popup": {
 		"hideLauncher": {

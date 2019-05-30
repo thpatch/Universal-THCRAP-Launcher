@@ -44,6 +44,8 @@ namespace Universal_THCRAP_Launcher
             this.sortAZButton1 = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.filterByType_button = new System.Windows.Forms.Button();
+            this.btn_AddFavorite0 = new System.Windows.Forms.Button();
+            this.btn_AddFavorite1 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.appTS = new System.Windows.Forms.ToolStripMenuItem();
             this.createShortcutTS = new System.Windows.Forms.ToolStripMenuItem();
@@ -193,6 +195,32 @@ namespace Universal_THCRAP_Launcher
             this.toolTip1.SetToolTip(this.filterByType_button, "Filter by Type");
             this.filterByType_button.UseVisualStyleBackColor = true;
             this.filterByType_button.Click += new System.EventHandler(this.filterByType_button_Click);
+            // 
+            // btn_AddFavorite0
+            // 
+            this.btn_AddFavorite0.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Favorite;
+            this.btn_AddFavorite0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_AddFavorite0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_AddFavorite0.Location = new System.Drawing.Point(73, 85);
+            this.btn_AddFavorite0.Name = "btn_AddFavorite0";
+            this.btn_AddFavorite0.Size = new System.Drawing.Size(25, 25);
+            this.btn_AddFavorite0.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.btn_AddFavorite0, "Add patch to favourites");
+            this.btn_AddFavorite0.UseVisualStyleBackColor = true;
+            this.btn_AddFavorite0.Click += new System.EventHandler(this.Btn_AddFavorite0_Click);
+            // 
+            // btn_AddFavorite1
+            // 
+            this.btn_AddFavorite1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Favorite;
+            this.btn_AddFavorite1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_AddFavorite1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_AddFavorite1.Location = new System.Drawing.Point(262, 85);
+            this.btn_AddFavorite1.Name = "btn_AddFavorite1";
+            this.btn_AddFavorite1.Size = new System.Drawing.Size(25, 25);
+            this.btn_AddFavorite1.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.btn_AddFavorite1, "Add game or exe to favourites");
+            this.btn_AddFavorite1.UseVisualStyleBackColor = true;
+            this.btn_AddFavorite1.Click += new System.EventHandler(this.Btn_AddFavorite1_Click);
             // 
             // menuStrip1
             // 
@@ -381,6 +409,8 @@ namespace Universal_THCRAP_Launcher
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 431);
+            this.Controls.Add(this.btn_AddFavorite1);
+            this.Controls.Add(this.btn_AddFavorite0);
             this.Controls.Add(this.filterByType_button);
             this.Controls.Add(this.filterFavButton2);
             this.Controls.Add(this.filterFavButton1);
@@ -446,6 +476,8 @@ namespace Universal_THCRAP_Launcher
         private ToolStripMenuItem featureRequestTS;
         private ToolStripMenuItem otherTS;
         private ListBox patchListBox;
+        private Button btn_AddFavorite0;
+        private Button btn_AddFavorite1;
     }
 }
 

@@ -24,11 +24,11 @@
 		},
 		"oops": "Something went wrong...",
 		"noneSelected": "No run configuration (patch stack) or game (executable) selected!\nPlease select one!",
-		"downloadError": "Couldn't download language files from GitHub. You either:\n- Not Connected to the Internet\n- This program has become so deprecated that the GitHub repo doesn't exist.\n- In a future where GitHub or the Internet doesn't exist."
+		"downloadError": "Couldn't download language files from GitHub. You either:\n- Not Connected to the Internet\n- This program has become so deprecated that the GitHub Repository doesn't exist.\n- In a future where GitHub or the Internet doesn't exist."
 	},
 	"popup": {
 		"hideLauncher": {
-			"caption": "Note",
+			"caption": "Notice",
 			"text": "The Launcher disappears during configuration..."
 		},
 		"kbSh": {
@@ -82,7 +82,9 @@
 			"filterFav": "Filter by favourites",
 			"filterByType": "Filter by Type",
 			"patchLB": "Choose the run configuration (patch stack)",
-			"gameLB": "Choose the game (executable)"
+			"gameLB": "Choose the game (executable)",
+			"patchFav": "Add patch to favourites (or use F2 if it's the active selection)",
+			"gamesFav": "Add game or exe to favourites (or use F2 if it's the active selection)"
 		}
 	}
 }

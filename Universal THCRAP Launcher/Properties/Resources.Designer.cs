@@ -61,11 +61,23 @@ namespace Universal_THCRAP_Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 2019. 05. 29. 20:55:54,25
+        ///Central Europe Standard Time.
         /// </summary>
         internal static string BuildDate {
             get {
                 return ResourceManager.GetString("BuildDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tudi20
+        ///tudorkae@gmail.com
+        ///.
+        /// </summary>
+        internal static string BuildUser {
+            get {
+                return ResourceManager.GetString("BuildUser", resourceCulture);
             }
         }
         
@@ -75,6 +87,16 @@ namespace Universal_THCRAP_Launcher.Properties {
         internal static System.Drawing.Bitmap Custom {
             get {
                 object obj = ResourceManager.GetObject("Custom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Favorite {
+            get {
+                object obj = ResourceManager.GetObject("Favorite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

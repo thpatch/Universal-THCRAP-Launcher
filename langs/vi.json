@@ -1,0 +1,88 @@
+{
+	"metadata": {
+		"authors": ["Another Oni"],
+		"native": "Tiếng Việt",
+		"english": "Vietnamese"
+	},
+	"settingsForm": {
+		"settings": "Hiệu chỉnh",
+		"language": "Ngôn ngữ",
+		"closeOnExit": "Thoát khi game khởi động",
+		"langCredits": "Dịch bởi {0}.",
+		"and": "và",
+		"downloadAll": "Tải tất cả ngôn ngữ",
+		"downloading": "Đang tải...",
+		"hidePatchExtension": "Ẩn extension trên danh sách patch"
+	},
+	"errors": {
+		"error": "Lỗi",
+		"missing": {
+			"thcrap_loader": "Không thể tìm thấy thcrap_loader.exe.\nXin để ứng dụng cùng thư mục!",
+			"gamesJs": "Không thể tìm thấy games.js.\nXin hãy thcrap_configure.exe trước!",
+			"patchStacks": "Không thể tìm thấy file hiệu chỉnh patch stack.\nXin hãy thcrap_configure.exe trước!",
+			"jsonParser": "Thiếu Newtonsoft.Json.dll. XIn hãy đảm bảo đã sao chép toàn bộ."
+		},
+		"oops": "Lỗi...",
+		"noneSelected": "Bạn chưa chọn file hiệu chỉnh (patch stack) hoặc game (executable)!\nXin hãy chọn một!",
+		"downloadError": "Không thể tải file ngôn ngữ từ from GitHub. Bạn đang:\n- không kết nối với internet\n- Phần mềm này đã bị bỏ hoang nên không còn tồn tại trên GitHub Repository.\n- Trong một tương lai với GitHub hoặc Internet không tồn tại."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Ghi chú",
+			"text": "Launcher sẽ tắt khi đang hiệu chỉnh..."
+		},
+		"kbSh": {
+			"caption": "Phím tắt",
+			"text": "Alt + F4: Thoát ứng dụng (phím tắt mặc định của Window)\nCtrl + R: Tái khởi động ứng dụng\nCtrl + O: Mở hiệu chỉnh patch stack đang chọn\nF1: Hiển thị phím tắt (trong cửa sổ này)\nF2: Đánh dấu yêu thích các lựa chọn trong danh sách"
+		}
+	},
+	"shCreate": {
+		"file": "Universal THCRAP Launcher",
+		"desc": "Shortcut cho UTL"
+	},
+	"mainForm": {
+		"utl": "Universal THCRAP Launcher",
+		"menuStrip": [
+			[
+				"Ứng dụng",
+				"Tạo shortcut lên desktop",
+				"Tuỳ chỉnh...",
+				"-",
+				"Tái khởi động",
+				"Thoát"
+			],
+			[
+				"THCRAP",
+				"Chạy hiệu chỉnh THCRAP",
+				[
+					"Mở...",
+					"Mở thư mục",
+					"mở danh sách game",
+					"Mở hiệu chỉnh patch stack hiện tại"
+				]
+			],
+			[
+				"GitHub",
+				"Trang GitHub",
+				[
+					"Phản hồi",
+					"Báo cáo lỗi",
+					"Yêu cầu chức năng",
+					"Khác"
+				]
+			],
+			[
+				"Trợ giúp",
+				"Phím tắt"
+			]
+		],
+		"tooltips": {
+			"startButton": "Khởi động thcrap với tuỳ chỉnh đã chọn",
+			"sortAZ": "Sắ xếp theo thứ tự bảng chữ cái",
+			"filterFav": "Lọc theo yêu thích",
+			"filterByType": "Lọc theo loại",
+			"patchLB": "Chọn hiệu chỉnh (patch stack)",
+			"gameLB": "Chọn game (executable)"
+		}
+	}
+}

@@ -1,0 +1,90 @@
+{
+	"metadata": {
+		"authors": ["Rosenrose"],
+		"native": "한국어",
+		"english": "Korean"
+	},
+	"settingsForm": {
+		"settings": "설정",
+		"language": "언어",
+		"closeOnExit": "창을 닫고 게임 시작",
+		"langCredits": "번역: {0}.",
+		"and": ",",
+		"downloadAll": "모든 언어팩 다운로드",
+		"downloading": "다운로드 중...",
+		"hidePatchExtension": "패치 목록에서 확장자 숨기기"
+	},
+	"errors": {
+		"error": "오류",
+		"missing": {
+			"thcrap_loader": "thcrap_loader.exe를 찾지 못 했습니다.\n같은 폴더에 있는지 확인해 주십시오.",
+			"gamesJs": "games.js를 찾지 못 했습니다.\n우선 thcrap_configure.exe를 실행해 주십시오.",
+			"patchStacks": "패치 목록이 담긴 설정 파일을 찾지 못 했습니다.\n우선 thcrap_configure.exe를 실행해 주십시오.",
+			"jsonParser": "Newtonsoft.Json.dll이 없습니다. 제대로 복사되었는지 확인해 주십시오."
+		},
+		"oops": "오류가 있습니다.",
+		"noneSelected": "설정 파일(패치 목록)이나 게임이 선택되지 않았습니다.\n선택을 해주십시오.",
+		"downloadError": "Github에서 언어팩을 다운로드할 수 없습니다. 다음과 같은 경우에 해당됩니다.\n- 인터넷이 연결되지 않음.\n- 이 프로그램이 폐기되어 더 이상 깃허브 저장소에 있지 않음.\n- 깃허브나 인터넷이 존재하지 않는 미래."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "알림",
+			"text": "설정 파일을 구성하는 중에는 창이 잠시 사라집니다."
+		},
+		"kbSh": {
+			"caption": "키보드 단축키",
+			"text": "Alt + F4: 프로그램 종료(윈도우 기본)\nCtrl + R: 프로그램 다시 시작\nCtrl + O: 선택한 설정 파일 열기\nF1: 키보드 단축키 표시\nF2: 선택한 항목을 즐겨찾기에 추가"
+		}
+	},
+	"shCreate": {
+		"file": "Universal THCRAP Launcher",
+		"desc": "Shortcut for UTL"
+	},
+	"mainForm": {
+		"utl": "Universal THCRAP Launcher",
+		"menuStrip": [
+			[
+				"App",
+				"바탕화면에 바로가기 생성",
+				"설정",
+				"-",
+				"다시 시작",
+				"종료"
+			],
+			[
+				"THCRAP",
+				"THCRAP Configuration 열기",
+				[
+					"열기...",
+					"폴더 열기",
+					"게임 목록 열기",
+					"선택한 설정 파일 열기"
+				]
+			],
+			[
+				"GitHub",
+				"깃허브로 가기",
+				[
+					"피드백",
+					"버그 제보",
+					"기능 요청",
+					"기타"
+				]
+			],
+			[
+				"도움말",
+				"키보드 단축키"
+			]
+		],
+		"tooltips": {
+			"startButton": "선택한 설정으로 thcrap 실행",
+			"sortAZ": "알파벳 순서로 정렬",
+			"filterFav": "즐겨찾기 필터",
+			"filterByType": "게임/환경설정 필터",
+			"patchLB": "설정 파일(패치 목록)을 선택",
+			"gameLB": "게임을 선택",
+			"patchFav": "패치를 즐겨찾기에 추가 (선택한 항목이면 F2)",
+			"gamesFav": "게임을 즐겨찾기에 추가 (선택한 항목이면 F2)"
+		}
+	}
+}

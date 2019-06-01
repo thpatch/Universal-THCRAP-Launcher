@@ -44,6 +44,7 @@ namespace Universal_THCRAP_Launcher {
         private readonly Image _starHollow = new Bitmap(Resources.Star_Hollow);
 
         private List<string> _jsFiles = new List<string>();
+        private List<string> _thcrapFiles = new List<string>();
 
         private int[] _resizeConstants;
         private Dictionary<string, string> _gamesDictionary;
@@ -681,12 +682,14 @@ namespace Universal_THCRAP_Launcher {
 
         public void PopulatePatchList() {
             _jsFiles.Clear();
+            _thcrapFiles.Clear();
 
             //Load patch stacks
             _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
+            _thcrapFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.thcrap").ToList();
 
             //Give error if there are no patch configurations
-            if (_jsFiles.Count == 0) ErrorAndExit(I18N.LangResource.errors.missing.patchStacks);
+            if (_jsFiles.Count == 0 && _thcrapFiles.Count == 0) ErrorAndExit(I18N.LangResource.errors.missing.patchStacks);
 
 
             #region  Fix patch stack list
@@ -699,12 +702,14 @@ namespace Universal_THCRAP_Launcher {
             _jsFiles.Remove("favourites.js");
             _jsFiles.Remove(CONFIG_FILE);
             if (Configuration1.HidePatchExtension) {
-                for (var i = 0; i < _jsFiles.Count; i++)
+                for (var i = 0; i < _jsFiles.Count; i++) {
                     _jsFiles[i] = _jsFiles[i].Replace(".js", "");
+                    _thcrapFiles[i] = _thcrapFiles[i].Replace(".thcrap", "");
+                }
             }
 
             if (Configuration1.ShowVanilla)
-                _jsFiles.Insert(0, $"[{I18N.LangResource.mainForm.vanilla}]");
+                patchListBox.Items.Insert(0, $"[{I18N.LangResource.mainForm.vanilla}]");
 
             #endregion
 
@@ -712,6 +717,7 @@ namespace Universal_THCRAP_Launcher {
 
             //Display patch stacks
             foreach (var item in _jsFiles) patchListBox.Items.Add(item);
+            foreach (var item in _thcrapFiles) patchListBox.Items.Add(item);
 
             AddStars(patchListBox, Favourites1.Patches);
 
@@ -851,7 +857,8 @@ namespace Universal_THCRAP_Launcher {
             } else {
                 var s = "";
                 s += patchListBox.SelectedItem;
-                if (Configuration1.HidePatchExtension) s += ".js";
+                if (Configuration1.HidePatchExtension && _jsFiles.Contains(patchListBox.SelectedItem)) s += ".js";
+                if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patchListBox.SelectedItem)) s += ".thcrap";
                 s += " ";
                 s += gameListBox.SelectedItem;
                 s =  s.Replace(" ★", "");

@@ -38,12 +38,12 @@ namespace Universal_THCRAP_Launcher
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gameListBox = new System.Windows.Forms.ListBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.filterFavButton2 = new System.Windows.Forms.Button();
-            this.filterFavButton1 = new System.Windows.Forms.Button();
-            this.sortAZButton2 = new System.Windows.Forms.Button();
-            this.sortAZButton1 = new System.Windows.Forms.Button();
+            this.btn_filterFav2 = new System.Windows.Forms.Button();
+            this.btn_filterFav1 = new System.Windows.Forms.Button();
+            this.btn_sortAZ2 = new System.Windows.Forms.Button();
+            this.btn_sortAZ1 = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
-            this.filterByType_button = new System.Windows.Forms.Button();
+            this.btn_filterByType = new System.Windows.Forms.Button();
             this.btn_AddFavorite0 = new System.Windows.Forms.Button();
             this.btn_AddFavorite1 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -68,6 +68,8 @@ namespace Universal_THCRAP_Launcher
             this.helpTS = new System.Windows.Forms.ToolStripMenuItem();
             this.keyboardShortcutsTS = new System.Windows.Forms.ToolStripMenuItem();
             this.reportBugTS = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Random1 = new System.Windows.Forms.Button();
+            this.btn_Random2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -114,57 +116,57 @@ namespace Universal_THCRAP_Launcher
             this.gameListBox.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
             this.gameListBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             // 
-            // filterFavButton2
+            // btn_filterFav2
             // 
-            this.filterFavButton2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Star_Hollow;
-            this.filterFavButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.filterFavButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.filterFavButton2.Location = new System.Drawing.Point(200, 85);
-            this.filterFavButton2.Name = "filterFavButton2";
-            this.filterFavButton2.Size = new System.Drawing.Size(25, 25);
-            this.filterFavButton2.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.filterFavButton2, "Filter for favourites");
-            this.filterFavButton2.UseVisualStyleBackColor = true;
-            this.filterFavButton2.Click += new System.EventHandler(this.filterButton2_Click);
+            this.btn_filterFav2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Star_Hollow;
+            this.btn_filterFav2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_filterFav2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_filterFav2.Location = new System.Drawing.Point(200, 85);
+            this.btn_filterFav2.Name = "btn_filterFav2";
+            this.btn_filterFav2.Size = new System.Drawing.Size(25, 25);
+            this.btn_filterFav2.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.btn_filterFav2, "Filter for favourites");
+            this.btn_filterFav2.UseVisualStyleBackColor = true;
+            this.btn_filterFav2.Click += new System.EventHandler(this.filterButton2_Click);
             // 
-            // filterFavButton1
+            // btn_filterFav1
             // 
-            this.filterFavButton1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Star_Hollow;
-            this.filterFavButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.filterFavButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.filterFavButton1.Location = new System.Drawing.Point(42, 85);
-            this.filterFavButton1.Name = "filterFavButton1";
-            this.filterFavButton1.Size = new System.Drawing.Size(25, 25);
-            this.filterFavButton1.TabIndex = 4;
-            this.toolTip1.SetToolTip(this.filterFavButton1, "Filter for favourites");
-            this.filterFavButton1.UseVisualStyleBackColor = true;
-            this.filterFavButton1.Click += new System.EventHandler(this.filterButton1_Click);
+            this.btn_filterFav1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Star_Hollow;
+            this.btn_filterFav1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_filterFav1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_filterFav1.Location = new System.Drawing.Point(42, 85);
+            this.btn_filterFav1.Name = "btn_filterFav1";
+            this.btn_filterFav1.Size = new System.Drawing.Size(25, 25);
+            this.btn_filterFav1.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.btn_filterFav1, "Filter for favourites");
+            this.btn_filterFav1.UseVisualStyleBackColor = true;
+            this.btn_filterFav1.Click += new System.EventHandler(this.filterButton1_Click);
             // 
-            // sortAZButton2
+            // btn_sortAZ2
             // 
-            this.sortAZButton2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Ascending;
-            this.sortAZButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.sortAZButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sortAZButton2.Location = new System.Drawing.Point(169, 85);
-            this.sortAZButton2.Name = "sortAZButton2";
-            this.sortAZButton2.Size = new System.Drawing.Size(25, 25);
-            this.sortAZButton2.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.sortAZButton2, "Sort in alphabetical order");
-            this.sortAZButton2.UseVisualStyleBackColor = true;
-            this.sortAZButton2.Click += new System.EventHandler(this.sortAZButton2_Click);
+            this.btn_sortAZ2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Ascending;
+            this.btn_sortAZ2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_sortAZ2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_sortAZ2.Location = new System.Drawing.Point(169, 85);
+            this.btn_sortAZ2.Name = "btn_sortAZ2";
+            this.btn_sortAZ2.Size = new System.Drawing.Size(25, 25);
+            this.btn_sortAZ2.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.btn_sortAZ2, "Sort in alphabetical order");
+            this.btn_sortAZ2.UseVisualStyleBackColor = true;
+            this.btn_sortAZ2.Click += new System.EventHandler(this.sortAZButton2_Click);
             // 
-            // sortAZButton1
+            // btn_sortAZ1
             // 
-            this.sortAZButton1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Ascending;
-            this.sortAZButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.sortAZButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sortAZButton1.Location = new System.Drawing.Point(11, 85);
-            this.sortAZButton1.Name = "sortAZButton1";
-            this.sortAZButton1.Size = new System.Drawing.Size(25, 25);
-            this.sortAZButton1.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.sortAZButton1, "Sort in alphabetical order");
-            this.sortAZButton1.UseVisualStyleBackColor = true;
-            this.sortAZButton1.Click += new System.EventHandler(this.sortAZButton1_Click);
+            this.btn_sortAZ1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Sort_Ascending;
+            this.btn_sortAZ1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_sortAZ1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_sortAZ1.Location = new System.Drawing.Point(11, 85);
+            this.btn_sortAZ1.Name = "btn_sortAZ1";
+            this.btn_sortAZ1.Size = new System.Drawing.Size(25, 25);
+            this.btn_sortAZ1.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btn_sortAZ1, "Sort in alphabetical order");
+            this.btn_sortAZ1.UseVisualStyleBackColor = true;
+            this.btn_sortAZ1.Click += new System.EventHandler(this.sortAZButton1_Click);
             // 
             // startButton
             // 
@@ -183,18 +185,18 @@ namespace Universal_THCRAP_Launcher
             this.startButton.MouseLeave += new System.EventHandler(this.startButton_MouseLeave);
             this.startButton.MouseHover += new System.EventHandler(this.startButton_MouseHover);
             // 
-            // filterByType_button
+            // btn_filterByType
             // 
-            this.filterByType_button.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.GameAndCustom;
-            this.filterByType_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.filterByType_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.filterByType_button.Location = new System.Drawing.Point(231, 85);
-            this.filterByType_button.Name = "filterByType_button";
-            this.filterByType_button.Size = new System.Drawing.Size(25, 25);
-            this.filterByType_button.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.filterByType_button, "Filter by Type");
-            this.filterByType_button.UseVisualStyleBackColor = true;
-            this.filterByType_button.Click += new System.EventHandler(this.filterByType_button_Click);
+            this.btn_filterByType.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.GameAndCustom;
+            this.btn_filterByType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_filterByType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_filterByType.Location = new System.Drawing.Point(231, 85);
+            this.btn_filterByType.Name = "btn_filterByType";
+            this.btn_filterByType.Size = new System.Drawing.Size(25, 25);
+            this.btn_filterByType.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.btn_filterByType, "Filter by Type");
+            this.btn_filterByType.UseVisualStyleBackColor = true;
+            this.btn_filterByType.Click += new System.EventHandler(this.filterByType_button_Click);
             // 
             // btn_AddFavorite0
             // 
@@ -404,18 +406,44 @@ namespace Universal_THCRAP_Launcher
             this.reportBugTS.Name = "reportBugTS";
             this.reportBugTS.Size = new System.Drawing.Size(32, 19);
             // 
+            // btn_Random1
+            // 
+            this.btn_Random1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
+            this.btn_Random1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_Random1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Random1.Location = new System.Drawing.Point(104, 85);
+            this.btn_Random1.Name = "btn_Random1";
+            this.btn_Random1.Size = new System.Drawing.Size(25, 25);
+            this.btn_Random1.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.btn_Random1, "Select random patch");
+            this.btn_Random1.UseVisualStyleBackColor = true;
+            // 
+            // btn_Random2
+            // 
+            this.btn_Random2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
+            this.btn_Random2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_Random2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Random2.Location = new System.Drawing.Point(293, 85);
+            this.btn_Random2.Name = "btn_Random2";
+            this.btn_Random2.Size = new System.Drawing.Size(25, 25);
+            this.btn_Random2.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.btn_Random2, "Select random game");
+            this.btn_Random2.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 431);
+            this.Controls.Add(this.btn_Random2);
+            this.Controls.Add(this.btn_Random1);
             this.Controls.Add(this.btn_AddFavorite1);
             this.Controls.Add(this.btn_AddFavorite0);
-            this.Controls.Add(this.filterByType_button);
-            this.Controls.Add(this.filterFavButton2);
-            this.Controls.Add(this.filterFavButton1);
-            this.Controls.Add(this.sortAZButton2);
-            this.Controls.Add(this.sortAZButton1);
+            this.Controls.Add(this.btn_filterByType);
+            this.Controls.Add(this.btn_filterFav2);
+            this.Controls.Add(this.btn_filterFav1);
+            this.Controls.Add(this.btn_sortAZ2);
+            this.Controls.Add(this.btn_sortAZ1);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
@@ -448,11 +476,11 @@ namespace Universal_THCRAP_Launcher
         private ListBox gameListBox;
         private Button startButton;
         private ToolTip toolTip1;
-        private Button sortAZButton1;
-        private Button sortAZButton2;
-        private Button filterFavButton1;
-        private Button filterFavButton2;
-        private Button filterByType_button;
+        private Button btn_sortAZ1;
+        private Button btn_sortAZ2;
+        private Button btn_filterFav1;
+        private Button btn_filterFav2;
+        private Button btn_filterByType;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem appTS;
         private ToolStripMenuItem restartTS;
@@ -478,6 +506,8 @@ namespace Universal_THCRAP_Launcher
         private ListBox patchListBox;
         private Button btn_AddFavorite0;
         private Button btn_AddFavorite1;
+        private Button btn_Random1;
+        private Button btn_Random2;
     }
 }
 

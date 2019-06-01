@@ -869,7 +869,7 @@ namespace Universal_THCRAP_Launcher
         }
         private void SelectRandomInListBox(ListBox lb) {
             Random r = new Random();
-            lb.SelectedIndex = r.Next(lb.Items.Count - 1);
+            lb.SelectedIndex = r.Next(lb.Items.Count);
         }
         #endregion
 

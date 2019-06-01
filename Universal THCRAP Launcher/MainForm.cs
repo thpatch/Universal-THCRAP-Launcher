@@ -46,6 +46,7 @@ namespace Universal_THCRAP_Launcher {
         private List<string> _jsFiles = new List<string>();
 
         private int[] _resizeConstants;
+        private Dictionary<string, string> _gamesDictionary;
 
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
@@ -130,7 +131,7 @@ namespace Universal_THCRAP_Launcher {
 
             //Load executables
             var file  = File.ReadAllText("games.js");
-            var games = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
+            _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
 
             //Load favorites
             if (File.Exists("favourites.js")) {
@@ -157,7 +158,7 @@ namespace Universal_THCRAP_Launcher {
             #region Display
 
             //Display executables
-            foreach (var item in games) {
+            foreach (var item in _gamesDictionary) {
                 _gamesList.Add(item.Key);
                 gameListBox.Items.Add(item.Key);
             }
@@ -833,12 +834,8 @@ namespace Universal_THCRAP_Launcher {
                 return;
             }
 
-            
-            if (patchListBox.SelectedItem.ToString() == $"[{I18N.LangResource.mainForm.vanilla}]".ToString()) {
-                var gamelist =
-                    JsonConvert.DeserializeObject<Dictionary<string, string>>("games.js");
-                MessageBox.Show("");
-                gamelist.TryGetValue(gameListBox.SelectedItem.ToString(), out string game);
+            if (patchListBox.SelectedIndex == 0) {
+                _gamesDictionary.TryGetValue(gameListBox.SelectedItem.ToString(), out string game);
                 if (game == null) {
                     ErrorAndExit(I18N.LangResource.errors.oops?.ToString());
                     return;
@@ -846,7 +843,6 @@ namespace Universal_THCRAP_Launcher {
 
                 var process = new Process {StartInfo = {FileName = game}};
                 process.Start();
-
 
                 Debug.WriteLine("Game {0} started without thcrap.", game);
             } else {

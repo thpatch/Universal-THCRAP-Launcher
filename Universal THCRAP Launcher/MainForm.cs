@@ -300,8 +300,8 @@ namespace Universal_THCRAP_Launcher
                     break;
             }
         }
-        private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
-        private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
+        private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox(patchListBox);
+        private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox(gameListBox);
 
         #region Sorting/Filtering Button Click Methods
 

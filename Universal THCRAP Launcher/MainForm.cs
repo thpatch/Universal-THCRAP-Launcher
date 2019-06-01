@@ -826,15 +826,18 @@ namespace Universal_THCRAP_Launcher {
         ///     Starts thcrap with the selected patch stack and executable
         /// </summary>
         private void StartThcrap() {
+            
             if (patchListBox.SelectedIndex == -1 || gameListBox.SelectedIndex == -1) {
                 MessageBox.Show(I18N.LangResource.errors.noneSelected?.ToString(),
                                 I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (patchListBox.SelectedItem == $"[{I18N.LangResource.mainForm.vanilla}]") {
+            
+            if (patchListBox.SelectedItem.ToString() == $"[{I18N.LangResource.mainForm.vanilla}]".ToString()) {
                 var gamelist =
                     JsonConvert.DeserializeObject<Dictionary<string, string>>("games.js");
+                MessageBox.Show("");
                 gamelist.TryGetValue(gameListBox.SelectedItem.ToString(), out string game);
                 if (game == null) {
                     ErrorAndExit(I18N.LangResource.errors.oops?.ToString());

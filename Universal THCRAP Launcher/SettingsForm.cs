@@ -75,11 +75,13 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateLang()
         {
-            Text = I18N.LangResource.settingsForm.settings?.ToString();
-            languageLabel.Text = I18N.LangResource.settingsForm.language?.ToString() + ':';
-            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm.closeOnExit?.ToString();
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll?.ToString();
-            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm.hidePatchExtension?.ToString();
+            Text = I18N.LangResource.settingsForm?.settings?.ToString();
+            languageLabel.Text = I18N.LangResource.settingsForm?.language?.ToString() + ':';
+            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm?.closeOnExit?.ToString();
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm?.downloadAll?.ToString();
+            cB_hidePatchExtension.Text = I18N.LangResource.settingsForm?.hidePatchExtension?.ToString();
+            tabPage_General.Text = I18N.LangResource.settingsForm.tabs?.general?.ToString();
+            tabPage_Language.Text = I18N.LangResource.settingsForm.tabs?.language?.ToString();
         }
 
         private void UpdateCredits()
@@ -155,9 +157,6 @@ namespace Universal_THCRAP_Launcher
             _mf.PopulatePatchList();
         }
 
-        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _mf.UpdateConfigFile();
-        }
+        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) => _mf.UpdateConfigFile();
     }
 }

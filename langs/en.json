@@ -12,7 +12,11 @@
 		"and": "and",
 		"downloadAll": "Download All Languages",
 		"downloading": "Downloading...",
-		"hidePatchExtension": "Hide extension on patch list"
+		"hidePatchExtension": "Hide extension on patch list",
+		"tabs": {
+			"general": "General",
+			"language": "Language"
+		}	
 	},
 	"errors": {
 		"error": "Error",

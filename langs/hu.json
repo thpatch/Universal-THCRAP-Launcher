@@ -12,7 +12,11 @@
 		"and": "és",
 		"downloadAll": "Összes nyelv letöltése",
 		"downloading:": "Letöltés...",
-		"hidePatchExtension": "Konfiguráció (patch stack) kiterjesztésének elrejtése"
+		"hidePatchExtension": "Konfiguráció (patch stack) kiterjesztésének elrejtése",
+		"tabs": {
+			"general": "Átlagos",
+			"language": "Nyelv"
+		}
 
 	},
 	"errors": {

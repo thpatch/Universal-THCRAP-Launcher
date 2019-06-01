@@ -85,7 +85,8 @@
 			"patchLB": "Futtatási konfiguráció kiválasztása (patch stack)",
 			"gameLB": "Játék kiválasztása (executable)",
 			"patchFav": "Patch hozzáadása a kedvencekhez (vagy használd az F2-t, ha akítvan ki van választva)",
-			"gamesFav": "Játék vagy futtatható hozzáadása a kedvencekhez (vagy használd az F2-t, ha aktívan ki van választva)"
+			"gamesFav": "Játék vagy futtatható hozzáadása a kedvencekhez (vagy használd az F2-t, ha aktívan ki van választva)",
+			"random": "Véletlenszerű elem kiválasztása"
 		}
 	}
 }

@@ -40,8 +40,8 @@ namespace Universal_THCRAP_Launcher
             this.cB_hidePatchExtension = new System.Windows.Forms.CheckBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage_General = new System.Windows.Forms.TabPage();
-            this.tabPage_Language = new System.Windows.Forms.TabPage();
             this.cB_ShowVanilla = new System.Windows.Forms.CheckBox();
+            this.tabPage_Language = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.tabPage_General.SuspendLayout();
             this.tabPage_Language.SuspendLayout();
@@ -109,9 +109,9 @@ namespace Universal_THCRAP_Launcher
             this.cB_hidePatchExtension.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cB_hidePatchExtension.Location = new System.Drawing.Point(8, 28);
             this.cB_hidePatchExtension.Name = "cB_hidePatchExtension";
-            this.cB_hidePatchExtension.Size = new System.Drawing.Size(159, 17);
+            this.cB_hidePatchExtension.Size = new System.Drawing.Size(156, 17);
             this.cB_hidePatchExtension.TabIndex = 16;
-            this.cB_hidePatchExtension.Text = "Hide extension on patch list.";
+            this.cB_hidePatchExtension.Text = "Hide extension on patch list";
             this.cB_hidePatchExtension.UseVisualStyleBackColor = true;
             this.cB_hidePatchExtension.CheckedChanged += new System.EventHandler(this.CB_hidePatchExtension_CheckedChanged);
             // 
@@ -138,6 +138,19 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_General.Text = "General";
             this.tabPage_General.UseVisualStyleBackColor = true;
             // 
+            // cB_ShowVanilla
+            // 
+            this.cB_ShowVanilla.AutoSize = true;
+            this.cB_ShowVanilla.Checked = true;
+            this.cB_ShowVanilla.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cB_ShowVanilla.Location = new System.Drawing.Point(8, 51);
+            this.cB_ShowVanilla.Name = "cB_ShowVanilla";
+            this.cB_ShowVanilla.Size = new System.Drawing.Size(284, 17);
+            this.cB_ShowVanilla.TabIndex = 17;
+            this.cB_ShowVanilla.Text = "Show Vanilla (THCRAP-less) launch option in patch list";
+            this.cB_ShowVanilla.UseVisualStyleBackColor = true;
+            this.cB_ShowVanilla.CheckedChanged += new System.EventHandler(this.CB_ShowVanilla_CheckedChanged);
+            // 
             // tabPage_Language
             // 
             this.tabPage_Language.Controls.Add(this.btn_dwnlAllLangs);
@@ -151,19 +164,6 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_Language.TabIndex = 0;
             this.tabPage_Language.Text = "Language";
             this.tabPage_Language.UseVisualStyleBackColor = true;
-            // 
-            // cB_ShowVanilla
-            // 
-            this.cB_ShowVanilla.AutoSize = true;
-            this.cB_ShowVanilla.Checked = true;
-            this.cB_ShowVanilla.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_ShowVanilla.Location = new System.Drawing.Point(8, 51);
-            this.cB_ShowVanilla.Name = "cB_ShowVanilla";
-            this.cB_ShowVanilla.Size = new System.Drawing.Size(287, 17);
-            this.cB_ShowVanilla.TabIndex = 17;
-            this.cB_ShowVanilla.Text = "Show Vanilla (THCRAP-less) launch option in patch list.";
-            this.cB_ShowVanilla.UseVisualStyleBackColor = true;
-            this.cB_ShowVanilla.CheckedChanged += new System.EventHandler(this.CB_ShowVanilla_CheckedChanged);
             // 
             // SettingsForm
             // 

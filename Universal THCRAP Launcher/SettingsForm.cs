@@ -129,8 +129,9 @@ namespace Universal_THCRAP_Launcher
             closeOnExitCheckBox.Text   = I18N.LangResource.settingsForm?.closeOnExit?.ToString();
             btn_dwnlAllLangs.Text      = I18N.LangResource.settingsForm?.downloadAll?.ToString();
             cB_hidePatchExtension.Text = I18N.LangResource.settingsForm?.hidePatchExtension?.ToString();
-            tabPage_General.Text       = I18N.LangResource.settingsForm.tabs?.general?.ToString();
-            tabPage_Language.Text      = I18N.LangResource.settingsForm.tabs?.language?.ToString();
+            tabPage_General.Text       = I18N.LangResource.settingsForm?.tabs?.general?.ToString();
+            tabPage_Language.Text      = I18N.LangResource.settingsForm?.tabs?.language?.ToString();
+            cB_ShowVanilla.Text        = I18N.LangResource.settingsForm?.showVanilla?.ToString();
         }
         private void UpdateCredits()
         {

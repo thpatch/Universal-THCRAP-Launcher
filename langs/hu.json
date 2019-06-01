@@ -7,12 +7,13 @@
 	"settingsForm": {
 		"settings": "Beállítások",
 		"language": "Nyelv",
-		"closeOnExit": "Bezárás a játék indulásakor",
+		"closeOnExit": "Bezárás a futtatható indulásakor",
 		"langCredits": "Fordította: {0}",
 		"and": "és",
 		"downloadAll": "Összes nyelv letöltése",
 		"downloading:": "Letöltés...",
-		"hidePatchExtension": "Konfiguráció (patch stack) kiterjesztésének elrejtése",
+		"hidePatchExtension": "Futtatási konfiguráció (patch stack) kiterjesztésének elrejtése",
+		"showVanilla": "Mutassa a Szűz (THCRAP nélküli) elindítási lehetőséget a futtatási konfigurációk (patch stacks) között",
 		"tabs": {
 			"general": "Átlagos",
 			"language": "Nyelv"
@@ -24,11 +25,11 @@
 		"missing": {
 			"thcrap_loader": "thcrap_loader.exe nem található.\nBizonyosodj meg róla, hogy az alkalmazás mellette van!",
 			"gamesJs": "games.js nem található.\nBizonyosodj meg róla, hogy elöször a(z) thcrap_configure.exe fájlt futtatod!",
-			"patchStacks": "Patch stackekből álló konfig fájlok nem találhatóak.\nBizonyosodj meg róla, hogy elöször a(z) thcrap_configure.exe fájlt futtatod!",
+			"patchStacks": "Futtatási konfigurációkból (patch stack) álló konfig fájlok nem találhatóak.\nBizonyosodj meg róla, hogy elöször a(z) thcrap_configure.exe fájlt futtatod!",
 			"jsonParser": "A(z) Newtonsoft.Json.dll hiányzik. Bizonyosodj meg róla, hogy azt is átmásoltad."
 		},
 		"oops": "Valami hiba történt...",
-		"noneSelected": "Egy konfiguráció (patch stack) vagy játék (executable) sincs kiváalasztva!\nKérlek, válassz ki egyet!",
+		"noneSelected": "Egy futtatási konfiguráció (patch stack) vagy futtatható (executable) sincs kiváalasztva!\nKérlek, válassz ki egyet!",
 		"downloadError": "Nem sikerült a nyelvi fájlok letöltése a GitHubról.\nEnnek lehetséges indokai:\n- Nem vagy csatlakozva az Internethez.\n- A program annyira elavult, hogy már nem létezik a GitHub repo.\n- Egy olyan jövőben vagy, ahol nincs GitHub vagy Internet."
 	},
 	"popup": {
@@ -38,7 +39,7 @@
 		},
 		"kbSh": {
 			"caption": "Gyorsgombok",
-			"text": "Alt + F4: Alklamazás bezárása (alapértelmezett Windows rövidítés)\nCtrl + R: Alkalmazás újraindítása\nCtrl + O: Kiválasztott patch konfiguráció megnyitása\nF1: Gyorsgombok mutatása (ez az ablak)\nF2: Kiválasztott elem kedvencnek jejölése a kiválasztott listán"
+			"text": "Alt + F4: Alklamazás bezárása (alapértelmezett Windows rövidítés)\nCtrl + R: Alkalmazás újraindítása\nCtrl + O: Kiválasztott futtatási konfiguráció (patch stack) megnyitása\nF1: Gyorsgombok mutatása (ez az ablak)\nF2: Kiválasztott elem kedvencnek jejölése a kiválasztott listán"
 		}
 	},
 	"shCreate": {
@@ -62,8 +63,8 @@
 				[
 					"Megnyitás...",
 					"Mappa megnyitása",
-					"Játéklista megnyitása",
-					"Kiválasztott patch konfiguráció megnyitása"
+					"Játéklista megnyitása (games.js)",
+					"Kiválasztott futtatási konfiguráció (patch stack) megnyitása"
 				]
 			],
 			[
@@ -83,14 +84,14 @@
 		],
 		"vanilla":"Szűz",
 		"tooltips": {
-			"startButton": "Thcrap indítása a kiválasztott beállításokkal",
+			"startButton": "Futtatható indítása a kiválasztott beállításokkal",
 			"sortAZ": "Rendezés ábécésorrendbe",
 			"filterFav": "Szűrés kedvencek alapján",
 			"filterByType": "Szűrés típus alapján",
-			"patchLB": "Futtatási konfiguráció kiválasztása (patch stack)",
-			"gameLB": "Játék kiválasztása (executable)",
-			"patchFav": "Patch hozzáadása a kedvencekhez (vagy használd az F2-t, ha akítvan ki van választva)",
-			"gamesFav": "Játék vagy futtatható hozzáadása a kedvencekhez (vagy használd az F2-t, ha aktívan ki van választva)",
+			"patchLB": "Futtatási konfiguráció (patch stack) kiválasztása",
+			"gameLB": "Futtatható (executable) kiválasztása",
+			"patchFav": "Futtatási konfiguráció (patch stack) hozzáadása a kedvencekhez (vagy használd az F2-t, ha akítvan ki van választva)",
+			"gamesFav": "Futtatható (executable) hozzáadása a kedvencekhez (vagy használd az F2-t, ha aktívan ki van választva)",
 			"random": "Véletlenszerű elem kiválasztása"
 		}
 	}

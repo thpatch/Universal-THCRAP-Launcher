@@ -5,7 +5,7 @@
 		"english": "Malay"
 	},
 	"settingsForm": {
-		"settings": "Seting",
+		"settings": "Tetapan",
 		"language": "Bahasa",
 		"closeOnExit": "Tutup apabila permainan bermula",
 		"langCredits": "Diterjemahkan oleh {0}.",
@@ -28,7 +28,7 @@
 	},
 	"popup": {
 		"hideLauncher": {
-			"caption": "Nota",
+			"caption": "Notis",
 			"text": "Pelancar tu hilang sendiri semasa konfigurasi..."
 		},
 		"kbSh": {
@@ -46,7 +46,7 @@
 			[
 				"Aplikasi",
 				"Cipta fail pintasan ke Desktop",
-				"Seting...",
+				"Tetapan...",
 				"-",
 				"Mula semula",
 				"Keluar"
@@ -57,7 +57,7 @@
 				[
 					"Buka...",
 					"Buka fail folder",
-					"Buka Senari Permainan",
+					"Buka Senarai Permainan",
 					"Buka Konfigurasi Tampalan Terpilih"
 				]
 			],
@@ -82,7 +82,9 @@
 			"filterFav": "Tapis mengikut kegemaran",
 			"filterByType": "Tapis mengikut jenis",
 			"patchLB": "Pilih konfigurasi untuk dijalankan (timbulan tampalan)",
-			"gameLB": "Pilih permainan (fail boleh laku)"
+			"gameLB": "Pilih permainan (fail boleh laku)",
+			"patchFav": "Tambah tampalan ke kegemaran (atau gunakan F2 jika ia adalah pilihan aktif)",
+			"gamesFav": "Tambah permainan atau fail exe to favourites (atau gunakan F2 jika ia adalah pemilihan aktif)"
 		}
 	}
 }

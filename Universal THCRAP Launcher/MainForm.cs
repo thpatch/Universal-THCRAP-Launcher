@@ -17,10 +17,10 @@ using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
 
 /* WARNING: This code has been made by a new developer with WinForms
- * and the quality of code is very bad. If you want to be able to get thiw working, ensure:
+ * and the quality of code is very bad. If you want to be able to get this working, ensure:
  * NuGet packages are working.
  * Both "code behinds" have been loaded up in th editor once.
- * For Debug's the working directory has been set to thcrap's directory.
+ * For Debug the working directory has been set to thcrap's directory.
  */ 
 
 namespace Universal_THCRAP_Launcher
@@ -153,9 +153,9 @@ namespace Universal_THCRAP_Launcher
             _resizeConstants[0] = Size.Width - startButton.Width;
             _resizeConstants[1] = Size.Width - splitContainer1.Width;
             _resizeConstants[2] = Size.Height - splitContainer1.Height;
-            _resizeConstants[3] = splitContainer1.Location.Y - sortAZButton1.Location.Y;
-            _resizeConstants[4] = sortAZButton2.Location.X - patchListBox.Size.Width;
-            _resizeConstants[5] = filterFavButton1.Location.X - sortAZButton1.Location.X;
+            _resizeConstants[3] = splitContainer1.Location.Y - btn_sortAZ1.Location.Y;
+            _resizeConstants[4] = btn_sortAZ2.Location.X - patchListBox.Size.Width;
+            _resizeConstants[5] = btn_filterFav1.Location.X - btn_sortAZ1.Location.X;
             #endregion
 
             #region Display
@@ -232,20 +232,24 @@ namespace Universal_THCRAP_Launcher
                 splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
                 patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
                 gameListBox.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
-                sortAZButton1.Location =
-                    new Point(sortAZButton1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
-                sortAZButton2.Location =
+                btn_sortAZ1.Location =
+                    new Point(btn_sortAZ1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_sortAZ2.Location =
                     new Point(patchListBox.Size.Width + _resizeConstants[4], splitContainer1.Location.Y - _resizeConstants[3]);
-                filterFavButton1.Location =
-                    new Point(sortAZButton1.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
-                filterFavButton2.Location =
-                    new Point(sortAZButton2.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
-                filterByType_button.Location =
-                    new Point(filterFavButton2.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_filterFav1.Location =
+                    new Point(btn_sortAZ1.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_filterFav2.Location =
+                    new Point(btn_sortAZ2.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_filterByType.Location =
+                    new Point(btn_filterFav2.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
                 btn_AddFavorite0.Location =
-                    new Point(filterFavButton1.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                    new Point(btn_filterFav1.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
                 btn_AddFavorite1.Location =
-                    new Point(filterByType_button.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                    new Point(btn_filterByType.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_Random1.Location =
+                    new Point(btn_AddFavorite0.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_Random2.Location =
+                    new Point(btn_AddFavorite1.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
             }
             catch (Exception ex)
             {
@@ -296,23 +300,25 @@ namespace Universal_THCRAP_Launcher
                     break;
             }
         }
+        private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox(patchListBox);
+        private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox(gameListBox);
 
         #region Sorting/Filtering Button Click Methods
 
         private void sortAZButton1_Click(object sender, EventArgs e)
         {
             var isDesc = Configuration1.IsDescending;
-            if (sortAZButton1.BackgroundImage.Equals(_sortDescending))
+            if (btn_sortAZ1.BackgroundImage.Equals(_sortDescending))
             {
                 SortListBoxItems(ref patchListBox);
-                sortAZButton1.BackgroundImage = _sortAscending;
+                btn_sortAZ1.BackgroundImage = _sortAscending;
                 isDesc[0] = "false";
             }
             else
             {
                 SortListBoxItemsDesc(ref patchListBox);
                 isDesc[0] = "true";
-                sortAZButton1.BackgroundImage = _sortDescending;
+                btn_sortAZ1.BackgroundImage = _sortDescending;
             }
 
             Configuration1.IsDescending = isDesc;
@@ -322,17 +328,17 @@ namespace Universal_THCRAP_Launcher
         private void sortAZButton2_Click(object sender, EventArgs e)
         {
             var isDesc = Configuration1.IsDescending;
-            if (sortAZButton2.BackgroundImage.Equals(_sortDescending))
+            if (btn_sortAZ2.BackgroundImage.Equals(_sortDescending))
             {
                 SortListBoxItems(ref gameListBox);
-                sortAZButton2.BackgroundImage = _sortAscending;
+                btn_sortAZ2.BackgroundImage = _sortAscending;
                 isDesc[1] = "false";
             }
             else
             {
                 SortListBoxItemsDesc(ref gameListBox);
                 isDesc[1] = "true";
-                sortAZButton2.BackgroundImage = _sortDescending;
+                btn_sortAZ2.BackgroundImage = _sortDescending;
             }
 
             Configuration1.IsDescending = isDesc;
@@ -342,9 +348,9 @@ namespace Universal_THCRAP_Launcher
         private void filterButton1_Click(object sender, EventArgs e)
         {
             var onlyFav = Configuration1.OnlyFavourites;
-            if (!filterFavButton1.BackgroundImage.Equals(_star))
+            if (!btn_filterFav1.BackgroundImage.Equals(_star))
             {
-                filterFavButton1.BackgroundImage = _star;
+                btn_filterFav1.BackgroundImage = _star;
                 for (var n = patchListBox.Items.Count - 1; n >= 0; --n)
                 {
                     const char filterItem = '★';
@@ -356,7 +362,7 @@ namespace Universal_THCRAP_Launcher
             }
             else
             {
-                filterFavButton1.BackgroundImage = _starHollow;
+                btn_filterFav1.BackgroundImage = _starHollow;
                 patchListBox.Items.Clear();
                 foreach (var s in _jsFiles) patchListBox.Items.Add(s);
 
@@ -371,9 +377,9 @@ namespace Universal_THCRAP_Launcher
         private void filterButton2_Click(object sender, EventArgs e)
         {
             var onlyFav = Configuration1.OnlyFavourites;
-            if (!filterFavButton2.BackgroundImage.Equals(_star))
+            if (!btn_filterFav2.BackgroundImage.Equals(_star))
             {
-                filterFavButton2.BackgroundImage = _star;
+                btn_filterFav2.BackgroundImage = _star;
                 for (var n = gameListBox.Items.Count - 1; n >= 0; --n)
                 {
                     const string filterItem = "★";
@@ -385,7 +391,7 @@ namespace Universal_THCRAP_Launcher
             }
             else
             {
-                filterFavButton2.BackgroundImage = _starHollow;
+                btn_filterFav2.BackgroundImage = _starHollow;
                 gameListBox.Items.Clear();
                 foreach (var s in _gamesList) gameListBox.Items.Add(s);
 
@@ -399,9 +405,9 @@ namespace Universal_THCRAP_Launcher
 
         private void filterByType_button_Click(object sender, EventArgs e)
         {
-            if (filterByType_button.BackgroundImage.Equals(_gameAndCustom))
+            if (btn_filterByType.BackgroundImage.Equals(_gameAndCustom))
             {
-                filterByType_button.BackgroundImage = _game;
+                btn_filterByType.BackgroundImage = _game;
                 gameListBox.Items.Clear();
                 foreach (var item in _gamesList)
                     if (!item.Contains("_custom"))
@@ -411,9 +417,9 @@ namespace Universal_THCRAP_Launcher
                 return;
             }
 
-            if (filterByType_button.BackgroundImage.Equals(_game))
+            if (btn_filterByType.BackgroundImage.Equals(_game))
             {
-                filterByType_button.BackgroundImage = _custom;
+                btn_filterByType.BackgroundImage = _custom;
                 gameListBox.Items.Clear();
                 foreach (var item in _gamesList)
                     if (item.Contains("_custom"))
@@ -423,9 +429,9 @@ namespace Universal_THCRAP_Launcher
                 return;
             }
 
-            if (!filterByType_button.BackgroundImage.Equals(_custom)) return;
+            if (!btn_filterByType.BackgroundImage.Equals(_custom)) return;
             {
-                filterByType_button.BackgroundImage = _gameAndCustom;
+                btn_filterByType.BackgroundImage = _gameAndCustom;
                 gameListBox.Items.Clear();
                 foreach (var item in _gamesList) gameListBox.Items.Add(item);
                 AddStars(gameListBox, Favourites1.Games);
@@ -571,24 +577,24 @@ namespace Universal_THCRAP_Launcher
                         if (i == 0)
                         {
                             SortListBoxItems(ref patchListBox);
-                            sortAZButton1.BackgroundImage = _sortAscending;
+                            btn_sortAZ1.BackgroundImage = _sortAscending;
                         }
                         else
                         {
                             SortListBoxItems(ref gameListBox);
-                            sortAZButton2.BackgroundImage = _sortAscending;
+                            btn_sortAZ2.BackgroundImage = _sortAscending;
                         }
                     }
                     else if (i == 0)
                     {
 
                         SortListBoxItemsDesc(ref patchListBox);
-                        sortAZButton1.BackgroundImage = _sortDescending;
+                        btn_sortAZ1.BackgroundImage = _sortDescending;
                     }
                     else
                     {
                         SortListBoxItemsDesc(ref gameListBox);
-                        sortAZButton2.BackgroundImage = _sortDescending;
+                        btn_sortAZ2.BackgroundImage = _sortDescending;
                     }
 
                 //Default favourite button state
@@ -599,7 +605,7 @@ namespace Universal_THCRAP_Launcher
                             $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
                         if (i == 0)
                         {
-                            filterFavButton1.BackgroundImage = _star;
+                            btn_filterFav1.BackgroundImage = _star;
                             for (var n = patchListBox.Items.Count - 1; n >= 0; --n)
                             {
                                 const string filterItem = "★";
@@ -609,7 +615,7 @@ namespace Universal_THCRAP_Launcher
                         }
                         else
                         {
-                            filterFavButton2.BackgroundImage = _star;
+                            btn_filterFav2.BackgroundImage = _star;
                             for (var n = gameListBox.Items.Count - 1; n >= 0; --n)
                             {
                                 const string filterItem = "★";
@@ -620,12 +626,12 @@ namespace Universal_THCRAP_Launcher
                     }
                     else
                     {
-                        if (i == 0) filterFavButton1.BackgroundImage = _starHollow;
-                        else filterFavButton2.BackgroundImage = _starHollow;
+                        if (i == 0) btn_filterFav1.BackgroundImage = _starHollow;
+                        else btn_filterFav2.BackgroundImage = _starHollow;
                     }
 
                 //Default exe type button state
-                filterByType_button.BackgroundImage = _gameAndCustom;
+                btn_filterByType.BackgroundImage = _gameAndCustom;
                 for (var i = 0; i < Configuration1.FilterExeType; i++)
                 {
                     Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
@@ -762,15 +768,17 @@ namespace Universal_THCRAP_Launcher
 
             Text = objLangRes.utl + " " + Application.ProductVersion.TrimStart(new char[] { '0', '.' });
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton?.ToString());
-            toolTip1.SetToolTip(sortAZButton1, objLangRes.tooltips.sortAZ?.ToString());
-            toolTip1.SetToolTip(sortAZButton2, objLangRes.tooltips.sortAZ?.ToString());
-            toolTip1.SetToolTip(filterFavButton1, objLangRes.tooltips.filterFav?.ToString());
-            toolTip1.SetToolTip(filterFavButton2, objLangRes.tooltips.filterFav?.ToString());
-            toolTip1.SetToolTip(filterByType_button, objLangRes.tooltips.filterByType?.ToString());
+            toolTip1.SetToolTip(btn_sortAZ1, objLangRes.tooltips.sortAZ?.ToString());
+            toolTip1.SetToolTip(btn_sortAZ2, objLangRes.tooltips.sortAZ?.ToString());
+            toolTip1.SetToolTip(btn_filterFav1, objLangRes.tooltips.filterFav?.ToString());
+            toolTip1.SetToolTip(btn_filterFav2, objLangRes.tooltips.filterFav?.ToString());
+            toolTip1.SetToolTip(btn_filterByType, objLangRes.tooltips.filterByType?.ToString());
             toolTip1.SetToolTip(patchListBox, objLangRes.tooltips.patchLB?.ToString());
             toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB?.ToString());
             toolTip1.SetToolTip(btn_AddFavorite0, objLangRes.tooltips.patchFav?.ToString());
             toolTip1.SetToolTip(btn_AddFavorite1, objLangRes.tooltips.gamesFav?.ToString());
+            toolTip1.SetToolTip(btn_Random1, objLangRes.tooltips.random?.ToString());
+            toolTip1.SetToolTip(btn_Random2, objLangRes.tooltips.random?.ToString());
 
             // - TODO: Refactor this code
             menuStrip1.Items[0].Text = objLangRes.menuStrip[0][0];
@@ -859,6 +867,10 @@ namespace Universal_THCRAP_Launcher
             MessageBox.Show(I18N.LangResource.popup.kbSh.text?.ToString(),
                 I18N.LangResource.popup.kbSh.caption?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        private void SelectRandomInListBox(ListBox lb) {
+            Random r = new Random();
+            lb.SelectedIndex = r.Next(lb.Items.Count);
+        }
         #endregion
 
         #region Methods less reletad to the GUI
@@ -930,6 +942,7 @@ namespace Universal_THCRAP_Launcher
             Application.Exit();
         }
         #endregion
+
 
     }
 

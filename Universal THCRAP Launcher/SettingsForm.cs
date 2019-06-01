@@ -30,6 +30,7 @@ namespace Universal_THCRAP_Launcher
         {
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
+            cB_ShowVanilla.Checked = MainForm.Configuration1.ShowVanilla;
    
             UpdateLang();
             UpdateCredits();

@@ -17,10 +17,10 @@ using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
 
 /* WARNING: This code has been made by a new developer with WinForms
- * and the quality of code is very bad. If you want to be able to get thiw working, ensure:
+ * and the quality of code is very bad. If you want to be able to get this working, ensure:
  * NuGet packages are working.
  * Both "code behinds" have been loaded up in th editor once.
- * For Debug's the working directory has been set to thcrap's directory.
+ * For Debug the working directory has been set to thcrap's directory.
  */ 
 
 namespace Universal_THCRAP_Launcher
@@ -931,6 +931,14 @@ namespace Universal_THCRAP_Launcher
         }
         #endregion
 
+        private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
+
+        private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
+
+        private void SelectRandomInListBox(ListBox lb) {
+            Random r = new Random();
+            lb.SelectedIndex = r.Next(lb.Items.Count - 1);
+        }
     }
 
     #region Helper Classes

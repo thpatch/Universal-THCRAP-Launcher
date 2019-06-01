@@ -417,6 +417,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_Random1.TabIndex = 10;
             this.toolTip1.SetToolTip(this.btn_Random1, "Select random patch");
             this.btn_Random1.UseVisualStyleBackColor = true;
+            this.btn_Random1.Click += new System.EventHandler(this.Btn_Random1_Click);
             // 
             // btn_Random2
             // 
@@ -429,6 +430,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_Random2.TabIndex = 11;
             this.toolTip1.SetToolTip(this.btn_Random2, "Select random game");
             this.btn_Random2.UseVisualStyleBackColor = true;
+            this.btn_Random2.Click += new System.EventHandler(this.Btn_Random2_Click);
             // 
             // MainForm
             // 

@@ -246,6 +246,10 @@ namespace Universal_THCRAP_Launcher
                     new Point(btn_filterFav1.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
                 btn_AddFavorite1.Location =
                     new Point(btn_filterByType.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_Random1.Location =
+                    new Point(btn_AddFavorite0.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
+                btn_Random2.Location =
+                    new Point(btn_AddFavorite1.Location.X + _resizeConstants[5], splitContainer1.Location.Y - _resizeConstants[3]);
             }
             catch (Exception ex)
             {
@@ -296,6 +300,8 @@ namespace Universal_THCRAP_Launcher
                     break;
             }
         }
+        private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
+        private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
 
         #region Sorting/Filtering Button Click Methods
 
@@ -859,6 +865,10 @@ namespace Universal_THCRAP_Launcher
             MessageBox.Show(I18N.LangResource.popup.kbSh.text?.ToString(),
                 I18N.LangResource.popup.kbSh.caption?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        private void SelectRandomInListBox(ListBox lb) {
+            Random r = new Random();
+            lb.SelectedIndex = r.Next(lb.Items.Count - 1);
+        }
         #endregion
 
         #region Methods less reletad to the GUI
@@ -931,14 +941,7 @@ namespace Universal_THCRAP_Launcher
         }
         #endregion
 
-        private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
 
-        private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox((ListBox)sender);
-
-        private void SelectRandomInListBox(ListBox lb) {
-            Random r = new Random();
-            lb.SelectedIndex = r.Next(lb.Items.Count - 1);
-        }
     }
 
     #region Helper Classes

@@ -1,11 +1,14 @@
-﻿namespace Universal_THCRAP_Launcher
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Universal_THCRAP_Launcher
 {
     partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -132,11 +135,11 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox closeOnExitCheckBox;
-        private System.Windows.Forms.ComboBox languageComboBox;
-        private System.Windows.Forms.Label languageLabel;
-        private System.Windows.Forms.Label langCreditsLabel;
-        private System.Windows.Forms.Button btn_dwnlAllLangs;
-        private System.Windows.Forms.CheckBox cB_hidePatchExtension;
+        private CheckBox closeOnExitCheckBox;
+        private ComboBox languageComboBox;
+        private Label languageLabel;
+        private Label langCreditsLabel;
+        private Button btn_dwnlAllLangs;
+        private CheckBox cB_hidePatchExtension;
     }
 }

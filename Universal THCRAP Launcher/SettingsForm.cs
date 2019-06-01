@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using System.Net;
-using System.Threading;
 
 namespace Universal_THCRAP_Launcher
 {
@@ -56,7 +56,7 @@ namespace Universal_THCRAP_Launcher
                 }
                 catch (Exception ex)
                 {
-                    Trace.WriteLine($"Exception while parsing language file {file}\nException: {ex.ToString()}");
+                    Trace.WriteLine($"Exception while parsing language file {file}\nException: {ex}");
                     MessageBox.Show(I18N.LangResource.errors.oops?.ToString() + Environment.CurrentDirectory, I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -116,7 +116,7 @@ namespace Universal_THCRAP_Launcher
             var client = new WebClient();
             client.Headers.Add(HttpRequestHeader.UserAgent, "UTL");
             var stream = client.OpenRead(url);
-            using (var textReader = new StreamReader(stream, System.Text.Encoding.UTF8, true))
+            using (var textReader = new StreamReader(stream, Encoding.UTF8, true))
             {
                 return textReader.ReadToEnd();
             }
@@ -140,7 +140,7 @@ namespace Universal_THCRAP_Launcher
             }
             catch (Exception ex)
             {
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex.ToString()}");
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex}");
                 MessageBox.Show(I18N.LangResource.error.downloadError?.ToString(),I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll?.ToString();

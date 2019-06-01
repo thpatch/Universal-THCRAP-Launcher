@@ -77,6 +77,7 @@
 				"Gyorsgombok"
 			]
 		],
+		"vanilla":"Szűz",
 		"tooltips": {
 			"startButton": "Thcrap indítása a kiválasztott beállításokkal",
 			"sortAZ": "Rendezés ábécésorrendbe",

@@ -76,6 +76,7 @@
 				"Keyboard Shortcuts"
 			]
 		],
+		"vanilla": "Vanilla",
 		"tooltips": {
 			"startButton": "Start thcrap with the selected settings",
 			"sortAZ": "Sort in alphabetical order",

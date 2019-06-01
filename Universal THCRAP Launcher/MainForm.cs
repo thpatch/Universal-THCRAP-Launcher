@@ -777,6 +777,8 @@ namespace Universal_THCRAP_Launcher
             toolTip1.SetToolTip(gameListBox, objLangRes.tooltips.gameLB?.ToString());
             toolTip1.SetToolTip(btn_AddFavorite0, objLangRes.tooltips.patchFav?.ToString());
             toolTip1.SetToolTip(btn_AddFavorite1, objLangRes.tooltips.gamesFav?.ToString());
+            toolTip1.SetToolTip(btn_Random1, objLangRes.tooltips.random?.ToString());
+            toolTip1.SetToolTip(btn_Random2, objLangRes.tooltips.random?.ToString());
 
             // - TODO: Refactor this code
             menuStrip1.Items[0].Text = objLangRes.menuStrip[0][0];

@@ -46,6 +46,8 @@ namespace Universal_THCRAP_Launcher
             this.btn_filterByType = new System.Windows.Forms.Button();
             this.btn_AddFavorite0 = new System.Windows.Forms.Button();
             this.btn_AddFavorite1 = new System.Windows.Forms.Button();
+            this.btn_Random1 = new System.Windows.Forms.Button();
+            this.btn_Random2 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.appTS = new System.Windows.Forms.ToolStripMenuItem();
             this.createShortcutTS = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,8 +70,6 @@ namespace Universal_THCRAP_Launcher
             this.helpTS = new System.Windows.Forms.ToolStripMenuItem();
             this.keyboardShortcutsTS = new System.Windows.Forms.ToolStripMenuItem();
             this.reportBugTS = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_Random1 = new System.Windows.Forms.Button();
-            this.btn_Random2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -223,6 +223,32 @@ namespace Universal_THCRAP_Launcher
             this.toolTip1.SetToolTip(this.btn_AddFavorite1, "Add game or exe to favourites");
             this.btn_AddFavorite1.UseVisualStyleBackColor = true;
             this.btn_AddFavorite1.Click += new System.EventHandler(this.Btn_AddFavorite1_Click);
+            // 
+            // btn_Random1
+            // 
+            this.btn_Random1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
+            this.btn_Random1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_Random1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Random1.Location = new System.Drawing.Point(104, 85);
+            this.btn_Random1.Name = "btn_Random1";
+            this.btn_Random1.Size = new System.Drawing.Size(25, 25);
+            this.btn_Random1.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.btn_Random1, "Select a random element");
+            this.btn_Random1.UseVisualStyleBackColor = true;
+            this.btn_Random1.Click += new System.EventHandler(this.Btn_Random1_Click);
+            // 
+            // btn_Random2
+            // 
+            this.btn_Random2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
+            this.btn_Random2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_Random2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Random2.Location = new System.Drawing.Point(293, 85);
+            this.btn_Random2.Name = "btn_Random2";
+            this.btn_Random2.Size = new System.Drawing.Size(25, 25);
+            this.btn_Random2.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.btn_Random2, "Select something randomly");
+            this.btn_Random2.UseVisualStyleBackColor = true;
+            this.btn_Random2.Click += new System.EventHandler(this.Btn_Random2_Click);
             // 
             // menuStrip1
             // 
@@ -405,32 +431,6 @@ namespace Universal_THCRAP_Launcher
             // 
             this.reportBugTS.Name = "reportBugTS";
             this.reportBugTS.Size = new System.Drawing.Size(32, 19);
-            // 
-            // btn_Random1
-            // 
-            this.btn_Random1.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
-            this.btn_Random1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btn_Random1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Random1.Location = new System.Drawing.Point(104, 85);
-            this.btn_Random1.Name = "btn_Random1";
-            this.btn_Random1.Size = new System.Drawing.Size(25, 25);
-            this.btn_Random1.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.btn_Random1, "Select random patch");
-            this.btn_Random1.UseVisualStyleBackColor = true;
-            this.btn_Random1.Click += new System.EventHandler(this.Btn_Random1_Click);
-            // 
-            // btn_Random2
-            // 
-            this.btn_Random2.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
-            this.btn_Random2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btn_Random2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Random2.Location = new System.Drawing.Point(293, 85);
-            this.btn_Random2.Name = "btn_Random2";
-            this.btn_Random2.Size = new System.Drawing.Size(25, 25);
-            this.btn_Random2.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.btn_Random2, "Select random game");
-            this.btn_Random2.UseVisualStyleBackColor = true;
-            this.btn_Random2.Click += new System.EventHandler(this.Btn_Random2_Click);
             // 
             // MainForm
             // 

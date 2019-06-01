@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
+// ReSharper disable IdentifierTypo
 
 /* WARNING: This code has been made by a new developer with WinForms
  * and the quality of code is very bad. If you want to be able to get this working, ensure:
@@ -46,7 +47,7 @@ namespace Universal_THCRAP_Launcher {
 
         private int[] _resizeConstants;
 
-        public static Configuration Configuration1 { get; set; }
+        public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
 
         #endregion
@@ -70,6 +71,7 @@ namespace Universal_THCRAP_Launcher {
             #endregion
 
             Configuration1 = new Configuration();
+            // ReSharper disable once IdentifierTypo
             dynamic dconfig = null;
 
             //Load config
@@ -112,8 +114,7 @@ namespace Universal_THCRAP_Launcher {
             }
 
             //Load language
-            Configuration.Lang = dconfig?.Lang;
-            if (Configuration.Lang == null) Configuration.Lang = "en.json";
+            Configuration.Lang = dconfig?.Lang ?? "en.json";
             I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
 
             //Give error if not next to thcrap_loader.exe
@@ -131,7 +132,7 @@ namespace Universal_THCRAP_Launcher {
             var file  = File.ReadAllText("games.js");
             var games = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
 
-            //Load favourites
+            //Load favorites
             if (File.Exists("favourites.js")) {
                 file        = File.ReadAllText("favourites.js");
                 Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
@@ -167,7 +168,7 @@ namespace Universal_THCRAP_Launcher {
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
 
-            //Update Display favourites
+            //Update Display favorites
             AddStars(gameListBox, Favourites1.Games);
 
             #endregion
@@ -193,7 +194,7 @@ namespace Universal_THCRAP_Launcher {
 
             Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
             Trace.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}\n\tLastConfig: {Configuration1.LastConfig}\n\tLastGame: {Configuration1.LastGame}\n\tFilterExeType: {Configuration1.FilterExeType}\n\tHidePatchExtension: {Configuration1.HidePatchExtension}\n\tLang: {Configuration.Lang}");
-            Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}\n\tOnlyFavourites: {Configuration1.OnlyFavourites[0]} | {Configuration1.OnlyFavourites[1]}\n\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}\n\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+            Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}\n\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}\n\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}\n\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
 
 
@@ -339,7 +340,7 @@ namespace Universal_THCRAP_Launcher {
         }
 
         private void filterButton1_Click(object sender, EventArgs e) {
-            var onlyFav = Configuration1.OnlyFavourites;
+            var onlyFav = Configuration1.OnlyFavorites;
             if (!btn_filterFav1.BackgroundImage.Equals(_star)) {
                 btn_filterFav1.BackgroundImage = _star;
                 for (var n = patchListBox.Items.Count - 1; n >= 0; --n) {
@@ -357,12 +358,12 @@ namespace Universal_THCRAP_Launcher {
                 onlyFav[0] = "false";
             }
 
-            Configuration1.OnlyFavourites = onlyFav;
+            Configuration1.OnlyFavorites = onlyFav;
             ReadConfig();
         }
 
         private void filterButton2_Click(object sender, EventArgs e) {
-            var onlyFav = Configuration1.OnlyFavourites;
+            var onlyFav = Configuration1.OnlyFavorites;
             if (!btn_filterFav2.BackgroundImage.Equals(_star)) {
                 btn_filterFav2.BackgroundImage = _star;
                 for (var n = gameListBox.Items.Count - 1; n >= 0; --n) {
@@ -380,7 +381,7 @@ namespace Universal_THCRAP_Launcher {
                 onlyFav[1] = "false";
             }
 
-            Configuration1.OnlyFavourites = onlyFav;
+            Configuration1.OnlyFavorites = onlyFav;
             ReadConfig();
         }
 
@@ -514,12 +515,12 @@ namespace Universal_THCRAP_Launcher {
                                     Configuration1.IsDescending[1]);
                 }
 
-                if (Configuration1.OnlyFavourites == null) {
+                if (Configuration1.OnlyFavorites == null) {
                     string[] a = {"false", "false"};
-                    Configuration1.OnlyFavourites = a;
+                    Configuration1.OnlyFavorites = a;
                     Trace.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites has been set to {Configuration1.OnlyFavourites[0]}, " +
-                                    Configuration1.OnlyFavourites[1]);
+                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites has been set to {Configuration1.OnlyFavorites[0]}, " +
+                                    Configuration1.OnlyFavorites[1]);
                 }
 
                 if (Configuration1.Window == null) {
@@ -558,11 +559,11 @@ namespace Universal_THCRAP_Launcher {
                     }
                 }
 
-                //Default favourite button state
+                //Default favorite button state
                 for (var i = 0; i < 2; i++) {
-                    if (Configuration1.OnlyFavourites[i] == "true") {
+                    if (Configuration1.OnlyFavorites[i] == "true") {
                         Trace.WriteLine(
-                                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavourites was true for listBox{i}");
+                                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites was true for listBox{i}");
                         if (i == 0) {
                             btn_filterFav1.BackgroundImage = _star;
                             for (var n = patchListBox.Items.Count - 1; n >= 0; --n) {
@@ -624,7 +625,7 @@ namespace Universal_THCRAP_Launcher {
         }
 
         /// <summary>
-        ///     Updates the configuration and favourites list
+        ///     Updates the configuration and favorites list
         /// </summary>
         private void UpdateConfig() {
             if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
@@ -654,7 +655,7 @@ namespace Universal_THCRAP_Launcher {
         }
 
         /// <summary>
-        ///     Writes the configuration and favourites to file
+        ///     Writes the configuration and favorites to file
         /// </summary>
         public void UpdateConfigFile([CallerMemberName] string caller = "") {
             UpdateConfig();
@@ -693,6 +694,7 @@ namespace Universal_THCRAP_Launcher {
                 _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + "\\", "");
             _jsFiles.Remove("games.js");
             _jsFiles.Remove("config.js");
+            // ReSharper disable once StringLiteralTypo
             _jsFiles.Remove("favourites.js");
             _jsFiles.Remove(CONFIG_FILE);
             if (Configuration1.HidePatchExtension)
@@ -939,7 +941,7 @@ namespace Universal_THCRAP_Launcher {
         public string LastConfig { get; set; }
         public string LastGame { get; set; }
         public string[] IsDescending { get; set; }
-        public string[] OnlyFavourites { get; set; }
+        public string[] OnlyFavorites { get; set; }
         public byte FilterExeType { get; set; }
         public Window Window { get; set; }
         public static string Lang { get; set; }

@@ -461,7 +461,7 @@ namespace Universal_THCRAP_Launcher {
         private void openFolderTS_Click(object sender, EventArgs e) => Process.Start(Directory.GetCurrentDirectory());
 
         private void createShortcutTS_Click(object sender, EventArgs e) {
-            object shDesktop = (object) "Desktop";
+            object shDesktop = "Desktop";
             WshShell shell     = new WshShell();
             string shortcutAddress = (string) shell.SpecialFolders.Item(ref shDesktop) + "\\" +
                                      I18N.LangResource.shCreate.file?.ToString() + ".lnk";
@@ -838,6 +838,7 @@ namespace Universal_THCRAP_Launcher {
                 return;
             }
 
+            Process process;
             if (patchListBox.SelectedIndex == 0) {
                 _gamesDictionary.TryGetValue(gameListBox.SelectedItem.ToString(), out string game);
                 if (game == null) {
@@ -845,9 +846,7 @@ namespace Universal_THCRAP_Launcher {
                     return;
                 }
 
-                Process process = new Process {StartInfo = {FileName = game}};
-                process.Start();
-
+                process = new Process {StartInfo = {FileName = game}};
                 Debug.WriteLine("Game {0} started without thcrap.", game);
             } else {
                 string s = "";
@@ -859,12 +858,17 @@ namespace Universal_THCRAP_Launcher {
                 s =  s.Replace(" ★", "");
 
                 //MessageBox.Show(args);
-                Process process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
-                process.Start();
+                process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
                 Debug.WriteLine("Starting thcrap with {0}", s);
             }
-
+            process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
+            while (!process.Responding) Thread.Sleep(10);
+            Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {process.ProcessName}";
+            Enabled = false;
+            process.WaitForExit();
+            Enabled = true;
+            Text = I18N.LangResource.mainForm?.utl?.ToString();
         }
 
         private void AddFavorite(ListBox lb) {

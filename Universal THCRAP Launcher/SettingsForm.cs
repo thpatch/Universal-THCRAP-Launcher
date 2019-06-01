@@ -6,21 +6,22 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+// ReSharper disable IdentifierTypo
 
 namespace Universal_THCRAP_Launcher
 {
     public partial class SettingsForm : Form
     {
-        MainForm mf;
+        private readonly MainForm _mf;
         public SettingsForm(MainForm mainForm)
         {
             InitializeComponent();
-            mf = mainForm;
+            _mf = mainForm;
         }
 
         private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _langFileToName = new Dictionary<string, string>();
-        private readonly Dictionary<string, string> _downNameToPatch = new Dictionary<string, string>();
+        //private readonly Dictionary<string, string> _downNameToPatch = new Dictionary<string, string>();
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
@@ -29,12 +30,12 @@ namespace Universal_THCRAP_Launcher
    
             UpdateLang();
             UpdateCredits();
-            LoadLangs();
+            LoadLanguages();
         }
 
-        private void LoadLangs()
+        private void LoadLanguages()
         {
-            #region LoadLangs
+            #region LoadLanguages
             languageComboBox.Items.Clear();
             _langFileToName.Clear();
             _langNameToFile.Clear();
@@ -116,23 +117,22 @@ namespace Universal_THCRAP_Launcher
             var client = new WebClient();
             client.Headers.Add(HttpRequestHeader.UserAgent, "UTL");
             var stream = client.OpenRead(url);
-            using (var textReader = new StreamReader(stream, Encoding.UTF8, true))
+            using (var textReader = new StreamReader(stream ?? throw new InvalidOperationException(), Encoding.UTF8, true))
             {
                 return textReader.ReadToEnd();
             }
         }
 
+
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {
-            if (I18N.LangResource.settingsForm.downloading != null)
-                btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading.ToString();
-            else btn_dwnlAllLangs.Text = "Downloading...";
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading != null ? (string) I18N.LangResource.settingsForm.downloading.ToString() : "Downloading...";
             btn_dwnlAllLangs.Enabled = false;
             try
             {
                 string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
-                dynamic obj_gh = JsonConvert.DeserializeObject(gh);
-                foreach (var item in obj_gh)
+                dynamic objGh = JsonConvert.DeserializeObject(gh);
+                foreach (dynamic item in objGh)
                 {
                     string langtxt = ReadTextFromUrl(item.download_url.ToString());
                     File.WriteAllText(I18N.I18NDir + item.name, langtxt);
@@ -146,18 +146,18 @@ namespace Universal_THCRAP_Launcher
             btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll?.ToString();
             btn_dwnlAllLangs.Enabled = true;
 
-            LoadLangs();
+            LoadLanguages();
         }
 
         private void CB_hidePatchExtension_CheckedChanged(object sender, EventArgs e)
         {
             MainForm.Configuration1.HidePatchExtension = cB_hidePatchExtension.Checked;
-            mf.PopulatePatchList();
+            _mf.PopulatePatchList();
         }
 
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            mf.UpdateConfigFile();
+            _mf.UpdateConfigFile();
         }
     }
 }

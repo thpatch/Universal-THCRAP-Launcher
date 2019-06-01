@@ -19,10 +19,13 @@ namespace Universal_THCRAP_Launcher
             _mf = mainForm;
         }
 
+        #region Globals
         private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _langFileToName = new Dictionary<string, string>();
         //private readonly Dictionary<string, string> _downNameToPatch = new Dictionary<string, string>();
+        #endregion
 
+        #region Form Events
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
@@ -32,7 +35,54 @@ namespace Universal_THCRAP_Launcher
             UpdateCredits();
             LoadLanguages();
         }
+        #endregion
 
+        #region GUI events
+        private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) => MainForm.Configuration1.ExitAfterStartup = closeOnExitCheckBox.Checked;
+        private void languageComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _langNameToFile.TryGetValue(languageComboBox.SelectedItem.ToString(), out var file);
+            I18N.UpdateLangResource(file);
+            UpdateLang();
+            UpdateCredits();
+        }
+        private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
+        {
+            btn_dwnlAllLangs.Text    = I18N.LangResource.settingsForm.downloading != null ? (string) I18N.LangResource.settingsForm.downloading.ToString() : "Downloading...";
+            btn_dwnlAllLangs.Enabled = false;
+            try
+            {
+                string  gh    = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
+                dynamic objGh = JsonConvert.DeserializeObject(gh);
+                foreach (dynamic item in objGh)
+                {
+                    string langtxt = ReadTextFromUrl(item.download_url.ToString());
+                    File.WriteAllText(I18N.I18NDir + item.name, langtxt);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex}");
+                MessageBox.Show(I18N.LangResource.error.downloadError?.ToString(),I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            btn_dwnlAllLangs.Text    = I18N.LangResource.settingsForm.downloadAll?.ToString();
+            btn_dwnlAllLangs.Enabled = true;
+
+            LoadLanguages();
+        }
+        private void CB_hidePatchExtension_CheckedChanged(object sender, EventArgs e)
+        {
+            MainForm.Configuration1.HidePatchExtension = cB_hidePatchExtension.Checked;
+            _mf.PopulatePatchList();
+        }
+        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) => _mf.UpdateConfigFile();
+        private void CB_ShowVanilla_CheckedChanged(object sender, EventArgs e) {
+            MainForm.Configuration1.ShowVanilla = cB_ShowVanilla.Checked;
+            _mf.PopulatePatchList();
+        }
+        #endregion
+
+        #region GUI-releated Methods
         private void LoadLanguages()
         {
             #region LoadLanguages
@@ -72,18 +122,16 @@ namespace Universal_THCRAP_Launcher
             Debug.WriteLine("Language Selected: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
             #endregion
         }
-
         private void UpdateLang()
         {
-            Text = I18N.LangResource.settingsForm?.settings?.ToString();
-            languageLabel.Text = I18N.LangResource.settingsForm?.language?.ToString() + ':';
-            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm?.closeOnExit?.ToString();
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm?.downloadAll?.ToString();
+            Text                       = I18N.LangResource.settingsForm?.settings?.ToString();
+            languageLabel.Text         = I18N.LangResource.settingsForm?.language?.ToString() + ':';
+            closeOnExitCheckBox.Text   = I18N.LangResource.settingsForm?.closeOnExit?.ToString();
+            btn_dwnlAllLangs.Text      = I18N.LangResource.settingsForm?.downloadAll?.ToString();
             cB_hidePatchExtension.Text = I18N.LangResource.settingsForm?.hidePatchExtension?.ToString();
-            tabPage_General.Text = I18N.LangResource.settingsForm.tabs?.general?.ToString();
-            tabPage_Language.Text = I18N.LangResource.settingsForm.tabs?.language?.ToString();
+            tabPage_General.Text       = I18N.LangResource.settingsForm.tabs?.general?.ToString();
+            tabPage_Language.Text      = I18N.LangResource.settingsForm.tabs?.language?.ToString();
         }
-
         private void UpdateCredits()
         {
             string credits = "";
@@ -99,22 +147,13 @@ namespace Universal_THCRAP_Launcher
             }
             langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits?.ToString(), credits);
         }
-
-        private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) =>
-            MainForm.Configuration1.ExitAfterStartup = closeOnExitCheckBox.Checked;
-
-        private void languageComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _langNameToFile.TryGetValue(languageComboBox.SelectedItem.ToString(), out var file);
-            I18N.UpdateLangResource(file);
-            UpdateLang();
-            UpdateCredits();
-        }
-
+        #endregion
+        
+        #region GUI-less Methods
         static string ReadTextFromUrl(string url)
         {
             ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
             // Assume UTF8, but detect BOM - could also honor response charset I suppose
             var client = new WebClient();
             client.Headers.Add(HttpRequestHeader.UserAgent, "UTL");
@@ -124,39 +163,8 @@ namespace Universal_THCRAP_Launcher
                 return textReader.ReadToEnd();
             }
         }
+        #endregion
 
-
-        private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
-        {
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading != null ? (string) I18N.LangResource.settingsForm.downloading.ToString() : "Downloading...";
-            btn_dwnlAllLangs.Enabled = false;
-            try
-            {
-                string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
-                dynamic objGh = JsonConvert.DeserializeObject(gh);
-                foreach (dynamic item in objGh)
-                {
-                    string langtxt = ReadTextFromUrl(item.download_url.ToString());
-                    File.WriteAllText(I18N.I18NDir + item.name, langtxt);
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex}");
-                MessageBox.Show(I18N.LangResource.error.downloadError?.ToString(),I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll?.ToString();
-            btn_dwnlAllLangs.Enabled = true;
-
-            LoadLanguages();
-        }
-
-        private void CB_hidePatchExtension_CheckedChanged(object sender, EventArgs e)
-        {
-            MainForm.Configuration1.HidePatchExtension = cB_hidePatchExtension.Checked;
-            _mf.PopulatePatchList();
-        }
-
-        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) => _mf.UpdateConfigFile();
+        
     }
 }

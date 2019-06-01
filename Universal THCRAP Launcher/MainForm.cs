@@ -698,10 +698,13 @@ namespace Universal_THCRAP_Launcher {
             // ReSharper disable once StringLiteralTypo
             _jsFiles.Remove("favourites.js");
             _jsFiles.Remove(CONFIG_FILE);
-            if (Configuration1.HidePatchExtension)
+            if (Configuration1.HidePatchExtension) {
                 for (var i = 0; i < _jsFiles.Count; i++)
                     _jsFiles[i] = _jsFiles[i].Replace(".js", "");
-            _jsFiles.Insert(0, $"[{I18N.LangResource.mainForm.vanilla}]");
+            }
+
+            if (Configuration1.ShowVanilla)
+                _jsFiles.Insert(0, $"[{I18N.LangResource.mainForm.vanilla}]");
 
             #endregion
 

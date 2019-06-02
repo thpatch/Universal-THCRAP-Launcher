@@ -1,3 +1,6 @@
 [submodule "Newtonsoft.Json"]
 	path = Newtonsoft.Json
 	url = https://github.com/JamesNK/Newtonsoft.Json
+[submodule "thxx to Full Name Dictionary"]
+	path = "Universal THCRAP Launcher/Resources"
+	url = https://github.com/thpatch/thcrap-tsa/blob/master/script_latin/stringdefs.js

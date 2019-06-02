@@ -15,11 +15,12 @@
 		"hidePatchExtension": "Futtatási konfiguráció (patch stack) kiterjesztésének elrejtése",
 		"showVanilla": "Mutassa a Szűz (THCRAP nélküli) elindítási lehetőséget a futtatási konfigurációk (patch stacks) között",
 		"onlyOneExe": "Csak egyetlen futtathatót engedélyezzen futtatni",
+		"label_gameNaming": "Futtathatók elnevezési módszere:",
 		"tabs": {
 			"general": "Átlagos",
 			"language": "Nyelv"
-		}
-
+		},
+		"namingType": ["thxx", "Kezdőbetük", "Rövid név", "Hosszú név"]
 	},
 	"errors": {
 		"error": "Hiba",

@@ -32,6 +32,7 @@ namespace Universal_THCRAP_Launcher
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
             cB_ShowVanilla.Checked = MainForm.Configuration1.ShowVanilla;
             cB_OnlyAllowOneExe.Checked = MainForm.Configuration1.OnlyAllowOneExecutable;
+            comboBox_gamesNamingType.SelectedIndex = (int)MainForm.Configuration1.NamingForGames;
    
             UpdateLang();
             UpdateCredits();
@@ -139,6 +140,8 @@ namespace Universal_THCRAP_Launcher
             tabPage_Language.Text      = I18N.LangResource.settingsForm?.tabs?.language?.ToString();
             cB_ShowVanilla.Text        = I18N.LangResource.settingsForm?.showVanilla?.ToString();
             cB_OnlyAllowOneExe.Text    = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
+            comboBox_gamesNamingType.Items.Clear();
+            for (int i = 0; i < 4; i++) comboBox_gamesNamingType.Items.Add(I18N.LangResource.settingsForm?.namingType?[i].ToString());
         }
         private void UpdateCredits()
         {
@@ -172,8 +175,12 @@ namespace Universal_THCRAP_Launcher
             }
         }
 
+
         #endregion
 
-        
+        private void ComboBox_gamesNamingType_SelectedIndexChanged(object sender, EventArgs e) {
+            MainForm.Configuration1.NamingForGames = (GameNameType)comboBox_gamesNamingType.SelectedIndex;
+            _mf.PopulateGames();
+        }
     }
 }

@@ -15,10 +15,12 @@
 		"hidePatchExtension": "Hide extension on patch list",
 		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
 		"onlyOneExe": "Only allow one executable to run",
+		"label_gameNaming": "Naming type for executables:",
 		"tabs": {
 			"general": "General",
 			"language": "Language"
-		}	
+		},
+		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
 	},
 	"errors": {
 		"error": "Error",

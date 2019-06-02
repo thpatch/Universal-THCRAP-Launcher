@@ -37,7 +37,6 @@ namespace Universal_THCRAP_Launcher {
         private readonly Image  _game      = new Bitmap(Resources.Game);
 
         private readonly Image        _gameAndCustom = new Bitmap(Resources.GameAndCustom);
-        private readonly List<string> _gamesList     = new List<string>();
 
         private readonly Image _sortAscending  = new Bitmap(Resources.Sort_Ascending);
         private readonly Image _sortDescending = new Bitmap(Resources.Sort_Decending);
@@ -145,6 +144,10 @@ namespace Universal_THCRAP_Launcher {
                 string file = File.ReadAllText(@"nmlgc\script_latin\stringdefs.js");
                 _gameFullNameDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
             }
+
+            //Load executables
+            string rawFile = File.ReadAllText("games.js");
+            _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawFile);
 
             PopulatePatchList();
             PopulateGames();
@@ -378,7 +381,7 @@ namespace Universal_THCRAP_Launcher {
             } else {
                 btn_filterFav2.BackgroundImage = _starHollow;
                 gameListBox.Items.Clear();
-                foreach (string s in _gamesList) gameListBox.Items.Add(s);
+                foreach (string s in _displayNameToThxxDictionary.Keys) gameListBox.Items.Add(s);
 
                 AddStars(gameListBox, Favourites1.Games);
                 onlyFav[1] = "false";
@@ -392,7 +395,7 @@ namespace Universal_THCRAP_Launcher {
             if (btn_filterByType.BackgroundImage.Equals(_gameAndCustom)) {
                 btn_filterByType.BackgroundImage = _game;
                 gameListBox.Items.Clear();
-                foreach (string item in _gamesList)
+                foreach (string item in _displayNameToThxxDictionary.Keys)
                     if (!item.Contains("_custom"))
                         gameListBox.Items.Add(item);
                 AddStars(gameListBox, Favourites1.Games);
@@ -403,7 +406,7 @@ namespace Universal_THCRAP_Launcher {
             if (btn_filterByType.BackgroundImage.Equals(_game)) {
                 btn_filterByType.BackgroundImage = _custom;
                 gameListBox.Items.Clear();
-                foreach (string item in _gamesList)
+                foreach (string item in _displayNameToThxxDictionary.Keys)
                     if (item.Contains("_custom"))
                         gameListBox.Items.Add(item);
                 AddStars(gameListBox, Favourites1.Games);
@@ -415,7 +418,7 @@ namespace Universal_THCRAP_Launcher {
             {
                 btn_filterByType.BackgroundImage = _gameAndCustom;
                 gameListBox.Items.Clear();
-                foreach (string item in _gamesList) gameListBox.Items.Add(item);
+                foreach (string item in _displayNameToThxxDictionary.Keys) gameListBox.Items.Add(item);
                 AddStars(gameListBox, Favourites1.Games);
                 if (sender.ToString() != "DefaultSettings") Configuration1.FilterExeType = 0;
             }
@@ -499,7 +502,7 @@ namespace Universal_THCRAP_Launcher {
                 }
 
                 if (Configuration1.LastGame == null) {
-                    Configuration1.LastGame = _gamesList[0];
+                    Configuration1.LastGame = _displayNameToThxxDictionary.Keys.ElementAt(0);
                     Trace.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
@@ -682,18 +685,11 @@ namespace Universal_THCRAP_Launcher {
         #region Methods Related to GUI
 
         public void PopulateGames() {
-            _gamesList.Clear();
-            _gamesDictionary?.Clear();
             gameListBox.Items.Clear();
-
-            //Load executables
-            string file = File.ReadAllText("games.js");
-            _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
-
+            _displayNameToThxxDictionary.Clear();
 
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary) {
-                _gamesList.Add(item.Key);
                 _gameFullNameDictionary.TryGetValue(item.Key.Replace("_custom", ""), out string name);
                 if (item.Key.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
                 switch (Configuration1.NamingForGames) {

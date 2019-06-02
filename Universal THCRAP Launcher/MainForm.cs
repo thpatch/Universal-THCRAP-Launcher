@@ -52,6 +52,7 @@ namespace Universal_THCRAP_Launcher {
         private Dictionary<string, string> _gamesDictionary;
         private Dictionary<string, string> _gameFullNameDictionary;
         private readonly Dictionary<string, string> _displayNameToThxxDictionary = new Dictionary<string, string>();
+        private readonly List<string> _favoritesWithDisplayName = new List<string>();
 
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
@@ -175,9 +176,6 @@ namespace Universal_THCRAP_Launcher {
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
 
-            //Update Display favorites
-            AddStars(gameListBox, Favourites1.Games);
-
             #endregion
 
             if (menuStrip1 == null) return;
@@ -297,15 +295,17 @@ namespace Universal_THCRAP_Launcher {
 
         private void SelectedIndexChanged(object sender, EventArgs e) {
             if (ModifierKeys != Keys.None) return;
-            ListBox lb = (ListBox) sender;
+            var lb = (ListBox) sender;
             switch (lb.Name) {
-                case "listBox1":
-                    if (lb.SelectedIndex != -1)
-                        Configuration1.LastConfig = lb.SelectedItem.ToString().Replace(" ★", "");
+                case "listBox1": {
+                    if (lb.SelectedIndex != -1) Configuration1.LastConfig = lb.SelectedItem.ToString().Replace(" ★", "");
                     break;
-                case "listBox2":
+                }
+
+                case "listBox2": {
                     if (lb.SelectedIndex != -1) Configuration1.LastGame = lb.SelectedItem.ToString().Replace(" ★", "");
                     break;
+                }
             }
         }
 
@@ -317,15 +317,14 @@ namespace Universal_THCRAP_Launcher {
         private void sortAZButton1_Click(object sender, EventArgs e) {
             string[] isDesc = Configuration1.IsDescending;
             if (btn_sortAZ1.BackgroundImage.Equals(_sortDescending)) {
-                SortListBoxItems(ref patchListBox);
                 btn_sortAZ1.BackgroundImage = _sortAscending;
                 isDesc[0]                   = "false";
             } else {
-                SortListBoxItemsDesc(ref patchListBox);
                 isDesc[0]                   = "true";
                 btn_sortAZ1.BackgroundImage = _sortDescending;
             }
 
+            PopulatePatchList();
             Configuration1.IsDescending = isDesc;
             ReadConfig();
         }
@@ -333,15 +332,14 @@ namespace Universal_THCRAP_Launcher {
         private void sortAZButton2_Click(object sender, EventArgs e) {
             string[] isDesc = Configuration1.IsDescending;
             if (btn_sortAZ2.BackgroundImage.Equals(_sortDescending)) {
-                SortListBoxItems(ref gameListBox);
                 btn_sortAZ2.BackgroundImage = _sortAscending;
                 isDesc[1]                   = "false";
             } else {
-                SortListBoxItemsDesc(ref gameListBox);
                 isDesc[1]                   = "true";
                 btn_sortAZ2.BackgroundImage = _sortDescending;
             }
 
+            PopulateGames();
             Configuration1.IsDescending = isDesc;
             ReadConfig();
         }
@@ -350,21 +348,12 @@ namespace Universal_THCRAP_Launcher {
             string[] onlyFav = Configuration1.OnlyFavorites;
             if (!btn_filterFav1.BackgroundImage.Equals(_star)) {
                 btn_filterFav1.BackgroundImage = _star;
-                for (int n = patchListBox.Items.Count - 1; n >= 0; --n) {
-                    const char filterItem = '★';
-                    if (!patchListBox.Items[n].ToString().Contains(filterItem)) patchListBox.Items.RemoveAt(n);
-                }
-
                 onlyFav[0] = "true";
             } else {
                 btn_filterFav1.BackgroundImage = _starHollow;
-                patchListBox.Items.Clear();
-                foreach (string s in _jsFiles) patchListBox.Items.Add(s);
-
-                AddStars(patchListBox, Favourites1.Patches);
                 onlyFav[0] = "false";
             }
-
+            PopulatePatchList();
             Configuration1.OnlyFavorites = onlyFav;
             ReadConfig();
         }
@@ -373,21 +362,13 @@ namespace Universal_THCRAP_Launcher {
             string[] onlyFav = Configuration1.OnlyFavorites;
             if (!btn_filterFav2.BackgroundImage.Equals(_star)) {
                 btn_filterFav2.BackgroundImage = _star;
-                for (int n = gameListBox.Items.Count - 1; n >= 0; --n) {
-                    const string filterItem = "★";
-                    if (!gameListBox.Items[n].ToString().Contains(filterItem)) gameListBox.Items.RemoveAt(n);
-                }
-
                 onlyFav[1] = "true";
             } else {
                 btn_filterFav2.BackgroundImage = _starHollow;
-                gameListBox.Items.Clear();
-                foreach (string s in _displayNameToThxxDictionary.Keys) gameListBox.Items.Add(s);
-
-                AddStars(gameListBox, Favourites1.Games);
                 onlyFav[1] = "false";
             }
-
+            
+            PopulateGames();
             Configuration1.OnlyFavorites = onlyFav;
             ReadConfig();
         }
@@ -395,34 +376,26 @@ namespace Universal_THCRAP_Launcher {
         private void filterByType_button_Click(object sender, EventArgs e) {
             if (btn_filterByType.BackgroundImage.Equals(_gameAndCustom)) {
                 btn_filterByType.BackgroundImage = _game;
-                gameListBox.Items.Clear();
-                foreach (string item in _displayNameToThxxDictionary.Keys)
-                    if (!item.Contains("_custom"))
-                        gameListBox.Items.Add(item);
-                AddStars(gameListBox, Favourites1.Games);
-                if (sender.ToString() != "DefaultSettings") Configuration1.FilterExeType = 1;
+                Configuration1.FilterExeType = 1;
+                PopulateGames();
                 return;
             }
 
             if (btn_filterByType.BackgroundImage.Equals(_game)) {
                 btn_filterByType.BackgroundImage = _custom;
-                gameListBox.Items.Clear();
-                foreach (string item in _displayNameToThxxDictionary.Keys)
-                    if (item.Contains("_custom"))
-                        gameListBox.Items.Add(item);
-                AddStars(gameListBox, Favourites1.Games);
-                if (sender.ToString() != "DefaultSettings") Configuration1.FilterExeType = 2;
+                Configuration1.FilterExeType = 2;
+                PopulateGames();
                 return;
             }
 
             if (!btn_filterByType.BackgroundImage.Equals(_custom)) return;
             {
                 btn_filterByType.BackgroundImage = _gameAndCustom;
-                gameListBox.Items.Clear();
-                foreach (string item in _displayNameToThxxDictionary.Keys) gameListBox.Items.Add(item);
-                AddStars(gameListBox, Favourites1.Games);
-                if (sender.ToString() != "DefaultSettings") Configuration1.FilterExeType = 0;
+                Configuration1.FilterExeType = 0;
+                PopulateGames();
             }
+
+            
         }
 
         #endregion
@@ -642,23 +615,27 @@ namespace Universal_THCRAP_Launcher {
             if (gameListBox.SelectedIndex != -1)
                 Configuration1.LastGame = ( (string) gameListBox.SelectedItem ).Replace(" ★", "");
 
-            Window window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
+            var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
             Configuration1.Window = window;
 
             Favourites1.Patches.Clear();
             Favourites1.Games.Clear();
 
-            foreach (string s in patchListBox.Items)
+            foreach (string s in patchListBox.Items) {
                 if (s.Contains("★")) {
-                    string v = s.Replace(" ★", "");
+                    string v                                                          = s.Replace(" ★", "");
+                    if (v == $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") v = @"VANILLA";
                     Favourites1.Patches.Add(v);
                 }
+            }
 
-            foreach (string s in gameListBox.Items)
+            foreach (string s in gameListBox.Items) {
                 if (s.Contains("★")) {
                     string v = s.Replace(" ★", "");
+                    _displayNameToThxxDictionary.TryGetValue(v, out v);
                     Favourites1.Games.Add(v);
                 }
+            }
         }
 
         /// <summary>
@@ -688,6 +665,8 @@ namespace Universal_THCRAP_Launcher {
         public void PopulateGames() {
             gameListBox.Items.Clear();
             _displayNameToThxxDictionary.Clear();
+            _favoritesWithDisplayName.Clear();
+            
 
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary) {
@@ -697,6 +676,8 @@ namespace Universal_THCRAP_Launcher {
                     case GameNameType.Thxx:
                         gameListBox.Items.Add(item.Key);
                         _displayNameToThxxDictionary.Add(item.Key, item.Key);
+                        if (Favourites1.Games.Contains(item.Key))
+                            _favoritesWithDisplayName.Add(item.Key);
                         break;
                     case GameNameType.Initials:
                         if (name != null) {
@@ -707,16 +688,22 @@ namespace Universal_THCRAP_Launcher {
                             name = item.Key;
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                         _displayNameToThxxDictionary.Add(name, item.Key);
+                        if (Favourites1.Games.Contains(item.Key))
+                            _favoritesWithDisplayName.Add(name);
                         break;
                     case GameNameType.ShortName:
                         name = name != null ? name.Split('-')[1].Trim() : item.Key;
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                         _displayNameToThxxDictionary.Add(name, item.Key);
+                        if (Favourites1.Games.Contains(item.Key))
+                            _favoritesWithDisplayName.Add(name);
                         break;
                     case GameNameType.LongName: {
                         name = name ?? item.Key;
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                         _displayNameToThxxDictionary.Add(name, item.Key);
+                        if (Favourites1.Games.Contains(item.Key))
+                            _favoritesWithDisplayName.Add(name);
                         break;
                     }
 
@@ -724,6 +711,14 @@ namespace Universal_THCRAP_Launcher {
                 }
             }
 
+            AddStars(gameListBox, _favoritesWithDisplayName);
+
+            if (bool.Parse(Configuration1.IsDescending[1])) SortListBoxItemsDesc(ref gameListBox);
+            else SortListBoxItems(ref gameListBox);
+
+            if (bool.Parse(Configuration1.OnlyFavorites[1])) FilterByFav(gameListBox);
+
+            FilterByExeType();
         }
 
         public void PopulatePatchList() {
@@ -760,7 +755,20 @@ namespace Universal_THCRAP_Launcher {
             foreach (string item in _jsFiles) patchListBox.Items.Add(item);
             foreach (string item in _thcrapFiles) patchListBox.Items.Add(item);
 
+            if (Favourites1.Patches.Contains(@"VANILLA")) {
+                Favourites1.Patches.Remove(@"VANILLA");
+                Favourites1.Patches.Add($@"[{I18N.LangResource.mainForm.vanilla}]");
+            }
             AddStars(patchListBox, Favourites1.Patches);
+            if (Favourites1.Patches.Contains($@"[{I18N.LangResource.mainForm.vanilla}]")) {
+                Favourites1.Patches.Remove($@"[{I18N.LangResource.mainForm.vanilla}]");
+                Favourites1.Patches.Add(@"VANILLA");
+            }
+
+            if (bool.Parse(Configuration1.IsDescending[0])) SortListBoxItemsDesc(ref patchListBox);
+            else SortListBoxItems(ref patchListBox);
+
+            if (bool.Parse(Configuration1.OnlyFavorites[0])) FilterByFav(patchListBox);
 
             if (patchListBox.SelectedIndex == -1) patchListBox.SelectedIndex = 0;
         }
@@ -855,6 +863,49 @@ namespace Universal_THCRAP_Launcher {
             lb.Items.AddRange(items.OrderByDescending(i => i).ToArray());
         }
 
+        private void FilterByFav(IDisposable lb) {
+            if (lb.Equals(patchListBox)) {
+                for (int n = patchListBox.Items.Count - 1; n >= 0; --n) {
+                    const char filterItem = '★';
+                    if (!patchListBox.Items[n].ToString().Contains(filterItem)) patchListBox.Items.RemoveAt(n);
+                }
+            }
+
+            if (!lb.Equals(gameListBox)) return;
+            {
+                for (int n = gameListBox.Items.Count - 1; n >= 0; --n) {
+                    const string filterItem = "★";
+                    if (!gameListBox.Items[n].ToString().Contains(filterItem)) gameListBox.Items.RemoveAt(n);
+                }
+            }
+        }
+
+        private void FilterByExeType() {
+            switch (Configuration1.FilterExeType) {
+                case 0: break;
+                case 1: {
+                    foreach (string item in _displayNameToThxxDictionary.Keys) {
+                        _displayNameToThxxDictionary.TryGetValue(item, out string s);
+                        if (s != null && s.Contains("_custom"))
+                            gameListBox.Items.Remove(item);
+                    }
+                    break;
+                }
+
+                case 2: {
+                    foreach (string item in _displayNameToThxxDictionary.Keys) {
+                        _displayNameToThxxDictionary.TryGetValue(item, out string s);
+                        if (s != null && !s.Contains("_custom"))
+                            gameListBox.Items.Remove(item);
+                    }
+
+                    break;
+                }
+
+                default: throw new InvalidOperationException();
+            }
+        }
+
         private static void RestartProgram() {
             Process.Start(Assembly.GetEntryAssembly()?.Location ?? throw new InvalidOperationException());
             Application.Exit();
@@ -866,14 +917,14 @@ namespace Universal_THCRAP_Launcher {
                             MessageBoxIcon.Information);
         }
 
-        private void SelectRandomInListBox(ListBox lb) {
-            Random r = new Random();
+        private static void SelectRandomInListBox(ListBox lb) {
+            var r = new Random();
             lb.SelectedIndex = r.Next(lb.Items.Count);
         }
 
         #endregion
 
-        #region Methods less reletad to the GUI
+        #region Methods less releated to the GUI
 
         /// <summary>
         ///     Starts thcrap with the selected patch stack and executable
@@ -957,11 +1008,45 @@ namespace Universal_THCRAP_Launcher {
 
         private void AddFavorite(ListBox lb) {
             if (!lb.SelectedItem.ToString().Contains("★")) {
-                if (lb.Equals(patchListBox)) Favourites1.Patches.Add(lb.Items[lb.SelectedIndex].ToString());
+                if (lb.Equals(patchListBox)) {
+                    string s = lb.Items[lb.SelectedIndex].ToString();
+                    if (Configuration1.HidePatchExtension) {
+                        if(_jsFiles.Contains(s)) s += ".js";
+                        if (_thcrapFiles.Contains(s)) s += ".thcrap";
+                    }
 
-                if (lb.Equals(gameListBox)) Favourites1.Games.Add(lb.Items[lb.SelectedIndex].ToString());
-                lb.Items[lb.SelectedIndex] += " ★";
-            } else { lb.Items[lb.SelectedIndex] = lb.Items[lb.SelectedIndex].ToString().Replace(" ★", ""); }
+                    if (Configuration1.ShowVanilla && lb.SelectedIndex == 0) s = @"VANILLA";
+                    Favourites1.Patches.Add(s);
+                    PopulatePatchList();
+                }
+
+                if (lb.Equals(gameListBox)) {
+                    string s = lb.Items[lb.SelectedIndex].ToString();
+                    _displayNameToThxxDictionary.TryGetValue(s, out s);
+                    Favourites1.Games.Add(s);
+                    PopulateGames();
+                }
+            } else {
+                if (lb.Equals(gameListBox)) {
+                    string display = lb.SelectedItem.ToString().Replace("★", "").Trim();
+                    _favoritesWithDisplayName.Remove(display);
+                    _displayNameToThxxDictionary.TryGetValue(display, out string s);
+                    Favourites1.Games.Remove(s);
+                    PopulateGames();
+                }
+
+                if (!lb.Equals(patchListBox)) return;
+                {
+                    string s                                                 = lb.SelectedItem.ToString();
+                    if (Configuration1.ShowVanilla && lb.SelectedIndex == 0) s = @"VANILLA";
+                    if (Configuration1.HidePatchExtension) {
+                        if(_jsFiles.Contains(s)) s      += ".js";
+                        if (_thcrapFiles.Contains(s)) s += ".thcrap";
+                    }
+                    Favourites1.Patches.Remove(s);
+                    PopulatePatchList();
+                }
+            }
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Universal_THCRAP_Launcher {
 
         private int[] _resizeConstants;
         private Dictionary<string, string> _gamesDictionary;
-        public Dictionary<string, string> _gameFullNameDictionary;
+        public static Dictionary<string, string> GameFullNameDictionary;
         private readonly Dictionary<string, string> _displayNameToThxxDictionary = new Dictionary<string, string>();
         private readonly List<string> _favoritesWithDisplayName = new List<string>();
 
@@ -147,7 +147,7 @@ namespace Universal_THCRAP_Launcher {
             //Load full names for games
             if (File.Exists(@"nmlgc\script_latin\stringdefs.js")) {
                 string file = File.ReadAllText(@"nmlgc\script_latin\stringdefs.js");
-                _gameFullNameDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
+                GameFullNameDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
             }
 
             //Load executables
@@ -323,9 +323,21 @@ namespace Universal_THCRAP_Launcher {
         private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox(patchListBox);
         private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox(gameListBox);
         private void NotifyIcon1_Click(object sender, EventArgs e) {
-            Show();
-            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
-            Activate();
+            
+        }
+
+        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (( e.Button & MouseButtons.Left ) != 0) {
+                Show();
+                if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
+                Activate();
+            }
+
+            if (( e.Button & MouseButtons.Right ) != 0) {
+                FillJumpList();
+                contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.AboveLeft);
+            }
         }
 
         #region Sorting/Filtering Button Click Methods
@@ -686,7 +698,7 @@ namespace Universal_THCRAP_Launcher {
 
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary) {
-                _gameFullNameDictionary.TryGetValue(item.Key.Replace("_custom", ""), out string name);
+                GameFullNameDictionary.TryGetValue(item.Key.Replace("_custom", ""), out string name);
                 if (item.Key.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
                 switch (Configuration1.NamingForGames) {
                     case GameNameType.Thxx:
@@ -938,6 +950,21 @@ namespace Universal_THCRAP_Launcher {
             lb.SelectedIndex = r.Next(lb.Items.Count);
         }
 
+        private void FillJumpList() {
+            contextMenuStrip1.Items.Clear();
+            var tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.utl?.ToString()) {Enabled = false};
+            contextMenuStrip1.Items.Add(tsi);
+            contextMenuStrip1.Items.Add(new ToolStripSeparator());
+            foreach (string game in Favourites1.Games) {
+                foreach (string patch in Favourites1.Patches) {
+                    if (patch == @"VANILLA") continue;
+                    var jsi = new JumpListElement(game, patch);
+                    jsi.Click += ( delegate { StartThcrap(jsi.ToString(), game); } );
+                    contextMenuStrip1.Items.Add(jsi);
+                }
+            }
+        }
+
         #endregion
 
         #region Methods less releated to the GUI
@@ -985,6 +1012,20 @@ namespace Universal_THCRAP_Launcher {
             List<Task> tasks = new List<Task> {Task.Run(() => ScanRunningProcess(process))};
             if (patchListBox.SelectedIndex != 0) tasks.Add(Task.Run(() => ScanRunningTouhou(gameListBox.SelectedItem.ToString())));
             await Task.WhenAll(tasks);
+            Enabled = true;
+        }
+
+        private async Task StartThcrap(string s, string game) {
+            var process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
+            process.Start();
+            if (Configuration1.ExitAfterStartup) Application.Exit();
+            var tasks = new List<Task> {
+                                                  Task.Run(() => ScanRunningProcess(process)),
+                                                  Task.Run(() => ScanRunningTouhou(game))
+                                              };
+            MessageBox.Show("");
+            await Task.WhenAll(tasks);
+            
             Enabled = true;
         }
 
@@ -1092,6 +1133,7 @@ namespace Universal_THCRAP_Launcher {
             Application.Exit();
         }
 
+
         #endregion
 
         
@@ -1163,19 +1205,22 @@ namespace Universal_THCRAP_Launcher {
         public List<string> Games { get; }
     }
 
-    public class JumpListElement {
-        private readonly string Exec;
-        private readonly string Patch;
+    public sealed class JumpListElement : ToolStripMenuItem {
+        private readonly string _exec;
+        private readonly string _patch;
         public JumpListElement(string exec, string patch) {
-            this.Exec = exec;
-            this.Patch = patch;
+            _exec = exec;
+            _patch = patch;
+            Text = ToStringPretty();
         }
 
-        public string ToString(MainForm mf) {
-            if (mf == null) throw new ArgumentNullException();
-            mf._gameFullNameDictionary.TryGetValue(Exec, out string display);
-            return $"{(!string.IsNullOrEmpty(display) ? display : Exec)} ({Patch})";
+        private string ToStringPretty() {
+            MainForm.GameFullNameDictionary.TryGetValue(_exec.Replace("_custom", ""), out string display);
+            if (_exec.Contains("_custom")) display += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
+            return $"{(!string.IsNullOrEmpty(display) ? display : _exec)} ({_patch})";
         }
+
+        public override string ToString() => _patch + " " + _exec;
     }
     #endregion
 }

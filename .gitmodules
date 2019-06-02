@@ -3,4 +3,4 @@
 	url = https://github.com/JamesNK/Newtonsoft.Json
 [submodule "thxx to Full Name Dictionary"]
 	path = "Universal THCRAP Launcher/Resources"
-	url = https://github.com/thpatch/thcrap-tsa/blob/master/script_latin/stringdefs.js
+	url = https://github.com/thpatch/thcrap-tsa/script_latin/stringdefs.js

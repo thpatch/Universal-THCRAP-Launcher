@@ -76,6 +76,7 @@
 				"Pintasan Papan Kekunci"
 			]
 		],
+		"vanilla": "Vanila",
 		"tooltips": {
 			"startButton": "Mula THCRAP dengan seting yang terpilih",
 			"sortAZ": "Isih mengikut susunan abjad",
@@ -84,7 +85,8 @@
 			"patchLB": "Pilih konfigurasi untuk dijalankan (timbulan tampalan)",
 			"gameLB": "Pilih permainan (fail boleh laku)",
 			"patchFav": "Tambah tampalan ke kegemaran (atau gunakan F2 jika ia adalah pilihan aktif)",
-			"gamesFav": "Tambah permainan atau fail exe to favourites (atau gunakan F2 jika ia adalah pemilihan aktif)"
+			"gamesFav": "Tambah permainan atau fail exe to favourites (atau gunakan F2 jika ia adalah pemilihan aktif)",
+			"random": "Pilih secara rawak"
 		}
 	}
 }

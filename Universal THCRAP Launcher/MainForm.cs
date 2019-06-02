@@ -131,6 +131,9 @@ namespace Universal_THCRAP_Launcher {
             //Give error if no games.js file
             if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
 
+            if (Configuration1.OnlyAllowOneUtl && Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
+                ErrorAndExit(I18N.LangResource.errors.alreadyRunning);
+
             DeleteOutdatedConfig();
 
             #region Load data from files
@@ -262,12 +265,13 @@ namespace Universal_THCRAP_Launcher {
             }
             catch (Exception ex) { Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e}"); }
 
-            if (WindowState == FormWindowState.Minimized) {
-                Hide();
-                notifyIcon1.BalloonTipTitle = I18N.LangResource.mainForm?.utl?.ToString();
-                notifyIcon1.BalloonTipText = I18N.LangResource.mainForm?.hided?.ToString();
-                notifyIcon1.ShowBalloonTip(1000);
-            }
+            if (WindowState != FormWindowState.Minimized) return;
+            Hide();
+            if (Configuration1.MinimizeNotificationWasShown) return;
+            notifyIcon1.BalloonTipTitle = I18N.LangResource.mainForm?.utl?.ToString();
+            notifyIcon1.BalloonTipText  = I18N.LangResource.mainForm?.hided?.ToString();
+            notifyIcon1.ShowBalloonTip(1000);
+            Configuration1.MinimizeNotificationWasShown = true;
         }
 
         private void MainForm_Closing(object sender, FormClosingEventArgs e) {
@@ -318,6 +322,11 @@ namespace Universal_THCRAP_Launcher {
 
         private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox(patchListBox);
         private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox(gameListBox);
+        private void NotifyIcon1_Click(object sender, EventArgs e) {
+            Show();
+            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
+            Activate();
+        }
 
         #region Sorting/Filtering Button Click Methods
 
@@ -1085,11 +1094,7 @@ namespace Universal_THCRAP_Launcher {
 
         #endregion
 
-        private void NotifyIcon1_Click(object sender, EventArgs e) {
-            Show();
-            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
-            Activate();
-        }
+        
     }
 
     #region Helper Classes
@@ -1137,7 +1142,8 @@ namespace Universal_THCRAP_Launcher {
         public bool ShowVanilla { get; set; }
         public bool OnlyAllowOneExecutable { get; set; }
         public GameNameType NamingForGames { get;  set; }
-
+        public bool MinimizeNotificationWasShown { get; set; }
+        public bool OnlyAllowOneUtl { get; set; }
     }
 
     public enum GameNameType { Thxx = 0, Initials,  ShortName, LongName }

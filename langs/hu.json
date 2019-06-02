@@ -16,6 +16,7 @@
 		"showVanilla": "Mutassa a Szűz (THCRAP nélküli) elindítási lehetőséget a futtatási konfigurációk (patch stacks) között",
 		"onlyOneExe": "Csak egyetlen futtathatót engedélyezzen futtatni",
 		"label_gameNaming": "Futtathatók elnevezési módszere:",
+		"onlyOneUTL": "Csak egyetlen UTL futtatásának engedélyezése",
 		"tabs": {
 			"general": "Átlagos",
 			"language": "Nyelv"
@@ -32,7 +33,8 @@
 		},
 		"oops": "Valami hiba történt...",
 		"noneSelected": "Egy futtatási konfiguráció (patch stack) vagy futtatható (executable) sincs kiváalasztva!\nKérlek, válassz ki egyet!",
-		"downloadError": "Nem sikerült a nyelvi fájlok letöltése a GitHubról.\nEnnek lehetséges indokai:\n- Nem vagy csatlakozva az Internethez.\n- A program annyira elavult, hogy már nem létezik a GitHub repo.\n- Egy olyan jövőben vagy, ahol nincs GitHub vagy Internet."
+		"downloadError": "Nem sikerült a nyelvi fájlok letöltése a GitHubról.\nEnnek lehetséges indokai:\n- Nem vagy csatlakozva az Internethez.\n- A program annyira elavult, hogy már nem létezik a GitHub repo.\n- Egy olyan jövőben vagy, ahol nincs GitHub vagy Internet.",
+		"alreadyRunning": "A program már fut. Vagy kapcsold ki a beállításd, hogy ezt ellenőrize, vagy zárd be a másik programot."
 	},
 	"popup": {
 		"hideLauncher": {

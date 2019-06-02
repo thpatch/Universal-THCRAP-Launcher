@@ -16,6 +16,7 @@
 		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
 		"onlyOneExe": "Only allow one executable to run",
 		"label_gameNaming": "Naming type for executables:",
+		"onlyOneUTL": "Only allow one UTL to run",
 		"tabs": {
 			"general": "General",
 			"language": "Language"
@@ -32,7 +33,8 @@
 		},
 		"oops": "Something went wrong...",
 		"noneSelected": "No patch stacks or executables selected!\nPlease select one!",
-		"downloadError": "Couldn't download language files from GitHub. You either:\n- Not Connected to the Internet\n- This program has become so deprecated that the GitHub Repository doesn't exist.\n- In a future where GitHub or the Internet doesn't exist."
+		"downloadError": "Couldn't download language files from GitHub. You either:\n- Not Connected to the Internet\n- This program has become so deprecated that the GitHub Repository doesn't exist.\n- In a future where GitHub or the Internet doesn't exist.",
+		"alreadyRunning": "The program is already running. Either disable this check in the settings or close the program."
 	},
 	"popup": {
 		"hideLauncher": {

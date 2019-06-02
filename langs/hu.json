@@ -87,6 +87,7 @@
 		],
 		"vanilla":"Szűz",
 		"custom": "Környezet Egyedi Program",
+		"hided": "A program minimalizálva lett az értesítési területre és futni fog a háttérben.",
 		"tooltips": {
 			"startButton": "Futtatható indítása a kiválasztott beállításokkal",
 			"sortAZ": "Rendezés ábécésorrendbe",

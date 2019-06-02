@@ -87,6 +87,7 @@
 		],
 		"vanilla": "Vanilla",
 		"custom": "Environment Custom Program",
+		"hided": "The program has been minimized to the notification tray and is still running in the background.",
 		"tooltips": {
 			"startButton": "Start executable with the selected settings",
 			"sortAZ": "Sort in alphabetical order",

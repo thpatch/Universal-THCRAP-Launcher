@@ -261,6 +261,13 @@ namespace Universal_THCRAP_Launcher {
                               splitContainer1.Location.Y - _resizeConstants[3]);
             }
             catch (Exception ex) { Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e}"); }
+
+            if (WindowState == FormWindowState.Minimized) {
+                Hide();
+                notifyIcon1.BalloonTipTitle = I18N.LangResource.mainForm?.utl?.ToString();
+                notifyIcon1.BalloonTipText = I18N.LangResource.mainForm?.hided?.ToString();
+                notifyIcon1.ShowBalloonTip(1000);
+            }
         }
 
         private void MainForm_Closing(object sender, FormClosingEventArgs e) {
@@ -1079,6 +1086,7 @@ namespace Universal_THCRAP_Launcher {
         #endregion
 
         private void NotifyIcon1_Click(object sender, EventArgs e) {
+            Show();
             if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
             Activate();
         }

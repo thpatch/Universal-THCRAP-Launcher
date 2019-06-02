@@ -681,9 +681,10 @@ namespace Universal_THCRAP_Launcher {
 
         #region Methods Related to GUI
 
-        private void PopulateGames() {
+        public void PopulateGames() {
             _gamesList.Clear();
             _gamesDictionary?.Clear();
+            gameListBox.Items.Clear();
 
             //Load executables
             string file = File.ReadAllText("games.js");
@@ -693,7 +694,8 @@ namespace Universal_THCRAP_Launcher {
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary) {
                 _gamesList.Add(item.Key);
-                _gameFullNameDictionary.TryGetValue(item.Key, out string name);
+                _gameFullNameDictionary.TryGetValue(item.Key.Replace("_custom", ""), out string name);
+                if (item.Key.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
                 switch (Configuration1.NamingForGames) {
                     case GameNameType.Thxx:
                         gameListBox.Items.Add(item.Key);
@@ -702,7 +704,8 @@ namespace Universal_THCRAP_Launcher {
                     case GameNameType.Initials:
                         if (name != null) {
                             Regex initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
-                            name = initials.Replace(name.Split('-')[1].Trim(), "$1");
+                            name = initials.Replace(name.Split('-')[1], "$1");
+                            name = name.Replace("~", " ~");
                         } else
                             name = item.Key;
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());

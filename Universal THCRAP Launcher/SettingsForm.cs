@@ -47,6 +47,7 @@ namespace Universal_THCRAP_Launcher
             I18N.UpdateLangResource(file);
             UpdateLang();
             UpdateCredits();
+            _mf.PopulateGames();
         }
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {
@@ -82,6 +83,9 @@ namespace Universal_THCRAP_Launcher
             MainForm.Configuration1.ShowVanilla = cB_ShowVanilla.Checked;
             _mf.PopulatePatchList();
         }
+        private void CB_OnlyAllowOneExe_CheckedChanged(object sender, EventArgs e) =>
+            MainForm.Configuration1.OnlyAllowOneExecutable = cB_OnlyAllowOneExe.Checked;
+        
         #endregion
 
         #region GUI-releated Methods
@@ -170,7 +174,6 @@ namespace Universal_THCRAP_Launcher
 
         #endregion
 
-        private void CB_OnlyAllowOneExe_CheckedChanged(object sender, EventArgs e) =>
-            MainForm.Configuration1.OnlyAllowOneExecutable = cB_OnlyAllowOneExe.Checked;
+        
     }
 }

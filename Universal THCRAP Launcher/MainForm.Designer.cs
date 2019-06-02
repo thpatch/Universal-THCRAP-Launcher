@@ -440,6 +440,7 @@ namespace Universal_THCRAP_Launcher
             this.notifyIcon1.Text = "Universal THCRAP Launcher";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.Click += new System.EventHandler(this.NotifyIcon1_Click);
+            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
             // 
             // contextMenuStrip1
             // 

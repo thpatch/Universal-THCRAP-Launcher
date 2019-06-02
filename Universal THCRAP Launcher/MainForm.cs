@@ -49,6 +49,8 @@ namespace Universal_THCRAP_Launcher {
 
         private int[] _resizeConstants;
         private Dictionary<string, string> _gamesDictionary;
+        private Dictionary<string, string> _gameFullNameDictionary;
+        private Dictionary<string, string> _displayNameToThxxDictionary;
 
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
@@ -131,17 +133,20 @@ namespace Universal_THCRAP_Launcher {
 
             #region Load data from files
 
-            //Load executables
-            string file  = File.ReadAllText("games.js");
-            _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
-
             //Load favorites
             if (File.Exists("favourites.js")) {
-                file        = File.ReadAllText("favourites.js");
+                string file = File.ReadAllText("favourites.js");
                 Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
             }
 
+            //Load full names for games
+            if (File.Exists(@"nmlgc\script_latin\stringdefs.js")) {
+                string file = File.ReadAllText(@"nmlgc\script_latin\stringdefs.js");
+                _gameFullNameDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
+            }
+
             PopulatePatchList();
+            PopulateGames();
 
             #endregion
 
@@ -158,12 +163,6 @@ namespace Universal_THCRAP_Launcher {
             #endregion
 
             #region Display
-
-            //Display executables
-            foreach (KeyValuePair<string, string> item in _gamesDictionary) {
-                _gamesList.Add(item.Key);
-                gameListBox.Items.Add(item.Key);
-            }
 
             SetDefaultSettings();
 
@@ -681,6 +680,48 @@ namespace Universal_THCRAP_Launcher {
 
         #region Methods Related to GUI
 
+        private void PopulateGames() {
+            _gamesList.Clear();
+            _gameFullNameDictionary.Clear();
+            _gamesDictionary.Clear();
+
+            //Load executables
+            string file = File.ReadAllText("games.js");
+            _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
+            
+
+            //Display executables
+            foreach (KeyValuePair<string, string> item in _gamesDictionary) {
+                _gamesList.Add(item.Key);
+                _gameFullNameDictionary.TryGetValue(item.Key, out string name);
+     
+                switch (Configuration1.NamingForGames) {
+                    case GameNameType.THXX:
+                        gameListBox.Items.Add(item.Key);
+                        _displayNameToThxxDictionary.Add(item.Key, item.Key);
+                        break;
+                    case GameNameType.INITIALS:
+                        if (name != null) { name = name.Split('-')[1].Trim().Where(char.IsUpper) as string; } else
+                            name = item.Key;
+                        gameListBox.Items.Add(name ?? throw new InvalidOperationException());
+                        _displayNameToThxxDictionary.Add(name, item.Key);
+                        break;
+                    case GameNameType.SHORT_NAME:
+                        name = name != null ? name.Split('-')[1].Trim() : item.Key;
+                        gameListBox.Items.Add(name ?? throw new InvalidOperationException());
+                        _displayNameToThxxDictionary.Add(name, item.Key);
+                        break;
+                    case GameNameType.LONG_NAME: {
+                        name = name ?? item.Key;
+                        gameListBox.Items.Add(name ?? throw new InvalidOperationException());
+                        _displayNameToThxxDictionary.Add(name, item.Key);
+                        break;
+                    }
+
+                    default: throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
         public void PopulatePatchList() {
             _jsFiles.Clear();
             _thcrapFiles.Clear();
@@ -963,7 +1004,7 @@ namespace Universal_THCRAP_Launcher {
         }
 
         private static dynamic GetLangResource(string filePath) {
-            string raw = File.ReadAllText(filePath);;
+            string raw = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject(raw);
         }
 
@@ -991,7 +1032,11 @@ namespace Universal_THCRAP_Launcher {
         public bool HidePatchExtension { get; set; }
         public bool ShowVanilla { get; set; }
         public bool OnlyAllowOneExecutable { get; set; }
+        public GameNameType NamingForGames { get; set; }
+
     }
+
+    public enum GameNameType { THXX = 0, INITIALS,  SHORT_NAME, LONG_NAME }
 
     public class Window {
         public int[] Location { get; set; } = {0, 0};
@@ -1007,6 +1052,5 @@ namespace Universal_THCRAP_Launcher {
         public List<string> Patches { get; }
         public List<string> Games { get; }
     }
-
     #endregion
 }

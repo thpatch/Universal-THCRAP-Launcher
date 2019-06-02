@@ -85,6 +85,7 @@
 			]
 		],
 		"vanilla":"Szűz",
+		"custom": "Környezet Egyedi Program",
 		"tooltips": {
 			"startButton": "Futtatható indítása a kiválasztott beállításokkal",
 			"sortAZ": "Rendezés ábécésorrendbe",

@@ -84,6 +84,7 @@
 			]
 		],
 		"vanilla": "Vanilla",
+		"custom": "Environment Custom Program",
 		"tooltips": {
 			"startButton": "Start executable with the selected settings",
 			"sortAZ": "Sort in alphabetical order",

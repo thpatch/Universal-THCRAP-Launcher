@@ -1078,7 +1078,10 @@ namespace Universal_THCRAP_Launcher {
 
         #endregion
 
-        private void NotifyIcon1_Click(object sender, EventArgs e) => notifyIcon1.ContextMenu.Show(new Control(notifyIcon1.Text), MousePosition);
+        private void NotifyIcon1_Click(object sender, EventArgs e) {
+            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
+            Activate();
+        }
     }
 
     #region Helper Classes

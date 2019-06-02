@@ -467,7 +467,6 @@ namespace Universal_THCRAP_Launcher
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(350, 300);
             this.Name = "MainForm";
             this.Text = "Universal THCRAP Launcher";

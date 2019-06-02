@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
 using Newtonsoft.Json;
@@ -830,8 +831,8 @@ namespace Universal_THCRAP_Launcher {
         /// <summary>
         ///     Starts thcrap with the selected patch stack and executable
         /// </summary>
-        private void StartThcrap() {
-            
+        private async Task StartThcrap() {
+
             if (patchListBox.SelectedIndex == -1 || gameListBox.SelectedIndex == -1) {
                 MessageBox.Show(I18N.LangResource.errors.noneSelected?.ToString(),
                                 I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -847,28 +848,62 @@ namespace Universal_THCRAP_Launcher {
                 }
 
                 process = new Process {StartInfo = {FileName = game}};
-                Debug.WriteLine("Game {0} started without thcrap.", game);
+                Debug.WriteLine($"Game {game} started without thcrap.");
             } else {
                 string s = "";
                 s += patchListBox.SelectedItem;
                 if (Configuration1.HidePatchExtension && _jsFiles.Contains(patchListBox.SelectedItem)) s += ".js";
-                if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patchListBox.SelectedItem)) s += ".thcrap";
+                if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patchListBox.SelectedItem))
+                    s += ".thcrap";
                 s += " ";
                 s += gameListBox.SelectedItem;
                 s =  s.Replace(" ★", "");
 
                 //MessageBox.Show(args);
                 process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
-                Debug.WriteLine("Starting thcrap with {0}", s);
+                Debug.WriteLine($"Starting thcrap with {s}");
             }
+
             process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
-            while (!process.Responding) Thread.Sleep(10);
-            Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {process.ProcessName}";
-            Enabled = false;
-            process.WaitForExit();
+            List<Task> tasks = new List<Task> {Task.Run(() => ScanRunningProcess(process))};
+            if (patchListBox.SelectedIndex != 0) tasks.Add(Task.Run(() => ScanRunningTouhou(gameListBox.SelectedItem.ToString())));
+            await Task.WhenAll(tasks);
             Enabled = true;
-            Text = I18N.LangResource.mainForm?.utl?.ToString();
+        }
+
+        private async Task ScanRunningProcess(Process process) {
+            if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
+            process.WaitForInputIdle();
+            string processName = process.MainWindowTitle;
+            Debug.WriteLine($"{process.ProcessName} is running with title {processName}.");
+            Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}";
+            process.WaitForExit();
+            Text    = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}", "");
+        }
+
+        private async Task ScanRunningTouhou(string gameName) {
+            if (gameName == null) throw new ArgumentNullException(nameof(gameName));
+            if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
+            Process gameProcess = null;
+            _gamesDictionary.TryGetValue(gameName, out string gameFile);
+            string[] splitted = gameFile?.Split('/');
+            if (splitted != null) gameFile = splitted[splitted.Length - 1].Split('.')[0];
+            do {
+                try { gameProcess = Process.GetProcessesByName(gameFile)[0];
+                    foreach (Process item in Process.GetProcessesByName(gameFile)) Debug.WriteLine($"Game Found for {gameFile} with ID: " + item.Id);
+                    if (Process.GetProcessesByName(gameFile).Length > 1) Debug.WriteLine(@"Looks like you're running two of the same game somehow. You're magic, but I am going to assume the first game.");
+                }
+                catch { Thread.Sleep(10); }
+            } while (gameProcess == null);
+
+            gameProcess.WaitForInputIdle();
+            gameName = gameProcess.MainWindowTitle;
+            Enabled = false;
+            Text +=
+                $@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}";
+            gameProcess.WaitForExit();
+            Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", "");
         }
 
         private void AddFavorite(ListBox lb) {
@@ -955,6 +990,7 @@ namespace Universal_THCRAP_Launcher {
         public static string Lang { get; set; }
         public bool HidePatchExtension { get; set; }
         public bool ShowVanilla { get; set; }
+        public bool OnlyAllowOneExecutable { get; set; }
     }
 
     public class Window {

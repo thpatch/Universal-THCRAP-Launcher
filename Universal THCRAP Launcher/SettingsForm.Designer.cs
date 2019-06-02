@@ -42,6 +42,7 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_General = new System.Windows.Forms.TabPage();
             this.cB_ShowVanilla = new System.Windows.Forms.CheckBox();
             this.tabPage_Language = new System.Windows.Forms.TabPage();
+            this.cB_OnlyAllowOneExe = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage_General.SuspendLayout();
             this.tabPage_Language.SuspendLayout();
@@ -127,6 +128,7 @@ namespace Universal_THCRAP_Launcher
             // 
             // tabPage_General
             // 
+            this.tabPage_General.Controls.Add(this.cB_OnlyAllowOneExe);
             this.tabPage_General.Controls.Add(this.cB_ShowVanilla);
             this.tabPage_General.Controls.Add(this.closeOnExitCheckBox);
             this.tabPage_General.Controls.Add(this.cB_hidePatchExtension);
@@ -165,6 +167,17 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_Language.Text = "Language";
             this.tabPage_Language.UseVisualStyleBackColor = true;
             // 
+            // cB_OnlyAllowOneExe
+            // 
+            this.cB_OnlyAllowOneExe.AutoSize = true;
+            this.cB_OnlyAllowOneExe.Location = new System.Drawing.Point(8, 75);
+            this.cB_OnlyAllowOneExe.Name = "cB_OnlyAllowOneExe";
+            this.cB_OnlyAllowOneExe.Size = new System.Drawing.Size(180, 17);
+            this.cB_OnlyAllowOneExe.TabIndex = 18;
+            this.cB_OnlyAllowOneExe.Text = "Only allow one executable to run";
+            this.cB_OnlyAllowOneExe.UseVisualStyleBackColor = true;
+            this.cB_OnlyAllowOneExe.CheckedChanged += new System.EventHandler(this.CB_OnlyAllowOneExe_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -201,5 +214,6 @@ namespace Universal_THCRAP_Launcher
         private TabPage tabPage_Language;
         private TabPage tabPage_General;
         private CheckBox cB_ShowVanilla;
+        private CheckBox cB_OnlyAllowOneExe;
     }
 }

@@ -14,6 +14,7 @@
 		"downloading": "Downloading...",
 		"hidePatchExtension": "Hide extension on patch list",
 		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
+		"onlyOneExe": "Only allow one executable to run",
 		"tabs": {
 			"general": "General",
 			"language": "Language"

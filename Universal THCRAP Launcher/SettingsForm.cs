@@ -31,6 +31,7 @@ namespace Universal_THCRAP_Launcher
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
             cB_ShowVanilla.Checked = MainForm.Configuration1.ShowVanilla;
+            cB_OnlyAllowOneExe.Checked = MainForm.Configuration1.OnlyAllowOneExecutable;
    
             UpdateLang();
             UpdateCredits();
@@ -133,6 +134,7 @@ namespace Universal_THCRAP_Launcher
             tabPage_General.Text       = I18N.LangResource.settingsForm?.tabs?.general?.ToString();
             tabPage_Language.Text      = I18N.LangResource.settingsForm?.tabs?.language?.ToString();
             cB_ShowVanilla.Text        = I18N.LangResource.settingsForm?.showVanilla?.ToString();
+            cB_OnlyAllowOneExe.Text = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
         }
         private void UpdateCredits()
         {
@@ -165,8 +167,10 @@ namespace Universal_THCRAP_Launcher
                 return textReader.ReadToEnd();
             }
         }
+
         #endregion
 
-        
+        private void CB_OnlyAllowOneExe_CheckedChanged(object sender, EventArgs e) =>
+            MainForm.Configuration1.OnlyAllowOneExecutable = cB_OnlyAllowOneExe.Checked;
     }
 }

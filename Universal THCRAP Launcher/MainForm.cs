@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -50,7 +51,7 @@ namespace Universal_THCRAP_Launcher {
         private int[] _resizeConstants;
         private Dictionary<string, string> _gamesDictionary;
         private Dictionary<string, string> _gameFullNameDictionary;
-        private Dictionary<string, string> _displayNameToThxxDictionary;
+        private Dictionary<string, string> _displayNameToThxxDictionary = new Dictionary<string, string>();
 
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
@@ -682,36 +683,37 @@ namespace Universal_THCRAP_Launcher {
 
         private void PopulateGames() {
             _gamesList.Clear();
-            _gameFullNameDictionary.Clear();
-            _gamesDictionary.Clear();
+            _gamesDictionary?.Clear();
 
             //Load executables
             string file = File.ReadAllText("games.js");
             _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
-            
+
 
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary) {
                 _gamesList.Add(item.Key);
                 _gameFullNameDictionary.TryGetValue(item.Key, out string name);
-     
                 switch (Configuration1.NamingForGames) {
-                    case GameNameType.THXX:
+                    case GameNameType.Thxx:
                         gameListBox.Items.Add(item.Key);
                         _displayNameToThxxDictionary.Add(item.Key, item.Key);
                         break;
-                    case GameNameType.INITIALS:
-                        if (name != null) { name = name.Split('-')[1].Trim().Where(char.IsUpper) as string; } else
+                    case GameNameType.Initials:
+                        if (name != null) {
+                            Regex initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
+                            name = initials.Replace(name.Split('-')[1].Trim(), "$1");
+                        } else
                             name = item.Key;
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                         _displayNameToThxxDictionary.Add(name, item.Key);
                         break;
-                    case GameNameType.SHORT_NAME:
+                    case GameNameType.ShortName:
                         name = name != null ? name.Split('-')[1].Trim() : item.Key;
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                         _displayNameToThxxDictionary.Add(name, item.Key);
                         break;
-                    case GameNameType.LONG_NAME: {
+                    case GameNameType.LongName: {
                         name = name ?? item.Key;
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                         _displayNameToThxxDictionary.Add(name, item.Key);
@@ -721,7 +723,9 @@ namespace Universal_THCRAP_Launcher {
                     default: throw new ArgumentOutOfRangeException();
                 }
             }
+
         }
+
         public void PopulatePatchList() {
             _jsFiles.Clear();
             _thcrapFiles.Clear();
@@ -882,7 +886,8 @@ namespace Universal_THCRAP_Launcher {
 
             Process process;
             if (patchListBox.SelectedIndex == 0) {
-                _gamesDictionary.TryGetValue(gameListBox.SelectedItem.ToString(), out string game);
+                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem as string ?? throw new InvalidOperationException(), out string s1);
+                _gamesDictionary.TryGetValue(s1 ?? throw new InvalidOperationException(), out string game);
                 if (game == null) {
                     ErrorAndExit(I18N.LangResource.errors.oops?.ToString());
                     return;
@@ -897,7 +902,8 @@ namespace Universal_THCRAP_Launcher {
                 if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patchListBox.SelectedItem))
                     s += ".thcrap";
                 s += " ";
-                s += gameListBox.SelectedItem;
+                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem as string ?? throw new InvalidOperationException(), out string s1);
+                s += s1;
                 s =  s.Replace(" ★", "");
 
                 //MessageBox.Show(args);
@@ -981,9 +987,6 @@ namespace Universal_THCRAP_Launcher {
                             buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
             Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {errorMessage?.ToString()}");
             Application.Exit();
-
-
-
         }
 
         #endregion
@@ -1021,6 +1024,8 @@ namespace Universal_THCRAP_Launcher {
     }
 
     public class Configuration {
+        public Configuration(GameNameType namingForGames) => NamingForGames = namingForGames;
+        public Configuration() => NamingForGames = GameNameType.ShortName;
         public bool ExitAfterStartup { get; set; }
         public string LastConfig { get; set; }
         public string LastGame { get; set; }
@@ -1032,11 +1037,11 @@ namespace Universal_THCRAP_Launcher {
         public bool HidePatchExtension { get; set; }
         public bool ShowVanilla { get; set; }
         public bool OnlyAllowOneExecutable { get; set; }
-        public GameNameType NamingForGames { get; set; }
+        public GameNameType NamingForGames { get;  set; }
 
     }
 
-    public enum GameNameType { THXX = 0, INITIALS,  SHORT_NAME, LONG_NAME }
+    public enum GameNameType { Thxx = 0, Initials,  ShortName, LongName }
 
     public class Window {
         public int[] Location { get; set; } = {0, 0};

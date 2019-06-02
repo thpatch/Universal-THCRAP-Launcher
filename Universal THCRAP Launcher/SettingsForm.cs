@@ -134,7 +134,7 @@ namespace Universal_THCRAP_Launcher
             tabPage_General.Text       = I18N.LangResource.settingsForm?.tabs?.general?.ToString();
             tabPage_Language.Text      = I18N.LangResource.settingsForm?.tabs?.language?.ToString();
             cB_ShowVanilla.Text        = I18N.LangResource.settingsForm?.showVanilla?.ToString();
-            cB_OnlyAllowOneExe.Text = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
+            cB_OnlyAllowOneExe.Text    = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
         }
         private void UpdateCredits()
         {

@@ -963,7 +963,7 @@ namespace Universal_THCRAP_Launcher {
         }
 
         private static dynamic GetLangResource(string filePath) {
-            string raw = File.ReadAllText(filePath);
+            string raw = File.ReadAllText(filePath);;
             return JsonConvert.DeserializeObject(raw);
         }
 

@@ -963,6 +963,10 @@ namespace Universal_THCRAP_Launcher {
                     contextMenuStrip1.Items.Add(jsi);
                 }
             }
+            contextMenuStrip1.Items.Add(new ToolStripSeparator());
+            tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.menuStrip?[0]?[5]?.ToString());
+            tsi.Click += exitTS_Click;
+            contextMenuStrip1.Items.Add(tsi);
         }
 
         #endregion

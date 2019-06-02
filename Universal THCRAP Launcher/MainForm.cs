@@ -50,7 +50,7 @@ namespace Universal_THCRAP_Launcher {
 
         private int[] _resizeConstants;
         private Dictionary<string, string> _gamesDictionary;
-        private Dictionary<string, string> _gameFullNameDictionary;
+        public Dictionary<string, string> _gameFullNameDictionary;
         private readonly Dictionary<string, string> _displayNameToThxxDictionary = new Dictionary<string, string>();
         private readonly List<string> _favoritesWithDisplayName = new List<string>();
 
@@ -1161,6 +1161,21 @@ namespace Universal_THCRAP_Launcher {
 
         public List<string> Patches { get; }
         public List<string> Games { get; }
+    }
+
+    public class JumpListElement {
+        private readonly string Exec;
+        private readonly string Patch;
+        public JumpListElement(string exec, string patch) {
+            this.Exec = exec;
+            this.Patch = patch;
+        }
+
+        public string ToString(MainForm mf) {
+            if (mf == null) throw new ArgumentNullException();
+            mf._gameFullNameDictionary.TryGetValue(Exec, out string display);
+            return $"{(!string.IsNullOrEmpty(display) ? display : Exec)} ({Patch})";
+        }
     }
     #endregion
 }

@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
+
 // ReSharper disable IdentifierTypo
 
 /* WARNING: This code has been made by a new developer with WinForms
@@ -50,7 +51,7 @@ namespace Universal_THCRAP_Launcher {
         private int[] _resizeConstants;
         private Dictionary<string, string> _gamesDictionary;
         private Dictionary<string, string> _gameFullNameDictionary;
-        private Dictionary<string, string> _displayNameToThxxDictionary = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _displayNameToThxxDictionary = new Dictionary<string, string>();
 
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
@@ -831,6 +832,8 @@ namespace Universal_THCRAP_Launcher {
             }
 
             // ---
+
+            notifyIcon1.Text = I18N.LangResource.mainForm?.utl?.ToString();
         }
 
         private static void AddStars(ListBox listBox, IEnumerable<string> list) {
@@ -989,6 +992,8 @@ namespace Universal_THCRAP_Launcher {
         }
 
         #endregion
+
+        private void NotifyIcon1_Click(object sender, EventArgs e) => notifyIcon1.ContextMenu.Show(new Control(notifyIcon1.Text), MousePosition);
     }
 
     #region Helper Classes
@@ -1023,7 +1028,6 @@ namespace Universal_THCRAP_Launcher {
     }
 
     public class Configuration {
-        public Configuration(GameNameType namingForGames) => NamingForGames = namingForGames;
         public Configuration() => NamingForGames = GameNameType.ShortName;
         public bool ExitAfterStartup { get; set; }
         public string LastConfig { get; set; }

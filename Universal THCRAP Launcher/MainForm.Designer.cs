@@ -69,6 +69,8 @@ namespace Universal_THCRAP_Launcher
             this.helpTS = new System.Windows.Forms.ToolStripMenuItem();
             this.keyboardShortcutsTS = new System.Windows.Forms.ToolStripMenuItem();
             this.reportBugTS = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -431,6 +433,19 @@ namespace Universal_THCRAP_Launcher
             this.reportBugTS.Name = "reportBugTS";
             this.reportBugTS.Size = new System.Drawing.Size(32, 19);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Universal THCRAP Launcher";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.Click += new System.EventHandler(this.NotifyIcon1_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -509,6 +524,8 @@ namespace Universal_THCRAP_Launcher
         private Button btn_AddFavorite1;
         private Button btn_Random1;
         private Button btn_Random2;
+        private NotifyIcon notifyIcon1;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }
 

@@ -28,13 +28,11 @@ namespace Universal_THCRAP_Launcher
         #region Form Events
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            UpdateLang();
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
             cB_ShowVanilla.Checked = MainForm.Configuration1.ShowVanilla;
-            cB_OnlyAllowOneExe.Checked = MainForm.Configuration1.OnlyAllowOneExecutable;
-            comboBox_gamesNamingType.SelectedIndex = (int)MainForm.Configuration1.NamingForGames;
-   
-            UpdateLang();
+            cB_OnlyAllowOneExe.Checked = MainForm.Configuration1.OnlyAllowOneExecutable;comboBox_gamesNamingType.SelectedIndex = (int)MainForm.Configuration1.NamingForGames;
             UpdateCredits();
             LoadLanguages();
         }

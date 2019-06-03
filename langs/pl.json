@@ -12,7 +12,16 @@
 		"and": "i",
 		"downloadAll": "Pobierz wszystkie języki",
 		"downloading": "Trwa pobieranie...",
-		"hidePatchExtension": "Ukryj rozszerzenia na liście"
+		"hidePatchExtension": "Ukryj rozszerzenia na liście",
+		"showVanilla": "Pokaż gry niezmodyfikowane (bez THCRAP) na liście",
+		"onlyOneExe": "Zezwól na tylko jeden proces gry",
+		"label_gameNaming": "Nazewnictwo gier:",
+		"onlyOneUTL": "Zezwól na tylko jeden proces UTL",
+		"tabs": {
+			"general": "Główne",
+			"language": "Język"
+		},
+		"namingType": ["thxx", "Inicjały", "Krótka nazwa", "Długa nazwa"]
 	},
 	"errors": {
 		"error": "Błąd",
@@ -24,7 +33,8 @@
 		},
 		"oops": "Coś poszło nie tak...",
 		"noneSelected": "Nie wybrano konfiguracji lub gry!",
-		"downloadError": "Pobieranie plików językowych z GitHuba nie powiodło się. Prawdopodobnie nie masz połączenia z internetem,\n- lub żyjesz w przyszłości, w której nie istnieją ani GitHub, ani internet."
+		"downloadError": "Pobieranie plików językowych z GitHuba nie powiodło się. Prawdopodobnie nie masz połączenia z internetem,\n- lub żyjesz w przyszłości, w której nie istnieją ani GitHub, ani internet.",
+		"alreadyRunning": "Został już uruchomiony jeden proces. Wyłącz sprawdzanie tego w ustawieniach lub wyłącz program."
 	},
 	"popup": {
 		"hideLauncher": {
@@ -42,6 +52,7 @@
 	},
 	"mainForm": {
 		"utl": "Uniwersalny Launcher do THCRAP",
+		"running": "Uruchomiono:",
 		"menuStrip": [
 			[
 				"Aplikacja",
@@ -76,13 +87,19 @@
 				"Skróty klawiaturowe"
 			]
 		],
+		"vanilla": "Niezmodyfikowany",
+		"custom": "Zmodyfikowany",
+		"hided": "Program został zminimalizowany do paska zadań.",
 		"tooltips": {
 			"startButton": "Włącz THCRAP z wybranymi ustawieniami",
 			"sortAZ": "Sortuj alfabetycznie",
 			"filterFav": "Filtruj według ulubionych",
 			"filterByType": "Filter według typu",
 			"patchLB": "Wybierz konfigurację",
-			"gameLB": "Wybierz grę"
+			"gameLB": "Wybierz grę",
+			"patchFav": "Dodaj konfigurację do ulubionych (lub naciśnij F2)",
+			"gamesFav": "Dodaj grę do ulubionych (lub naciśnij F2)",
+			"random": "Wybierz losowy"
 		}
 	}
 }

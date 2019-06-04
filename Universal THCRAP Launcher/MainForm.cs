@@ -747,6 +747,8 @@ namespace Universal_THCRAP_Launcher {
             if (bool.Parse(Configuration1.OnlyFavorites[1])) FilterByFav(gameListBox);
 
             FilterByExeType();
+
+            if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0) gameListBox.SelectedIndex = 0;
         }
 
         public void PopulatePatchList() {
@@ -771,10 +773,11 @@ namespace Universal_THCRAP_Launcher {
             _jsFiles.Remove("favourites.js");
             _jsFiles.Remove(CONFIG_FILE);
             if (Configuration1.HidePatchExtension) {
-                for (int i = 0; i < _jsFiles.Count; i++) {
+                for (int i = 0; i < _jsFiles.Count; i++) 
                     _jsFiles[i] = _jsFiles[i].Replace(".js", "");
+                for (int i = 0; i < _thcrapFiles.Count; i++) 
                     _thcrapFiles[i] = _thcrapFiles[i].Replace(".thcrap", "");
-                }
+                
             }
             #endregion
 
@@ -798,7 +801,7 @@ namespace Universal_THCRAP_Launcher {
 
             if (bool.Parse(Configuration1.OnlyFavorites[0])) FilterByFav(patchListBox);
 
-            if (patchListBox.SelectedIndex == -1) patchListBox.SelectedIndex = 0;
+            if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
         }
 
         private void UpdateLanguage() {
@@ -872,9 +875,15 @@ namespace Universal_THCRAP_Launcher {
             notifyIcon1.Text = I18N.LangResource.mainForm?.utl?.ToString();
         }
 
-        private static void AddStars(ListBox listBox, IEnumerable<string> list) {
+        private void AddStars(ListBox listBox, IEnumerable<string> list) {
             foreach (string variable in list) {
-                int index                             = listBox.FindStringExact(variable);
+                string s = variable;
+                if (Configuration1.HidePatchExtension) {
+                    /*if (_jsFiles.Contains(s)) s += ".js";
+                    if (_thcrapFiles.Contains(s)) s += ".thcrap";*/
+                    s = s.Replace(".js", "").Replace(".thcrap", "");
+                }
+                int index                             = listBox.FindStringExact(s);
                 if (index != -1) listBox.Items[index] += " ★";
             }
         }
@@ -1072,11 +1081,11 @@ namespace Universal_THCRAP_Launcher {
                 if (lb.Equals(patchListBox)) {
                     string s = lb.Items[lb.SelectedIndex].ToString();
                     if (Configuration1.HidePatchExtension) {
-                        if(_jsFiles.Contains(s)) s += ".js";
+                        if (_jsFiles.Contains(s)) s += ".js";
                         if (_thcrapFiles.Contains(s)) s += ".thcrap";
                     }
 
-                    if (Configuration1.ShowVanilla && lb.SelectedIndex == 0) s = @"VANILLA";
+                    if (s == $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") s = @"VANILLA";
                     Favourites1.Patches.Add(s);
                     PopulatePatchList();
                 }

@@ -7,24 +7,34 @@
 	"settingsForm": {
 		"settings": "Tetapan",
 		"language": "Bahasa",
-		"closeOnExit": "Tutup apabila permainan bermula",
+		"closeOnExit": "Tutup apabila program bermula",
 		"langCredits": "Diterjemahkan oleh {0}.",
 		"and": "dan",
 		"downloadAll": "Muat turun kesemua bahasa",
 		"downloading": "Memuat turun...",
-		"hidePatchExtension": "Sembunyikan sambungan dalam senarai tampalan"
+		"hidePatchExtension": "Sembunyikan sambungan dalam senarai tampalan",
+		"showVanilla": "Tunjuk Vanila (Tanpa THCRAP) pilihan pelancaran dalam senarai tampalan",
+		"onlyOneExe": "Hanya satu program dapat berjalan",
+		"label_gameNaming": "Jenis penamaan untuk program:",
+		"onlyOneUTL": "Hanya satu UTL dapat berjalan",
+		"tabs": {
+			"general": "Umum",
+			"language": "Bahasa"
+		},
+		"namingType": ["thxx", "Parap", "Nama Pendek", "Nama Panjang"]
 	},
 	"errors": {
 		"error": "Ralat",
 		"missing": {
 			"thcrap_loader": "Fail thcrap_loader.exe tidak dijumpai.\nPastikan letakkan fail itu disebelahnya!",
 			"gamesJs": "Fail games.js tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
-			"patchStacks": "Fail konfig yang mengandungi timbungan tampalan tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
+			"patchStacks": "Senarai timbungan tampalan tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
 			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumapi. Pastikan fail itu juga disalin."
 		},
 		"oops": "Ada sesuatu bermasalah...",
-		"noneSelected": "Tiada konfigurasi (timbungan tampalan) atau permainan (fail boleh laku) dipilih!\nTolong pilih satu!",
-		"downloadError": "Tidak dapat memuat turun fail terjemaahan dari GitHub. Kamu berkemungkinan:\n- Tidak disabungkan ke Internet\n- Program ini telah menjadi lapuk disebabkan repositori ini dalam GitHub tidak lagi wujud.\n- Dimana GitHub atau Internet tidak lagi wujud."
+		"noneSelected": "Tiada timbungan tampalan atau fail program dipilih!\nTolong pilih satu!",
+		"downloadError": "Tidak dapat memuat turun fail terjemaahan dari GitHub. Kamu berkemungkinan:\n- Tidak disabungkan ke Internet\n- Program ini telah menjadi lapuk disebabkan repositori ini dalam GitHub tidak lagi wujud.\n- Dimana GitHub atau Internet tidak lagi wujud.",
+		"alreadyRunning": "Program ini sudah berjalan. Sama ada nyahaktifkan tanda di dalam tetapan atau tutup program ini."
 	},
 	"popup": {
 		"hideLauncher": {
@@ -33,7 +43,7 @@
 		},
 		"kbSh": {
 			"caption": "Pintasan Papan Kekunci",
-			"text": "Alt + F4: Tutup aplikasi (Tetapan asal Windows)\nCtrl + R: Mula semula aplikasi\nCtrl + O: Buka konfigurasi tampalan yang dipilih\nF1: Tunjukan pintasan papan kekunci (Tetingkap ini)\nF2: Pilih item yang dipilih ke dalam senarai kegemaran."
+			"text": "Alt + F4: Tutup aplikasi (Tetapan asal Windows)\nCtrl + R: Mula semula aplikasi\nCtrl + O: Buka timbungan tampalan yang dipilih\nF1: Tunjukan pintasan papan kekunci (Tetingkap ini)\nF2: Pilih item yang dipilih ke dalam senarai kegemaran."
 		}
 	},
 	"shCreate": {
@@ -42,6 +52,7 @@
 	},
 	"mainForm": {
 		"utl": "Pelancar Universal THCRAP",
+		"running": "Berjalan:",
 		"menuStrip": [
 			[
 				"Aplikasi",
@@ -57,8 +68,8 @@
 				[
 					"Buka...",
 					"Buka fail folder",
-					"Buka Senarai Permainan",
-					"Buka Konfigurasi Tampalan Terpilih"
+					"Buka Senarai Permainan (games.js)",
+					"Buka Timbungan Tampalan Terpilih"
 				]
 			],
 			[
@@ -77,15 +88,17 @@
 			]
 		],
 		"vanilla": "Vanila",
+		"custom": "Program Menyesuaikan Persekitaran",
+		"hided": "Program ini telah diminimumkan ke dulang pemberitahuan dan masih berjalan di latar belakang.",
 		"tooltips": {
-			"startButton": "Mula THCRAP dengan seting yang terpilih",
+			"startButton": "Mula program dengan seting yang terpilih",
 			"sortAZ": "Isih mengikut susunan abjad",
 			"filterFav": "Tapis mengikut kegemaran",
 			"filterByType": "Tapis mengikut jenis",
-			"patchLB": "Pilih konfigurasi untuk dijalankan (timbulan tampalan)",
-			"gameLB": "Pilih permainan (fail boleh laku)",
+			"patchLB": "Pilih timbungan tampalan untuk dijalankan",
+			"gameLB": "Pilih fail program",
 			"patchFav": "Tambah tampalan ke kegemaran (atau gunakan F2 jika ia adalah pilihan aktif)",
-			"gamesFav": "Tambah permainan atau fail exe to favourites (atau gunakan F2 jika ia adalah pemilihan aktif)",
+			"gamesFav": "Tambah program ke kegemaran (atau gunakan F2 jika ia adalah pemilihan aktif)",
 			"random": "Pilih secara rawak"
 		}
 	}

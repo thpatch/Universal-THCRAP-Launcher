@@ -154,33 +154,7 @@ namespace Universal_THCRAP_Launcher {
             string rawFile = File.ReadAllText("games.js");
             _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawFile);
 
-            PopulatePatchList();
-            PopulateGames();
-
             #endregion
-
-            #region Create constants for resizing
-
-            _resizeConstants    = new int[6];
-            _resizeConstants[0] = Size.Width - startButton.Width;
-            _resizeConstants[1] = Size.Width - splitContainer1.Width;
-            _resizeConstants[2] = Size.Height - splitContainer1.Height;
-            _resizeConstants[3] = splitContainer1.Location.Y - btn_sortAZ1.Location.Y;
-            _resizeConstants[4] = btn_sortAZ2.Location.X - patchListBox.Size.Width;
-            _resizeConstants[5] = btn_filterFav1.Location.X - btn_sortAZ1.Location.X;
-
-            #endregion
-
-            #region Display
-
-            SetDefaultSettings();
-
-            //Change Form settings
-            SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
-            Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
-
-            #endregion
-
             if (menuStrip1 == null) return;
             menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
                                                                               x.MouseHover +=
@@ -198,13 +172,22 @@ namespace Universal_THCRAP_Launcher {
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for language update.\nReason: {ex}");
             }
 
+            GetPatchList();
+            SetDefaultSettings();
+
             UpdateLanguage();
-
-            Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
-            Trace.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}\n\tLastConfig: {Configuration1.LastConfig}\n\tLastGame: {Configuration1.LastGame}\n\tFilterExeType: {Configuration1.FilterExeType}\n\tHidePatchExtension: {Configuration1.HidePatchExtension}\n\tLang: {Configuration.Lang}");
-            Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}\n\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}\n\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}\n\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+            Debug.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
+            Trace.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
+            Trace.WriteLine($"\tLastGame: {Configuration1.LastGame}");
+            Trace.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
+            Trace.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
+            Trace.WriteLine($"\tLang: {Configuration.Lang}");
+            Trace.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
+            Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
+            Trace.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
+            Trace.WriteLine($"\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+            Trace.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
-
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e) {
             if (ModifierKeys != Keys.None) {
@@ -280,12 +263,31 @@ namespace Universal_THCRAP_Launcher {
         }
 
         private void Form1_Shown(object sender, EventArgs e) {
+            #region Create constants for resizing
+
+            _resizeConstants    = new int[6];
+            _resizeConstants[0] = Size.Width - startButton.Width;
+            _resizeConstants[1] = Size.Width - splitContainer1.Width;
+            _resizeConstants[2] = Size.Height - splitContainer1.Height;
+            _resizeConstants[3] = splitContainer1.Location.Y - btn_sortAZ1.Location.Y;
+            _resizeConstants[4] = btn_sortAZ2.Location.X - patchListBox.Size.Width;
+            _resizeConstants[5] = btn_filterFav1.Location.X - btn_sortAZ1.Location.X;
+
+            #endregion
+            
+
+            #region Display
+
+            //Change Form settings
+            SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
+            Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
+
+            #endregion
+
             ReadConfig();
-
-            //Set default selection index
-            if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
-
-            if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0) gameListBox.SelectedIndex = 0;
+            
+            PopulatePatchList();
+            PopulateGames();
 
             UpdateConfigFile();
         }
@@ -498,13 +500,15 @@ namespace Universal_THCRAP_Launcher {
         private void SetDefaultSettings() {
             //Default Configuration setting
             try {
+                if (Configuration1 == null) Configuration1 = new Configuration();
+
                 if (Configuration.Lang == null) {
                     Configuration.Lang = "en.json";
                     Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
                 }
 
                 if (Configuration1.LastGame == null) {
-                    Configuration1.LastGame = _displayNameToThxxDictionary.Keys.ElementAt(0);
+                    Configuration1.LastGame = _displayNameToThxxDictionary.Count != 0 ? _displayNameToThxxDictionary.Keys.ElementAt(0) : _gamesDictionary.Keys.ElementAt(0);
                     Trace.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
@@ -601,6 +605,9 @@ namespace Universal_THCRAP_Launcher {
                     Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
                     filterByType_button_Click("DefaultSettings", new EventArgs());
                 }
+
+                if (Favourites1.Games == null) Favourites1.Games = new List<string>();
+                if (Favourites1.Patches == null) Favourites1.Patches = new List<string>();
             }
             catch (Exception e) {
                 MessageBox.Show($@"1. If you're a developer: Don't forget to set the working directory to thcrap's directory. Your current working directory is: {Environment.CurrentDirectory}
@@ -751,13 +758,13 @@ namespace Universal_THCRAP_Launcher {
             if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0) gameListBox.SelectedIndex = 0;
         }
 
-        public void PopulatePatchList() {
+        private void GetPatchList() {
             _jsFiles.Clear();
             _thcrapFiles.Clear();
             patchListBox.Items.Clear();
 
             //Load patch stacks
-            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
+            _jsFiles     = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
             _thcrapFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.thcrap").ToList();
 
             //Give error if there are no patch configurations
@@ -780,6 +787,10 @@ namespace Universal_THCRAP_Launcher {
                 
             }
             #endregion
+        }
+
+        public void PopulatePatchList() {
+            GetPatchList();
 
             //Display patch stacks
             if (Configuration1.ShowVanilla) patchListBox.Items.Add($"[{I18N.LangResource.mainForm.vanilla}]");
@@ -1214,8 +1225,8 @@ namespace Universal_THCRAP_Launcher {
             Games   = games;
         }
 
-        public List<string> Patches { get; }
-        public List<string> Games { get; }
+        public List<string> Patches { get; set; }
+        public List<string> Games { get; set; }
     }
 
     public sealed class JumpListElement : ToolStripMenuItem {

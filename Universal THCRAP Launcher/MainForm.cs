@@ -176,6 +176,8 @@ namespace Universal_THCRAP_Launcher {
             SetDefaultSettings();
 
             UpdateLanguage();
+
+            
             Debug.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
             Trace.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
             Trace.WriteLine($"\tLastGame: {Configuration1.LastGame}");
@@ -883,7 +885,7 @@ namespace Universal_THCRAP_Launcher {
 
             // ---
 
-            notifyIcon1.Text = I18N.LangResource.mainForm?.utl?.ToString();
+            
         }
 
         private void AddStars(ListBox listBox, IEnumerable<string> list) {
@@ -1069,7 +1071,6 @@ namespace Universal_THCRAP_Launcher {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
             Process gameProcess = null;
-            //MessageBox.Show(gameName);
             _gamesDictionary.TryGetValue(gameName, out string gameFile);
             string[] splitted = gameFile?.Split('/');
             if (splitted != null) gameFile = splitted[splitted.Length - 1].Split('.')[0];
@@ -1161,9 +1162,9 @@ namespace Universal_THCRAP_Launcher {
         }
 
 
+
         #endregion
 
-        
     }
 
     #region Helper Classes

@@ -1022,11 +1022,12 @@ namespace Universal_THCRAP_Launcher {
                 if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patchListBox.SelectedItem))
                     s += ".thcrap";
                 s += " ";
-                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem as string ?? throw new InvalidOperationException(), out string s1);
+                s = s.Replace(" ★", "");
+                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★",""), out string s1);
                 s += s1;
-                s =  s.Replace(" ★", "");
-
-                //MessageBox.Show(args);
+                s = s.Trim();
+                MessageBox.Show( gameListBox.SelectedItem + " | " + s1);
+                //MessageBox.Show(s);
                 process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
                 Debug.WriteLine($"Starting thcrap with {s}");
             }
@@ -1048,7 +1049,7 @@ namespace Universal_THCRAP_Launcher {
                                                   Task.Run(() => ScanRunningProcess(process)),
                                                   Task.Run(() => ScanRunningTouhou(game))
                                               };
-            MessageBox.Show("");
+            //MessageBox.Show("");
             await Task.WhenAll(tasks);
             
             Enabled = true;
@@ -1068,7 +1069,7 @@ namespace Universal_THCRAP_Launcher {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
             Process gameProcess = null;
-            MessageBox.Show(gameName);
+            //MessageBox.Show(gameName);
             _gamesDictionary.TryGetValue(gameName, out string gameFile);
             string[] splitted = gameFile?.Split('/');
             if (splitted != null) gameFile = splitted[splitted.Length - 1].Split('.')[0];

@@ -1018,18 +1018,16 @@ namespace Universal_THCRAP_Launcher {
                 process = new Process {StartInfo = {FileName = game}};
                 Debug.WriteLine($"Game {game} started without thcrap.");
             } else {
-                string s = "";
-                s += patchListBox.SelectedItem;
-                if (Configuration1.HidePatchExtension && _jsFiles.Contains(patchListBox.SelectedItem)) s += ".js";
-                if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patchListBox.SelectedItem))
+                string s = patchListBox.SelectedItem.ToString().Replace(" ★", "");
+                if (Configuration1.HidePatchExtension && _jsFiles.Contains(s)) s += ".js";
+                if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s))
                     s += ".thcrap";
                 s += " ";
-                s = s.Replace(" ★", "");
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★",""), out string s1);
                 s += s1;
                 s = s.Trim();
-                //MessageBox.Show( gameListBox.SelectedItem + " | " + s1);
                 //MessageBox.Show(s);
+                //MessageBox.Show( gameListBox.SelectedItem + " | " + s1);
                 process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
                 Debug.WriteLine($"Starting thcrap with {s}");
             }

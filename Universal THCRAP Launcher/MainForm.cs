@@ -1026,7 +1026,7 @@ namespace Universal_THCRAP_Launcher {
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★",""), out string s1);
                 s += s1;
                 s = s.Trim();
-                MessageBox.Show( gameListBox.SelectedItem + " | " + s1);
+                //MessageBox.Show( gameListBox.SelectedItem + " | " + s1);
                 //MessageBox.Show(s);
                 process = new Process {StartInfo = {FileName = "thcrap_loader.exe", Arguments = s}};
                 Debug.WriteLine($"Starting thcrap with {s}");
@@ -1035,7 +1035,7 @@ namespace Universal_THCRAP_Launcher {
             process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
             List<Task> tasks = new List<Task> {Task.Run(() => ScanRunningProcess(process))};
-            _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString(), out string gameName);
+            _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★",""), out string gameName);
             if (patchListBox.SelectedItem.ToString() != $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") tasks.Add(Task.Run(() => ScanRunningTouhou(gameName)));
             await Task.WhenAll(tasks);
             Enabled = true;

@@ -1034,7 +1034,8 @@ namespace Universal_THCRAP_Launcher {
             process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
             List<Task> tasks = new List<Task> {Task.Run(() => ScanRunningProcess(process))};
-            if (patchListBox.SelectedIndex != 0) tasks.Add(Task.Run(() => ScanRunningTouhou(gameListBox.SelectedItem.ToString())));
+            _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString(), out string gameName);
+            if (patchListBox.SelectedItem.ToString() != $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") tasks.Add(Task.Run(() => ScanRunningTouhou(gameName)));
             await Task.WhenAll(tasks);
             Enabled = true;
         }
@@ -1067,6 +1068,7 @@ namespace Universal_THCRAP_Launcher {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
             Process gameProcess = null;
+            MessageBox.Show(gameName);
             _gamesDictionary.TryGetValue(gameName, out string gameFile);
             string[] splitted = gameFile?.Split('/');
             if (splitted != null) gameFile = splitted[splitted.Length - 1].Split('.')[0];

@@ -937,7 +937,7 @@ namespace Universal_THCRAP_Launcher {
                     foreach (string item in _displayNameToThxxDictionary.Keys) {
                         _displayNameToThxxDictionary.TryGetValue(item, out string s);
                         if (s != null && s.Contains("_custom"))
-                            gameListBox.Items.Remove(item);
+                            gameListBox.Items.Remove(_favoritesWithDisplayName.Contains(item) ? item + " ★" : item);
                     }
                     break;
                 }
@@ -946,7 +946,7 @@ namespace Universal_THCRAP_Launcher {
                     foreach (string item in _displayNameToThxxDictionary.Keys) {
                         _displayNameToThxxDictionary.TryGetValue(item, out string s);
                         if (s != null && !s.Contains("_custom"))
-                            gameListBox.Items.Remove(item);
+                            gameListBox.Items.Remove(_favoritesWithDisplayName.Contains(item) ? item + " ★" : item);
                     }
 
                     break;
@@ -1007,8 +1007,8 @@ namespace Universal_THCRAP_Launcher {
             }
 
             Process process;
-            if (patchListBox.SelectedIndex == 0) {
-                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem as string ?? throw new InvalidOperationException(), out string s1);
+            if (patchListBox.SelectedItem.ToString() == $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") {
+                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★","").Trim(), out string s1);
                 _gamesDictionary.TryGetValue(s1 ?? throw new InvalidOperationException(), out string game);
                 if (game == null) {
                     ErrorAndExit(I18N.LangResource.errors.oops?.ToString());
@@ -1023,7 +1023,7 @@ namespace Universal_THCRAP_Launcher {
                 if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s))
                     s += ".thcrap";
                 s += " ";
-                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★",""), out string s1);
+                _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★","").Trim(), out string s1);
                 s += s1;
                 s = s.Trim();
                 //MessageBox.Show(s);

@@ -56,6 +56,7 @@ namespace Universal_THCRAP_Launcher {
 
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
+        private const string VERSION_SUFFIX_S = "pre5";
 
         #endregion
 
@@ -65,7 +66,7 @@ namespace Universal_THCRAP_Launcher {
             #region Log File Beggining
 
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
-                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') +
+                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') + "-" + VERSION_SUFFIX_S +
                             $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
                             $"\nBuilt by: {Resources.BuildUser.Split('\n')[0]} ({Resources.BuildUser.Split('\n')[1]})" +
                             "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
@@ -83,7 +84,7 @@ namespace Universal_THCRAP_Launcher {
 
             //Load config
             if (File.Exists(CONFIG_FILE)) {
-                JsonSerializerSettings settings = new JsonSerializerSettings {ObjectCreationHandling = ObjectCreationHandling.Replace};
+                var settings = new JsonSerializerSettings {ObjectCreationHandling = ObjectCreationHandling.Replace};
                 string raw      = File.ReadAllText(CONFIG_FILE);
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
                 dconfig        = JsonConvert.DeserializeObject(raw, settings);
@@ -111,12 +112,11 @@ namespace Universal_THCRAP_Launcher {
                 string[] lines =
                     File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
                 foreach (string item in lines) {
-                    string error                          = "Error";
+                    var error                          = "Error";
                     if (item.Contains("\"error\"")) error = item.Split('"')[3];
-                    if (item.Contains("\"jsonParser\"")) {
-                        MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Application.Exit();
-                    }
+                    if (!item.Contains("\"jsonParser\"")) continue;
+                    MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
                 }
             }
 
@@ -820,7 +820,7 @@ namespace Universal_THCRAP_Launcher {
         private void UpdateLanguage() {
             dynamic objLangRes = I18N.LangResource.mainForm;
 
-            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.');
+            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.') + "-" + VERSION_SUFFIX_S;
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton?.ToString());
             toolTip1.SetToolTip(btn_sortAZ1, objLangRes.tooltips.sortAZ?.ToString());
             toolTip1.SetToolTip(btn_sortAZ2, objLangRes.tooltips.sortAZ?.ToString());

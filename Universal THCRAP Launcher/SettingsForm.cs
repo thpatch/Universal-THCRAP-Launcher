@@ -153,12 +153,12 @@ namespace Universal_THCRAP_Launcher
             cB_OnlyAllowOneExe.Text    = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
             cB_onlyOneUTL.Text = I18N.LangResource.settingsForm?.onlyOneUTL?.ToString();
             comboBox_gamesNamingType.Items.Clear();
-            for (int i = 0; i < 4; i++) comboBox_gamesNamingType.Items.Add(I18N.LangResource.settingsForm?.namingType?[i].ToString());
+            for (var i = 0; i < 4; i++) comboBox_gamesNamingType.Items.Add(I18N.LangResource.settingsForm?.namingType?[i].ToString() ?? throw new InvalidOperationException());
         }
         private void UpdateCredits()
         {
-            string credits = "";
-            foreach (var author in I18N.LangResource.metadata.authors)
+            var credits = "";
+            foreach (dynamic author in I18N.LangResource.metadata.authors)
             {
                 credits += author?.ToString() + ", ";
             }

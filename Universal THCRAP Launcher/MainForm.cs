@@ -74,6 +74,9 @@ namespace Universal_THCRAP_Launcher {
                             new FileInfo(( new Uri(Assembly.GetEntryAssembly()?.GetName().CodeBase ?? throw new InvalidOperationException()) ).AbsolutePath)
                                .Directory?.FullName +
                             "\nCurrent Date: " + DateTime.Now +
+                            "\nDo these files below exists:" +
+                            $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\t{CONFIG_FILE}\tfavourites.js\tgames.js?" +
+                            $"\n{File.Exists("thcrap_configure.exe")}\t{File.Exists("Newtonsoft.Json.dll")}\t{File.Exists(CONFIG_FILE)}\t{File.Exists("favourites.js")}\t{File.Exists("games.js")}" +
                             "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n");
 
             #endregion
@@ -185,6 +188,8 @@ namespace Universal_THCRAP_Launcher {
             Trace.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
             Trace.WriteLine($"\tLang: {Configuration.Lang}");
             Trace.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
+            Trace.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
+            Trace.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
             Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
             Trace.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
             Trace.WriteLine($"\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
@@ -472,10 +477,10 @@ namespace Universal_THCRAP_Launcher {
 
         private void createShortcutTS_Click(object sender, EventArgs e) {
             object shDesktop = "Desktop";
-            WshShell shell     = new WshShell();
+            var shell     = new WshShell();
             string shortcutAddress = (string) shell.SpecialFolders.Item(ref shDesktop) + "\\" +
                                      I18N.LangResource.shCreate.file?.ToString() + ".lnk";
-            IWshShortcut shortcut = (IWshShortcut) shell.CreateShortcut(shortcutAddress);
+            var shortcut = (IWshShortcut) shell.CreateShortcut(shortcutAddress);
             shortcut.Description      = I18N.LangResource.shCreate.desc?.ToString();
             shortcut.TargetPath       = Assembly.GetEntryAssembly()?.Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
@@ -488,7 +493,7 @@ namespace Universal_THCRAP_Launcher {
                           patchListBox.SelectedItem.ToString().Replace(" ★", ""));
 
         private void settingsTS_Click(object sender, EventArgs e) {
-            SettingsForm settingsForm = new SettingsForm(this);
+            var settingsForm = new SettingsForm(this);
             settingsForm.ShowDialog();
             UpdateLanguage();
         }
@@ -538,7 +543,7 @@ namespace Universal_THCRAP_Launcher {
                 }
 
                 if (Configuration1.Window == null) {
-                    Window window = new Window {
+                    var window = new Window {
                                                 Size     = new[] {Size.Width, Size.Height},
                                                 Location = new[] {Location.X, Location.Y}
                                             };
@@ -553,7 +558,7 @@ namespace Universal_THCRAP_Launcher {
 
 
                 //Default sort
-                for (int i = 0; i < 2; i++) {
+                for (var i = 0; i < 2; i++) {
                     if (Configuration1.IsDescending[i] == "false") {
 
                         if (i == 0) {
@@ -820,7 +825,7 @@ namespace Universal_THCRAP_Launcher {
         private void UpdateLanguage() {
             dynamic objLangRes = I18N.LangResource.mainForm;
 
-            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.') + "-" + VERSION_SUFFIX_S;
+            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.') + @"-" + VERSION_SUFFIX_S;
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton?.ToString());
             toolTip1.SetToolTip(btn_sortAZ1, objLangRes.tooltips.sortAZ?.ToString());
             toolTip1.SetToolTip(btn_sortAZ2, objLangRes.tooltips.sortAZ?.ToString());

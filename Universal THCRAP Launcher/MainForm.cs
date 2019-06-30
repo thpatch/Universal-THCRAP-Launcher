@@ -725,9 +725,9 @@ namespace Universal_THCRAP_Launcher {
                         if (name != null) {
                             Regex initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
                             name = initials.Replace(name.Split('-')[1], "$1");
-                            name = name.Replace("~", " ~");
+                            name = name.Replace("~", " ~").Trim();
                         } else
-                            name = item.Key;
+                            name = item.Key.Trim();
                         gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                         _displayNameToThxxDictionary.Add(name, item.Key);
                         if (Favourites1.Games.Contains(item.Key))

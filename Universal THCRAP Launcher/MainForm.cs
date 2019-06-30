@@ -488,9 +488,14 @@ namespace Universal_THCRAP_Launcher {
             Trace.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
         }
 
-        private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) =>
-            Process.Start(Directory.GetCurrentDirectory() + @"/" +
-                          patchListBox.SelectedItem.ToString().Replace(" ★", ""));
+        private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) {
+            string path = Directory.GetCurrentDirectory() + @"/" +
+                          patchListBox.SelectedItem.ToString().Replace(" ★", "");
+            if (Configuration1.HidePatchExtension)
+                if (_jsFiles.Contains(patchListBox.SelectedItem.ToString().Replace(" ★", ""))) path+= ".js";
+                if (_thcrapFiles.Contains(patchListBox.SelectedItem.ToString().Replace(" ★", ""))) path+= ".thcrap";
+            Process.Start(path);
+        }
 
         private void settingsTS_Click(object sender, EventArgs e) {
             var settingsForm = new SettingsForm(this);

@@ -728,7 +728,7 @@ namespace Universal_THCRAP_Launcher {
                             name = name.Replace("~", " ~").Trim();
                         } else
                             name = item.Key.Trim();
-                        gameListBox.Items.Add(name ?? throw new InvalidOperationException());
+                        gameListBox.Items.Add(name);
                         _displayNameToThxxDictionary.Add(name, item.Key);
                         if (Favourites1.Games.Contains(item.Key))
                             _favoritesWithDisplayName.Add(name);

@@ -735,6 +735,7 @@ namespace Universal_THCRAP_Launcher {
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary) {
                 GameFullNameDictionary.TryGetValue(item.Key.Replace("_custom", ""), out string name);
+                name = name?.Replace("~", "-");
                 if (item.Key.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
                 switch (Configuration1.NamingForGames) {
                     case GameNameType.Thxx:

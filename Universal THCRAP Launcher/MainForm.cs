@@ -50,7 +50,7 @@ namespace Universal_THCRAP_Launcher {
 
         private int[] _resizeConstants;
         private Dictionary<string, string> _gamesDictionary;
-        public static Dictionary<string, string> GameFullNameDictionary;
+        public static Dictionary<string, string> GameFullNameDictionary = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _displayNameToThxxDictionary = new Dictionary<string, string>();
         private readonly List<string> _favoritesWithDisplayName = new List<string>();
 
@@ -150,7 +150,24 @@ namespace Universal_THCRAP_Launcher {
             //Load full names for games
             if (File.Exists(@"nmlgc\script_latin\stringdefs.js")) {
                 string file = File.ReadAllText(@"nmlgc\script_latin\stringdefs.js");
-                GameFullNameDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
+                var stringdef = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
+                foreach (KeyValuePair<string, string> variable in stringdef) {
+                    if (Regex.IsMatch(variable.Key, "^th[0-9]{2,3}$"))
+                        GameFullNameDictionary.Add(variable.Key, variable.Value);
+                    if (variable.Key.Equals("alcostg"))
+                        GameFullNameDictionary.Add(variable.Key, variable.Value);
+                }
+            }
+            if (Directory.Exists(@"nmlgc\base_tasofro")) {
+                foreach (string file in Directory.EnumerateFiles(@"nmlgc\base_tasofro")) {
+                    Trace.WriteLine($"File: {file}");
+                    string raw = File.ReadAllText(file);
+                    if (!raw.Contains("title")) continue;
+                    dynamic content = JsonConvert.DeserializeObject(raw);
+                    if (content.title is null) continue;
+                    string title = content.title.ToString();
+                    GameFullNameDictionary.Add(file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", ""), title);
+                }
             }
 
             //Load executables

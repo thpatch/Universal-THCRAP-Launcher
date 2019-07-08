@@ -679,8 +679,14 @@ namespace Universal_THCRAP_Launcher {
             if (gameListBox.SelectedIndex != -1)
                 Configuration1.LastGame = ( (string) gameListBox.SelectedItem ).Replace(" ★", "");
 
-            var window = new Window {Size = new[] {Size.Width, Size.Height}, Location = new[] {Location.X, Location.Y}};
-            Configuration1.Window = window;
+            Configuration1.WindowState = WindowState;
+            if (WindowState != FormWindowState.Maximized) {
+                var window = new Window {
+                                            Size     = new[] {Size.Width, Size.Height},
+                                            Location = new[] {Location.X, Location.Y}
+                                        };
+                Configuration1.Window = window;
+            }
 
             Favourites1.Patches.Clear();
             Favourites1.Games.Clear();
@@ -1243,6 +1249,7 @@ namespace Universal_THCRAP_Launcher {
         public GameNameType NamingForGames { get;  set; }
         public bool MinimizeNotificationWasShown { get; set; }
         public bool OnlyAllowOneUtl { get; set; }
+        public FormWindowState WindowState { get; set; }
     }
 
     public enum GameNameType { Thxx = 0, Initials,  ShortName, LongName }

@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
+using JumpListHelpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
@@ -28,8 +29,13 @@ using File = System.IO.File;
  */
 
 namespace Universal_THCRAP_Launcher {
-    public partial class MainForm : Form {
-        public MainForm() { InitializeComponent(); }
+    public partial class MainForm : JumpListMainFormBase {
+        public MainForm() {
+            InitializeComponent(); 
+            JumpListCommandReceived += MainForm_JumpListCommandReceived;
+        }
+
+        
 
         #region Global variables
 
@@ -63,6 +69,7 @@ namespace Universal_THCRAP_Launcher {
         #region MainForm Events
 
         private void Form1_Load(object sender, EventArgs e) {
+            
             #region Log File Beggining
 
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――\nUniversal THCRAP Launcher Log File" +
@@ -211,6 +218,10 @@ namespace Universal_THCRAP_Launcher {
             Trace.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
             Trace.WriteLine($"\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
             Trace.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+        }
+
+        private void MainForm_JumpListCommandReceived(object sender, CommandEventArgs e) {
+            StartThcrap(e.CommandName.Split(' ')[0], e.CommandName.Split(' ')[1]);
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e) {
@@ -1009,6 +1020,7 @@ namespace Universal_THCRAP_Launcher {
 
         private void FillJumpList() {
             contextMenuStrip1.Items.Clear();
+            JumpListManager.Clear();
             var tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.utl?.ToString()) {Enabled = false};
             contextMenuStrip1.Items.Add(tsi);
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
@@ -1018,8 +1030,10 @@ namespace Universal_THCRAP_Launcher {
                     var jsi = new JumpListElement(game, patch);
                     jsi.Click += ( delegate { StartThcrap(jsi.ToString(), game); } );
                     contextMenuStrip1.Items.Add(jsi);
+                    JumpListManager.AddCategorySelfLink("Favorites", $"{game} {patch}", $"{game} {patch}");
                 }
             }
+            JumpListManager.Refresh();
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
             tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.menuStrip?[0]?[5]?.ToString());
             tsi.Click += exitTS_Click;

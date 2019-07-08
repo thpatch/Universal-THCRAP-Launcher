@@ -160,7 +160,6 @@ namespace Universal_THCRAP_Launcher {
             }
             if (Directory.Exists(@"nmlgc\base_tasofro")) {
                 foreach (string file in Directory.EnumerateFiles(@"nmlgc\base_tasofro")) {
-                    Trace.WriteLine($"File: {file}");
                     string raw = File.ReadAllText(file);
                     if (!raw.Contains("title")) continue;
                     dynamic content = JsonConvert.DeserializeObject(raw);
@@ -508,9 +507,10 @@ namespace Universal_THCRAP_Launcher {
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) {
             string path = Directory.GetCurrentDirectory() + @"/" +
                           patchListBox.SelectedItem.ToString().Replace(" ★", "");
-            if (Configuration1.HidePatchExtension)
-                if (_jsFiles.Contains(patchListBox.SelectedItem.ToString().Replace(" ★", ""))) path+= ".js";
-                if (_thcrapFiles.Contains(patchListBox.SelectedItem.ToString().Replace(" ★", ""))) path+= ".thcrap";
+            if (Configuration1.HidePatchExtension) {
+                if (_jsFiles.Contains(patchListBox.SelectedItem.ToString().Replace(" ★", ""))) path     += ".js";
+                if (_thcrapFiles.Contains(patchListBox.SelectedItem.ToString().Replace(" ★", ""))) path += ".thcrap";
+            }
             Process.Start(path);
         }
 
@@ -746,7 +746,7 @@ namespace Universal_THCRAP_Launcher {
                         break;
                     case GameNameType.Initials:
                         if (name != null) {
-                            Regex initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
+                            var initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
                             name = initials.Replace(name.Split('-')[1], "$1");
                             name = name.Replace("~", " ~").Trim();
                         } else
@@ -1081,10 +1081,13 @@ namespace Universal_THCRAP_Launcher {
             await Task.WhenAll(tasks);
             
             Enabled = true;
+            Show();
+            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
+            Activate();
         }
 
         private async Task ScanRunningProcess(Process process) {
-            if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
+            if (!Configuration1.OnlyAllowOneExecutable) Enabled = false;
             process.WaitForInputIdle();
             string processName = process.MainWindowTitle;
             Debug.WriteLine($"{process.ProcessName} is running with title {processName}.");
@@ -1095,7 +1098,7 @@ namespace Universal_THCRAP_Launcher {
 
         private async Task ScanRunningTouhou(string gameName) {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
-            if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
+            if (!Configuration1.OnlyAllowOneExecutable) Enabled = false;
             Process gameProcess = null;
             _gamesDictionary.TryGetValue(gameName, out string gameFile);
             string[] splitted = gameFile?.Split('/');

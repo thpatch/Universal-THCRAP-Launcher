@@ -76,7 +76,7 @@ namespace Universal_THCRAP_Launcher {
                             "\nCurrent Date: " + DateTime.Now +
                             "\nDo these files below exists:" +
                             $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\t{CONFIG_FILE}\tfavourites.js\tgames.js?" +
-                            $"\n{File.Exists("thcrap_configure.exe")}\t{File.Exists("Newtonsoft.Json.dll")}\t{File.Exists(CONFIG_FILE)}\t{File.Exists("favourites.js")}\t{File.Exists("games.js")}" +
+                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists("Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t\t{File.Exists("favourites.js")}\t\t\t{File.Exists("games.js")}" +
                             "\n――――――――――――――――――――――――――――――――――――――――――――――――――\n");
 
             #endregion
@@ -208,6 +208,7 @@ namespace Universal_THCRAP_Launcher {
             Trace.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
             Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
             Trace.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
+            Trace.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
             Trace.WriteLine($"\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
             Trace.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }

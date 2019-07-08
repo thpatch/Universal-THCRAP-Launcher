@@ -305,7 +305,7 @@ namespace Universal_THCRAP_Launcher {
             //Change Form settings
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
-
+            WindowState = Configuration1.WindowState;
             #endregion
 
             ReadConfig();

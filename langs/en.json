@@ -29,7 +29,8 @@
 			"thcrap_loader": "thcrap_loader.exe couldn't be found.\nMake sure to put the application next to it!",
 			"gamesJs": "games.js couldn't be found.\nMake sure to run thcrap_configure.exe first!",
 			"patchStacks": "No patch stacks could be found.\nMake sure to run thcrap_configure.exe first!",
-			"jsonParser": "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well."
+			"jsonParser": "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well.",
+			"file": "{0} is missing. Please make sure this is fixed."
 		},
 		"oops": "Something went wrong...",
 		"noneSelected": "No patch stacks or executables selected!\nPlease select one!",

@@ -209,6 +209,7 @@ namespace JumpListHelpers
             list = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpList();
             list.ClearAllUserTasks();
             list.Refresh();
+            categories = new Dictionary<string, Microsoft.WindowsAPICodePack.Taskbar.JumpListCustomCategory>();
         }
 
         public static void AddToRecent(string path)

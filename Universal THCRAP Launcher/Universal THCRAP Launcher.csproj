@@ -33,7 +33,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -61,6 +61,21 @@
   <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>utl-key.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -93,7 +108,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs" />
+    <Compile Include="Properties\Settings1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +136,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="utl-key.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -189,9 +209,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>echo %25date%25 %25time%25&gt; "$(ProjectDir)\Resources\BuildDate.txt"
-tzutil /g &gt;&gt;  "$(ProjectDir)\Resources\BuildDate.txt"
-git config --global --get user.name &gt; "$(ProjectDir)\Resources\BuildUser.txt"
-git config --global --get user.email &gt;&gt; "$(ProjectDir)\Resources\BuildUser.txt"</PreBuildEvent>
+    <PreBuildEvent>echo %25date%25 %25time%25 &gt; "$(ProjectDir)Resources\BuildDate.txt"
+tzutil /g &gt;&gt;  "$(ProjectDir)Resources\BuildDate.txt"
+git config --global --get user.name &gt; "$(ProjectDir)Resources\BuildUser.txt"
+git config --global --get user.email &gt;&gt; "$(ProjectDir)Resources\BuildUser.txt"</PreBuildEvent>
   </PropertyGroup>
 </Project>

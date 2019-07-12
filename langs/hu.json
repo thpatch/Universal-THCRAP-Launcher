@@ -29,7 +29,8 @@
 			"thcrap_loader": "thcrap_loader.exe nem található.\nBizonyosodj meg róla, hogy az alkalmazás mellette van!",
 			"gamesJs": "games.js nem található.\nBizonyosodj meg róla, hogy elöször a(z) thcrap_configure.exe fájlt futtatod!",
 			"patchStacks": "Futtatási konfigurációkból (patch stack) álló konfig fájlok nem találhatóak.\nBizonyosodj meg róla, hogy elöször a(z) thcrap_configure.exe fájlt futtatod!",
-			"jsonParser": "A(z) Newtonsoft.Json.dll hiányzik. Bizonyosodj meg róla, hogy azt is átmásoltad."
+			"jsonParser": "A Newtonsoft.Json.dll hiányzik. Bizonyosodj meg róla, hogy azt is átmásoltad.",
+			"file": "A(z) {0} fájl hiányzik. Bizonyosodj meg róla, hogy ez nem így van."
 		},
 		"oops": "Valami hiba történt...",
 		"noneSelected": "Egy futtatási konfiguráció (patch stack) vagy futtatható (executable) sincs kiváalasztva!\nKérlek, válassz ki egyet!",

@@ -29,7 +29,7 @@
 			"thcrap_loader": "Fail thcrap_loader.exe tidak dijumpai.\nPastikan letakkan fail itu disebelahnya!",
 			"gamesJs": "Fail games.js tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
 			"patchStacks": "Senarai timbungan tampalan tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
-			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumpai. Pastikan fail itu juga disalin."
+			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumpai. Pastikan fail itu juga disalin.",
 			"file": "Fail {0} tidak dijumpai. Sila pastikan ini dibaiki atau ditetapkan."
 		},
 		"oops": "Ada sesuatu bermasalah...",

@@ -107,7 +107,7 @@ namespace Universal_THCRAP_Launcher
             languageComboBox.Items.Clear();
             _langFileToName.Clear();
             _langNameToFile.Clear();
-            Trace.WriteLine("Loading languages...");
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Loading languages...");
             foreach (var file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
@@ -125,19 +125,19 @@ namespace Universal_THCRAP_Launcher
                 }
                 catch (Exception ex)
                 {
-                    Trace.WriteLine($"Exception while parsing language file {file}\nException: {ex}");
+                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Exception while parsing language file {file}\nException: {ex}");
                     MessageBox.Show(I18N.LangResource.errors.oops?.ToString() + Environment.CurrentDirectory, I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             #endregion
-            Trace.WriteLine("Language loading ended.");
+            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Language loading ended.");
             #region Select appropiate lang
             if (Configuration.Lang == null)
                 languageComboBox.SelectedIndex = 0;
 
             else languageComboBox.SelectedItem = _langFileToName[I18N.I18NDir + Configuration.Lang];
-            Debug.WriteLine("Configuration.Lang = " + Configuration.Lang);
-            Debug.WriteLine("Language Selected: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
+            Debug.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang is " + Configuration.Lang);
+            Debug.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Selected Language In GUI: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
             #endregion
         }
         private void UpdateLang()

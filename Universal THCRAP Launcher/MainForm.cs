@@ -1145,7 +1145,7 @@ namespace Universal_THCRAP_Launcher {
 
         private void ScanRunningProcess(Process process)
         {
-            if (!Configuration1.OnlyAllowOneExecutable) Enabled = false;
+            if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
             process.WaitForInputIdle();
             string processName = process.MainWindowTitle;
             Debug.WriteLine($"{process.ProcessName} is running with title {processName}.");
@@ -1157,7 +1157,7 @@ namespace Universal_THCRAP_Launcher {
         private void ScanRunningTouhou(string gameName)
         {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
-            if (!Configuration1.OnlyAllowOneExecutable) Enabled = false;
+            if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
             Process gameProcess = null;
             _gamesDictionary.TryGetValue(gameName, out string gameFile);
             string[] splitted = gameFile?.Split('/');
@@ -1175,7 +1175,6 @@ namespace Universal_THCRAP_Launcher {
 
             gameProcess.WaitForInputIdle();
             gameName = gameProcess.MainWindowTitle;
-            Enabled = false;
             Text +=
                 $@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}";
             gameProcess.WaitForExit();

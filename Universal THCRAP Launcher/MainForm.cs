@@ -523,7 +523,7 @@ namespace Universal_THCRAP_Launcher {
 
         private void CreateShortcutDesktopTS_Click(object sender, EventArgs e) => CreateShortcut("Desktop");
 
-        private void CreateShortcutStartMenuTS_Click(object sender, EventArgs e) => CreateShortcut("CommonPrograms");
+        private void CreateShortcutStartMenuTS_Click(object sender, EventArgs e) => CreateShortcut("Programs");
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) {
             string path = Directory.GetCurrentDirectory() + @"/" +

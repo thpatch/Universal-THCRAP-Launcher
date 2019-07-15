@@ -12,7 +12,16 @@
 		"and": ",",
 		"downloadAll": "모든 언어팩 다운로드",
 		"downloading": "다운로드 중...",
-		"hidePatchExtension": "패치 목록에서 확장자 숨기기"
+		"hidePatchExtension": "패치 목록에서 확장자 숨기기",
+		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
+		"onlyOneExe": "Only allow one executable to run",
+		"label_gameNaming": "Naming type for executables:",
+		"onlyOneUTL": "Only allow one UTL to run",
+		"tabs": {
+			"general": "General",
+			"language": "Language"
+		},
+		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
 	},
 	"errors": {
 		"error": "오류",
@@ -20,11 +29,13 @@
 			"thcrap_loader": "thcrap_loader.exe를 찾지 못 했습니다.\n같은 폴더에 있는지 확인해 주십시오.",
 			"gamesJs": "games.js를 찾지 못 했습니다.\n우선 thcrap_configure.exe를 실행해 주십시오.",
 			"patchStacks": "패치 목록이 담긴 설정 파일을 찾지 못 했습니다.\n우선 thcrap_configure.exe를 실행해 주십시오.",
-			"jsonParser": "Newtonsoft.Json.dll이 없습니다. 제대로 복사되었는지 확인해 주십시오."
+			"jsonParser": "Newtonsoft.Json.dll이 없습니다. 제대로 복사되었는지 확인해 주십시오.",
+			"file": "{0} is missing. Please make sure this is fixed."
 		},
 		"oops": "오류가 있습니다.",
 		"noneSelected": "설정 파일(패치 목록)이나 게임이 선택되지 않았습니다.\n선택을 해주십시오.",
-		"downloadError": "Github에서 언어팩을 다운로드할 수 없습니다. 다음과 같은 경우에 해당됩니다.\n- 인터넷이 연결되지 않음.\n- 이 프로그램이 폐기되어 더 이상 깃허브 저장소에 있지 않음.\n- 깃허브나 인터넷이 존재하지 않는 미래."
+		"downloadError": "Github에서 언어팩을 다운로드할 수 없습니다. 다음과 같은 경우에 해당됩니다.\n- 인터넷이 연결되지 않음.\n- 이 프로그램이 폐기되어 더 이상 깃허브 저장소에 있지 않음.\n- 깃허브나 인터넷이 존재하지 않는 미래.",
+		"alreadyRunning": "The program is already running. Either disable this check in the settings or close the program."
 	},
 	"popup": {
 		"hideLauncher": {
@@ -42,10 +53,12 @@
 	},
 	"mainForm": {
 		"utl": "Universal THCRAP Launcher",
+		"running": "Running:",
 		"menuStrip": [
 			[
 				"App",
 				"바탕화면에 바로가기 생성",
+				"Create Shortcut for Start Menu",
 				"설정",
 				"-",
 				"다시 시작",
@@ -76,6 +89,9 @@
 				"키보드 단축키"
 			]
 		],
+		"vanilla": "Vanilla",
+		"custom": "Environment Custom Program",
+		"hided": "The program has been minimized to the notification tray and is still running in the background.",
 		"tooltips": {
 			"startButton": "선택한 설정으로 thcrap 실행",
 			"sortAZ": "알파벳 순서로 정렬",
@@ -84,7 +100,8 @@
 			"patchLB": "설정 파일(패치 목록)을 선택",
 			"gameLB": "게임을 선택",
 			"patchFav": "패치를 즐겨찾기에 추가 (선택한 항목이면 F2)",
-			"gamesFav": "게임을 즐겨찾기에 추가 (선택한 항목이면 F2)"
+			"gamesFav": "게임을 즐겨찾기에 추가 (선택한 항목이면 F2)",
+			"random": "Select a random element"
 		}
 	}
 }

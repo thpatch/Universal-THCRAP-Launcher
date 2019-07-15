@@ -3,7 +3,7 @@
 		"authors": ["32th System", "Splashman", "Yaro"],
 		"native": "Deutsch",
 		"english": "German"
-        },
+	},
 	"settingsForm": {
 		"settings": "Einstellungen",
 		"language": "Sprache",
@@ -11,78 +11,96 @@
 		"langCredits": "Übersetzt von: {0}.",
 		"and": "und",
 		"downloadAll": "Alle Sprachen herunterladen",
-		"downloading": "Wird heruntergeladen...",
-		"hidePatchExtension": "Erweiterung auf Patch-Liste verstecken"
-        },
-		"errors": {
-			"error": "Fehler",
-			"missing": {
-				"thcrap_loader": "thcrap_loader.exe wurde nicht gefunden.\nBitte überprüfen, ob sich die Datei im gleichen Verzeichnis befindet.",
-				"gamesJs": "games.js wurde nicht gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
-				"patchStacks": "Keine Konfigurationsdateien oder Patch-Stacks gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
-				"jsonParser": "Newtonsoft.Json.dll wurde nicht gefunden. Bitte überprüfen, ob die Datei mit kopiert wurde."
-			},
-			"oops": "Etwas ist falsch gelaufen...",
-			"noneSelected": "Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!",
-			"downloadError": "Sprachdateien konnten nicht von GitHub heruntergeladen werden. Dies könnte folgende Ursachen haben:\n- Du bist nicht mit dem Internet verbunden.\n- Das Programm ist veraltet und und das GitHub-Repository existiert nicht mehr.\n- Du lebst in einer Zeit, zu der GitHub oder das Internet nicht mehr existieren."
-        },
-		"popup": {
-			"hideLauncher": {
-				"caption": "Information",
-				"text": "Der Launcher wird während der Konfiguration ausgeblendet..."
-                },
-				"kbSh": {
-					"caption": "Tastenkürzel",
-					"text": "Alt + F4: Anwendung schließen (Standard-Windows-Kürzel)\nCtrl + R: Anwendung neu starten\nCtrl + O: Ausgewählte Patch-Konfiguration öffnen\nF1: Tastenkürzel anzeigen (dieses Fenster)\nF2: Ausgewähltes Element der Liste favorisieren."
-                }
-        },
-		"shCreate": {
-			"file": "Universaler THCRAP-Launcher",
-			"desc": "Verknüpfung auf UTL"
-        },
-		"mainForm": {
-			"utl": "Universaler THCRAP-Launcher",
-			"menuStrip": [
-	 				[
-						"App",
-						"Verknüpfung auf Desktop erstellen",
-						"Einstellungen...",
-						"-",
-						"Neu starten",
-						"Schließen"
-					],
-					[
-						"THCRAP",
-						"thcrap-Konfiguration öffnen",
-							[
-								"Öffnen...",
-								"Ordner Öffnen",
-								"Spieleliste Öffnen",
-								"Ausgewählte Patch-Konfiguration Öffnen"
-							]
-					],
-					[
-						"GitHub",
-						"GitHub-Seite",
-						[
-							"Feedback",
-							"Fehlerbericht",
-							"Feature Vorschlagen",
-							"Anderes"
-						]
-					],
-					[
-						"Hilfe",
-						"Tastenkürzel"
-					]
-				],
-				"tooltips": {
-					"startButton": "thcrap mit ausgewählten Einstellungen starten",
-					"sortAZ": "In alphabetischer Reihenfolge sortieren",
-					"filterFav": "Favoriten filtern",
-					"filterByType": "Nach Typ filtern",
-					"patchLB": "Ausführungskonfiguration (Patch-Stack) auswählen",
-					"gameLB": "Spiel (ausführbare Datei) auswählen"
-				}
+		"downloading": "Wird heruntergeladen ...",
+		"hidePatchExtension": "Erweiterung auf Patch-Liste verstecken",
+		"showVanilla": "Vanilla-Launch-Option in der Patchliste anzeigen",
+		"onlyOneExe": "Erlaube nur die Ausführung einer Programminstanz",
+		"label_gameNaming": "Namenstyp der ausführbaren Dateien:",
+		"onlyOneUTL": "Erlaube nur die Ausführung einer UTL-Instanz",
+		"tabs": {
+			"general": "Allgemein",
+			"language": "Sprache"
+	},
+	"namingType": ["thxx", "Initialen", "Kurzer Name", "Langer Name"]
+	},
+	"errors": {
+		"error": "Fehler",
+		"missing": {
+			"thcrap_loader": "thcrap_loader.exe wurde nicht gefunden.\nBitte überprüfen, ob sich die Datei im gleichen Verzeichnis befindet.",
+			"gamesJs": "games.js wurde nicht gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
+			"patchStacks": "Keine Konfigurationsdateien oder Patch-Stacks gefunden.\nBitte überprüfen, ob eine Installation mit thcrap_configure.exe bereits ausgeführt wurde.",
+			"jsonParser": "Newtonsoft.Json.dll wurde nicht gefunden. Bitte überprüfen, ob die Datei mit kopiert wurde.",
+			"file": "{0} fehlt. Bitte beheben."
+		},
+		"oops": "Etwas ist falsch gelaufen ...",
+		"noneSelected": "Keine Ausführungskonfiguration (Patch-Stack) oder Spiel (ausführbare Datei) ausgewählt!\nBitte jeweils eins von beidem auswählen!",
+		"downloadError": "Sprachdateien konnten nicht von GitHub heruntergeladen werden. Dies könnte folgende Ursachen haben:\n- Du bist nicht mit dem Internet verbunden.\n- Das Programm ist veraltet und und das GitHub-Repository existiert nicht mehr.\n- Du lebst in einer Zeit, zu der GitHub oder das Internet nicht mehr existieren.",
+		"alreadyRunning": "Das Programm wird bereits ausgeführt. Entweder die entsprechende Option in den Einstellungen anhaken oder das Programm schließen."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Information",
+			"text": "Der Launcher wird während der Konfiguration ausgeblendet ..."
+		},
+		"kbSh": {
+			"caption": "Tastenkürzel",
+			"text": "Alt + F4: Anwendung schließen (Standard-Windows-Kürzel)\nCtrl + R: Anwendung neu starten\nCtrl + O: Ausgewählte Patch-Konfiguration öffnen\nF1: Tastenkürzel anzeigen (dieses Fenster)\nF2: Ausgewähltes Element der Liste favorisieren."
 		}
+	},
+	"shCreate": {
+		"file": "Universaler THCRAP-Launcher",
+		"desc": "Verknüpfung auf UTL"
+	},
+	"mainForm": {
+		"utl": "Universaler THCRAP-Launcher",
+		"running": "Ausführen:",
+		"menuStrip": [
+			[
+				"App",
+				"Verknüpfung auf Desktop erstellen",
+				"Einstellungen ...",
+				"-",
+				"Neu starten",
+				"Schließen"
+			],
+			[
+				"THCRAP",
+				"thcrap-Konfiguration öffnen",
+				[
+					"Öffnen ...",
+					"Ordner öffnen",
+					"Spieleliste öffnen (games.js)",
+					"Ausgewählte Patch-Konfiguration öffnen"
+				]
+			],
+			[
+			"GitHub",
+			"GitHub-Seite",
+				[
+					"Feedback",
+					"Fehlerbericht",
+					"Feature vorschlagen",
+					"Anderes"
+				]
+			],
+			[
+				"Hilfe",
+				"Tastenkürzel"
+			]
+		],
+		"vanilla": "Vanilla",
+		"custom": "Environment Custom Program",
+		"hided": "Das Programm wurde minimiert und läuft nun im Hintergrund weiter.",
+		"tooltips": {
+			"startButton": "thcrap mit ausgewählten Einstellungen starten",
+			"sortAZ": "In alphabetischer Reihenfolge sortieren",
+			"filterFav": "Favoriten filtern",
+			"filterByType": "Nach Typ filtern",
+			"patchLB": "Ausführungskonfiguration (Patch-Stack) auswählen",
+			"gameLB": "Spiel (ausführbare Datei) auswählen",
+			"patchFav": "Ausführungskonfiguration zu Favoriten hinzufügen (oder drücke F2 wenn ausgewählt)",
+			"gamesFav": "Spiel/Programm zu Favoriten hinzufügen (oder drücke F2 wenn ausgewählt)",
+			"random": "Zufällige Auswahl"
+		}
+	}
 }

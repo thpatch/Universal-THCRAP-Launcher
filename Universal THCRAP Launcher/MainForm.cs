@@ -25,7 +25,7 @@ using File = System.IO.File;
  * and the quality of code is very bad. If you want to be able to get this working, ensure:
  * NuGet packages are working.
  * Both "code behinds" have been loaded up in th editor once.
- * For Debug the working directory has been set to thcrap's directory.
+ * In Debug tab the working directory has been set to thcrap's directory.
  */
 
 namespace Universal_THCRAP_Launcher {
@@ -34,8 +34,6 @@ namespace Universal_THCRAP_Launcher {
             InitializeComponent(); 
             JumpListCommandReceived += new EventHandler<CommandEventArgs>(MainForm_JumpListCommandReceived);
         }
-
-
 
         #region Global variables
 
@@ -382,9 +380,6 @@ namespace Universal_THCRAP_Launcher {
 
         private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox(patchListBox);
         private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox(gameListBox);
-        private void NotifyIcon1_Click(object sender, EventArgs e) {
-            
-        }
 
         private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
@@ -398,11 +393,6 @@ namespace Universal_THCRAP_Launcher {
                 FillJumpList();
                 contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.AboveLeft);
             }
-        }
-
-        private void MainForm_MouseEnter(object sender, EventArgs e)
-        {
-            FillJumpList();
         }
 
         #region Sorting/Filtering Button Click Methods
@@ -531,18 +521,9 @@ namespace Universal_THCRAP_Launcher {
         private void openGamesListTS_Click(object sender, EventArgs e) => Process.Start("games.js");
         private void openFolderTS_Click(object sender, EventArgs e) => Process.Start(Directory.GetCurrentDirectory());
 
-        private void createShortcutTS_Click(object sender, EventArgs e) {
-            object shDesktop = "Desktop";
-            var shell     = new WshShell();
-            string shortcutAddress = (string) shell.SpecialFolders.Item(ref shDesktop) + "\\" +
-                                     I18N.LangResource.shCreate.file?.ToString() + ".lnk";
-            var shortcut = (IWshShortcut) shell.CreateShortcut(shortcutAddress);
-            shortcut.Description      = I18N.LangResource.shCreate.desc?.ToString();
-            shortcut.TargetPath       = Assembly.GetEntryAssembly()?.Location;
-            shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
-            shortcut.Save();
-            Trace.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
-        }
+        private void CreateShortcutDesktopTS_Click(object sender, EventArgs e) => CreateShortcut("Desktop");
+
+        private void CreateShortcutStartMenuTS_Click(object sender, EventArgs e) => CreateShortcut("CommonPrograms");
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e) {
             string path = Directory.GetCurrentDirectory() + @"/" +
@@ -553,7 +534,6 @@ namespace Universal_THCRAP_Launcher {
             }
             Process.Start(path);
         }
-
         private void settingsTS_Click(object sender, EventArgs e) {
             var settingsForm = new SettingsForm(this);
             settingsForm.ShowDialog();
@@ -1084,6 +1064,20 @@ namespace Universal_THCRAP_Launcher {
 
         #region Methods less releated to the GUI
 
+
+        private void CreateShortcut(object targetSpecialFolder)
+        {
+            var shell = new WshShell();
+            
+            string shortcutAddress = (string)shell.SpecialFolders.Item(ref targetSpecialFolder) + "\\" +
+                                     I18N.LangResource.shCreate.file?.ToString() + ".lnk";
+            var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+            shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
+            shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
+            shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
+            shortcut.Save();
+            Trace.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
+        }
 
         /// <summary>
         ///     Starts thcrap with the selected patch stack and executable

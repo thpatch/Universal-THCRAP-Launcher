@@ -49,7 +49,8 @@ namespace Universal_THCRAP_Launcher
             this.btn_Random2 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.appTS = new System.Windows.Forms.ToolStripMenuItem();
-            this.createShortcutTS = new System.Windows.Forms.ToolStripMenuItem();
+            this.createShortcutDesktopTS = new System.Windows.Forms.ToolStripMenuItem();
+            this.createShortcutStartMenuTS = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsTS = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.restartTS = new System.Windows.Forms.ToolStripMenuItem();
@@ -267,7 +268,8 @@ namespace Universal_THCRAP_Launcher
             // appTS
             // 
             this.appTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createShortcutTS,
+            this.createShortcutDesktopTS,
+            this.createShortcutStartMenuTS,
             this.settingsTS,
             this.toolStripSeparator1,
             this.restartTS,
@@ -276,31 +278,38 @@ namespace Universal_THCRAP_Launcher
             this.appTS.Size = new System.Drawing.Size(41, 20);
             this.appTS.Text = "App";
             // 
-            // createShortcutTS
+            // createShortcutDesktopTS
             // 
-            this.createShortcutTS.Name = "createShortcutTS";
-            this.createShortcutTS.Size = new System.Drawing.Size(216, 22);
-            this.createShortcutTS.Text = "Create Shortcut to Desktop";
-            this.createShortcutTS.Click += new System.EventHandler(this.createShortcutTS_Click);
+            this.createShortcutDesktopTS.Name = "createShortcutDesktopTS";
+            this.createShortcutDesktopTS.Size = new System.Drawing.Size(231, 22);
+            this.createShortcutDesktopTS.Text = "Create Shortcut to Desktop";
+            this.createShortcutDesktopTS.Click += new System.EventHandler(this.CreateShortcutDesktopTS_Click);
+            // 
+            // createShortcutStartMenuTS
+            // 
+            this.createShortcutStartMenuTS.Name = "createShortcutStartMenuTS";
+            this.createShortcutStartMenuTS.Size = new System.Drawing.Size(231, 22);
+            this.createShortcutStartMenuTS.Text = "Create Shortcut to Start Menu";
+            this.createShortcutStartMenuTS.Click += new System.EventHandler(this.CreateShortcutStartMenuTS_Click);
             // 
             // settingsTS
             // 
             this.settingsTS.Name = "settingsTS";
-            this.settingsTS.Size = new System.Drawing.Size(216, 22);
+            this.settingsTS.Size = new System.Drawing.Size(231, 22);
             this.settingsTS.Text = "Settings...";
             this.settingsTS.Click += new System.EventHandler(this.settingsTS_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(228, 6);
             // 
             // restartTS
             // 
             this.restartTS.Name = "restartTS";
             this.restartTS.ShortcutKeyDisplayString = "Ctrl+R";
             this.restartTS.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.restartTS.Size = new System.Drawing.Size(216, 22);
+            this.restartTS.Size = new System.Drawing.Size(231, 22);
             this.restartTS.Text = "Restart";
             this.restartTS.Click += new System.EventHandler(this.restartTS_Click);
             // 
@@ -309,7 +318,7 @@ namespace Universal_THCRAP_Launcher
             this.exitTS.Name = "exitTS";
             this.exitTS.ShortcutKeyDisplayString = "Alt+F4";
             this.exitTS.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitTS.Size = new System.Drawing.Size(216, 22);
+            this.exitTS.Size = new System.Drawing.Size(231, 22);
             this.exitTS.Text = "Exit";
             this.exitTS.Click += new System.EventHandler(this.exitTS_Click);
             // 
@@ -439,7 +448,6 @@ namespace Universal_THCRAP_Launcher
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "Universal THCRAP Launcher";
             this.notifyIcon1.Visible = true;
-            this.notifyIcon1.Click += new System.EventHandler(this.NotifyIcon1_Click);
             this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
             // 
             // contextMenuStrip1
@@ -507,7 +515,7 @@ namespace Universal_THCRAP_Launcher
         private ToolStripMenuItem openConfigureTS;
         private ToolStripMenuItem openGamesListTS;
         private ToolStripMenuItem openFolderTS;
-        private ToolStripMenuItem createShortcutTS;
+        private ToolStripMenuItem createShortcutDesktopTS;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem openMenuTS;
         private ToolStripMenuItem openSelectedPatchConfigurationTS;
@@ -525,6 +533,7 @@ namespace Universal_THCRAP_Launcher
         private Button btn_Random2;
         private NotifyIcon notifyIcon1;
         private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem createShortcutStartMenuTS;
     }
 }
 

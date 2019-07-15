@@ -1138,8 +1138,9 @@ namespace Universal_THCRAP_Launcher {
             await Task.WhenAll(tasks);
             
             Enabled = true;
+            Thread.Sleep(1000);
             Show();
-            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
+            WindowState = FormWindowState.Normal;
             Activate();
         }
 

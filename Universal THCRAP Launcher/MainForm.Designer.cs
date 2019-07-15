@@ -176,9 +176,9 @@ namespace Universal_THCRAP_Launcher
             this.startButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.startButton.ForeColor = System.Drawing.Color.Red;
-            this.startButton.Location = new System.Drawing.Point(14, 40);
+            this.startButton.Location = new System.Drawing.Point(11, 40);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(307, 38);
+            this.startButton.Size = new System.Drawing.Size(312, 38);
             this.startButton.TabIndex = 2;
             this.toolTip1.SetToolTip(this.startButton, "Start thcrap with the selected settings");
             this.startButton.UseVisualStyleBackColor = false;
@@ -467,7 +467,7 @@ namespace Universal_THCRAP_Launcher
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(350, 300);
+            this.MinimumSize = new System.Drawing.Size(334, 300);
             this.Name = "MainForm";
             this.Text = "Universal THCRAP Launcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_Closing);

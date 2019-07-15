@@ -29,7 +29,8 @@
 			"thcrap_loader": "Fail thcrap_loader.exe tidak dijumpai.\nPastikan letakkan fail itu disebelahnya!",
 			"gamesJs": "Fail games.js tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
 			"patchStacks": "Senarai timbungan tampalan tidak dijumpai.\nJalankan thcrap_configure.exe dulu!",
-			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumapi. Pastikan fail itu juga disalin."
+			"jsonParser": "Fail Newtonsoft.Json.dll tidak dijumpai. Pastikan fail itu juga disalin.",
+			"file": "Fail {0} tidak dijumpai. Sila pastikan ini dibaiki atau ditetapkan."
 		},
 		"oops": "Ada sesuatu bermasalah...",
 		"noneSelected": "Tiada timbungan tampalan atau fail program dipilih!\nTolong pilih satu!",
@@ -39,7 +40,7 @@
 	"popup": {
 		"hideLauncher": {
 			"caption": "Notis",
-			"text": "Pelancar tu hilang sendiri semasa konfigurasi..."
+			"text": "Pelancar tu akan dilenyapkan semasa konfigurasi..."
 		},
 		"kbSh": {
 			"caption": "Pintasan Papan Kekunci",
@@ -91,7 +92,7 @@
 		"custom": "Program Menyesuaikan Persekitaran",
 		"hided": "Program ini telah diminimumkan ke dulang pemberitahuan dan masih berjalan di latar belakang.",
 		"tooltips": {
-			"startButton": "Mula program dengan seting yang terpilih",
+			"startButton": "Mula program dengan tetapan yang dipilih",
 			"sortAZ": "Isih mengikut susunan abjad",
 			"filterFav": "Tapis mengikut kegemaran",
 			"filterByType": "Tapis mengikut jenis",

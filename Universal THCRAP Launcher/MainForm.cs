@@ -35,9 +35,11 @@ namespace Universal_THCRAP_Launcher {
             JumpListCommandReceived += new EventHandler<CommandEventArgs>(MainForm_JumpListCommandReceived);
         }
 
-        
+
 
         #region Global variables
+
+        private const string VERSION_SUFFIX_S = "pre7";
 
         private const    string CONFIG_FILE = "utl_config.js";
         private readonly Image  _custom    = new Bitmap(Resources.Custom);
@@ -62,7 +64,6 @@ namespace Universal_THCRAP_Launcher {
 
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
-        private const string VERSION_SUFFIX_S = "pre5";
 
         #endregion
 

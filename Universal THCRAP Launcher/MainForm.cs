@@ -70,7 +70,10 @@ namespace Universal_THCRAP_Launcher {
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Environment.CurrentDirectory == @"C:\Windows\system32") return;
+            if (Environment.CurrentDirectory == @"C:\Windows\system32") {
+                MessageBox.Show("The application was launched from Windows/system32. This was probably because you used the Windows jumplist.\nIf you know how to fix the jumplist, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", "There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
             #region Log File Beggining
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
             Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
@@ -708,7 +711,7 @@ namespace Universal_THCRAP_Launcher {
         ///     Updates the configuration and favorites list
         /// </summary>
         private void UpdateConfig() {
-            if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
+                if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
             if (patchListBox.SelectedIndex != -1)
                 Configuration1.LastConfig = ( (string) patchListBox.SelectedItem ).Replace(" ★", "");
             if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0) gameListBox.SelectedIndex = 0;
@@ -748,6 +751,7 @@ namespace Universal_THCRAP_Launcher {
         ///     Writes the configuration and favorites to file
         /// </summary>
         public void UpdateConfigFile([CallerMemberName] string caller = "") {
+            if (Environment.CurrentDirectory == @"C:\Windows\system32") return;
             UpdateConfig();
             string output = JsonConvert.SerializeObject(Configuration1, Formatting.Indented, new JsonSerializerSettings());
             output = output.Remove(output.Length - 3);

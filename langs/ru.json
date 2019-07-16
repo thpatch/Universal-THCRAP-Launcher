@@ -13,13 +13,13 @@
 		"downloadAll": "Скачать для всех языков",
 		"downloading": "Скачивание...",
 		"hidePatchExtension": "Скрыть расширение в списке патчей",
-		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
-		"onlyOneExe": "Only allow one executable to run",
-		"label_gameNaming": "Naming type for executables:",
+		"showVanilla": "Показывать оригинальные (без THCRAP) опции запуска в списке патчей",
+		"onlyOneExe": "Позволять запуск только одного экземпляра программы",
+		"label_gameNaming": "Шаблон для имён исполняемых файлов:",
 		"onlyOneUTL": "Only allow one UTL to run",
 		"tabs": {
-			"general": "General",
-			"language": "Language"
+			"general": "Общее",
+			"language": "Язык"
 		},
 		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
 	},
@@ -30,12 +30,12 @@
 			"gamesJs": "Невозможно найти games.js.\nЗапускайте сначала thcrap_configure.exe!",
 			"patchStacks": "Невозможно найти файлы конфигурации или патчи.\nЗапускайте сначала thcrap_configure.exe!",
 			"jsonParser": "Невозможно найти Newtonsoft.Json.dll. Убедитесь в том, что файл был успешно скопирован.",
-			"file": "{0} is missing. Please make sure this is fixed."
+			"file": "Невозможно найти {0}. Пожалуйста, сообщите нам."
 		},
 		"oops": "Что-то пошло не так...",
 		"noneSelected":"Не выбрана конфигурация (набор патчей) или игра (исполняемый файл)!\nВыберите, пожалуйста!",
 		"downloadError": "Невозможно загрузить языковые файлы с GitHub. Вы либо:\n- Не подключены к Интернету\n- Застали эту программу в упадке и репозитория на GitHub не существует.\n- Живёте в мрачном будущем без GitHub или Интернета.",
-		"alreadyRunning": "The program is already running. Either disable this check in the settings or close the program."
+		"alreadyRunning": "Программа уже запущена. Вы можете отключить эту проверку в настройках."
 	},
 	"popup": {
 		"hideLauncher": {
@@ -53,12 +53,12 @@
 	},
 	"mainForm": {
 		"utl": "Универсальный лаунчер THCRAP",
-		"running": "Running:",
+		"running": "Запущено:",
 		"menuStrip": [
 			[
 				"Приложение",
 				"Создать ярлык на рабочем столе",
-				"Create Shortcut for Start Menu",
+				"Создать ярлык в меню Пуск",
 				"Настройки...",
 				"-",
 				"Перезапуск",
@@ -89,9 +89,9 @@
 				"Команды клавиатуры"
 			]
 		],
-		"vanilla": "Vanilla",
+		"vanilla": "Оригинал",
 		"custom": "Environment Custom Program",
-		"hided": "The program has been minimized to the notification tray and is still running in the background.",
+		"hided": "Программа помещена в трей и работает в фоновом режиме.",
 		"tooltips": {
 			"startButton": "Запустить THCRAP с выбранными настройками",
 			"sortAZ": "Сортировать по алфавиту",
@@ -99,9 +99,9 @@
 			"filterByType": "Сортировать по типу",
 			"patchLB": "Выбрать конфигурацию (набор патчей)",
 			"gameLB": "Выбрать игру (исполняемый файл)",
-			"patchFav": "Add patch stack to favourites (or use F2 if it's the active selection)",
-			"gamesFav": "Add executable or exe to favourites (or use F2 if it's the active selection)",
-			"random": "Select a random element"
+			"patchFav": "Добавить набор патчей в Избранное (если это активный выбор, нажмите F2)",
+			"gamesFav": "Добавить исполняемый файл в Избранное (если это активный выбор, нажмите F2)",
+			"random": "Выбрать случайный элемент"
 		}
 	}
 }

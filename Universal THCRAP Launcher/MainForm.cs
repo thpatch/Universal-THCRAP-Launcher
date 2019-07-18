@@ -661,73 +661,8 @@ namespace Universal_THCRAP_Launcher
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
                 }
 
-
-                //Default sort
-                for (var i = 0; i < 2; i++)
-                {
-                    if (Configuration1.IsDescending[i] == "false")
-                    {
-
-                        if (i == 0)
-                        {
-                            SortListBoxItems(ref patchListBox);
-                            btn_sortAZ1.BackgroundImage = _sortAscending;
-                        }
-                        else
-                        {
-                            SortListBoxItems(ref gameListBox);
-                            btn_sortAZ2.BackgroundImage = _sortAscending;
-                        }
-                    }
-                    else if (i == 0)
-                    {
-
-                        SortListBoxItemsDesc(ref patchListBox);
-                        btn_sortAZ1.BackgroundImage = _sortDescending;
-                    }
-                    else
-                    {
-                        SortListBoxItemsDesc(ref gameListBox);
-                        btn_sortAZ2.BackgroundImage = _sortDescending;
-                    }
-                }
-
-                //Default favorite button state
-                for (int i = 0; i < 2; i++)
-                {
-                    if (Configuration1.OnlyFavorites[i] == "true")
-                    {
-                        Trace.WriteLine(
-                                        $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites was true for listBox{i}");
-                        if (i == 0)
-                        {
-                            btn_filterFav1.BackgroundImage = _star;
-                            for (int n = patchListBox.Items.Count - 1; n >= 0; --n)
-                            {
-                                const string filterItem = "★";
-                                if (!patchListBox.Items[n].ToString().Contains(filterItem))
-                                    patchListBox.Items.RemoveAt(n);
-                            }
-                        }
-                        else
-                        {
-                            btn_filterFav2.BackgroundImage = _star;
-                            for (int n = gameListBox.Items.Count - 1; n >= 0; --n)
-                            {
-                                const string filterItem = "★";
-                                if (!gameListBox.Items[n].ToString().Contains(filterItem))
-                                    gameListBox.Items.RemoveAt(n);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (i == 0)
-                            btn_filterFav1.BackgroundImage = _starHollow;
-                        else
-                            btn_filterFav2.BackgroundImage = _starHollow;
-                    }
-                }
+                SetDefaultSorting();
+                SetDefaultFavButtonState();
 
                 //Default exe type button state
                 btn_filterByType.BackgroundImage = _gameAndCustom;
@@ -746,6 +681,77 @@ namespace Universal_THCRAP_Launcher
 2. If you're a dev in the right working directory this is for you:{Environment.NewLine}====={Environment.NewLine}{e}{Environment.NewLine}=====
 3. If you're an end user, try reinstalling again carefully following the instructions this time or try pinging Tudi20 in Discord.");
                 Application.Exit();
+            }
+        }
+
+        private void SetDefaultFavButtonState()
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (Configuration1.OnlyFavorites[i] == "true")
+                {
+                    Trace.WriteLine(
+                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites was true for listBox{i}");
+                    if (i == 0)
+                    {
+                        btn_filterFav1.BackgroundImage = _star;
+                        for (int n = patchListBox.Items.Count - 1; n >= 0; --n)
+                        {
+                            const string filterItem = "★";
+                            if (!patchListBox.Items[n].ToString().Contains(filterItem))
+                                patchListBox.Items.RemoveAt(n);
+                        }
+                    }
+                    else
+                    {
+                        btn_filterFav2.BackgroundImage = _star;
+                        for (int n = gameListBox.Items.Count - 1; n >= 0; --n)
+                        {
+                            const string filterItem = "★";
+                            if (!gameListBox.Items[n].ToString().Contains(filterItem))
+                                gameListBox.Items.RemoveAt(n);
+                        }
+                    }
+                }
+                else
+                {
+                    if (i == 0)
+                        btn_filterFav1.BackgroundImage = _starHollow;
+                    else
+                        btn_filterFav2.BackgroundImage = _starHollow;
+                }
+            }
+        }
+
+        private void SetDefaultSorting()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                if (Configuration1.IsDescending[i] == "false")
+                {
+
+                    if (i == 0)
+                    {
+                        SortListBoxItems(ref patchListBox);
+                        btn_sortAZ1.BackgroundImage = _sortAscending;
+                    }
+                    else
+                    {
+                        SortListBoxItems(ref gameListBox);
+                        btn_sortAZ2.BackgroundImage = _sortAscending;
+                    }
+                }
+                else if (i == 0)
+                {
+
+                    SortListBoxItemsDesc(ref patchListBox);
+                    btn_sortAZ1.BackgroundImage = _sortDescending;
+                }
+                else
+                {
+                    SortListBoxItemsDesc(ref gameListBox);
+                    btn_sortAZ2.BackgroundImage = _sortDescending;
+                }
             }
         }
 
@@ -851,8 +857,6 @@ namespace Universal_THCRAP_Launcher
             gameListBox.Items.Clear();
             _displayNameToThxxDictionary.Clear();
             _favoritesWithDisplayName.Clear();
-
-
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary)
             {

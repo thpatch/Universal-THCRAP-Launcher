@@ -17,8 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
 
 namespace JumpListHelpers
@@ -205,7 +203,8 @@ namespace JumpListHelpers
             list.Refresh();
         }
 
-        public static void Clear() {
+        public static void Clear()
+        {
             list = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpList();
             list.ClearAllUserTasks();
             list.Refresh();

@@ -15,11 +15,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.Collections.ObjectModel;
-using System.Windows.Forms;
 
 namespace JumpListHelpers
 {
@@ -66,7 +62,7 @@ namespace JumpListHelpers
         #endregion
 
         public static string MainFormName { get; set; }
-        
+
         public static Dictionary<int, string> WindowMessages { get; set; }
         internal const string COMMAND_PREFIX = "__JumpListCommand:";
 

@@ -17,10 +17,10 @@
 */
 
 using System;
-using System.Runtime.InteropServices;
-using System.Reflection;
-using System.Threading;
 using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace JumpListHelpers
 {

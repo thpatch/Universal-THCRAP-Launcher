@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 // ReSharper disable IdentifierTypo
 
 namespace Universal_THCRAP_Launcher
@@ -52,11 +52,11 @@ namespace Universal_THCRAP_Launcher
         }
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {
-            btn_dwnlAllLangs.Text    = I18N.LangResource.settingsForm.downloading != null ? (string) I18N.LangResource.settingsForm.downloading.ToString() : "Downloading...";
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloading != null ? (string)I18N.LangResource.settingsForm.downloading.ToString() : "Downloading...";
             btn_dwnlAllLangs.Enabled = false;
             try
             {
-                string  gh    = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
+                string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
                 dynamic objGh = JsonConvert.DeserializeObject(gh);
                 foreach (dynamic item in objGh)
                 {
@@ -67,9 +67,9 @@ namespace Universal_THCRAP_Launcher
             catch (Exception ex)
             {
                 Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down languages.\nReason: {ex}");
-                MessageBox.Show(I18N.LangResource.error.downloadError?.ToString(),I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(I18N.LangResource.error.downloadError?.ToString(), I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            btn_dwnlAllLangs.Text    = I18N.LangResource.settingsForm.downloadAll?.ToString();
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm.downloadAll?.ToString();
             btn_dwnlAllLangs.Enabled = true;
 
             LoadLanguages();
@@ -80,19 +80,22 @@ namespace Universal_THCRAP_Launcher
             _mf.PopulatePatchList();
         }
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) => _mf.UpdateConfigFile();
-        private void CB_ShowVanilla_CheckedChanged(object sender, EventArgs e) {
+        private void CB_ShowVanilla_CheckedChanged(object sender, EventArgs e)
+        {
             MainForm.Configuration1.ShowVanilla = cB_ShowVanilla.Checked;
             _mf.PopulatePatchList();
         }
         private void CB_OnlyAllowOneExe_CheckedChanged(object sender, EventArgs e) =>
             MainForm.Configuration1.OnlyAllowOneExecutable = cB_OnlyAllowOneExe.Checked;
-        
-        private void ComboBox_gamesNamingType_SelectedIndexChanged(object sender, EventArgs e) {
+
+        private void ComboBox_gamesNamingType_SelectedIndexChanged(object sender, EventArgs e)
+        {
             MainForm.Configuration1.NamingForGames = (GameNameType)comboBox_gamesNamingType.SelectedIndex;
             _mf.PopulateGames();
         }
 
-        private void CB_onlyOneUTL_CheckedChanged(object sender, EventArgs e) {
+        private void CB_onlyOneUTL_CheckedChanged(object sender, EventArgs e)
+        {
             MainForm.Configuration1.OnlyAllowOneUtl = cB_onlyOneUTL.Checked;
             if (!cB_onlyOneUTL.Checked) return;
             Process[] processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName);
@@ -142,15 +145,15 @@ namespace Universal_THCRAP_Launcher
         }
         private void UpdateLang()
         {
-            Text                       = I18N.LangResource.settingsForm?.settings?.ToString();
-            languageLabel.Text         = I18N.LangResource.settingsForm?.language?.ToString() + ':';
-            closeOnExitCheckBox.Text   = I18N.LangResource.settingsForm?.closeOnExit?.ToString();
-            btn_dwnlAllLangs.Text      = I18N.LangResource.settingsForm?.downloadAll?.ToString();
+            Text = I18N.LangResource.settingsForm?.settings?.ToString();
+            languageLabel.Text = I18N.LangResource.settingsForm?.language?.ToString() + ':';
+            closeOnExitCheckBox.Text = I18N.LangResource.settingsForm?.closeOnExit?.ToString();
+            btn_dwnlAllLangs.Text = I18N.LangResource.settingsForm?.downloadAll?.ToString();
             cB_hidePatchExtension.Text = I18N.LangResource.settingsForm?.hidePatchExtension?.ToString();
-            tabPage_General.Text       = I18N.LangResource.settingsForm?.tabs?.general?.ToString();
-            tabPage_Language.Text      = I18N.LangResource.settingsForm?.tabs?.language?.ToString();
-            cB_ShowVanilla.Text        = I18N.LangResource.settingsForm?.showVanilla?.ToString();
-            cB_OnlyAllowOneExe.Text    = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
+            tabPage_General.Text = I18N.LangResource.settingsForm?.tabs?.general?.ToString();
+            tabPage_Language.Text = I18N.LangResource.settingsForm?.tabs?.language?.ToString();
+            cB_ShowVanilla.Text = I18N.LangResource.settingsForm?.showVanilla?.ToString();
+            cB_OnlyAllowOneExe.Text = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
             cB_onlyOneUTL.Text = I18N.LangResource.settingsForm?.onlyOneUTL?.ToString();
             comboBox_gamesNamingType.Items.Clear();
             for (var i = 0; i < 4; i++) comboBox_gamesNamingType.Items.Add(I18N.LangResource.settingsForm?.namingType?[i].ToString() ?? throw new InvalidOperationException());
@@ -171,12 +174,12 @@ namespace Universal_THCRAP_Launcher
             langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits?.ToString(), credits);
         }
         #endregion
-        
+
         #region GUI-less Methods
         static string ReadTextFromUrl(string url)
         {
             ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             // Assume UTF8, but detect BOM - could also honor response charset I suppose
             var client = new WebClient();
             client.Headers.Add(HttpRequestHeader.UserAgent, "UTL");
@@ -190,6 +193,5 @@ namespace Universal_THCRAP_Launcher
 
         #endregion
 
-        
     }
 }

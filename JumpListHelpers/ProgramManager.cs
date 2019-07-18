@@ -14,11 +14,8 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace JumpListHelpers
 {
@@ -28,7 +25,7 @@ namespace JumpListHelpers
         {
             JumpListHelpers.WindowsMessageHelper.MainFormName = mainFormTitle;
             using (SingleProgramInstance spi = new SingleProgramInstance())
-            {                    
+            {
                 if (spi.IsSingleInstance)
                 {
                     Application.EnableVisualStyles();
@@ -46,7 +43,7 @@ namespace JumpListHelpers
                 else
                 {
                     // The program has already been started, so pass the arguments to it.
-                    IntPtr handle = spi.RaiseOtherProcess();    
+                    IntPtr handle = spi.RaiseOtherProcess();
                     HandleCommand(handle);
                 }
             }
@@ -56,7 +53,7 @@ namespace JumpListHelpers
         {
             var commandLineArgs = Environment.GetCommandLineArgs();
             if (commandLineArgs.Length > 1 && commandLineArgs[1].StartsWith(WindowsMessageHelper.COMMAND_PREFIX))
-            {              
+            {
                 // It is a Jump List command.
                 string temp = commandLineArgs[1].Split(':').LastOrDefault();
                 int commandNumber;

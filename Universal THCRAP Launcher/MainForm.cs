@@ -37,7 +37,7 @@ namespace Universal_THCRAP_Launcher {
 
         #region Global variables
 
-        private const string VERSION_SUFFIX_S = "pre7";
+        private const string VERSION_SUFFIX_S = "pre8-debug";
 
         private const    string CONFIG_FILE = "utl_config.js";
         private readonly Image  _custom    = new Bitmap(Resources.Custom);
@@ -177,11 +177,18 @@ namespace Universal_THCRAP_Launcher {
                 foreach (KeyValuePair<string, string> variable in stringdef)
                 {
                     if (Regex.IsMatch(variable.Key, "^th[0-9]{2,3}$"))
+                    {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
+                        Trace.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                    }
                     if (variable.Key.Equals("alcostg"))
+                    {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
+                        Trace.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                    }
                 }
             }
+            else Trace.WriteLine(@"nmlgc\script_latin\stringdefs.js does not exists!");
             if (Directory.Exists(@"nmlgc\base_tasofro"))
             {
                 foreach (string file in Directory.EnumerateFiles(@"nmlgc\base_tasofro"))
@@ -191,9 +198,12 @@ namespace Universal_THCRAP_Launcher {
                     dynamic content = JsonConvert.DeserializeObject(raw);
                     if (content.title is null) continue;
                     string title = content.title.ToString();
-                    GameFullNameDictionary.Add(file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", ""), title);
+                    string key = file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", "");
+                    GameFullNameDictionary.Add(key, title);
+                    Trace.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
                 }
             }
+            else Trace.WriteLine(@"nmlgc\base_tasofro does not exists!");
 
             //Load executables
             string rawFile = File.ReadAllText("games.js");
@@ -252,6 +262,9 @@ namespace Universal_THCRAP_Launcher {
             }
 
             switch (e.KeyCode) {
+                case Keys.F12:
+                    throw new Exception("This exception is for Debug purposes. Please don't press F12.");
+                    break;
                 case Keys.F3:
                     UpdateLanguage();
                     break;

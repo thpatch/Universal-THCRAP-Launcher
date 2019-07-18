@@ -16,12 +16,12 @@
 		"showVanilla": "Показывать оригинальные (без THCRAP) опции запуска в списке патчей",
 		"onlyOneExe": "Позволять запуск только одного экземпляра программы",
 		"label_gameNaming": "Шаблон для имён исполняемых файлов:",
-		"onlyOneUTL": "Only allow one UTL to run",
+		"onlyOneUTL": "Разрешать запуск только одного лаунчера",
 		"tabs": {
 			"general": "Общее",
 			"language": "Язык"
 		},
-		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
+		"namingType": ["thxx", "Аббревиатура", "Краткое назваине", "Длинное название"]
 	},
 	"errors": {
 		"error": "Ошибки",
@@ -90,7 +90,7 @@
 			]
 		],
 		"vanilla": "Оригинал",
-		"custom": "Environment Custom Program",
+		"custom": "Инструмент настройки",
 		"hided": "Программа помещена в трей и работает в фоновом режиме.",
 		"tooltips": {
 			"startButton": "Запустить THCRAP с выбранными настройками",

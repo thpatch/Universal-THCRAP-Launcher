@@ -137,7 +137,6 @@ namespace Universal_THCRAP_Launcher
             #region Select appropiate lang
             if (Configuration.Lang == null)
                 languageComboBox.SelectedIndex = 0;
-
             else languageComboBox.SelectedItem = _langFileToName[I18N.I18NDir + Configuration.Lang];
             Debug.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang is " + Configuration.Lang);
             Debug.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Selected Language In GUI: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
@@ -189,9 +188,6 @@ namespace Universal_THCRAP_Launcher
                 return textReader.ReadToEnd();
             }
         }
-
-
         #endregion
-
     }
 }

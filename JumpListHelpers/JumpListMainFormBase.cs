@@ -41,6 +41,5 @@ namespace JumpListHelpers
                 base.WndProc(ref m);
             }
         }
-
     }
 }

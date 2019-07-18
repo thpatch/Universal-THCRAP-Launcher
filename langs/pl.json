@@ -30,7 +30,7 @@
 			"gamesJs": "Nie znaleziono pliku games.js.\nNajpierw włącz thcrap_configure.exe!",
 			"patchStacks": "Nie znaleziono plików konfiguracyjnych.\nNajpierw włącz thcrap_configure.exe!",
 			"jsonParser": "Nie znaleziono pliku Newtonsoft.Json.dll. Upewnij się, że jest w folderze tego programu.",
-			"file": "{0} is missing. Please make sure this is fixed."
+			"file": "Nie znaleziono {0}. Upewnij się, że znajduje się w odpowiednim miejscu."
 		},
 		"oops": "Coś poszło nie tak...",
 		"noneSelected": "Nie wybrano konfiguracji lub gry!",
@@ -58,7 +58,7 @@
 			[
 				"Aplikacja",
 				"Stwórz skrót na pulpicie",
-				"Create Shortcut for Start Menu",
+				"Stwórz skrót w Menu Start",
 				"Ustawienia...",
 				"-",
 				"Restart",

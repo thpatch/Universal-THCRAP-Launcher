@@ -185,12 +185,12 @@ namespace Universal_THCRAP_Launcher
                     if (Regex.IsMatch(variable.Key, "^th[0-9]{2,3}$"))
                     {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                        //log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
                     }
                     if (variable.Key.Equals("alcostg"))
                     {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                        //log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
                     }
                 }
             }
@@ -205,8 +205,9 @@ namespace Universal_THCRAP_Launcher
                     if (content.title is null) continue;
                     string title = content.title.ToString();
                     string key = file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", "");
+                    if (key.Equals("patch")) return; //We don't need the name of he base_tasofro patch
                     GameFullNameDictionary.Add(key, title);
-                    log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
+                    //log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
                 }
             }
             else log.WriteLine(@"nmlgc\base_tasofro does not exists!");

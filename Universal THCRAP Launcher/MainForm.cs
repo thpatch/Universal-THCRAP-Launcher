@@ -240,7 +240,11 @@ namespace Universal_THCRAP_Launcher
 
             UpdateLanguage();
 
+            LogConfiguration();
+        }
 
+        private void LogConfiguration()
+        {
             log.WriteLine($"MainForm Loaded with the following Configuration:");
             log.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
             log.WriteLine($"\tLastGame: {Configuration1.LastGame}");
@@ -250,6 +254,7 @@ namespace Universal_THCRAP_Launcher
             log.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
             log.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
             log.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
+            log.WriteLine($"\tSplitterDistance: {Configuration1.SplitterDistance}");
             log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
             log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
             log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
@@ -359,6 +364,7 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
+            splitContainer1.SplitterDistance = Configuration1.SplitterDistance;
 
             #region Display
 

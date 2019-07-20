@@ -630,6 +630,12 @@ namespace Universal_THCRAP_Launcher
                                     $"Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
 
+                if (Configuration1.SplitterDistance == null)
+                {
+                    Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
+                    log.WriteLine($"Configuration1.SplitterDistance has been set to {Configuration1.SplitterDistance}");
+                }
+
                 if (Configuration1.LastConfig == null)
                 {
                     Configuration1.LastConfig = _jsFiles[0];
@@ -802,6 +808,7 @@ namespace Universal_THCRAP_Launcher
         /// </summary>
         private void UpdateConfig()
         {
+            Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
             if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
             if (patchListBox.SelectedIndex != -1)
                 Configuration1.LastConfig = ((string)patchListBox.SelectedItem).Replace(" ★", "");
@@ -1506,6 +1513,7 @@ namespace Universal_THCRAP_Launcher
         public bool MinimizeNotificationWasShown { get; set; }
         public bool OnlyAllowOneUtl { get; set; }
         public FormWindowState WindowState { get; set; }
+        public int SplitterDistance { get; set; }
     }
 
     public enum GameNameType { Thxx = 0, Initials, ShortName, LongName }

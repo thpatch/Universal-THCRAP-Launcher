@@ -32,7 +32,7 @@ namespace Universal_THCRAP_Launcher
 
         public void WriteLine(object text)
         {
-            sw.WriteLine(text);
+            sw.WriteLine($"[{DateTime.Now.ToLongTimeString()}] " + text);
             sw.Flush();
         }
 

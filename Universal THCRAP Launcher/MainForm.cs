@@ -121,7 +121,7 @@ namespace Universal_THCRAP_Launcher
                 }
                 catch (Exception ex)
                 {
-                    log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
+                    log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
                     MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
                                     @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -231,7 +231,7 @@ namespace Universal_THCRAP_Launcher
             }
             catch (Exception ex)
             {
-                log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for language update.\nReason: {ex}");
+                log.WriteLine($"Couldn't connect to GitHub for language update.\nReason: {ex}");
             }
 
             GetPatchList();
@@ -240,7 +240,7 @@ namespace Universal_THCRAP_Launcher
             UpdateLanguage();
 
 
-            log.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
+            log.WriteLine($"MainForm Loaded with the following Configuration:");
             log.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
             log.WriteLine($"\tLastGame: {Configuration1.LastGame}");
             log.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
@@ -326,7 +326,7 @@ namespace Universal_THCRAP_Launcher
                     new Point(btn_AddFavorite1.Location.X + _resizeConstants[5],
                               splitContainer1.Location.Y - _resizeConstants[3]);
             }
-            catch (Exception ex) { log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {ex}"); }
+            catch (Exception ex) { log.WriteLine($"{ex}"); }
 
             if (WindowState != FormWindowState.Minimized) return;
             Hide();
@@ -340,7 +340,7 @@ namespace Universal_THCRAP_Launcher
         private void MainForm_Closing(object sender, FormClosingEventArgs e)
         {
             UpdateConfigFile();
-            log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Program closed.");
+            log.WriteLine($"Program closed.");
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -612,21 +612,21 @@ namespace Universal_THCRAP_Launcher
                 if (Configuration.Lang == null)
                 {
                     Configuration.Lang = "en.json";
-                    log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
+                    log.WriteLine($"Configuration.Lang has been set to {Configuration.Lang}");
                 }
 
                 if (Configuration1.LastGame == null)
                 {
                     Configuration1.LastGame = _displayNameToThxxDictionary.Count != 0 ? _displayNameToThxxDictionary.Keys.ElementAt(0) : _gamesDictionary.Keys.ElementAt(0);
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
+                                    $"Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
 
                 if (Configuration1.LastConfig == null)
                 {
                     Configuration1.LastConfig = _jsFiles[0];
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
+                                    $"Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
                 }
 
                 if (Configuration1.IsDescending == null)
@@ -634,7 +634,7 @@ namespace Universal_THCRAP_Launcher
                     string[] a = { "false", "false" };
                     Configuration1.IsDescending = a;
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
+                                    $"Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
                                     Configuration1.IsDescending[1]);
                 }
 
@@ -643,7 +643,7 @@ namespace Universal_THCRAP_Launcher
                     string[] a = { "false", "false" };
                     Configuration1.OnlyFavorites = a;
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites has been set to {Configuration1.OnlyFavorites[0]}, " +
+                                    $"Configuration1.OnlyFavorites has been set to {Configuration1.OnlyFavorites[0]}, " +
                                     Configuration1.OnlyFavorites[1]);
                 }
 
@@ -656,11 +656,11 @@ namespace Universal_THCRAP_Launcher
                     };
                     Configuration1.Window = window;
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
+                                    $"Configuration1.Window has been set with the following properties:");
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+                                    $"Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+                                    $"Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
                 }
 
                 SetDefaultSorting();
@@ -670,7 +670,7 @@ namespace Universal_THCRAP_Launcher
                 btn_filterByType.BackgroundImage = _gameAndCustom;
                 for (int i = 0; i < Configuration1.FilterExeType; i++)
                 {
-                    log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
+                    log.WriteLine($"Configuration1.FilterExeType");
                     filterByType_button_Click("DefaultSettings", new EventArgs());
                 }
 
@@ -693,7 +693,7 @@ namespace Universal_THCRAP_Launcher
                 if (Configuration1.OnlyFavorites[i] == "true")
                 {
                     log.WriteLine(
-                                    $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites was true for listBox{i}");
+                                    $"Configuration1.OnlyFavorites was true for listBox{i}");
                     if (i == 0)
                     {
                         btn_filterFav1.BackgroundImage = _star;
@@ -846,7 +846,7 @@ namespace Universal_THCRAP_Launcher
             File.WriteAllText("favourites.js", output);
 
             log.WriteLine(
-                            $"[{DateTime.Now.ToShortTimeString()}] Config file has been successfully updated. Caller method was " +
+                            $"Config file has been successfully updated. Caller method was " +
                             caller);
         }
 
@@ -1175,7 +1175,7 @@ namespace Universal_THCRAP_Launcher
             }
             catch (Exception e)
             {
-                log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e.ToString()}");
+                log.WriteLine($"{e.ToString()}");
             }
             var tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.utl?.ToString()) { Enabled = false };
             contextMenuStrip1.Items.Add(tsi);
@@ -1192,7 +1192,7 @@ namespace Universal_THCRAP_Launcher
                     {
                         JumpListManager.AddCategorySelfLink("Favorites", jsi.ToStringPretty(), $"{game} {patch}");
                     }
-                    catch (Exception e) { log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e.ToString()}"); }
+                    catch (Exception e) { log.WriteLine($"{e.ToString()}"); }
                 }
             }
             JumpListManager.Refresh();
@@ -1407,7 +1407,7 @@ namespace Universal_THCRAP_Launcher
         {
             MessageBox.Show(text: errorMessage?.ToString(), caption: I18N.LangResource.errors.error?.ToString(),
                             buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
-            log.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {errorMessage?.ToString()}");
+            log.WriteLine($"{errorMessage?.ToString()}");
             Application.Exit();
         }
 

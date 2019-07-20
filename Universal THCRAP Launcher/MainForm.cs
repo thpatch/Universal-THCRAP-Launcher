@@ -875,47 +875,11 @@ namespace Universal_THCRAP_Launcher
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary)
             {
-                
-                switch (Configuration1.NamingForGames)
-                {
-                    case GameNameType.Thxx:
-                        {
-                            gameListBox.Items.Add(item.Key);
-                            _displayNameToThxxDictionary.Add(item.Key, item.Key);
-                            if (Favourites1.Games.Contains(item.Key))
-                                _favoritesWithDisplayName.Add(item.Key);
-                            break;
-                        }
-                    case GameNameType.Initials:
-                        {
-                            var name = GetPrettyTouhouName(item.Key, GameNameType.Initials);
-                            gameListBox.Items.Add(name);
-                            _displayNameToThxxDictionary.Add(name, item.Key);
-                            if (Favourites1.Games.Contains(item.Key))
-                                _favoritesWithDisplayName.Add(name);
-                            break;
-                        }
-                    case GameNameType.ShortName:
-                        {
-                            var name = GetPrettyTouhouName(item.Key, GameNameType.ShortName);
-                            gameListBox.Items.Add(name ?? throw new InvalidOperationException());
-                            _displayNameToThxxDictionary.Add(name, item.Key);
-                            if (Favourites1.Games.Contains(item.Key))
-                                _favoritesWithDisplayName.Add(name);
-                            break;
-                        }
-                    case GameNameType.LongName:
-                        {
-                            var name = GetPrettyTouhouName(item.Key, GameNameType.LongName);
-                            gameListBox.Items.Add(name ?? throw new InvalidOperationException());
-                            _displayNameToThxxDictionary.Add(name, item.Key);
-                            if (Favourites1.Games.Contains(item.Key))
-                                _favoritesWithDisplayName.Add(name);
-                            break;
-                        }
-
-                    default: throw new ArgumentOutOfRangeException();
-                }
+                var name = GetPrettyTouhouName(item.Key, Configuration1.NamingForGames);
+                gameListBox.Items.Add(name ?? throw new InvalidOperationException());
+                _displayNameToThxxDictionary.Add(name, item.Key);
+                if (Favourites1.Games.Contains(item.Key))
+                    _favoritesWithDisplayName.Add(name);
             }
 
             AddStars(gameListBox, _favoritesWithDisplayName);

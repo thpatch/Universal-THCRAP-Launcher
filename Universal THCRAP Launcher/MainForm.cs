@@ -207,7 +207,7 @@ namespace Universal_THCRAP_Launcher
                     string key = file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", "");
                     if (key.Equals("patch")) continue; //We don't need the name of he base_tasofro patch
                     GameFullNameDictionary.Add(key, title);
-                    log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
+                    //log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
                 }
             }
             else log.WriteLine(@"nmlgc\base_tasofro does not exists!");
@@ -253,7 +253,8 @@ namespace Universal_THCRAP_Launcher
             log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
             log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
             log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
-            log.WriteLine($"\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+            log.WriteLine($"\tWindow:");
+            log.WriteLine($"\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
             log.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
 
@@ -599,6 +600,12 @@ namespace Universal_THCRAP_Launcher
 
         #endregion
 
+        private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Console.WriteLine(sender.ToString() + ": " + e.Data);
+            log.WriteLine(sender.ToString() + ": " + e.Data);
+        }
+
         #endregion
 
         #region Configuration Methods
@@ -663,7 +670,12 @@ namespace Universal_THCRAP_Launcher
                     log.WriteLine(
                                     $"Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
                 }
-
+                if (Configuration1.Window.Location[0] == -32000)
+                {
+                    for (int i = 0; i < 2; i++)
+                        Configuration1.Window.Location[i] = 0;
+                    log.WriteLine("Configuration1.Window.Location has been set offscreen by that nasty bug. Resetting it.");
+                }
                 SetDefaultSorting();
                 SetDefaultFavButtonState();
 
@@ -863,41 +875,38 @@ namespace Universal_THCRAP_Launcher
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary)
             {
-                GameFullNameDictionary.TryGetValue(item.Key.Replace("_custom", ""), out string name);
-                name = name?.Replace("~", "-");
-                if (item.Key.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
+                
                 switch (Configuration1.NamingForGames)
                 {
                     case GameNameType.Thxx:
-                        gameListBox.Items.Add(item.Key);
-                        _displayNameToThxxDictionary.Add(item.Key, item.Key);
-                        if (Favourites1.Games.Contains(item.Key))
-                            _favoritesWithDisplayName.Add(item.Key);
-                        break;
-                    case GameNameType.Initials:
-                        if (name != null)
                         {
-                            var initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
-                            name = initials.Replace(name.Split('-')[1], "$1");
-                            name = name.Replace("~", " ~").Trim();
+                            gameListBox.Items.Add(item.Key);
+                            _displayNameToThxxDictionary.Add(item.Key, item.Key);
+                            if (Favourites1.Games.Contains(item.Key))
+                                _favoritesWithDisplayName.Add(item.Key);
+                            break;
                         }
-                        else
-                            name = item.Key.Trim();
-                        gameListBox.Items.Add(name);
-                        _displayNameToThxxDictionary.Add(name, item.Key);
-                        if (Favourites1.Games.Contains(item.Key))
-                            _favoritesWithDisplayName.Add(name);
-                        break;
+                    case GameNameType.Initials:
+                        {
+                            var name = GetPrettyTouhouName(item.Key, GameNameType.Initials);
+                            gameListBox.Items.Add(name);
+                            _displayNameToThxxDictionary.Add(name, item.Key);
+                            if (Favourites1.Games.Contains(item.Key))
+                                _favoritesWithDisplayName.Add(name);
+                            break;
+                        }
                     case GameNameType.ShortName:
-                        name = name != null ? name.Split('-')[1].Trim() : item.Key;
-                        gameListBox.Items.Add(name ?? throw new InvalidOperationException());
-                        _displayNameToThxxDictionary.Add(name, item.Key);
-                        if (Favourites1.Games.Contains(item.Key))
-                            _favoritesWithDisplayName.Add(name);
-                        break;
+                        {
+                            var name = GetPrettyTouhouName(item.Key, GameNameType.ShortName);
+                            gameListBox.Items.Add(name ?? throw new InvalidOperationException());
+                            _displayNameToThxxDictionary.Add(name, item.Key);
+                            if (Favourites1.Games.Contains(item.Key))
+                                _favoritesWithDisplayName.Add(name);
+                            break;
+                        }
                     case GameNameType.LongName:
                         {
-                            name = name ?? item.Key;
+                            var name = GetPrettyTouhouName(item.Key, GameNameType.LongName);
                             gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                             _displayNameToThxxDictionary.Add(name, item.Key);
                             if (Favourites1.Games.Contains(item.Key))
@@ -1198,7 +1207,7 @@ namespace Universal_THCRAP_Launcher
             }
             JumpListManager.Refresh();
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
-            tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.menuStrip?[0]?[5]?.ToString());
+            tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.menuStrip?[0]?[6]?.ToString());
             tsi.Click += exitTS_Click;
             contextMenuStrip1.Items.Add(tsi);
         }
@@ -1207,6 +1216,38 @@ namespace Universal_THCRAP_Launcher
 
         #region Methods less releated to the GUI
 
+        private static string GetPrettyTouhouName(string id, GameNameType nameType = GameNameType.ShortName)
+        {
+            GameFullNameDictionary.TryGetValue(id.Replace("_custom", ""), out string name);
+            name = name?.Replace("~", "-");
+            if (id.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
+            switch (nameType)
+            {
+                case GameNameType.Initials:
+                    if (name != null)
+                    {
+                        var initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
+                        name = initials.Replace(name.Split('-')[1], "$1");
+                        name = name.Replace("~", " ~").Trim();
+                    }
+                    else
+                        name = id.Trim();
+                    break;
+                case GameNameType.ShortName:
+                    name = name != null ? name.Split('-')[1].Trim() : id;
+                    break;
+                case GameNameType.LongName:
+                    name = name ?? id;
+                    break;
+                case GameNameType.Thxx:
+                    name = id;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+                    break;
+            }
+            return name;
+        }
 
         private void CreateShortcut(object targetSpecialFolder)
         {
@@ -1227,7 +1268,7 @@ namespace Universal_THCRAP_Launcher
         /// </summary>
         private async Task StartThcrap()
         {
-
+            string id;
             if (patchListBox.SelectedIndex == -1 || gameListBox.SelectedIndex == -1)
             {
                 MessageBox.Show(I18N.LangResource.errors.noneSelected?.ToString(),
@@ -1239,18 +1280,20 @@ namespace Universal_THCRAP_Launcher
             if (patchListBox.SelectedItem.ToString() == $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]")
             {
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★", "").Trim(), out string s1);
+                id = s1;
                 _gamesDictionary.TryGetValue(s1 ?? throw new InvalidOperationException(), out string game);
                 if (game == null)
                 {
                     ErrorAndExit(I18N.LangResource.errors.oops?.ToString());
                     return;
                 }
-
-                process = new Process { StartInfo = { FileName = game } };
+                process = new Process { StartInfo = { FileName = game, RedirectStandardOutput = true, UseShellExecute = false } };
+                process.OutputDataReceived += Process_OutputDataReceived;
                 log.WriteLine($"Game {game} started without thcrap.");
             }
             else
             {
+                id = "thcrap";
                 string s = patchListBox.SelectedItem.ToString().Replace(" ★", "");
                 if (Configuration1.HidePatchExtension && _jsFiles.Contains(s)) s += ".js";
                 if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s))
@@ -1259,31 +1302,37 @@ namespace Universal_THCRAP_Launcher
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★", "").Trim(), out string s1);
                 s += s1;
                 s = s.Trim();
-                //MessageBox.Show(s);
-                //MessageBox.Show( gameListBox.SelectedItem + " | " + s1);
-                process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s } };
+                process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s, RedirectStandardOutput = true, UseShellExecute = false } };
+                process.OutputDataReceived += Process_OutputDataReceived;
                 log.WriteLine($"Starting thcrap with {s}");
             }
 
             process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
-            List<Task> tasks = new List<Task> { Task.Run(() => ScanRunningProcess(process)) };
+            var progress = new Progress<Action>();
+            progress.ProgressChanged += ExecuteReportAction;
+            List<Task> tasks = new List<Task> { Task.Run(() => ScanRunningProcess(process, progress, id)) };
             _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★", ""), out string gameName);
-            if (patchListBox.SelectedItem.ToString() != $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") tasks.Add(Task.Run(() => ScanRunningTouhou(gameName)));
+            if (patchListBox.SelectedItem.ToString() != $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") tasks.Add(Task.Run(() => ScanRunningTouhou(gameName, progress)));
             await Task.WhenAll(tasks);
             Enabled = true;
         }
 
+        private void ExecuteReportAction(object sender, Action action) => action.Invoke();
         private async Task StartThcrap(string s, string game)
         {
-            var process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s } };
+            var process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s, RedirectStandardOutput = true, UseShellExecute = false } };
+            process.OutputDataReceived += Process_OutputDataReceived;
             process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
+            var progress = new Progress<Action>();
+            progress.ProgressChanged += ExecuteReportAction;
             var tasks = new List<Task> {
-                                                  Task.Run(() => ScanRunningProcess(process)),
-                                                  Task.Run(() => ScanRunningTouhou(game))
+                                                  Task.Run(() => ScanRunningProcess(process, progress, "thcrap")),
+                                                  Task.Run(() => ScanRunningTouhou(game, progress))
                                               };
             //MessageBox.Show("");
+            
             await Task.WhenAll(tasks);
 
             Enabled = true;
@@ -1292,19 +1341,24 @@ namespace Universal_THCRAP_Launcher
             WindowState = FormWindowState.Normal;
             Activate();
         }
-
-        private void ScanRunningProcess(Process process)
+        private void ScanRunningProcess(Process process, IProgress<Action> progress, string id)
         {
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
+            string gameName = GetPrettyTouhouName(id);
+            do
+            {
+                Thread.Sleep(10);
+                process.Refresh();
+                if (process.HasExited) return;
+            } while ((id != "thcrap" && !process.MainWindowTitle.Contains(gameName) || process.MainWindowTitle.Contains("vpatch")));
             process.WaitForInputIdle();
             string processName = process.MainWindowTitle;
             log.WriteLine($"{process.ProcessName} is running with title {processName}.");
-            Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}";
+            progress.Report(() => { Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}"; });
             process.WaitForExit();
-            Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}", "");
+            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}", ""); });
         }
-
-        private void ScanRunningTouhou(string gameName)
+        private void ScanRunningTouhou(string gameName, IProgress<Action> progress)
         {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
@@ -1312,6 +1366,9 @@ namespace Universal_THCRAP_Launcher
             _gamesDictionary.TryGetValue(gameName, out string gameFile);
             string[] splitted = gameFile?.Split('/');
             if (splitted != null) gameFile = splitted[splitted.Length - 1].Split('.')[0];
+            if (gameFile.Equals("vpatch")) gameFile = gameName;
+            var sw = new Stopwatch();
+            sw.Start();
             do
             {
                 try
@@ -1321,16 +1378,21 @@ namespace Universal_THCRAP_Launcher
                     if (Process.GetProcessesByName(gameFile).Length > 1) log.WriteLine(@"Looks like you're running two of the same game somehow. You're magic, but I am going to assume the first game.");
                 }
                 catch { Thread.Sleep(10); }
+                if (sw.Elapsed.CompareTo(new TimeSpan(0, 1, 0)) > 0)
+                {
+                    log.WriteLine("Finding game timed out. Couldn't find: " + gameFile);
+                    sw.Stop();
+                    return;
+                }
             } while (gameProcess == null);
-
+            sw.Stop();
+            log.WriteLine("Found game, took: " + sw.Elapsed + " // Can't redirect ouput of the game that's launched through thcrap, use thcrap.");
             gameProcess.WaitForInputIdle();
             gameName = gameProcess.MainWindowTitle;
-            Text +=
-                $@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}";
+            progress.Report(() => { Text +=$@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}"; });
             gameProcess.WaitForExit();
-            Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", "");
+            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", ""); });
         }
-
         private void AddFavorite(ListBox lb)
         {
             if (!lb.SelectedItem.ToString().Contains("★"))

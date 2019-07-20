@@ -243,25 +243,14 @@ namespace Universal_THCRAP_Launcher
             LogConfiguration();
         }
 
-        private void LogConfiguration()
+        private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            log.WriteLine($"MainForm Loaded with the following Configuration:");
-            log.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
-            log.WriteLine($"\tLastGame: {Configuration1.LastGame}");
-            log.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
-            log.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
-            log.WriteLine($"\tLang: {Configuration.Lang}");
-            log.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
-            log.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
-            log.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
-            log.WriteLine($"\tSplitterDistance: {Configuration1.SplitterDistance}");
-            log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
-            log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
-            log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
-            log.WriteLine($"\tWindow:");
-            log.WriteLine($"\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
-            log.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+            Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
+            patchListBox.SetBounds(patchListBox.Location.X, patchListBox.Location.Y, splitContainer1.SplitterDistance - patchListBox.Location.X - 1, patchListBox.Size.Height);
+            gameListBox.SetBounds(gameListBox.Location.X, gameListBox.Location.Y, splitContainer1.Width - splitContainer1.SplitterDistance - 4, gameListBox.Size.Height);
         }
+
+        
 
         private async void MainForm_JumpListCommandReceived(object sender, CommandEventArgs e)
         {
@@ -1194,7 +1183,25 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region Methods less releated to the GUI
-
+        private void LogConfiguration()
+        {
+            log.WriteLine($"MainForm Loaded with the following Configuration:");
+            log.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
+            log.WriteLine($"\tLastGame: {Configuration1.LastGame}");
+            log.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
+            log.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
+            log.WriteLine($"\tLang: {Configuration.Lang}");
+            log.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
+            log.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
+            log.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
+            log.WriteLine($"\tSplitterDistance: {Configuration1.SplitterDistance}");
+            log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
+            log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
+            log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
+            log.WriteLine($"\tWindow:");
+            log.WriteLine($"\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+            log.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+        }
         private static string GetPrettyTouhouName(string id, GameNameType nameType = GameNameType.ShortName)
         {
             GameFullNameDictionary.TryGetValue(id.Replace("_custom", ""), out string name);
@@ -1458,6 +1465,7 @@ namespace Universal_THCRAP_Launcher
             if (!File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName))
                 ErrorAndExit(String.Format(I18N.LangResource.errors.missing.file.ToString(), fileName));
         }
+
 
         #endregion
 

@@ -85,14 +85,13 @@ namespace Universal_THCRAP_Launcher
             this.patchListBox.Location = new System.Drawing.Point(0, 1);
             this.patchListBox.Name = "patchListBox";
             this.patchListBox.Size = new System.Drawing.Size(153, 303);
-            this.patchListBox.TabIndex = 8;
+            this.patchListBox.TabIndex = 12;
             this.toolTip1.SetToolTip(this.patchListBox, "Choose the run configuration (patch stack)");
             this.patchListBox.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
             this.patchListBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             // 
             // splitContainer1
             // 
-            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(11, 117);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -113,7 +112,7 @@ namespace Universal_THCRAP_Launcher
             this.gameListBox.Location = new System.Drawing.Point(0, 1);
             this.gameListBox.Name = "gameListBox";
             this.gameListBox.Size = new System.Drawing.Size(152, 303);
-            this.gameListBox.TabIndex = 9;
+            this.gameListBox.TabIndex = 13;
             this.toolTip1.SetToolTip(this.gameListBox, "Choose the game (executable)");
             this.gameListBox.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
             this.gameListBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
@@ -126,7 +125,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_filterFav2.Location = new System.Drawing.Point(200, 85);
             this.btn_filterFav2.Name = "btn_filterFav2";
             this.btn_filterFav2.Size = new System.Drawing.Size(25, 25);
-            this.btn_filterFav2.TabIndex = 6;
+            this.btn_filterFav2.TabIndex = 8;
             this.toolTip1.SetToolTip(this.btn_filterFav2, "Filter for favourites");
             this.btn_filterFav2.UseVisualStyleBackColor = true;
             this.btn_filterFav2.Click += new System.EventHandler(this.filterButton2_Click);
@@ -152,7 +151,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_sortAZ2.Location = new System.Drawing.Point(169, 85);
             this.btn_sortAZ2.Name = "btn_sortAZ2";
             this.btn_sortAZ2.Size = new System.Drawing.Size(25, 25);
-            this.btn_sortAZ2.TabIndex = 5;
+            this.btn_sortAZ2.TabIndex = 7;
             this.toolTip1.SetToolTip(this.btn_sortAZ2, "Sort in alphabetical order");
             this.btn_sortAZ2.UseVisualStyleBackColor = true;
             this.btn_sortAZ2.Click += new System.EventHandler(this.sortAZButton2_Click);
@@ -195,7 +194,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_filterByType.Location = new System.Drawing.Point(231, 85);
             this.btn_filterByType.Name = "btn_filterByType";
             this.btn_filterByType.Size = new System.Drawing.Size(25, 25);
-            this.btn_filterByType.TabIndex = 7;
+            this.btn_filterByType.TabIndex = 9;
             this.toolTip1.SetToolTip(this.btn_filterByType, "Filter by Type");
             this.btn_filterByType.UseVisualStyleBackColor = true;
             this.btn_filterByType.Click += new System.EventHandler(this.filterByType_button_Click);
@@ -208,7 +207,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_AddFavorite0.Location = new System.Drawing.Point(73, 85);
             this.btn_AddFavorite0.Name = "btn_AddFavorite0";
             this.btn_AddFavorite0.Size = new System.Drawing.Size(25, 25);
-            this.btn_AddFavorite0.TabIndex = 8;
+            this.btn_AddFavorite0.TabIndex = 5;
             this.toolTip1.SetToolTip(this.btn_AddFavorite0, "Add patch to favourites");
             this.btn_AddFavorite0.UseVisualStyleBackColor = true;
             this.btn_AddFavorite0.Click += new System.EventHandler(this.Btn_AddFavorite0_Click);
@@ -221,7 +220,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_AddFavorite1.Location = new System.Drawing.Point(262, 85);
             this.btn_AddFavorite1.Name = "btn_AddFavorite1";
             this.btn_AddFavorite1.Size = new System.Drawing.Size(25, 25);
-            this.btn_AddFavorite1.TabIndex = 9;
+            this.btn_AddFavorite1.TabIndex = 10;
             this.toolTip1.SetToolTip(this.btn_AddFavorite1, "Add game or exe to favourites");
             this.btn_AddFavorite1.UseVisualStyleBackColor = true;
             this.btn_AddFavorite1.Click += new System.EventHandler(this.Btn_AddFavorite1_Click);
@@ -234,7 +233,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_Random1.Location = new System.Drawing.Point(104, 85);
             this.btn_Random1.Name = "btn_Random1";
             this.btn_Random1.Size = new System.Drawing.Size(25, 25);
-            this.btn_Random1.TabIndex = 10;
+            this.btn_Random1.TabIndex = 6;
             this.toolTip1.SetToolTip(this.btn_Random1, "Select a random element");
             this.btn_Random1.UseVisualStyleBackColor = true;
             this.btn_Random1.Click += new System.EventHandler(this.Btn_Random1_Click);
@@ -263,6 +262,7 @@ namespace Universal_THCRAP_Launcher
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(334, 24);
             this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.TabStop = true;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // appTS

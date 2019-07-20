@@ -12,6 +12,7 @@ namespace Universal_THCRAP_Launcher
 {
     class Log
     {
+        private FileStream fs;
         private StreamWriter sw;
 
         public Log(string logFile)
@@ -27,21 +28,27 @@ namespace Universal_THCRAP_Launcher
                 return;
             }
 
-            sw = new StreamWriter(logFile, true, Encoding.UTF8);
+            fs = new FileStream(logFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);
+            sw = new StreamWriter(fs);
+            
         }
 
         public void WriteLine(object text)
         {
             Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] " + text);
+            if (sw == null) return;
             sw.WriteLine($"[{DateTime.Now.ToLongTimeString()}] " + text);
             sw.Flush();
+            fs.Flush();
         }
 
         public void Write(object text)
         {
             Console.Write(text);
+            if (sw == null) return;
             sw.Write(text);
             sw.Flush();
+            fs.Flush();
         }
 
         ~Log()
@@ -49,6 +56,9 @@ namespace Universal_THCRAP_Launcher
             sw.Flush();
             sw.Close();
             sw.Dispose();
+            fs.Flush();
+            fs.Close();
+            fs.Dispose();
         }
     }
 }

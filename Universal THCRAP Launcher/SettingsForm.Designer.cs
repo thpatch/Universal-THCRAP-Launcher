@@ -40,12 +40,12 @@ namespace Universal_THCRAP_Launcher
             this.cB_hidePatchExtension = new System.Windows.Forms.CheckBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage_General = new System.Windows.Forms.TabPage();
+            this.cB_onlyOneUTL = new System.Windows.Forms.CheckBox();
+            this.comboBox_gamesNamingType = new System.Windows.Forms.ComboBox();
+            this.label_GameNames = new System.Windows.Forms.Label();
+            this.cB_OnlyAllowOneExe = new System.Windows.Forms.CheckBox();
             this.cB_ShowVanilla = new System.Windows.Forms.CheckBox();
             this.tabPage_Language = new System.Windows.Forms.TabPage();
-            this.cB_OnlyAllowOneExe = new System.Windows.Forms.CheckBox();
-            this.label_GameNames = new System.Windows.Forms.Label();
-            this.comboBox_gamesNamingType = new System.Windows.Forms.ComboBox();
-            this.cB_onlyOneUTL = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage_General.SuspendLayout();
             this.tabPage_Language.SuspendLayout();
@@ -59,7 +59,7 @@ namespace Universal_THCRAP_Launcher
             this.closeOnExitCheckBox.Location = new System.Drawing.Point(8, 6);
             this.closeOnExitCheckBox.Name = "closeOnExitCheckBox";
             this.closeOnExitCheckBox.Size = new System.Drawing.Size(138, 17);
-            this.closeOnExitCheckBox.TabIndex = 11;
+            this.closeOnExitCheckBox.TabIndex = 2;
             this.closeOnExitCheckBox.Text = "Close when game starts";
             this.closeOnExitCheckBox.UseVisualStyleBackColor = true;
             this.closeOnExitCheckBox.CheckedChanged += new System.EventHandler(this.closeOnExitCheckBox_CheckedChanged);
@@ -74,7 +74,7 @@ namespace Universal_THCRAP_Launcher
             this.languageComboBox.MaxDropDownItems = 16;
             this.languageComboBox.Name = "languageComboBox";
             this.languageComboBox.Size = new System.Drawing.Size(237, 21);
-            this.languageComboBox.TabIndex = 12;
+            this.languageComboBox.TabIndex = 11;
             this.languageComboBox.SelectedIndexChanged += new System.EventHandler(this.languageComboBox_SelectedIndexChanged);
             // 
             // languageLabel
@@ -83,7 +83,7 @@ namespace Universal_THCRAP_Launcher
             this.languageLabel.Location = new System.Drawing.Point(5, 38);
             this.languageLabel.Name = "languageLabel";
             this.languageLabel.Size = new System.Drawing.Size(58, 13);
-            this.languageLabel.TabIndex = 13;
+            this.languageLabel.TabIndex = 10;
             this.languageLabel.Text = "Language:";
             // 
             // langCreditsLabel
@@ -93,7 +93,7 @@ namespace Universal_THCRAP_Launcher
             this.langCreditsLabel.MaximumSize = new System.Drawing.Size(276, 0);
             this.langCreditsLabel.Name = "langCreditsLabel";
             this.langCreditsLabel.Size = new System.Drawing.Size(110, 13);
-            this.langCreditsLabel.TabIndex = 14;
+            this.langCreditsLabel.TabIndex = 12;
             this.langCreditsLabel.Text = "Translated by: Tudi20";
             // 
             // btn_dwnlAllLangs
@@ -101,7 +101,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_dwnlAllLangs.Location = new System.Drawing.Point(6, 6);
             this.btn_dwnlAllLangs.Name = "btn_dwnlAllLangs";
             this.btn_dwnlAllLangs.Size = new System.Drawing.Size(293, 23);
-            this.btn_dwnlAllLangs.TabIndex = 15;
+            this.btn_dwnlAllLangs.TabIndex = 9;
             this.btn_dwnlAllLangs.Text = "Download All Languages";
             this.btn_dwnlAllLangs.UseVisualStyleBackColor = true;
             this.btn_dwnlAllLangs.Click += new System.EventHandler(this.Btn_dwnlAllLangs_Click);
@@ -114,7 +114,7 @@ namespace Universal_THCRAP_Launcher
             this.cB_hidePatchExtension.Location = new System.Drawing.Point(8, 28);
             this.cB_hidePatchExtension.Name = "cB_hidePatchExtension";
             this.cB_hidePatchExtension.Size = new System.Drawing.Size(156, 17);
-            this.cB_hidePatchExtension.TabIndex = 16;
+            this.cB_hidePatchExtension.TabIndex = 3;
             this.cB_hidePatchExtension.Text = "Hide extension on patch list";
             this.cB_hidePatchExtension.UseVisualStyleBackColor = true;
             this.cB_hidePatchExtension.CheckedChanged += new System.EventHandler(this.CB_hidePatchExtension_CheckedChanged);
@@ -127,7 +127,7 @@ namespace Universal_THCRAP_Launcher
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(313, 191);
-            this.tabControl.TabIndex = 17;
+            this.tabControl.TabIndex = 1;
             // 
             // tabPage_General
             // 
@@ -146,6 +146,53 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_General.Text = "General";
             this.tabPage_General.UseVisualStyleBackColor = true;
             // 
+            // cB_onlyOneUTL
+            // 
+            this.cB_onlyOneUTL.AutoSize = true;
+            this.cB_onlyOneUTL.Checked = true;
+            this.cB_onlyOneUTL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cB_onlyOneUTL.Location = new System.Drawing.Point(8, 98);
+            this.cB_onlyOneUTL.Name = "cB_onlyOneUTL";
+            this.cB_onlyOneUTL.Size = new System.Drawing.Size(149, 17);
+            this.cB_onlyOneUTL.TabIndex = 6;
+            this.cB_onlyOneUTL.Text = "Only allow one UTL to run";
+            this.cB_onlyOneUTL.UseVisualStyleBackColor = true;
+            this.cB_onlyOneUTL.CheckedChanged += new System.EventHandler(this.CB_onlyOneUTL_CheckedChanged);
+            // 
+            // comboBox_gamesNamingType
+            // 
+            this.comboBox_gamesNamingType.FormattingEnabled = true;
+            this.comboBox_gamesNamingType.Items.AddRange(new object[] {
+            "Thxx",
+            "Initials",
+            "ShortName",
+            "LongName"});
+            this.comboBox_gamesNamingType.Location = new System.Drawing.Point(156, 115);
+            this.comboBox_gamesNamingType.Name = "comboBox_gamesNamingType";
+            this.comboBox_gamesNamingType.Size = new System.Drawing.Size(143, 21);
+            this.comboBox_gamesNamingType.TabIndex = 8;
+            this.comboBox_gamesNamingType.SelectedIndexChanged += new System.EventHandler(this.ComboBox_gamesNamingType_SelectedIndexChanged);
+            // 
+            // label_GameNames
+            // 
+            this.label_GameNames.AutoSize = true;
+            this.label_GameNames.Location = new System.Drawing.Point(6, 118);
+            this.label_GameNames.Name = "label_GameNames";
+            this.label_GameNames.Size = new System.Drawing.Size(144, 13);
+            this.label_GameNames.TabIndex = 7;
+            this.label_GameNames.Text = "Naming type for executables:";
+            // 
+            // cB_OnlyAllowOneExe
+            // 
+            this.cB_OnlyAllowOneExe.AutoSize = true;
+            this.cB_OnlyAllowOneExe.Location = new System.Drawing.Point(8, 75);
+            this.cB_OnlyAllowOneExe.Name = "cB_OnlyAllowOneExe";
+            this.cB_OnlyAllowOneExe.Size = new System.Drawing.Size(180, 17);
+            this.cB_OnlyAllowOneExe.TabIndex = 5;
+            this.cB_OnlyAllowOneExe.Text = "Only allow one executable to run";
+            this.cB_OnlyAllowOneExe.UseVisualStyleBackColor = true;
+            this.cB_OnlyAllowOneExe.CheckedChanged += new System.EventHandler(this.CB_OnlyAllowOneExe_CheckedChanged);
+            // 
             // cB_ShowVanilla
             // 
             this.cB_ShowVanilla.AutoSize = true;
@@ -154,7 +201,7 @@ namespace Universal_THCRAP_Launcher
             this.cB_ShowVanilla.Location = new System.Drawing.Point(8, 51);
             this.cB_ShowVanilla.Name = "cB_ShowVanilla";
             this.cB_ShowVanilla.Size = new System.Drawing.Size(284, 17);
-            this.cB_ShowVanilla.TabIndex = 17;
+            this.cB_ShowVanilla.TabIndex = 4;
             this.cB_ShowVanilla.Text = "Show Vanilla (THCRAP-less) launch option in patch list";
             this.cB_ShowVanilla.UseVisualStyleBackColor = true;
             this.cB_ShowVanilla.CheckedChanged += new System.EventHandler(this.CB_ShowVanilla_CheckedChanged);
@@ -172,53 +219,6 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_Language.TabIndex = 0;
             this.tabPage_Language.Text = "Language";
             this.tabPage_Language.UseVisualStyleBackColor = true;
-            // 
-            // cB_OnlyAllowOneExe
-            // 
-            this.cB_OnlyAllowOneExe.AutoSize = true;
-            this.cB_OnlyAllowOneExe.Location = new System.Drawing.Point(8, 75);
-            this.cB_OnlyAllowOneExe.Name = "cB_OnlyAllowOneExe";
-            this.cB_OnlyAllowOneExe.Size = new System.Drawing.Size(180, 17);
-            this.cB_OnlyAllowOneExe.TabIndex = 18;
-            this.cB_OnlyAllowOneExe.Text = "Only allow one executable to run";
-            this.cB_OnlyAllowOneExe.UseVisualStyleBackColor = true;
-            this.cB_OnlyAllowOneExe.CheckedChanged += new System.EventHandler(this.CB_OnlyAllowOneExe_CheckedChanged);
-            // 
-            // label_GameNames
-            // 
-            this.label_GameNames.AutoSize = true;
-            this.label_GameNames.Location = new System.Drawing.Point(6, 118);
-            this.label_GameNames.Name = "label_GameNames";
-            this.label_GameNames.Size = new System.Drawing.Size(144, 13);
-            this.label_GameNames.TabIndex = 19;
-            this.label_GameNames.Text = "Naming type for executables:";
-            // 
-            // comboBox_gamesNamingType
-            // 
-            this.comboBox_gamesNamingType.FormattingEnabled = true;
-            this.comboBox_gamesNamingType.Items.AddRange(new object[] {
-            "Thxx",
-            "Initials",
-            "ShortName",
-            "LongName"});
-            this.comboBox_gamesNamingType.Location = new System.Drawing.Point(156, 115);
-            this.comboBox_gamesNamingType.Name = "comboBox_gamesNamingType";
-            this.comboBox_gamesNamingType.Size = new System.Drawing.Size(143, 21);
-            this.comboBox_gamesNamingType.TabIndex = 20;
-            this.comboBox_gamesNamingType.SelectedIndexChanged += new System.EventHandler(this.ComboBox_gamesNamingType_SelectedIndexChanged);
-            // 
-            // cB_onlyOneUTL
-            // 
-            this.cB_onlyOneUTL.AutoSize = true;
-            this.cB_onlyOneUTL.Checked = true;
-            this.cB_onlyOneUTL.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_onlyOneUTL.Location = new System.Drawing.Point(8, 98);
-            this.cB_onlyOneUTL.Name = "cB_onlyOneUTL";
-            this.cB_onlyOneUTL.Size = new System.Drawing.Size(149, 17);
-            this.cB_onlyOneUTL.TabIndex = 21;
-            this.cB_onlyOneUTL.Text = "Only allow one UTL to run";
-            this.cB_onlyOneUTL.UseVisualStyleBackColor = true;
-            this.cB_onlyOneUTL.CheckedChanged += new System.EventHandler(this.CB_onlyOneUTL_CheckedChanged);
             // 
             // SettingsForm
             // 

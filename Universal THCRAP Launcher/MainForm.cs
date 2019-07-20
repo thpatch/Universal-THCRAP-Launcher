@@ -951,7 +951,6 @@ namespace Universal_THCRAP_Launcher
             _jsFiles.Remove("config.js");
             // ReSharper disable once StringLiteralTypo
             _jsFiles.Remove("favourites.js");
-            _jsFiles.Remove(CONFIG_FILE);
             if (Configuration1.HidePatchExtension)
             {
                 for (int i = 0; i < _jsFiles.Count; i++)

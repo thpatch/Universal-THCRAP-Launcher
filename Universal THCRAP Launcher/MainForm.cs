@@ -772,7 +772,10 @@ namespace Universal_THCRAP_Launcher
 
         private static void DeleteOutdatedConfig()
         {
-            if (File.Exists("utl_config.js")) File.Move("utl_config.js", CONFIG_FILE);
+            if (!File.Exists("utl_config.js")) return;
+            File.Move("utl_config.js", CONFIG_FILE);
+            File.Delete("utl_config.js");
+            
         }
 
         /// <summary>
@@ -1243,8 +1246,8 @@ namespace Universal_THCRAP_Launcher
             if (patchListBox.SelectedItem.ToString() == $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]")
             {
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★", "").Trim(), out string s1);
-                id = s1;
                 _gamesDictionary.TryGetValue(s1 ?? throw new InvalidOperationException(), out string game);
+                id = s1;
                 if (game == null)
                 {
                     ErrorAndExit(I18N.LangResource.errors.oops?.ToString());

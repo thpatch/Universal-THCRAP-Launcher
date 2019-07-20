@@ -66,6 +66,8 @@ namespace Universal_THCRAP_Launcher
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
 
+        private Log log = new Log("utl-log.txt");
+
         #endregion
 
         #region MainForm Events
@@ -79,7 +81,7 @@ namespace Universal_THCRAP_Launcher
             }
             #region Log File Beggining
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
-            Trace.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
+            log.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
                             "\nUniversal THCRAP Launcher Log File" +
                             "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') + "-" + VERSION_SUFFIX_S +
                             $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
@@ -119,7 +121,7 @@ namespace Universal_THCRAP_Launcher
                 }
                 catch (Exception ex)
                 {
-                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
+                    log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
                     MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
                                     @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -183,16 +185,16 @@ namespace Universal_THCRAP_Launcher
                     if (Regex.IsMatch(variable.Key, "^th[0-9]{2,3}$"))
                     {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        Trace.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                        log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
                     }
                     if (variable.Key.Equals("alcostg"))
                     {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        Trace.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                        log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
                     }
                 }
             }
-            else Trace.WriteLine(@"nmlgc\script_latin\stringdefs.js does not exists!");
+            else log.WriteLine(@"nmlgc\script_latin\stringdefs.js does not exists!");
             if (Directory.Exists(@"nmlgc\base_tasofro"))
             {
                 foreach (string file in Directory.EnumerateFiles(@"nmlgc\base_tasofro"))
@@ -204,10 +206,10 @@ namespace Universal_THCRAP_Launcher
                     string title = content.title.ToString();
                     string key = file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", "");
                     GameFullNameDictionary.Add(key, title);
-                    Trace.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
+                    log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
                 }
             }
-            else Trace.WriteLine(@"nmlgc\base_tasofro does not exists!");
+            else log.WriteLine(@"nmlgc\base_tasofro does not exists!");
 
             //Load executables
             string rawFile = File.ReadAllText("games.js");
@@ -229,7 +231,7 @@ namespace Universal_THCRAP_Launcher
             }
             catch (Exception ex)
             {
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for language update.\nReason: {ex}");
+                log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Couldn't connect to GitHub for language update.\nReason: {ex}");
             }
 
             GetPatchList();
@@ -238,20 +240,20 @@ namespace Universal_THCRAP_Launcher
             UpdateLanguage();
 
 
-            Debug.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
-            Trace.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
-            Trace.WriteLine($"\tLastGame: {Configuration1.LastGame}");
-            Trace.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
-            Trace.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
-            Trace.WriteLine($"\tLang: {Configuration.Lang}");
-            Trace.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
-            Trace.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
-            Trace.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
-            Trace.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
-            Trace.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
-            Trace.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
-            Trace.WriteLine($"\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
-            Trace.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+            log.WriteLine($"[{DateTime.Now.ToLongTimeString()}] MainForm Loaded with the following Configuration:");
+            log.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
+            log.WriteLine($"\tLastGame: {Configuration1.LastGame}");
+            log.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
+            log.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
+            log.WriteLine($"\tLang: {Configuration.Lang}");
+            log.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
+            log.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
+            log.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
+            log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
+            log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
+            log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
+            log.WriteLine($"\tWindow:\n\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+            log.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
 
         private async void MainForm_JumpListCommandReceived(object sender, CommandEventArgs e)
@@ -324,7 +326,7 @@ namespace Universal_THCRAP_Launcher
                     new Point(btn_AddFavorite1.Location.X + _resizeConstants[5],
                               splitContainer1.Location.Y - _resizeConstants[3]);
             }
-            catch (Exception ex) { Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {ex}"); }
+            catch (Exception ex) { log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {ex}"); }
 
             if (WindowState != FormWindowState.Minimized) return;
             Hide();
@@ -338,7 +340,7 @@ namespace Universal_THCRAP_Launcher
         private void MainForm_Closing(object sender, FormClosingEventArgs e)
         {
             UpdateConfigFile();
-            Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Program closed.");
+            log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Program closed.");
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -610,20 +612,20 @@ namespace Universal_THCRAP_Launcher
                 if (Configuration.Lang == null)
                 {
                     Configuration.Lang = "en.json";
-                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
+                    log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang has been set to {Configuration.Lang}");
                 }
 
                 if (Configuration1.LastGame == null)
                 {
                     Configuration1.LastGame = _displayNameToThxxDictionary.Count != 0 ? _displayNameToThxxDictionary.Keys.ElementAt(0) : _gamesDictionary.Keys.ElementAt(0);
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
 
                 if (Configuration1.LastConfig == null)
                 {
                     Configuration1.LastConfig = _jsFiles[0];
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
                 }
 
@@ -631,7 +633,7 @@ namespace Universal_THCRAP_Launcher
                 {
                     string[] a = { "false", "false" };
                     Configuration1.IsDescending = a;
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
                                     Configuration1.IsDescending[1]);
                 }
@@ -640,7 +642,7 @@ namespace Universal_THCRAP_Launcher
                 {
                     string[] a = { "false", "false" };
                     Configuration1.OnlyFavorites = a;
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites has been set to {Configuration1.OnlyFavorites[0]}, " +
                                     Configuration1.OnlyFavorites[1]);
                 }
@@ -653,11 +655,11 @@ namespace Universal_THCRAP_Launcher
                         Location = new[] { Location.X, Location.Y }
                     };
                     Configuration1.Window = window;
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window has been set with the following properties:");
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
                 }
 
@@ -668,7 +670,7 @@ namespace Universal_THCRAP_Launcher
                 btn_filterByType.BackgroundImage = _gameAndCustom;
                 for (int i = 0; i < Configuration1.FilterExeType; i++)
                 {
-                    Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
+                    log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration1.FilterExeType");
                     filterByType_button_Click("DefaultSettings", new EventArgs());
                 }
 
@@ -690,7 +692,7 @@ namespace Universal_THCRAP_Launcher
             {
                 if (Configuration1.OnlyFavorites[i] == "true")
                 {
-                    Trace.WriteLine(
+                    log.WriteLine(
                                     $"[{DateTime.Now.ToShortTimeString()}] Configuration1.OnlyFavorites was true for listBox{i}");
                     if (i == 0)
                     {
@@ -843,7 +845,7 @@ namespace Universal_THCRAP_Launcher
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
             File.WriteAllText("favourites.js", output);
 
-            Trace.WriteLine(
+            log.WriteLine(
                             $"[{DateTime.Now.ToShortTimeString()}] Config file has been successfully updated. Caller method was " +
                             caller);
         }
@@ -1173,7 +1175,7 @@ namespace Universal_THCRAP_Launcher
             }
             catch (Exception e)
             {
-                Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e.ToString()}");
+                log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e.ToString()}");
             }
             var tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.utl?.ToString()) { Enabled = false };
             contextMenuStrip1.Items.Add(tsi);
@@ -1190,7 +1192,7 @@ namespace Universal_THCRAP_Launcher
                     {
                         JumpListManager.AddCategorySelfLink("Favorites", jsi.ToStringPretty(), $"{game} {patch}");
                     }
-                    catch (Exception e) { Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e.ToString()}"); }
+                    catch (Exception e) { log.WriteLine($"[{DateTime.Now.ToShortTimeString()}] {e.ToString()}"); }
                 }
             }
             JumpListManager.Refresh();
@@ -1216,7 +1218,7 @@ namespace Universal_THCRAP_Launcher
             shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
             shortcut.Save();
-            Trace.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
+            log.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
         }
 
         /// <summary>
@@ -1244,7 +1246,7 @@ namespace Universal_THCRAP_Launcher
                 }
 
                 process = new Process { StartInfo = { FileName = game } };
-                Debug.WriteLine($"Game {game} started without thcrap.");
+                log.WriteLine($"Game {game} started without thcrap.");
             }
             else
             {
@@ -1259,7 +1261,7 @@ namespace Universal_THCRAP_Launcher
                 //MessageBox.Show(s);
                 //MessageBox.Show( gameListBox.SelectedItem + " | " + s1);
                 process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s } };
-                Debug.WriteLine($"Starting thcrap with {s}");
+                log.WriteLine($"Starting thcrap with {s}");
             }
 
             process.Start();
@@ -1295,7 +1297,7 @@ namespace Universal_THCRAP_Launcher
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
             process.WaitForInputIdle();
             string processName = process.MainWindowTitle;
-            Debug.WriteLine($"{process.ProcessName} is running with title {processName}.");
+            log.WriteLine($"{process.ProcessName} is running with title {processName}.");
             Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}";
             process.WaitForExit();
             Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}", "");
@@ -1314,8 +1316,8 @@ namespace Universal_THCRAP_Launcher
                 try
                 {
                     gameProcess = Process.GetProcessesByName(gameFile)[0];
-                    foreach (Process item in Process.GetProcessesByName(gameFile)) Debug.WriteLine($"Game Found for {gameFile} with ID: " + item.Id);
-                    if (Process.GetProcessesByName(gameFile).Length > 1) Debug.WriteLine(@"Looks like you're running two of the same game somehow. You're magic, but I am going to assume the first game.");
+                    foreach (Process item in Process.GetProcessesByName(gameFile)) log.WriteLine($"Game Found for {gameFile} with ID: " + item.Id);
+                    if (Process.GetProcessesByName(gameFile).Length > 1) log.WriteLine(@"Looks like you're running two of the same game somehow. You're magic, but I am going to assume the first game.");
                 }
                 catch { Thread.Sleep(10); }
             } while (gameProcess == null);
@@ -1401,15 +1403,15 @@ namespace Universal_THCRAP_Launcher
         /// localized caption using <see cref="I18N.LangResource"/>.
         /// </summary>
         /// <param name="errorMessage">The message that should displayed in the <see cref="MessageBox"/>. Should come from <see cref="I18N.LangResource"/>.</param>
-        private static void ErrorAndExit(dynamic errorMessage)
+        private void ErrorAndExit(dynamic errorMessage)
         {
             MessageBox.Show(text: errorMessage?.ToString(), caption: I18N.LangResource.errors.error?.ToString(),
                             buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
-            Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {errorMessage?.ToString()}");
+            log.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {errorMessage?.ToString()}");
             Application.Exit();
         }
 
-        private static void CheckForMissingDll(string fileName)
+        private void CheckForMissingDll(string fileName)
         {
             if (!File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName))
                 ErrorAndExit(String.Format(I18N.LangResource.errors.missing.file.ToString(), fileName));

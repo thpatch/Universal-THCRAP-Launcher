@@ -15,7 +15,7 @@ UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP
  - Run `Universal THCRAP Launcher.exe`.
  
 ## Images
-![Screenshot of program](https://i.imgur.com/yPmqYGu.png)
+![Screenshot of program](https://i.imgur.com/Upwsy6o.png)
 ![Using the Program](https://i.imgur.com/B1KyHDF.gif)
 ![Opening German with Keyboard](https://i.imgur.com/t7kAdem.gif)
 

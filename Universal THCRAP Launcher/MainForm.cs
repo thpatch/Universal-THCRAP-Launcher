@@ -243,14 +243,6 @@ namespace Universal_THCRAP_Launcher
             LogConfiguration();
         }
 
-        private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
-            patchListBox.SetBounds(patchListBox.Location.X, patchListBox.Location.Y, splitContainer1.SplitterDistance - patchListBox.Location.X - 1, patchListBox.Size.Height);
-            gameListBox.SetBounds(gameListBox.Location.X, gameListBox.Location.Y, splitContainer1.Width - splitContainer1.SplitterDistance - 4, gameListBox.Size.Height);
-        }
-
-        
 
         private async void MainForm_JumpListCommandReceived(object sender, CommandEventArgs e)
         {
@@ -293,34 +285,7 @@ namespace Universal_THCRAP_Launcher
             {
                 startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
                 splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
-                patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
-                gameListBox.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
-                btn_sortAZ1.Location =
-                    new Point(btn_sortAZ1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_sortAZ2.Location =
-                    new Point(patchListBox.Size.Width + _resizeConstants[4],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_filterFav1.Location =
-                    new Point(btn_sortAZ1.Location.X + _resizeConstants[5],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_filterFav2.Location =
-                    new Point(btn_sortAZ2.Location.X + _resizeConstants[5],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_filterByType.Location =
-                    new Point(btn_filterFav2.Location.X + _resizeConstants[5],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_AddFavorite0.Location =
-                    new Point(btn_filterFav1.Location.X + _resizeConstants[5],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_AddFavorite1.Location =
-                    new Point(btn_filterByType.Location.X + _resizeConstants[5],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_Random1.Location =
-                    new Point(btn_AddFavorite0.Location.X + _resizeConstants[5],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
-                btn_Random2.Location =
-                    new Point(btn_AddFavorite1.Location.X + _resizeConstants[5],
-                              splitContainer1.Location.Y - _resizeConstants[3]);
+                UpdateSplitContainerReleatedGUI();
             }
             catch (Exception ex) { log.WriteLine($"{ex}"); }
 
@@ -374,7 +339,18 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region GUI Element Events
-
+        private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
+            try
+            {
+                UpdateSplitContainerReleatedGUI();
+            }
+            catch (Exception ex)
+            {
+                log.WriteLine("Couldn't update splitter releated GUI:\n\t" + ex.ToString());
+            }
+        }
         private async void startButton_Click(object sender, EventArgs e) => await StartThcrap();
         private void Btn_AddFavorite0_Click(object sender, EventArgs e) => AddFavorite(patchListBox);
         private void Btn_AddFavorite1_Click(object sender, EventArgs e) => AddFavorite(gameListBox);
@@ -774,7 +750,7 @@ namespace Universal_THCRAP_Launcher
         private static void DeleteOutdatedConfig()
         {
             if (!File.Exists("utl_config.js")) return;
-            File.Move("utl_config.js", CONFIG_FILE);
+            if (!File.Exists("utl_config.json")) File.Move("utl_config.js", CONFIG_FILE);
             File.Delete("utl_config.js");
             
         }
@@ -958,6 +934,37 @@ namespace Universal_THCRAP_Launcher
             if (bool.Parse(Configuration1.OnlyFavorites[0])) FilterByFav(patchListBox);
 
             if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
+        }
+        private void UpdateSplitContainerReleatedGUI()
+        {
+            patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
+            gameListBox.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
+            btn_sortAZ1.Location =
+                new Point(btn_sortAZ1.Location.X, splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_sortAZ2.Location =
+                new Point(patchListBox.Size.Width + _resizeConstants[4],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_filterFav1.Location =
+                new Point(btn_sortAZ1.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_filterFav2.Location =
+                new Point(btn_sortAZ2.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_filterByType.Location =
+                new Point(btn_filterFav2.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_AddFavorite0.Location =
+                new Point(btn_filterFav1.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_AddFavorite1.Location =
+                new Point(btn_filterByType.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_Random1.Location =
+                new Point(btn_AddFavorite0.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
+            btn_Random2.Location =
+                new Point(btn_AddFavorite1.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
         }
 
         private void UpdateLanguage()

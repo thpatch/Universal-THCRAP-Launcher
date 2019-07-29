@@ -339,6 +339,15 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region GUI Element Events
+        private void SplitContainer1_SplitterMoving(object sender, SplitterCancelEventArgs e)
+        {
+            if (e.SplitX < btn_Random1.Location.X + btn_Random1.Width)
+            {
+                Cursor.Position = new Point(Location.X + btn_Random1.Location.X + btn_Random1.Width + _resizeConstants[4] + 4, Cursor.Position.Y);
+            }
+            if (e.SplitX > startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 20)
+                Cursor.Position = new Point(Location.X + startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 37, Cursor.Position.Y);
+        }
         private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
             Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
@@ -1477,15 +1486,7 @@ namespace Universal_THCRAP_Launcher
 
         #endregion
 
-        private void SplitContainer1_SplitterMoving(object sender, SplitterCancelEventArgs e)
-        {
-            if (e.SplitX < btn_Random1.Location.X + btn_Random1.Width)
-            {
-                Cursor.Position = new Point(Location.X + btn_Random1.Location.X + btn_Random1.Width + _resizeConstants[4] + 4 , Cursor.Position.Y);
-            }
-            if (e.SplitX > startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 20)
-                Cursor.Position = new Point(Location.X + startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 37, Cursor.Position.Y);
-        }
+        
     }
 
     #region Helper Classes

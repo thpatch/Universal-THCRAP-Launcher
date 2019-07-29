@@ -105,6 +105,7 @@ namespace Universal_THCRAP_Launcher
             this.splitContainer1.Size = new System.Drawing.Size(312, 306);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 1;
+            this.splitContainer1.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.SplitContainer1_SplitterMoving);
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer1_SplitterMoved);
             // 
             // gameListBox

@@ -1474,9 +1474,17 @@ namespace Universal_THCRAP_Launcher
         }
 
 
+
         #endregion
 
-
+        private void SplitContainer1_SplitterMoving(object sender, SplitterCancelEventArgs e)
+        {
+            if (e.SplitX < btn_Random1.Location.X + btn_Random1.Width)
+            {
+                //e.SplitX = btn_Random1.Location.X + btn_Random1.Width + _resizeConstants[5];
+                Cursor.Position = new Point(Location.X + btn_Random1.Location.X + btn_Random1.Width + _resizeConstants[4] + 4 , Cursor.Position.Y);
+            }
+        }
     }
 
     #region Helper Classes

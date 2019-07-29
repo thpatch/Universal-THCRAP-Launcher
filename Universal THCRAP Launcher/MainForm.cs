@@ -1481,9 +1481,10 @@ namespace Universal_THCRAP_Launcher
         {
             if (e.SplitX < btn_Random1.Location.X + btn_Random1.Width)
             {
-                //e.SplitX = btn_Random1.Location.X + btn_Random1.Width + _resizeConstants[5];
                 Cursor.Position = new Point(Location.X + btn_Random1.Location.X + btn_Random1.Width + _resizeConstants[4] + 4 , Cursor.Position.Y);
             }
+            if (e.SplitX > startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 20)
+                Cursor.Position = new Point(Location.X + startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 37, Cursor.Position.Y);
         }
     }
 

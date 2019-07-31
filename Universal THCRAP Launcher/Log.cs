@@ -30,7 +30,6 @@ namespace Universal_THCRAP_Launcher
 
             fs = new FileStream(logFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);
             sw = new StreamWriter(fs);
-            
         }
 
         public void WriteLine(object text)

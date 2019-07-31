@@ -436,7 +436,7 @@ namespace Universal_THCRAP_Launcher
             //Default Configuration setting
             try
             {
-                if (Configuration1 == null) Configuration1 = new Configuration();
+                Configuration1 = Configuration1 ?? new Configuration();
 
                 if (Configuration.Lang == null)
                 {
@@ -505,17 +505,10 @@ namespace Universal_THCRAP_Launcher
                 }
                 SetDefaultSorting();
                 SetDefaultFavButtonState();
+                SetDefaultExeFilterButtonState();
 
-                //Default exe type button state
-                btn_filterByType.BackgroundImage = _gameAndCustom;
-                for (int i = 0; i < Configuration1.FilterExeType; i++)
-                {
-                    log.WriteLine($"Configuration1.FilterExeType");
-                    filterByType_button_Click("DefaultSettings", new EventArgs());
-                }
-
-                if (Favourites1.Games == null) Favourites1.Games = new List<string>();
-                if (Favourites1.Patches == null) Favourites1.Patches = new List<string>();
+                Favourites1.Games = Favourites1.Games ?? new List<string>();
+                Favourites1.Patches = Favourites1.Patches ?? new List<string>();
             }
             catch (Exception e)
             {
@@ -523,6 +516,17 @@ namespace Universal_THCRAP_Launcher
 2. If you're a dev in the right working directory this is for you:{Environment.NewLine}====={Environment.NewLine}{e}{Environment.NewLine}=====
 3. If you're an end user, try reinstalling again carefully following the instructions this time or try pinging Tudi20 in Discord.");
                 Application.Exit();
+            }
+        }
+
+        private void SetDefaultExeFilterButtonState()
+        {
+            //Default exe type button state
+            btn_filterByType.BackgroundImage = _gameAndCustom;
+            for (int i = 0; i < Configuration1.FilterExeType; i++)
+            {
+                log.WriteLine($"Configuration1.FilterExeType");
+                filterByType_button_Click("DefaultSettings", new EventArgs());
             }
         }
 

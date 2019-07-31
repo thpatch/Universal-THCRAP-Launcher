@@ -74,176 +74,17 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Environment.CurrentDirectory == @"C:\Windows\system32")
-            {
-                MessageBox.Show("The application was launched from Windows/system32. This was probably because you used the Windows jumplist.\nIf you know how to fix the jumplist, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", "There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
-            #region Log File Beggining
-            string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
-            log.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
-                            "\nUniversal THCRAP Launcher Log File" +
-                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') + "-" + VERSION_SUFFIX_S +
-                            $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
-                            $"\nBuilt by: {Resources.BuildUser.Split('\n')[0]} ({Resources.BuildUser.Split('\n')[1]})" +
-                            "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
-                            "\nDirectory of Exe: " + exeDir +
-                            "\nCurrent Date: " + DateTime.Now +
-                            "\nDo these files below exists:" +
-                            $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\t{CONFIG_FILE}\tfavourites.js\tgames.js?" +
-                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t\t{File.Exists("favourites.js")}\t\t\t{File.Exists("games.js")}" +
-                            "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n");
-
-            #endregion
-
-            Configuration1 = new Configuration();
-            // ReSharper disable once IdentifierTypo
-            dynamic dconfig = null;
-
-            //Load config
-            if (File.Exists(CONFIG_FILE))
-            {
-                var settings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
-                string raw = File.ReadAllText(CONFIG_FILE);
-                Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
-                dconfig = JsonConvert.DeserializeObject(raw, settings);
-            }
-
-            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
-
-            if (I18N.LangNumber() == 0)
-            {
-                try
-                {
-                    string lang =
-                        ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
-                    File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
-                }
-                catch (Exception ex)
-                {
-                    log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
-                    MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
-                                    @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-
-            //Give error if Newtonsoft.Json.dll isn't found.
-            if (!File.Exists(exeDir + "Newtonsoft.Json.dll"))
-            {
-                //Read parser-less, the error message.
-                if (Configuration.Lang == null) Configuration.Lang = "en.json";
-                string[] lines =
-                    File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
-                foreach (string item in lines)
-                {
-                    var error = "Error";
-                    if (item.Contains("\"error\"")) error = item.Split('"')[3];
-                    if (!item.Contains("\"jsonParser\"")) continue;
-                    MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
-                }
-            }
-
-            CheckForMissingDll("JumpListHelpers.dll");
-            CheckForMissingDll("Microsoft.WindowsAPICodePack.dll");
-            CheckForMissingDll("Microsoft.WindowsAPICodePack.Shell.dll");
-
-
-            //Load language
-            Configuration.Lang = dconfig?.Lang ?? "en.json";
-            I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
-
-            //Give error if not next to thcrap_loader.exe
-            bool fileExists = File.Exists("thcrap_loader.exe");
-            if (!fileExists) ErrorAndExit(I18N.LangResource.errors.missing.thcrap_loader);
-
-            //Give error if no games.js file
-            if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
-
-            if (Configuration1.OnlyAllowOneUtl && Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
-                ErrorAndExit(I18N.LangResource.errors.alreadyRunning);
-
-            DeleteOutdatedConfig();
-
-
-            #region Load data from files
-
-            //Load favorites
-            if (File.Exists("favourites.js"))
-            {
-                string file = File.ReadAllText("favourites.js");
-                Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
-            }
-
-            //Load full names for games
-            if (File.Exists(@"nmlgc\script_latin\stringdefs.js"))
-            {
-                string file = File.ReadAllText(@"nmlgc\script_latin\stringdefs.js");
-                var stringdef = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
-                foreach (KeyValuePair<string, string> variable in stringdef)
-                {
-                    if (Regex.IsMatch(variable.Key, "^th[0-9]{2,3}$"))
-                    {
-                        GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        //log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
-                    }
-                    if (variable.Key.Equals("alcostg"))
-                    {
-                        GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        //log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
-                    }
-                }
-            }
-            else log.WriteLine(@"nmlgc\script_latin\stringdefs.js does not exists!");
-            if (Directory.Exists(@"nmlgc\base_tasofro"))
-            {
-                foreach (string file in Directory.EnumerateFiles(@"nmlgc\base_tasofro"))
-                {
-                    string raw = File.ReadAllText(file);
-                    if (!raw.Contains("title")) continue;
-                    dynamic content = JsonConvert.DeserializeObject(raw);
-                    if (content.title is null) continue;
-                    string title = content.title.ToString();
-                    string key = file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", "");
-                    if (key.Equals("patch")) continue; //We don't need the name of he base_tasofro patch
-                    GameFullNameDictionary.Add(key, title);
-                    //log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
-                }
-            }
-            else log.WriteLine(@"nmlgc\base_tasofro does not exists!");
-
-            //Load executables
-            string rawFile = File.ReadAllText("games.js");
-            _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawFile);
-            #endregion
-            if (menuStrip1 == null) return;
-            menuStrip1.Items.OfType<ToolStripMenuItem>().ToList().ForEach(x =>
-                                                                              x.MouseHover +=
-                                                                                  (obj, arg) =>
-                                                                                      ((ToolStripDropDownItem)obj)
-                                                                                     .ShowDropDown());
-
-            try
-            {
-                string newlang =
-                    ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" +
-                                    Configuration.Lang);
-                File.WriteAllText(I18N.I18NDir + "\\" + Configuration.Lang, newlang);
-            }
-            catch (Exception ex)
-            {
-                log.WriteLine($"Couldn't connect to GitHub for language update.\nReason: {ex}");
-            }
+            InitChecks();
+            InitData();
+            DownloadCurrentLanguage();
 
             GetPatchList();
             SetDefaultSettings();
 
-            UpdateLanguage();
+            UpdateDisplayStrings();
 
             LogConfiguration();
         }
-
-
         private async void MainForm_JumpListCommandReceived(object sender, CommandEventArgs e)
         {
             await StartThcrap(e.CommandName.Split(' ')[0], e.CommandName.Split(' ')[1]);
@@ -263,7 +104,7 @@ namespace Universal_THCRAP_Launcher
                     throw new Exception("This exception is for Debug purposes. Please don't press F12.");
                     break;
                 case Keys.F3:
-                    UpdateLanguage();
+                    UpdateDisplayStrings();
                     break;
                 case Keys.F2 when sender.GetType().FullName != "System.Windows.Forms.ListBox":
                 case Keys.Enter when sender.GetType().FullName != "System.Windows.Forms.ListBox":
@@ -575,7 +416,7 @@ namespace Universal_THCRAP_Launcher
         {
             var settingsForm = new SettingsForm(this);
             settingsForm.ShowDialog();
-            UpdateLanguage();
+            UpdateDisplayStrings();
         }
 
         #endregion
@@ -976,7 +817,7 @@ namespace Universal_THCRAP_Launcher
                           splitContainer1.Location.Y - _resizeConstants[3]);
         }
 
-        private void UpdateLanguage()
+        private void UpdateDisplayStrings()
         {
             dynamic objLangRes = I18N.LangResource.mainForm;
 
@@ -1199,6 +1040,175 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region Methods less releated to the GUI
+        /// <summary>
+        /// Does checks to make sure everything is in place before starting the program
+        /// </summary>
+        private void InitChecks()
+        {
+            if (Environment.CurrentDirectory == @"C:\Windows\system32")
+            {
+                MessageBox.Show("The application was launched from Windows/system32. This was probably because you used the Windows jumplist.\nIf you know how to fix the jumplist, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", "There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            #region Log File Beginning
+            string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
+            log.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
+                            "\nUniversal THCRAP Launcher Log File" +
+                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') + "-" + VERSION_SUFFIX_S +
+                            $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
+                            $"\nBuilt by: {Resources.BuildUser.Split('\n')[0]} ({Resources.BuildUser.Split('\n')[1]})" +
+                            "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
+                            "\nDirectory of Exe: " + exeDir +
+                            "\nCurrent Date: " + DateTime.Now +
+                            "\nDo these files below exists:" +
+                            $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\t{CONFIG_FILE}\tfavourites.js\tgames.js?" +
+                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t\t{File.Exists("favourites.js")}\t\t\t{File.Exists("games.js")}" +
+                            "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n");
+
+            #endregion
+
+            Configuration1 = new Configuration();
+            dynamic dconfig = null;
+
+            //Load config
+            if (File.Exists(CONFIG_FILE))
+            {
+                var settings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
+                string raw = File.ReadAllText(CONFIG_FILE);
+                Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
+                dconfig = JsonConvert.DeserializeObject(raw, settings);
+            }
+
+            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
+
+            if (I18N.LangNumber() == 0)
+            {
+                try
+                {
+                    string lang =
+                        ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
+                    File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                }
+                catch (Exception ex)
+                {
+                    log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
+                    MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
+                                    @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            //Give error if Newtonsoft.Json.dll isn't found.
+            if (!File.Exists(exeDir + "Newtonsoft.Json.dll"))
+            {
+                //Read parser-less, the error message.
+                if (Configuration.Lang == null) Configuration.Lang = "en.json";
+                string[] lines =
+                    File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
+                foreach (string item in lines)
+                {
+                    var error = "Error";
+                    if (item.Contains("\"error\"")) error = item.Split('"')[3];
+                    if (!item.Contains("\"jsonParser\"")) continue;
+                    MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                }
+            }
+
+            CheckForMissingFile("JumpListHelpers.dll");
+            CheckForMissingFile("Microsoft.WindowsAPICodePack.dll");
+            CheckForMissingFile("Microsoft.WindowsAPICodePack.Shell.dll");
+
+
+            //Load language
+            Configuration.Lang = dconfig?.Lang ?? "en.json";
+            I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
+
+            //Give error if not next to thcrap_loader.exe
+            bool fileExists = File.Exists("thcrap_loader.exe");
+            if (!fileExists) ErrorAndExit(I18N.LangResource.errors.missing.thcrap_loader);
+
+            //Give error if no games.js file
+            if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
+
+            if (Configuration1.OnlyAllowOneUtl && Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
+                ErrorAndExit(I18N.LangResource.errors.alreadyRunning);
+
+            DeleteOutdatedConfig();
+        }
+        /// <summary>
+        /// Initialized data into the global variables and etc.
+        /// </summary>
+        private void InitData()
+        {
+
+            //Load favorites
+            if (File.Exists("favourites.js"))
+            {
+                string file = File.ReadAllText("favourites.js");
+                Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
+            }
+
+            //Load full names for games
+            if (File.Exists(@"nmlgc\script_latin\stringdefs.js"))
+            {
+                string file = File.ReadAllText(@"nmlgc\script_latin\stringdefs.js");
+                var stringdef = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
+                foreach (KeyValuePair<string, string> variable in stringdef)
+                {
+                    if (Regex.IsMatch(variable.Key, "^th[0-9]{2,3}$"))
+                    {
+                        GameFullNameDictionary.Add(variable.Key, variable.Value);
+                        //log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                    }
+                    if (variable.Key.Equals("alcostg"))
+                    {
+                        GameFullNameDictionary.Add(variable.Key, variable.Value);
+                        //log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
+                    }
+                }
+            }
+            else log.WriteLine(@"nmlgc\script_latin\stringdefs.js does not exists!");
+            if (Directory.Exists(@"nmlgc\base_tasofro"))
+            {
+                foreach (string file in Directory.EnumerateFiles(@"nmlgc\base_tasofro"))
+                {
+                    string raw = File.ReadAllText(file);
+                    if (!raw.Contains("title")) continue;
+                    dynamic content = JsonConvert.DeserializeObject(raw);
+                    if (content.title is null) continue;
+                    string title = content.title.ToString();
+                    string key = file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", "");
+                    if (key.Equals("patch")) continue; //We don't need the name of he base_tasofro patch
+                    GameFullNameDictionary.Add(key, title);
+                    //log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
+                }
+            }
+            else log.WriteLine(@"nmlgc\base_tasofro does not exists!");
+
+            //Load executables
+            string rawFile = File.ReadAllText("games.js");
+            _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawFile);
+        }
+        /// <summary>
+        /// Download the currently set language in Configuration
+        /// </summary>
+        private void DownloadCurrentLanguage()
+        {
+            try
+            {
+                string newlang =
+                    ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" +
+                                    Configuration.Lang);
+                File.WriteAllText(I18N.I18NDir + "\\" + Configuration.Lang, newlang);
+            }
+            catch (Exception ex)
+            {
+                log.WriteLine($"Couldn't connect to GitHub for language update.\nReason: {ex}");
+            }
+        }
+        /// <summary>
+        /// Logs the current configuration to the console and log file
+        /// </summary>
         private void LogConfiguration()
         {
             log.WriteLine($"MainForm Loaded with the following Configuration:");
@@ -1218,6 +1228,12 @@ namespace Universal_THCRAP_Launcher
             log.WriteLine($"\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
             log.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
+        /// <summary>
+        /// Based on the given game id (thxxx) it returns the game's name in the given GameNameType.
+        /// </summary>
+        /// <param name="id">The game id to get the name of.</param>
+        /// <param name="nameType">The GameNameType to get the name in.</param>
+        /// <returns></returns>
         private static string GetPrettyTouhouName(string id, GameNameType nameType = GameNameType.ShortName)
         {
             GameFullNameDictionary.TryGetValue(id.Replace("_custom", ""), out string name);
@@ -1250,7 +1266,10 @@ namespace Universal_THCRAP_Launcher
             }
             return name;
         }
-
+        /// <summary>
+        /// Creates shortcut to a special folder. <see cref="Environment.SpecialFolder"/> for the list of special folders.
+        /// </summary>
+        /// <param name="targetSpecialFolder">The special folder to create the shortcut in.</param>
         private void CreateShortcut(object targetSpecialFolder)
         {
             var shell = new WshShell();
@@ -1264,9 +1283,8 @@ namespace Universal_THCRAP_Launcher
             shortcut.Save();
             log.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
         }
-
         /// <summary>
-        ///     Starts thcrap with the selected patch stack and executable
+        /// Starts thcrap with the selected patch stack and executable
         /// </summary>
         private async Task StartThcrap()
         {
@@ -1319,8 +1337,19 @@ namespace Universal_THCRAP_Launcher
             await Task.WhenAll(tasks);
             Enabled = true;
         }
-
+        /// <summary>
+        /// Added to <see cref="Progress{Action}"/>. It executes the returend action as progress. 
+        /// <para>"This is tad more thread-safe."</para>
+        /// </summary>
+        /// <param name="sender">The sender object, you know the usual event listener stuff</param>
+        /// <param name="action">The action to invoke when the progress reported even gets called</param>
         private void ExecuteReportAction(object sender, Action action) => action.Invoke();
+        /// <summary>
+        /// Starts thcrap but with a given argument s and scans for the given game.
+        /// </summary>
+        /// <param name="s">Arguments for thcrap_loader.exe</param>
+        /// <param name="game">The game id (thxxx) that will be scanned</param>
+        /// <returns></returns>
         private async Task StartThcrap(string s, string game)
         {
             var process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s, RedirectStandardOutput = true, UseShellExecute = false } };
@@ -1343,6 +1372,12 @@ namespace Universal_THCRAP_Launcher
             WindowState = FormWindowState.Normal;
             Activate();
         }
+        /// <summary>
+        /// Scans the process passed in on how it's doing, and reports to <see cref="Progress{Action}"/> to change the title of the window.
+        /// </summary>
+        /// <param name="process">Process to scan</param>
+        /// <param name="progress">The progress reporter</param>
+        /// <param name="id">The game id (thxxx) or "thcrap"</param>
         private void ScanRunningProcess(Process process, IProgress<Action> progress, string id)
         {
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
@@ -1360,6 +1395,11 @@ namespace Universal_THCRAP_Launcher
             process.WaitForExit();
             progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}", ""); });
         }
+        /// <summary>
+        /// Scans the running game (if that's not set in as a process in which case <see cref="ScanRunningProcess(Process, IProgress{Action}, string)"/> might be better.
+        /// </summary>
+        /// <param name="gameName">The game id (thxxx)</param>
+        /// <param name="progress">A <see cref="Progress{Action}"/> that it will report to change <see cref="Form.Text"/> to include the title of the process.</param>
         private void ScanRunningTouhou(string gameName, IProgress<Action> progress)
         {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
@@ -1395,6 +1435,10 @@ namespace Universal_THCRAP_Launcher
             gameProcess.WaitForExit();
             progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", ""); });
         }
+        /// <summary>
+        /// Add the selected item in the given listbox to the favorites.
+        /// </summary>
+        /// <param name="lb">Listbox that the item is selected in</param>
         private void AddFavorite(ListBox lb)
         {
             if (!lb.SelectedItem.ToString().Contains("★"))
@@ -1446,7 +1490,6 @@ namespace Universal_THCRAP_Launcher
                 }
             }
         }
-
         /// <summary>
         /// Downloads a website into a string.
         /// <para>Thank you, Stackoverflow.</para>
@@ -1462,7 +1505,6 @@ namespace Universal_THCRAP_Launcher
                 new StreamReader(stream ?? throw new ArgumentNullException(nameof(url) + " returned a null stream."),
                                  Encoding.UTF8, true)) { return textReader.ReadToEnd(); }
         }
-
         /// <summary>
         /// Displays a <see cref="MessageBox"/> with <seealso cref="MessageBoxButtons.OK"/>, <seealso cref="MessageBoxIcon.Error"/> and  
         /// localized caption using <see cref="I18N.LangResource"/>.
@@ -1475,18 +1517,16 @@ namespace Universal_THCRAP_Launcher
             log.WriteLine($"{errorMessage?.ToString()}");
             Application.Exit();
         }
-
-        private void CheckForMissingDll(string fileName)
+        /// <summary>
+        /// Checks if the given file is missing, and if yes shows an error then exists
+        /// </summary>
+        /// <param name="fileName">The filename to check</param>
+        private void CheckForMissingFile(string fileName)
         {
             if (!File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName))
                 ErrorAndExit(String.Format(I18N.LangResource.errors.missing.file.ToString(), fileName));
         }
-
-
-
         #endregion
-
-        
     }
 
     #region Helper Classes

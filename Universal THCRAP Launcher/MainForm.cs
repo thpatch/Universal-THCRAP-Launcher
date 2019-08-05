@@ -40,7 +40,7 @@ namespace Universal_THCRAP_Launcher
 
         #region Global variables
 
-        private const string VERSION_SUFFIX_S = "pre9";
+        private const string VERSION_SUFFIX_S = "pre10";
 
         private const string CONFIG_FILE = "utl_config.json";
         private readonly Image _custom = new Bitmap(Resources.Custom);
@@ -1257,7 +1257,7 @@ namespace Universal_THCRAP_Launcher
         private static string GetPrettyTouhouName(string id, GameNameType nameType = GameNameType.ShortName)
         {
             GameFullNameDictionary.TryGetValue(id.Replace("_custom", ""), out string name);
-            name = name?.Replace("~", "-");
+            name = name?.Replace("~", "-").Replace("～", "-");
             if (id.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
             switch (nameType)
             {

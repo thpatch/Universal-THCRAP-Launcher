@@ -22,7 +22,7 @@
 			"general": "Umum",
 			"language": "Bahasa"
 		},
-		"namingType": ["Tiada", "Parap", "Nama Pendek", "Nama Panjang"]
+		"namingType": ["thxx", "Parap", "Nama Pendek", "Nama Panjang"]
 	},
 	"errors": {
 		"error": "Ralat",

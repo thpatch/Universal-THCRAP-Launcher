@@ -97,6 +97,7 @@ namespace Universal_THCRAP_Launcher
         private void ComboBox_gamesNamingType_SelectedIndexChanged(object sender, EventArgs e)
         {
             MainForm.Configuration1.NamingForGames = (GameNameType)comboBox_gamesNamingType.SelectedIndex;
+            cb_ShowGameId.Enabled = comboBox_gamesNamingType.SelectedIndex != 0;
             _mf.PopulateGames();
         }
 
@@ -197,6 +198,5 @@ namespace Universal_THCRAP_Launcher
         }
         #endregion
 
-        
     }
 }

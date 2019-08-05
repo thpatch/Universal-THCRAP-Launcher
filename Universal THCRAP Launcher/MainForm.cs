@@ -1265,14 +1265,18 @@ namespace Universal_THCRAP_Launcher
                     if (name != null)
                     {
                         var initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
-                        name = initials.Replace(name.Split('-')[1], "$1");
+                        if (name.Contains('-'))
+                            name = initials.Replace(name.Split('-')[1], "$1");
+                        else name = initials.Replace(name, "$1");
                         name = name.Replace("~", " ~").Trim();
                     }
                     else
                         name = id.Trim();
                     break;
                 case GameNameType.ShortName:
-                    name = name != null ? name.Split('-')[1].Trim() : id;
+                    if (name == null) name = id;
+                    if (!name.Contains('-')) name = name.Trim();
+                    else name = name.Split('-')[1].Trim();
                     break;
                 case GameNameType.LongName:
                     name = name ?? id;

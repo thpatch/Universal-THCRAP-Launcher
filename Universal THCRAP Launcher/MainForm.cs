@@ -727,6 +727,7 @@ namespace Universal_THCRAP_Launcher
             FilterByExeType();
 
             if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0) gameListBox.SelectedIndex = 0;
+            LogListBoxes();
         }
 
         private void GetPatchList()
@@ -788,6 +789,7 @@ namespace Universal_THCRAP_Launcher
             if (bool.Parse(Configuration1.OnlyFavorites[0])) FilterByFav(patchListBox);
 
             if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
+            LogListBoxes();
         }
         private void UpdateSplitContainerReleatedGUI()
         {
@@ -1209,6 +1211,19 @@ namespace Universal_THCRAP_Launcher
             {
                 log.WriteLine($"Couldn't connect to GitHub for language update.\nReason: {ex}");
             }
+        }
+
+        private void LogListBoxes()
+        {
+            log.WriteLine($"Selected Indices: {patchListBox.SelectedIndex} | {gameListBox.SelectedIndex}");
+            log.WriteLine($"Listboxes:");
+            log.Write("\tPatches: ");
+            foreach (var item in patchListBox.Items)
+                log.Write($"{item}, ");
+            log.Write("\n\tGames: ");
+            foreach (var item in gameListBox.Items)
+                log.Write($"{item}, ");
+            log.Write("\n");
         }
         /// <summary>
         /// Logs the current configuration to the console and log file

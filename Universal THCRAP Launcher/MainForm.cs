@@ -1390,7 +1390,7 @@ namespace Universal_THCRAP_Launcher
                 Thread.Sleep(10);
                 process.Refresh();
                 if (process.HasExited) return;
-            } while ((id != "thcrap" && !process.MainWindowTitle.Contains(gameName) || process.MainWindowTitle.Contains("vpatch")));
+            } while (id != "thcrap" && !process.MainWindowTitle.Contains(gameName) || process.MainWindowTitle.Contains("vpatch") || process.MainWindowTitle == "");
             process.WaitForInputIdle();
             string processName = process.MainWindowTitle;
             log.WriteLine($"{process.ProcessName} is running with title {processName}.");

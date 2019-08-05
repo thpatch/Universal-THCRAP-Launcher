@@ -53,10 +53,10 @@ namespace Universal_THCRAP_Launcher
         ~Log()
         {
             sw.Flush();
-            sw.Close();
-            sw.Dispose();
             fs.Flush();
+            sw.Close();
             fs.Close();
+            sw.Dispose();
             fs.Dispose();
         }
     }

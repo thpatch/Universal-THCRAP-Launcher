@@ -1225,7 +1225,7 @@ namespace Universal_THCRAP_Launcher
             log.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
             log.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
             log.WriteLine($"\tSplitterDistance: {Configuration1.SplitterDistance}");
-            log.WriteLine($"\tShowGameId: {Configuration1.ShowGameId});
+            log.WriteLine($"\tShowGameId: {Configuration1.ShowGameId}");
             log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
             log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
             log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");

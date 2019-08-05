@@ -1261,14 +1261,13 @@ namespace Universal_THCRAP_Launcher
                 case GameNameType.LongName:
                     name = name ?? id;
                     break;
-                case GameNameType.Thxx:
-                    name = id;
-                    break;
+                case GameNameType.None:
+                    return id;
                 default:
                     throw new ArgumentOutOfRangeException();
                     break;
             }
-            return name;
+            return Configuration1.ShowGameId ? id + ": " + name : name;
         }
         /// <summary>
         /// Creates shortcut to a special folder. <see cref="Environment.SpecialFolder"/> for the list of special folders.
@@ -1589,9 +1588,10 @@ namespace Universal_THCRAP_Launcher
         public bool OnlyAllowOneUtl { get; set; }
         public FormWindowState WindowState { get; set; }
         public int SplitterDistance { get; set; }
+        public bool ShowGameId { get; set; }
     }
 
-    public enum GameNameType { Thxx = 0, Initials, ShortName, LongName }
+    public enum GameNameType { None = 0, Initials, ShortName, LongName }
 
     public class Window
     {

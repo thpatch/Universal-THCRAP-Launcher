@@ -17,7 +17,7 @@
 		"onlyOneExe": "Erlaube nur die Ausführung einer Programminstanz",
 		"label_gameNaming": "Namenstyp der ausführbaren Dateien:",
 		"onlyOneUTL": "Erlaube nur die Ausführung einer UTL-Instanz",
-		"showGameId": "Show Game Id (thxx)",
+		"showGameId": "Spiele-ID (thxx) anzeigen",
 		"tabs": {
 			"general": "Allgemein",
 			"language": "Sprache"

@@ -72,6 +72,7 @@ namespace Universal_THCRAP_Launcher
             this.reportBugTS = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -377,7 +378,8 @@ namespace Universal_THCRAP_Launcher
             // 
             this.gitHubTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gitHubPageTS,
-            this.feedbackTS});
+            this.feedbackTS,
+            this.donateToolStripMenuItem});
             this.gitHubTS.Name = "gitHubTS";
             this.gitHubTS.Size = new System.Drawing.Size(57, 20);
             this.gitHubTS.Text = "GitHub";
@@ -385,7 +387,7 @@ namespace Universal_THCRAP_Launcher
             // gitHubPageTS
             // 
             this.gitHubPageTS.Name = "gitHubPageTS";
-            this.gitHubPageTS.Size = new System.Drawing.Size(141, 22);
+            this.gitHubPageTS.Size = new System.Drawing.Size(180, 22);
             this.gitHubPageTS.Text = "GitHub Page";
             this.gitHubPageTS.Click += new System.EventHandler(this.gitHubPageTS_Click);
             // 
@@ -396,7 +398,7 @@ namespace Universal_THCRAP_Launcher
             this.featureRequestTS,
             this.otherTS});
             this.feedbackTS.Name = "feedbackTS";
-            this.feedbackTS.Size = new System.Drawing.Size(141, 22);
+            this.feedbackTS.Size = new System.Drawing.Size(180, 22);
             this.feedbackTS.Text = "Feedback...";
             // 
             // bugReportTS
@@ -456,6 +458,13 @@ namespace Universal_THCRAP_Launcher
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // donateToolStripMenuItem
+            // 
+            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
+            this.donateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.donateToolStripMenuItem.Text = "Donate";
+            this.donateToolStripMenuItem.Click += new System.EventHandler(this.DonateToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -536,6 +545,7 @@ namespace Universal_THCRAP_Launcher
         private NotifyIcon notifyIcon1;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem createShortcutStartMenuTS;
+        private ToolStripMenuItem donateToolStripMenuItem;
     }
 }
 

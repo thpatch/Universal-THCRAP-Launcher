@@ -377,6 +377,8 @@ namespace Universal_THCRAP_Launcher
         private void gitHubPageTS_Click(object sender, EventArgs e) =>
             Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
 
+        private void DonateToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://ko-fi.com/tudi20");
+
         private void openConfigureTS_Click(object sender, EventArgs e)
         {
             MessageBox.Show(I18N.LangResource.popup.hideLauncher.text?.ToString(),
@@ -1550,6 +1552,8 @@ namespace Universal_THCRAP_Launcher
                 ErrorAndExit(String.Format(I18N.LangResource.errors.missing.file.ToString(), fileName));
         }
         #endregion
+
+        
     }
 
     #region Helper Classes

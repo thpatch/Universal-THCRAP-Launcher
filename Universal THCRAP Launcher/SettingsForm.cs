@@ -35,6 +35,7 @@ namespace Universal_THCRAP_Launcher
             cB_OnlyAllowOneExe.Checked = MainForm.Configuration1.OnlyAllowOneExecutable;
             comboBox_gamesNamingType.SelectedIndex = (int)MainForm.Configuration1.NamingForGames;
             cB_onlyOneUTL.Checked = MainForm.Configuration1.OnlyAllowOneUtl;
+            cb_ShowGameId.Checked = MainForm.Configuration1.ShowGameId;
             UpdateCredits();
             LoadLanguages();
         }
@@ -80,6 +81,11 @@ namespace Universal_THCRAP_Launcher
             _mf.PopulatePatchList();
         }
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) => _mf.UpdateConfigFile();
+        private void Cb_ShowGameId_CheckedChanged(object sender, EventArgs e)
+        {
+            MainForm.Configuration1.ShowGameId = cb_ShowGameId.Checked;
+            _mf.PopulateGames();
+        }
         private void CB_ShowVanilla_CheckedChanged(object sender, EventArgs e)
         {
             MainForm.Configuration1.ShowVanilla = cB_ShowVanilla.Checked;
@@ -154,6 +160,7 @@ namespace Universal_THCRAP_Launcher
             cB_ShowVanilla.Text = I18N.LangResource.settingsForm?.showVanilla?.ToString();
             cB_OnlyAllowOneExe.Text = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
             cB_onlyOneUTL.Text = I18N.LangResource.settingsForm?.onlyOneUTL?.ToString();
+            cb_ShowGameId.Text = I18N.LangResource.settingsForm?.showGameId?.ToString();
             comboBox_gamesNamingType.Items.Clear();
             for (var i = 0; i < 4; i++) comboBox_gamesNamingType.Items.Add(I18N.LangResource.settingsForm?.namingType?[i].ToString() ?? throw new InvalidOperationException());
         }
@@ -189,5 +196,7 @@ namespace Universal_THCRAP_Launcher
             }
         }
         #endregion
+
+        
     }
 }

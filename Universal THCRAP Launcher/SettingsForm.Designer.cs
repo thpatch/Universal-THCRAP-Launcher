@@ -46,6 +46,7 @@ namespace Universal_THCRAP_Launcher
             this.cB_OnlyAllowOneExe = new System.Windows.Forms.CheckBox();
             this.cB_ShowVanilla = new System.Windows.Forms.CheckBox();
             this.tabPage_Language = new System.Windows.Forms.TabPage();
+            this.cb_ShowGameId = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage_General.SuspendLayout();
             this.tabPage_Language.SuspendLayout();
@@ -131,6 +132,7 @@ namespace Universal_THCRAP_Launcher
             // 
             // tabPage_General
             // 
+            this.tabPage_General.Controls.Add(this.cb_ShowGameId);
             this.tabPage_General.Controls.Add(this.cB_onlyOneUTL);
             this.tabPage_General.Controls.Add(this.comboBox_gamesNamingType);
             this.tabPage_General.Controls.Add(this.label_GameNames);
@@ -167,7 +169,7 @@ namespace Universal_THCRAP_Launcher
             "Initials",
             "ShortName",
             "LongName"});
-            this.comboBox_gamesNamingType.Location = new System.Drawing.Point(156, 115);
+            this.comboBox_gamesNamingType.Location = new System.Drawing.Point(156, 138);
             this.comboBox_gamesNamingType.Name = "comboBox_gamesNamingType";
             this.comboBox_gamesNamingType.Size = new System.Drawing.Size(143, 21);
             this.comboBox_gamesNamingType.TabIndex = 8;
@@ -176,7 +178,7 @@ namespace Universal_THCRAP_Launcher
             // label_GameNames
             // 
             this.label_GameNames.AutoSize = true;
-            this.label_GameNames.Location = new System.Drawing.Point(6, 118);
+            this.label_GameNames.Location = new System.Drawing.Point(6, 141);
             this.label_GameNames.Name = "label_GameNames";
             this.label_GameNames.Size = new System.Drawing.Size(144, 13);
             this.label_GameNames.TabIndex = 7;
@@ -220,6 +222,17 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_Language.Text = "Language";
             this.tabPage_Language.UseVisualStyleBackColor = true;
             // 
+            // cb_ShowGameId
+            // 
+            this.cb_ShowGameId.AutoSize = true;
+            this.cb_ShowGameId.Location = new System.Drawing.Point(8, 122);
+            this.cb_ShowGameId.Name = "cb_ShowGameId";
+            this.cb_ShowGameId.Size = new System.Drawing.Size(129, 17);
+            this.cb_ShowGameId.TabIndex = 9;
+            this.cb_ShowGameId.Text = "Show Game Id (thxxx)";
+            this.cb_ShowGameId.UseVisualStyleBackColor = true;
+            this.cb_ShowGameId.CheckedChanged += new System.EventHandler(this.Cb_ShowGameId_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -260,5 +273,6 @@ namespace Universal_THCRAP_Launcher
         private ComboBox comboBox_gamesNamingType;
         private Label label_GameNames;
         private CheckBox cB_onlyOneUTL;
+        private CheckBox cb_ShowGameId;
     }
 }

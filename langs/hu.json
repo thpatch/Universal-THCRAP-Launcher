@@ -17,12 +17,12 @@
 		"onlyOneExe": "Csak egyetlen futtathatót engedélyezzen futtatni",
 		"label_gameNaming": "Futtathatók elnevezési módszere:",
 		"onlyOneUTL": "Csak egyetlen UTL futtatásának engedélyezése",
-		"showGameId": "Mutassa a játék azonosítóját (thxx)",
+		"showGameId": "Mutassa a játék azonosítóját (thXX)",
 		"tabs": {
 			"general": "Átlagos",
 			"language": "Nyelv"
 		},
-		"namingType": ["thxx", "Kezdőbetük", "Rövid név", "Hosszú név"]
+		"namingType": ["thXX", "Kezdőbetük", "Rövid név", "Hosszú név"]
 	},
 	"errors": {
 		"error": "Hiba",

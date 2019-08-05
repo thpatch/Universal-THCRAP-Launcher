@@ -22,7 +22,7 @@
 			"general": "Allgemein",
 			"language": "Sprache"
 	},
-	"namingType": ["thxx", "Initialen", "Kurzer Name", "Langer Name"]
+	"namingType": ["thXX", "Initialen", "Kurzer Name", "Langer Name"]
 	},
 	"errors": {
 		"error": "Fehler",

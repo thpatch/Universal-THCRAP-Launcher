@@ -17,6 +17,7 @@
 		"onlyOneExe": "Hanya satu program dapat berjalan",
 		"label_gameNaming": "Jenis penamaan untuk program:",
 		"onlyOneUTL": "Hanya satu UTL dapat berjalan",
+		"showGameId": "Show Game Id (thxx)",
 		"tabs": {
 			"general": "Umum",
 			"language": "Bahasa"

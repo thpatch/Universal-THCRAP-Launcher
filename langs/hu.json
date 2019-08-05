@@ -17,6 +17,7 @@
 		"onlyOneExe": "Csak egyetlen futtathatót engedélyezzen futtatni",
 		"label_gameNaming": "Futtathatók elnevezési módszere:",
 		"onlyOneUTL": "Csak egyetlen UTL futtatásának engedélyezése",
+		"showGameId": "Mutassa a játék azonosítóját (thxx)",
 		"tabs": {
 			"general": "Átlagos",
 			"language": "Nyelv"

@@ -17,6 +17,7 @@
 		"onlyOneExe": "Позволять запуск только одного экземпляра программы",
 		"label_gameNaming": "Шаблон для имён исполняемых файлов:",
 		"onlyOneUTL": "Разрешать запуск только одного лаунчера",
+		"showGameId": "Show Game Id (thxx)",
 		"tabs": {
 			"general": "Общее",
 			"language": "Язык"

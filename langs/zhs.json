@@ -17,6 +17,7 @@
 		"onlyOneExe": "Only allow one executable to run",
 		"label_gameNaming": "Naming type for executables:",
 		"onlyOneUTL": "Only allow one UTL to run",
+		"showGameId": "Show Game Id (thxx)",
 		"tabs": {
 			"general": "General",
 			"language": "Language"

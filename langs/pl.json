@@ -17,12 +17,12 @@
 		"onlyOneExe": "Zezwól na tylko jeden proces gry",
 		"label_gameNaming": "Nazewnictwo gier:",
 		"onlyOneUTL": "Zezwól na tylko jeden proces UTL",
-		"showGameId": "Show Game Id (thxx)",
+		"showGameId": "Pokaż numer gry (thXX)",
 		"tabs": {
 			"general": "Główne",
 			"language": "Język"
 		},
-		"namingType": ["thxx", "Inicjały", "Krótka nazwa", "Długa nazwa"]
+		"namingType": ["thXX", "Inicjały", "Krótka nazwa", "Długa nazwa"]
 	},
 	"errors": {
 		"error": "Błąd",

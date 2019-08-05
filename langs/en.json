@@ -17,12 +17,12 @@
 		"onlyOneExe": "Only allow one executable to run",
 		"label_gameNaming": "Naming type for executables:",
 		"onlyOneUTL": "Only allow one UTL to run",
-		"showGameId": "Show Game Id (thxx)",
+		"showGameId": "Show Game ID (thXX)",
 		"tabs": {
 			"general": "General",
 			"language": "Language"
 		},
-		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
+		"namingType": ["thXX", "Initials", "Short Name", "Long Name"]
 	},
 	"errors": {
 		"error": "Error",

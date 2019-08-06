@@ -162,6 +162,7 @@ namespace Universal_THCRAP_Launcher
             cB_OnlyAllowOneExe.Text = I18N.LangResource.settingsForm?.onlyOneExe?.ToString();
             cB_onlyOneUTL.Text = I18N.LangResource.settingsForm?.onlyOneUTL?.ToString();
             cb_ShowGameId.Text = I18N.LangResource.settingsForm?.showGameId?.ToString();
+            label_GameNames.Text = I18N.LangResource.settingsForm?.label_gameNaming?.ToString();
             comboBox_gamesNamingType.Items.Clear();
             for (var i = 0; i < 4; i++) comboBox_gamesNamingType.Items.Add(I18N.LangResource.settingsForm?.namingType?[i].ToString() ?? throw new InvalidOperationException());
         }

@@ -13,7 +13,7 @@
 		"downloadAll": "Összes nyelv letöltése",
 		"downloading:": "Letöltés...",
 		"hidePatchExtension": "Futtatási konfiguráció (patch stack) kiterjesztésének elrejtése",
-		"showVanilla": "Mutassa a Szűz (THCRAP nélküli) elindítási lehetőséget a futtatási konfigurációk (patch stacks) között",
+		"showVanilla": "Mutassa a Szűz (THCRAP nélküli) indítási lehetőséget futtatási konfigurációk között",
 		"onlyOneExe": "Csak egyetlen futtathatót engedélyezzen futtatni",
 		"label_gameNaming": "Futtathatók elnevezési módszere:",
 		"onlyOneUTL": "Csak egyetlen UTL futtatásának engedélyezése",

@@ -74,7 +74,7 @@ namespace Universal_THCRAP_Launcher
             this.languageComboBox.Location = new System.Drawing.Point(62, 35);
             this.languageComboBox.MaxDropDownItems = 16;
             this.languageComboBox.Name = "languageComboBox";
-            this.languageComboBox.Size = new System.Drawing.Size(351, 21);
+            this.languageComboBox.Size = new System.Drawing.Size(238, 21);
             this.languageComboBox.TabIndex = 11;
             this.languageComboBox.SelectedIndexChanged += new System.EventHandler(this.languageComboBox_SelectedIndexChanged);
             // 
@@ -101,7 +101,7 @@ namespace Universal_THCRAP_Launcher
             // 
             this.btn_dwnlAllLangs.Location = new System.Drawing.Point(6, 6);
             this.btn_dwnlAllLangs.Name = "btn_dwnlAllLangs";
-            this.btn_dwnlAllLangs.Size = new System.Drawing.Size(407, 23);
+            this.btn_dwnlAllLangs.Size = new System.Drawing.Size(297, 23);
             this.btn_dwnlAllLangs.TabIndex = 9;
             this.btn_dwnlAllLangs.Text = "Download All Languages";
             this.btn_dwnlAllLangs.UseVisualStyleBackColor = true;
@@ -127,9 +127,10 @@ namespace Universal_THCRAP_Launcher
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(427, 186);
+            this.tabControl.Size = new System.Drawing.Size(314, 186);
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl.TabIndex = 1;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // tabPage_General
             // 
@@ -144,7 +145,7 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_General.Location = new System.Drawing.Point(4, 22);
             this.tabPage_General.Name = "tabPage_General";
             this.tabPage_General.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_General.Size = new System.Drawing.Size(419, 160);
+            this.tabPage_General.Size = new System.Drawing.Size(306, 160);
             this.tabPage_General.TabIndex = 1;
             this.tabPage_General.Text = "General";
             this.tabPage_General.UseVisualStyleBackColor = true;
@@ -183,7 +184,7 @@ namespace Universal_THCRAP_Launcher
             "LongName"});
             this.comboBox_gamesNamingType.Location = new System.Drawing.Point(155, 139);
             this.comboBox_gamesNamingType.Name = "comboBox_gamesNamingType";
-            this.comboBox_gamesNamingType.Size = new System.Drawing.Size(261, 21);
+            this.comboBox_gamesNamingType.Size = new System.Drawing.Size(151, 21);
             this.comboBox_gamesNamingType.TabIndex = 8;
             this.comboBox_gamesNamingType.SelectedIndexChanged += new System.EventHandler(this.ComboBox_gamesNamingType_SelectedIndexChanged);
             // 
@@ -229,7 +230,7 @@ namespace Universal_THCRAP_Launcher
             this.tabPage_Language.Location = new System.Drawing.Point(4, 22);
             this.tabPage_Language.Name = "tabPage_Language";
             this.tabPage_Language.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Language.Size = new System.Drawing.Size(419, 160);
+            this.tabPage_Language.Size = new System.Drawing.Size(306, 160);
             this.tabPage_Language.TabIndex = 0;
             this.tabPage_Language.Text = "Language";
             this.tabPage_Language.UseVisualStyleBackColor = true;
@@ -238,7 +239,7 @@ namespace Universal_THCRAP_Launcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(424, 184);
+            this.ClientSize = new System.Drawing.Size(315, 184);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

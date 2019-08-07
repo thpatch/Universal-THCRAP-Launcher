@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -23,17 +24,20 @@ namespace Universal_THCRAP_Launcher
         private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _langFileToName = new Dictionary<string, string>();
         //private readonly Dictionary<string, string> _downNameToPatch = new Dictionary<string, string>();
+        private int spaceWidth;
+
         #endregion
 
         #region Form Events
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            
+            spaceWidth = comboBox_gamesNamingType.Location.X - label_GameNames.Location.X - label_GameNames.Width;
             UpdateLang();
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
             cB_ShowVanilla.Checked = MainForm.Configuration1.ShowVanilla;
             cB_OnlyAllowOneExe.Checked = MainForm.Configuration1.OnlyAllowOneExecutable;
-            comboBox_gamesNamingType.SelectedIndex = (int)MainForm.Configuration1.NamingForGames;
             cB_onlyOneUTL.Checked = MainForm.Configuration1.OnlyAllowOneUtl;
             cb_ShowGameId.Checked = MainForm.Configuration1.ShowGameId;
             UpdateCredits();
@@ -42,6 +46,7 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region GUI events
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e) => UpdateAlign();
         private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) => MainForm.Configuration1.ExitAfterStartup = closeOnExitCheckBox.Checked;
         private void languageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -165,7 +170,35 @@ namespace Universal_THCRAP_Launcher
             label_GameNames.Text = I18N.LangResource.settingsForm?.label_gameNaming?.ToString();
             comboBox_gamesNamingType.Items.Clear();
             for (var i = 0; i < 4; i++) comboBox_gamesNamingType.Items.Add(I18N.LangResource.settingsForm?.namingType?[i].ToString() ?? throw new InvalidOperationException());
+            comboBox_gamesNamingType.SelectedIndex = (int)MainForm.Configuration1.NamingForGames;
+            UpdateWidth();
+            UpdateAlign();
         }
+
+        private void UpdateAlign()
+        {
+            comboBox_gamesNamingType.Location = new Point(label_GameNames.Location.X + label_GameNames.Width + spaceWidth, comboBox_gamesNamingType.Location.Y);
+            comboBox_gamesNamingType.Size = new Size(tabControl.Width - comboBox_gamesNamingType.Location.X - spaceWidth - comboBox_gamesNamingType.Margin.Horizontal - tabControl.Margin.Horizontal*2, comboBox_gamesNamingType.Height);
+            languageComboBox.Location = new Point(label_GameNames.Location.X + languageLabel.Width + spaceWidth, languageComboBox.Location.Y);
+            languageComboBox.Size = new Size(tabControl.Width - languageComboBox.Location.X - spaceWidth - languageComboBox.Margin.Horizontal - tabControl.Margin.Horizontal*2, languageComboBox.Height);
+            btn_dwnlAllLangs.Size = new Size(tabControl.Width - btn_dwnlAllLangs.Location.X - spaceWidth - btn_dwnlAllLangs.Margin.Horizontal - tabControl.Margin.Horizontal*2, btn_dwnlAllLangs.Height);
+        }
+
+        private void UpdateWidth()
+        {
+            Width = 0;
+            foreach (var item in tabPage_General.Controls)
+            {
+                if (!item.GetType().Equals(closeOnExitCheckBox.GetType())) continue;
+                var width = ((CheckBox)item).Location.X + ((CheckBox)item).Width + tabControl.Margin.Horizontal*2 + ((CheckBox)item).Margin.Horizontal + ((CheckBox)item).Padding.Horizontal;
+                if (width > Width)
+                {
+                    Width = width;
+                    tabControl.Width = width;
+                }
+            }
+        }
+
         private void UpdateCredits()
         {
             var credits = "";
@@ -198,6 +231,5 @@ namespace Universal_THCRAP_Launcher
             }
         }
         #endregion
-
     }
 }

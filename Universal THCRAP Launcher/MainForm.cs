@@ -35,7 +35,7 @@ namespace Universal_THCRAP_Launcher
         public MainForm()
         {
             InitializeComponent();
-            JumpListCommandReceived += new EventHandler<CommandEventArgs>(MainForm_JumpListCommandReceived);
+            this.JumpListCommandReceived += new EventHandler<CommandEventArgs>(MainForm_JumpListCommandReceived);
         }
 
         #region Global variables
@@ -87,9 +87,10 @@ namespace Universal_THCRAP_Launcher
         }
         private async void MainForm_JumpListCommandReceived(object sender, CommandEventArgs e)
         {
+            log.WriteLine($"The following Jump List Command was received: {e.CommandName}");
             await StartThcrap(e.CommandName.Split(' ')[0], e.CommandName.Split(' ')[1]);
         }
-
+        private void MainForm_Activated(object sender, EventArgs e) => FillJumpList();
         private async void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (ModifierKeys != Keys.None)
@@ -245,7 +246,6 @@ namespace Universal_THCRAP_Launcher
 
             if ((e.Button & MouseButtons.Right) != 0)
             {
-                FillJumpList();
                 contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.AboveLeft);
             }
         }
@@ -730,6 +730,7 @@ namespace Universal_THCRAP_Launcher
 
             if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0) gameListBox.SelectedIndex = 0;
             LogListBoxes();
+            if (Form.ActiveForm != null) FillJumpList();
         }
 
         private void GetPatchList()
@@ -792,6 +793,7 @@ namespace Universal_THCRAP_Launcher
 
             if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
             LogListBoxes();
+            if (Form.ActiveForm != null) FillJumpList();
         }
         private void UpdateSplitContainerReleatedGUI()
         {
@@ -1012,14 +1014,7 @@ namespace Universal_THCRAP_Launcher
         private void FillJumpList()
         {
             contextMenuStrip1.Items.Clear();
-            try
-            {
-                JumpListManager.Clear();
-            }
-            catch (Exception e)
-            {
-                log.WriteLine($"{e.ToString()}");
-            }
+            if (Form.ActiveForm != null) JumpListManager.Clear();
             var tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.utl?.ToString()) { Enabled = false };
             contextMenuStrip1.Items.Add(tsi);
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
@@ -1038,7 +1033,7 @@ namespace Universal_THCRAP_Launcher
                     catch (Exception e) { log.WriteLine($"{e.ToString()}"); }
                 }
             }
-            JumpListManager.Refresh();
+            if (Form.ActiveForm != null) JumpListManager.Refresh();
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
             tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.menuStrip?[0]?[6]?.ToString());
             tsi.Click += exitTS_Click;
@@ -1551,9 +1546,8 @@ namespace Universal_THCRAP_Launcher
             if (!File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName))
                 ErrorAndExit(String.Format(I18N.LangResource.errors.missing.file.ToString(), fileName));
         }
-        #endregion
 
-        
+        #endregion
     }
 
     #region Helper Classes

@@ -606,7 +606,7 @@ namespace Universal_THCRAP_Launcher
         private static void DeleteOutdatedConfig()
         {
             if (!File.Exists("utl_config.js")) return;
-            if (!File.Exists("utl_config.json")) File.Move("utl_config.js", CONFIG_FILE);
+            if (!File.Exists(CONFIG_FILE)) File.Move("utl_config.js", CONFIG_FILE);
             File.Delete("utl_config.js");
             
         }
@@ -1055,7 +1055,7 @@ namespace Universal_THCRAP_Launcher
             }
             #region Log File Beginning
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
-            log.WriteLine("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
+            log.Write("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
                             "\nUniversal THCRAP Launcher Log File" +
                             "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') + "-" + VERSION_SUFFIX_S +
                             $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
@@ -1066,7 +1066,7 @@ namespace Universal_THCRAP_Launcher
                             "\nDo these files below exists:" +
                             $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\t{CONFIG_FILE}\tfavourites.js\tgames.js?" +
                             $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t\t{File.Exists("favourites.js")}\t\t\t{File.Exists("games.js")}" +
-                            "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n");
+                            "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
 
             #endregion
 
@@ -1081,6 +1081,8 @@ namespace Universal_THCRAP_Launcher
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
                 dconfig = JsonConvert.DeserializeObject(raw, settings);
             }
+
+            DeleteOutdatedConfig();
 
             if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
@@ -1136,7 +1138,6 @@ namespace Universal_THCRAP_Launcher
             if (Configuration1.OnlyAllowOneUtl && Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
                 ErrorAndExit(I18N.LangResource.errors.alreadyRunning);
 
-            DeleteOutdatedConfig();
         }
         /// <summary>
         /// Initialized data into the global variables and etc.
@@ -1334,11 +1335,11 @@ namespace Universal_THCRAP_Launcher
             else
             {
                 id = "thcrap";
-                string s = patchListBox.SelectedItem.ToString().Replace(" ★", "");
+                string s = "\"" + patchListBox.SelectedItem.ToString().Replace(" ★", "");
                 if (Configuration1.HidePatchExtension && _jsFiles.Contains(s)) s += ".js";
                 if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s))
                     s += ".thcrap";
-                s += " ";
+                s += "\" ";
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★", "").Trim(), out string s1);
                 s += s1;
                 s = s.Trim();
@@ -1647,7 +1648,7 @@ namespace Universal_THCRAP_Launcher
             return $"{(!string.IsNullOrEmpty(display) ? display : _exec)} ({_patch})";
         }
 
-        public override string ToString() => _patch + " " + _exec;
+        public override string ToString() => "\"" + _patch + "\" " + _exec;
     }
     #endregion
 }

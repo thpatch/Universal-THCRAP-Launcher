@@ -1,6 +1,6 @@
 {
 	"metadata": {
-		"authors": ["Yanstime"],
+		"authors": ["Yanstime", "DespairSnowflake (Dobby233Liu)"],
 		"native": "简体中文",
 		"english": "Chinese Simplified"
 	},
@@ -13,30 +13,30 @@
 		"downloadAll": "下载所有语言文件",
 		"downloading": "下载中......",
 		"hidePatchExtension": "隐藏补丁配置文件的扩展名",
-		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
-		"onlyOneExe": "Only allow one executable to run",
-		"label_gameNaming": "Naming type for executables:",
-		"onlyOneUTL": "Only allow one UTL to run",
-		"showGameId": "Show Game Id (thxx)",
+		"showVanilla": "在补丁列表里显示原版（无 THCRAP）启动选项",
+		"onlyOneExe": "只允许一个可执行文件运行",
+		"label_gameNaming": "给可执行程序一个名字：",
+		"onlyOneUTL": "只允许一个UTL运行",
+		"showGameId": "显示游戏 ID （thxx）",
 		"tabs": {
-			"general": "General",
-			"language": "Language"
+			"general": "常规",
+			"language": "语言"
 		},
-		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
+		"namingType": ["thxx", "首字符", "短名", "长名"]
 	},
 	"errors": {
 		"error": "错误",
 		"missing": {
 			"thcrap_loader": "找不到 thcrap_loader.exe。\n请确认本程序是否放置于其所在的文件夹！",
-			"gamesJs": "无法找到 games.js。\n请先运行 thcrap_configure.exe！",
+			"gamesJs": "找不到 games.js。\n请先运行 thcrap_configure.exe！",
 			"patchStacks": "未找到任何配置文件或补丁组。\n请先运行 thcrap_configure.exe！",
 			"jsonParser": "找不到 Newtonsoft.Json.dll。请确认该文件是否一同被复制过来。",
-			"file": "{0} is missing. Please make sure this is fixed."
+			"file": "{0} 不存在。请确保它已经被修复。"
 		},
 		"oops": "好像哪里出错了",
 		"noneSelected": "没有选中配置文件（补丁组）或游戏（程序）！\n请先选择一个再进行操作。",
-		"downloadError": "无法从 GitHub 下载语言文件。可能的原因：\n- 网络未连接\n- 程序太Low导致其repo不见了\n- 您所在的未来GitHub或者互联网已不存在。",
-		"alreadyRunning": "The program is already running. Either disable this check in the settings or close the program."
+		"downloadError": "无法从 GitHub 下载语言文件。可能的原因：\n- 网络未连接\n- 程序太Low导致其repo不见了\n- 您所在的未来里GitHub或者互联网已不存在。",
+		"alreadyRunning": "此程序已经在运行了。请在设置里关闭此功能或关闭此程序。"
 	},
 	"popup": {
 		"hideLauncher": {
@@ -50,16 +50,16 @@
 	},
 	"shCreate": {
 		"file": "Universal THCRAP Launcher",
-		"desc": "thcrap全域启动器 快捷方式"
+		"desc": "UTL的快捷方式"
 	},
 	"mainForm": {
 		"utl": "Universal THCRAP Launcher",
-		"running": "Running:",
+		"running": "正在运行：",
 		"menuStrip": [
 			[
 				"程序",
 				"在桌面创建快捷方式",
-				"Create Shortcut for Start Menu",
+				"在开始菜单创建快捷方式",
 				"设置...",
 				"-",
 				"重启本程序",
@@ -91,11 +91,11 @@
 				"键盘快捷键"
 			]
 		],
-		"vanilla": "Vanilla",
-		"custom": "Environment Custom Program",
-		"hided": "The program has been minimized to the notification tray and is still running in the background.",
+		"vanilla": "原版",
+		"custom": "环境自定义程序",
+		"hided": "该程序已最小化到托盘，并仍在后台运行。",
 		"tooltips": {
-			"startButton": "以选中的配置信息启动thcrap",
+			"startButton": "以选中的配置信息启动 THCRAP",
 			"sortAZ": "按名称排序",
 			"filterFav": "按是否收藏过滤",
 			"filterByType": "按类型过滤",
@@ -103,7 +103,7 @@
 			"gameLB": "选择目标游戏（程序）",
 			"patchFav": "加入/取消收藏选中配置文件（或选中状态按F2）",
 			"gamesFav": "加入/取消收藏选中游戏/程序（或选中状态按F2）",
-			"random": "Select a random element"
+			"random": "选择随机元素"
 		}
 	}
 }

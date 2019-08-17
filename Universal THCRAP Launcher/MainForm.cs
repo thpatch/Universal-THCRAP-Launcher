@@ -228,6 +228,17 @@ namespace Universal_THCRAP_Launcher
         private void Btn_Random1_Click(object sender, EventArgs e) => SelectRandomInListBox(patchListBox);
         private void Btn_Random2_Click(object sender, EventArgs e) => SelectRandomInListBox(gameListBox);
 
+        private void BtnDeletePatch_Click(object sender, EventArgs e)
+        {
+            string s = patchListBox.SelectedItem.ToString().Replace(" ★", "");
+            if (Configuration1.HidePatchExtension && _jsFiles.Contains(s)) s += ".js";
+            if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s)) s += ".thcrap";
+            File.Delete(s);
+            if (s.Contains(".js")) _jsFiles.Remove(s);
+            if (s.Contains(".thcrap")) _thcrapFiles.Remove(s);
+            PopulatePatchList();
+        }
+
         private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if ((e.Button & MouseButtons.Left) != 0)
@@ -1536,6 +1547,8 @@ namespace Universal_THCRAP_Launcher
         }
 
         #endregion
+
+        
     }
 
     #region Helper Classes

@@ -1,5 +1,4 @@
 ﻿using IWshRuntimeLibrary;
-using JumpListHelpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -30,12 +29,11 @@ using File = System.IO.File;
 
 namespace Universal_THCRAP_Launcher
 {
-    public partial class MainForm : JumpListMainFormBase
+    public partial class MainForm : Form
     {
         public MainForm()
         {
             InitializeComponent();
-            this.JumpListCommandReceived += new EventHandler<CommandEventArgs>(MainForm_JumpListCommandReceived);
         }
 
         #region Global variables
@@ -84,11 +82,6 @@ namespace Universal_THCRAP_Launcher
             UpdateDisplayStrings();
 
             LogConfiguration();
-        }
-        private async void MainForm_JumpListCommandReceived(object sender, CommandEventArgs e)
-        {
-            log.WriteLine($"The following Jump List Command was received: {e.CommandName}");
-            await StartThcrap(e.CommandName.Split(' ')[0], e.CommandName.Split(' ')[1]);
         }
         private void MainForm_Activated(object sender, EventArgs e) => FillJumpList();
         private async void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -1014,7 +1007,6 @@ namespace Universal_THCRAP_Launcher
         private void FillJumpList()
         {
             contextMenuStrip1.Items.Clear();
-            if (Form.ActiveForm != null) JumpListManager.Clear();
             var tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.utl?.ToString()) { Enabled = false };
             contextMenuStrip1.Items.Add(tsi);
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
@@ -1026,14 +1018,8 @@ namespace Universal_THCRAP_Launcher
                     var jsi = new JumpListElement(game, patch);
                     jsi.Click += (async delegate { await StartThcrap(jsi.ToString(), game); });
                     contextMenuStrip1.Items.Add(jsi);
-                    try
-                    {
-                        JumpListManager.AddCategorySelfLink("Favorites", jsi.ToStringPretty(), $"{game} {patch}");
-                    }
-                    catch (Exception e) { log.WriteLine($"{e.ToString()}"); }
                 }
             }
-            if (Form.ActiveForm != null) JumpListManager.Refresh();
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
             tsi = new ToolStripMenuItem(I18N.LangResource.mainForm?.menuStrip?[0]?[6]?.ToString());
             tsi.Click += exitTS_Click;
@@ -1073,6 +1059,23 @@ namespace Universal_THCRAP_Launcher
             Configuration1 = new Configuration();
             dynamic dconfig = null;
 
+            //Give error if Newtonsoft.Json.dll isn't found.
+            if (!File.Exists(exeDir + "Newtonsoft.Json.dll"))
+            {
+                //Read parser-less, the error message.
+                if (Configuration.Lang == null) Configuration.Lang = "en.json";
+                string[] lines =
+                    File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
+                foreach (string item in lines)
+                {
+                    var error = "Error";
+                    if (item.Contains("\"error\"")) error = item.Split('"')[3];
+                    if (!item.Contains("\"jsonParser\"")) continue;
+                    MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                }
+            }
+
             //Load config
             if (File.Exists(CONFIG_FILE))
             {
@@ -1102,31 +1105,15 @@ namespace Universal_THCRAP_Launcher
                 }
             }
 
-            //Give error if Newtonsoft.Json.dll isn't found.
-            if (!File.Exists(exeDir + "Newtonsoft.Json.dll"))
-            {
-                //Read parser-less, the error message.
-                if (Configuration.Lang == null) Configuration.Lang = "en.json";
-                string[] lines =
-                    File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
-                foreach (string item in lines)
-                {
-                    var error = "Error";
-                    if (item.Contains("\"error\"")) error = item.Split('"')[3];
-                    if (!item.Contains("\"jsonParser\"")) continue;
-                    MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
-                }
-            }
+            //Load language
+            Configuration.Lang = Configuration.Lang ?? "en.json";
+            I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
 
+            /* Windows Vista style JumpList requirements. This feature has been chosen to be NOT supported by UTL.
             CheckForMissingFile("JumpListHelpers.dll");
             CheckForMissingFile("Microsoft.WindowsAPICodePack.dll");
             CheckForMissingFile("Microsoft.WindowsAPICodePack.Shell.dll");
-
-
-            //Load language
-            Configuration.Lang = dconfig?.Lang ?? "en.json";
-            I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
+            */
 
             //Give error if not next to thcrap_loader.exe
             bool fileExists = File.Exists("thcrap_loader.exe");
@@ -1533,7 +1520,7 @@ namespace Universal_THCRAP_Launcher
         /// <param name="errorMessage">The message that should displayed in the <see cref="MessageBox"/>. Should come from <see cref="I18N.LangResource"/>.</param>
         private void ErrorAndExit(dynamic errorMessage)
         {
-            MessageBox.Show(text: errorMessage?.ToString(), caption: I18N.LangResource.errors.error?.ToString(),
+            MessageBox.Show(text: errorMessage?.ToString(), caption: I18N.LangResource?.errors?.error?.ToString(),
                             buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
             log.WriteLine($"{errorMessage?.ToString()}");
             Application.Exit();
@@ -1545,7 +1532,7 @@ namespace Universal_THCRAP_Launcher
         private void CheckForMissingFile(string fileName)
         {
             if (!File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName))
-                ErrorAndExit(String.Format(I18N.LangResource.errors.missing.file.ToString(), fileName));
+                ErrorAndExit(String.Format(I18N.LangResource?.errors?.missing?.file?.ToString(), fileName));
         }
 
         #endregion

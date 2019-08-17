@@ -103,7 +103,8 @@
 			"gameLB": "Futtatható (executable) kiválasztása",
 			"patchFav": "Futtatási konfiguráció (patch stack) hozzáadása a kedvencekhez (vagy használd az F2-t, ha akítvan ki van választva)",
 			"gamesFav": "Futtatható (executable) hozzáadása a kedvencekhez (vagy használd az F2-t, ha aktívan ki van választva)",
-			"random": "Véletlenszerű elem kiválasztása"
+			"random": "Véletlenszerű elem kiválasztása",
+			"delete": "Kiválasztott konfiguráció törlése a lemezről"
 		}
 	}
 }

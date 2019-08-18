@@ -234,6 +234,7 @@ namespace Universal_THCRAP_Launcher
             if (Configuration1.HidePatchExtension && _jsFiles.Contains(s)) s += ".js";
             if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s)) s += ".thcrap";
             File.Delete(s);
+            log.WriteLine($"Patch {s} has been deleted.");
             if (s.Contains(".js")) _jsFiles.Remove(s);
             if (s.Contains(".thcrap")) _thcrapFiles.Remove(s);
             PopulatePatchList();
@@ -829,6 +830,9 @@ namespace Universal_THCRAP_Launcher
             btn_Random2.Location =
                 new Point(btn_AddFavorite1.Location.X + _resizeConstants[5],
                           splitContainer1.Location.Y - _resizeConstants[3]);
+            btnDeletePatch.Location =
+                new Point(btn_Random1.Location.X + _resizeConstants[5],
+                          splitContainer1.Location.Y - _resizeConstants[3]);
         }
 
         private void UpdateDisplayStrings()
@@ -848,6 +852,7 @@ namespace Universal_THCRAP_Launcher
             toolTip1.SetToolTip(btn_AddFavorite1, objLangRes.tooltips.gamesFav?.ToString());
             toolTip1.SetToolTip(btn_Random1, objLangRes.tooltips.random?.ToString());
             toolTip1.SetToolTip(btn_Random2, objLangRes.tooltips.random?.ToString());
+            toolTip1.SetToolTip(btnDeletePatch, objLangRes.tooltips.delete?.ToString());
 
             // - TODO: Refactor this code
             menuStrip1.Items[0].Text = objLangRes.menuStrip[0][0];

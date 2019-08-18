@@ -257,7 +257,7 @@ namespace Universal_THCRAP_Launcher
             // 
             // btnDeletePatch
             // 
-            this.btnDeletePatch.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
+            this.btnDeletePatch.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Trash;
             this.btnDeletePatch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnDeletePatch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeletePatch.Location = new System.Drawing.Point(135, 85);

@@ -47,6 +47,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_AddFavorite1 = new System.Windows.Forms.Button();
             this.btn_Random1 = new System.Windows.Forms.Button();
             this.btn_Random2 = new System.Windows.Forms.Button();
+            this.btnDeletePatch = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.appTS = new System.Windows.Forms.ToolStripMenuItem();
             this.createShortcutDesktopTS = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +74,6 @@ namespace Universal_THCRAP_Launcher
             this.reportBugTS = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnDeletePatch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -254,6 +254,19 @@ namespace Universal_THCRAP_Launcher
             this.toolTip1.SetToolTip(this.btn_Random2, "Select something randomly");
             this.btn_Random2.UseVisualStyleBackColor = true;
             this.btn_Random2.Click += new System.EventHandler(this.Btn_Random2_Click);
+            // 
+            // btnDeletePatch
+            // 
+            this.btnDeletePatch.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
+            this.btnDeletePatch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDeletePatch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeletePatch.Location = new System.Drawing.Point(135, 85);
+            this.btnDeletePatch.Name = "btnDeletePatch";
+            this.btnDeletePatch.Size = new System.Drawing.Size(25, 25);
+            this.btnDeletePatch.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.btnDeletePatch, "Delete selected patch");
+            this.btnDeletePatch.UseVisualStyleBackColor = true;
+            this.btnDeletePatch.Click += new System.EventHandler(this.BtnDeletePatch_Click);
             // 
             // menuStrip1
             // 
@@ -467,19 +480,6 @@ namespace Universal_THCRAP_Launcher
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // btnDeletePatch
-            // 
-            this.btnDeletePatch.BackgroundImage = global::Universal_THCRAP_Launcher.Properties.Resources.Dice;
-            this.btnDeletePatch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnDeletePatch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeletePatch.Location = new System.Drawing.Point(135, 85);
-            this.btnDeletePatch.Name = "btnDeletePatch";
-            this.btnDeletePatch.Size = new System.Drawing.Size(25, 25);
-            this.btnDeletePatch.TabIndex = 12;
-            this.toolTip1.SetToolTip(this.btnDeletePatch, "Delete selected patch");
-            this.btnDeletePatch.UseVisualStyleBackColor = true;
-            this.btnDeletePatch.Click += new System.EventHandler(this.BtnDeletePatch_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -501,7 +501,7 @@ namespace Universal_THCRAP_Launcher
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(334, 300);
+            this.MinimumSize = new System.Drawing.Size(350, 300);
             this.Name = "MainForm";
             this.Text = "Universal THCRAP Launcher";
             this.Activated += new System.EventHandler(this.MainForm_Activated);

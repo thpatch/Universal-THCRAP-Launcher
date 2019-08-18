@@ -84,11 +84,12 @@ namespace Universal_THCRAP_Launcher
             // patchListBox
             // 
             this.patchListBox.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.patchListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.patchListBox.ForeColor = System.Drawing.SystemColors.Control;
             this.patchListBox.FormattingEnabled = true;
             this.patchListBox.Location = new System.Drawing.Point(0, 1);
             this.patchListBox.Name = "patchListBox";
-            this.patchListBox.Size = new System.Drawing.Size(153, 303);
+            this.patchListBox.Size = new System.Drawing.Size(153, 301);
             this.patchListBox.TabIndex = 12;
             this.toolTip1.SetToolTip(this.patchListBox, "Choose the run configuration (patch stack)");
             this.patchListBox.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
@@ -115,11 +116,12 @@ namespace Universal_THCRAP_Launcher
             // gameListBox
             // 
             this.gameListBox.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.gameListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.gameListBox.ForeColor = System.Drawing.SystemColors.Control;
             this.gameListBox.FormattingEnabled = true;
             this.gameListBox.Location = new System.Drawing.Point(0, 1);
             this.gameListBox.Name = "gameListBox";
-            this.gameListBox.Size = new System.Drawing.Size(152, 303);
+            this.gameListBox.Size = new System.Drawing.Size(152, 301);
             this.gameListBox.TabIndex = 13;
             this.toolTip1.SetToolTip(this.gameListBox, "Choose the game (executable)");
             this.gameListBox.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
@@ -289,6 +291,7 @@ namespace Universal_THCRAP_Launcher
             // 
             // appTS
             // 
+            this.appTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.appTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createShortcutDesktopTS,
             this.createShortcutStartMenuTS,
@@ -303,6 +306,7 @@ namespace Universal_THCRAP_Launcher
             // createShortcutDesktopTS
             // 
             this.createShortcutDesktopTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.createShortcutDesktopTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.createShortcutDesktopTS.Name = "createShortcutDesktopTS";
             this.createShortcutDesktopTS.Size = new System.Drawing.Size(231, 22);
             this.createShortcutDesktopTS.Text = "Create Shortcut to Desktop";
@@ -311,6 +315,7 @@ namespace Universal_THCRAP_Launcher
             // createShortcutStartMenuTS
             // 
             this.createShortcutStartMenuTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.createShortcutStartMenuTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.createShortcutStartMenuTS.Name = "createShortcutStartMenuTS";
             this.createShortcutStartMenuTS.Size = new System.Drawing.Size(231, 22);
             this.createShortcutStartMenuTS.Text = "Create Shortcut to Start Menu";
@@ -319,6 +324,7 @@ namespace Universal_THCRAP_Launcher
             // settingsTS
             // 
             this.settingsTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.settingsTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.settingsTS.Name = "settingsTS";
             this.settingsTS.Size = new System.Drawing.Size(231, 22);
             this.settingsTS.Text = "Settings...";
@@ -326,14 +332,14 @@ namespace Universal_THCRAP_Launcher
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.Control;
+            this.toolStripSeparator1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(228, 6);
             // 
             // restartTS
             // 
             this.restartTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.restartTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.restartTS.Name = "restartTS";
             this.restartTS.ShortcutKeyDisplayString = "Ctrl+R";
             this.restartTS.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
@@ -344,6 +350,7 @@ namespace Universal_THCRAP_Launcher
             // exitTS
             // 
             this.exitTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.exitTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.exitTS.Name = "exitTS";
             this.exitTS.ShortcutKeyDisplayString = "Alt+F4";
             this.exitTS.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
@@ -353,6 +360,7 @@ namespace Universal_THCRAP_Launcher
             // 
             // thcrapTS
             // 
+            this.thcrapTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.thcrapTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openConfigureTS,
             this.openMenuTS});
@@ -363,6 +371,7 @@ namespace Universal_THCRAP_Launcher
             // openConfigureTS
             // 
             this.openConfigureTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openConfigureTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.openConfigureTS.Name = "openConfigureTS";
             this.openConfigureTS.Size = new System.Drawing.Size(208, 22);
             this.openConfigureTS.Text = "Open THCRAP Configure";
@@ -371,6 +380,7 @@ namespace Universal_THCRAP_Launcher
             // openMenuTS
             // 
             this.openMenuTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openMenuTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.openMenuTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderTS,
             this.openGamesListTS,
@@ -381,6 +391,8 @@ namespace Universal_THCRAP_Launcher
             // 
             // openFolderTS
             // 
+            this.openFolderTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openFolderTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.openFolderTS.Name = "openFolderTS";
             this.openFolderTS.Size = new System.Drawing.Size(309, 22);
             this.openFolderTS.Text = "Open Folder";
@@ -388,6 +400,8 @@ namespace Universal_THCRAP_Launcher
             // 
             // openGamesListTS
             // 
+            this.openGamesListTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openGamesListTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.openGamesListTS.Name = "openGamesListTS";
             this.openGamesListTS.Size = new System.Drawing.Size(309, 22);
             this.openGamesListTS.Text = "Open Games List";
@@ -395,6 +409,8 @@ namespace Universal_THCRAP_Launcher
             // 
             // openSelectedPatchConfigurationTS
             // 
+            this.openSelectedPatchConfigurationTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.openSelectedPatchConfigurationTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.openSelectedPatchConfigurationTS.Name = "openSelectedPatchConfigurationTS";
             this.openSelectedPatchConfigurationTS.ShortcutKeyDisplayString = "Ctrl + O";
             this.openSelectedPatchConfigurationTS.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
@@ -404,6 +420,7 @@ namespace Universal_THCRAP_Launcher
             // 
             // gitHubTS
             // 
+            this.gitHubTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.gitHubTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gitHubPageTS,
             this.feedbackTS,
@@ -415,6 +432,7 @@ namespace Universal_THCRAP_Launcher
             // gitHubPageTS
             // 
             this.gitHubPageTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.gitHubPageTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.gitHubPageTS.Name = "gitHubPageTS";
             this.gitHubPageTS.Size = new System.Drawing.Size(180, 22);
             this.gitHubPageTS.Text = "GitHub Page";
@@ -423,6 +441,7 @@ namespace Universal_THCRAP_Launcher
             // feedbackTS
             // 
             this.feedbackTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.feedbackTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.feedbackTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bugReportTS,
             this.featureRequestTS,
@@ -433,6 +452,8 @@ namespace Universal_THCRAP_Launcher
             // 
             // bugReportTS
             // 
+            this.bugReportTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bugReportTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.bugReportTS.Name = "bugReportTS";
             this.bugReportTS.Size = new System.Drawing.Size(180, 22);
             this.bugReportTS.Text = "Bug Report";
@@ -440,6 +461,8 @@ namespace Universal_THCRAP_Launcher
             // 
             // featureRequestTS
             // 
+            this.featureRequestTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.featureRequestTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.featureRequestTS.Name = "featureRequestTS";
             this.featureRequestTS.Size = new System.Drawing.Size(180, 22);
             this.featureRequestTS.Text = "Feature Request";
@@ -447,6 +470,8 @@ namespace Universal_THCRAP_Launcher
             // 
             // otherTS
             // 
+            this.otherTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.otherTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.otherTS.Name = "otherTS";
             this.otherTS.Size = new System.Drawing.Size(180, 22);
             this.otherTS.Text = "Other";
@@ -462,6 +487,7 @@ namespace Universal_THCRAP_Launcher
             // 
             // helpTS
             // 
+            this.helpTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.helpTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.keyboardShortcutsTS});
             this.helpTS.Name = "helpTS";
@@ -473,6 +499,7 @@ namespace Universal_THCRAP_Launcher
             // keyboardShortcutsTS
             // 
             this.keyboardShortcutsTS.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.keyboardShortcutsTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.keyboardShortcutsTS.Name = "keyboardShortcutsTS";
             this.keyboardShortcutsTS.ShortcutKeyDisplayString = "F1";
             this.keyboardShortcutsTS.ShortcutKeys = System.Windows.Forms.Keys.F1;

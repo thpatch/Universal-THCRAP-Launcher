@@ -88,7 +88,7 @@ namespace Universal_THCRAP_Launcher
         {
             if (ModifierKeys != Keys.None)
             {
-                patchListBox.SelectedItem = Configuration1.LastConfig;
+                if (Configuration1.LastConfig != null) patchListBox.SelectedItem = Configuration1.LastConfig;
                 gameListBox.SelectedItem = Configuration1.LastGame;
             }
 
@@ -468,7 +468,7 @@ namespace Universal_THCRAP_Launcher
                     log.WriteLine($"Configuration1.SplitterDistance has been set to {Configuration1.SplitterDistance}");
                 }
 
-                if (Configuration1.LastConfig == null)
+                if (Configuration1.LastConfig == null && _jsFiles.Count > 0)
                 {
                     Configuration1.LastConfig = _jsFiles[0];
                     log.WriteLine(
@@ -625,10 +625,13 @@ namespace Universal_THCRAP_Launcher
         /// </summary>
         private void ReadConfig()
         {
-
-            string s = Configuration1.LastConfig;
-            if (Favourites1.Patches.Contains(s)) s += " ★";
-            patchListBox.SelectedIndex = patchListBox.FindStringExact(s);
+            string s;
+            if (Configuration1.LastConfig != null)
+            {
+                s = Configuration1.LastConfig;
+                if (Favourites1.Patches.Contains(s)) s += " ★";
+                patchListBox.SelectedIndex = patchListBox.FindStringExact(s);
+            }
             s = Configuration1.LastGame;
 
             if (Favourites1.Games.Contains(s)) s += " ★";

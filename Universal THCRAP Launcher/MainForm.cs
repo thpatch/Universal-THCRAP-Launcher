@@ -120,6 +120,8 @@ namespace Universal_THCRAP_Launcher
             {
                 startButton.Size = new Size(Size.Width - _resizeConstants[0], startButton.Size.Height);
                 splitContainer1.Size = new Size(Size.Width - _resizeConstants[1], Size.Height - _resizeConstants[2]);
+                if (btn_sortAZ2.Location.X < btnDeletePatch.Location.X + btnDeletePatch.Width + 20)
+                    splitContainer1.SplitterDistance = btnDeletePatch.Location.X + btnDeletePatch.Width + 4;
                 UpdateSplitContainerReleatedGUI();
             }
             catch (Exception ex) { log.WriteLine($"{ex}"); }

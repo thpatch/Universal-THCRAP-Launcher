@@ -38,7 +38,7 @@ namespace Universal_THCRAP_Launcher
 
         #region Global variables
 
-        private const string VERSION_SUFFIX_S = "pre10";
+        private const string VERSION_SUFFIX_S = "rumia";
 
         private const string CONFIG_FILE = "utl_config.json";
         private readonly Image _custom = new Bitmap(Resources.Custom);

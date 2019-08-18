@@ -176,9 +176,9 @@ namespace Universal_THCRAP_Launcher
         #region GUI Element Events
         private void SplitContainer1_SplitterMoving(object sender, SplitterCancelEventArgs e)
         {
-            if (e.SplitX < btn_Random1.Location.X + btn_Random1.Width)
+            if (e.SplitX < btnDeletePatch.Location.X + btnDeletePatch.Width)
             {
-                Cursor.Position = new Point(Location.X + btn_Random1.Location.X + btn_Random1.Width + _resizeConstants[4] + 4, Cursor.Position.Y);
+                Cursor.Position = new Point(Location.X + btnDeletePatch.Location.X + btnDeletePatch.Width + _resizeConstants[4] + 4, Cursor.Position.Y);
             }
             if (e.SplitX > startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 20)
                 Cursor.Position = new Point(Location.X + startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 37, Cursor.Position.Y);

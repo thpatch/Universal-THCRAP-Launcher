@@ -103,7 +103,8 @@
 			"gameLB": "게임을 선택",
 			"patchFav": "패치를 즐겨찾기에 추가 (선택한 항목이면 F2)",
 			"gamesFav": "게임을 즐겨찾기에 추가 (선택한 항목이면 F2)",
-			"random": "Select a random element"
+			"random": "Select a random element",
+			"delete": "Delete the selected patch stack from disk"
 		}
 	}
 }

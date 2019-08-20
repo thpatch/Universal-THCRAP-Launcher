@@ -103,7 +103,8 @@
 			"gameLB": "Chọn game (executable)",
 			"patchFav": "Add patch stack to favourites (or use F2 if it's the active selection)",
 			"gamesFav": "Add executable or exe to favourites (or use F2 if it's the active selection)",
-			"random": "Select a random element"
+			"random": "Select a random element",
+			"delete": "Delete the selected patch stack from disk"
 		}
 	}
 }

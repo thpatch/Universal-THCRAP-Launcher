@@ -103,7 +103,8 @@
 			"gameLB": "选择目标游戏（程序）",
 			"patchFav": "加入/取消收藏选中配置文件（或选中状态按F2）",
 			"gamesFav": "加入/取消收藏选中游戏/程序（或选中状态按F2）",
-			"random": "选择随机元素"
+			"random": "选择随机元素",
+			"delete": "Delete the selected patch stack from disk"
 		}
 	}
 }

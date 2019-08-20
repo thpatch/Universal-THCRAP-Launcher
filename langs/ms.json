@@ -103,7 +103,8 @@
 			"gameLB": "Pilih fail program",
 			"patchFav": "Tambah tampalan ke kegemaran (atau gunakan F2 jika ia adalah pilihan aktif)",
 			"gamesFav": "Tambah program ke kegemaran (atau gunakan F2 jika ia adalah pemilihan aktif)",
-			"random": "Pilih secara rawak"
+			"random": "Pilih secara rawak",
+			"delete": "Delete the selected patch stack from disk"
 		}
 	}
 }

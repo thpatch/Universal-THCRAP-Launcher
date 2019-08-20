@@ -104,7 +104,7 @@
 			"patchFav": "Ausführungskonfiguration zu Favoriten hinzufügen (oder drücke F2 wenn ausgewählt)",
 			"gamesFav": "Spiel/Programm zu Favoriten hinzufügen (oder drücke F2 wenn ausgewählt)",
 			"random": "Zufällige Auswahl",
-			"delete": "Delete the selected patch stack from disk"
+			"delete": "Ausgewählten Patch-Stack löschen"
 		}
 	}
 }

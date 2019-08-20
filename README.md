@@ -14,12 +14,18 @@ UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP
  - Run `Universal THCRAP Launcher.exe`.
  
 ## Images
- - Screenshot of program: ![Screenshot of program](https://i.imgur.com/8QuWJ8l.png)
- - Settings: ![Settings](https://i.imgur.com/8HnnRnY.png)
- - Language Tab: ![Language Tab](https://i.imgur.com/FAfylHl.png)
- - Supported Languages: ![Supported Languages](https://i.imgur.com/BozBook.png)
- - Using the Program: ![Using the Program](https://i.imgur.com/B1KyHDF.gif)
- - Opening German with Keyboard: ![Opening German with Keyboard](https://i.imgur.com/t7kAdem.gif)
+ - Screenshot of program:  
+ ![Screenshot of program](https://i.imgur.com/8QuWJ8l.png)
+ - Settings:  
+ ![Settings](https://i.imgur.com/8HnnRnY.png)
+ - Language Tab:  
+ ![Language Tab](https://i.imgur.com/FAfylHl.png)
+ - Supported Languages:  
+ ![Supported Languages](https://i.imgur.com/BozBook.png)
+ - Using the Program:  
+ ![Using the Program](https://i.imgur.com/B1KyHDF.gif)
+ - Opening German with Keyboard:  
+ ![Opening German with Keyboard](https://i.imgur.com/t7kAdem.gif)
 
 ## Adding/Updating Languages
 The language files are in the [langs folder](https://github.com/Tudi20/Universal-THCRAP-Launcher/tree/master/langs).

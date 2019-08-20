@@ -92,7 +92,7 @@
 			]
 		],
 		"vanilla": "Vanila",
-		"custom": "Program Menyesuaikan Persekitaran",
+		"custom": "Tetapan Luaran",
 		"hided": "Program ini telah diminimumkan ke dulang pemberitahuan dan masih berjalan di latar belakang.",
 		"tooltips": {
 			"startButton": "Mula program dengan tetapan yang dipilih",
@@ -102,9 +102,9 @@
 			"patchLB": "Pilih timbungan tampalan untuk dijalankan",
 			"gameLB": "Pilih fail program",
 			"patchFav": "Tambah tampalan ke kegemaran (atau gunakan F2 jika ia adalah pilihan aktif)",
-			"gamesFav": "Tambah program ke kegemaran (atau gunakan F2 jika ia adalah pemilihan aktif)",
+			"gamesFav": "Tambah program ke kegemaran (atau gunakan F2 jika ia adalah pilihan aktif)",
 			"random": "Pilih secara rawak",
-			"delete": "Delete the selected patch stack from disk"
+			"delete": "Buang tampalan yang dipilih dari cakera keras"
 		}
 	}
 }

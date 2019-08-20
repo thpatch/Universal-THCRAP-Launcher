@@ -13,16 +13,16 @@
 		"downloadAll": "Tải tất cả ngôn ngữ",
 		"downloading": "Đang tải...",
 		"hidePatchExtension": "Ẩn extension trên danh sách patch",
-		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
-		"onlyOneExe": "Only allow one executable to run",
-		"label_gameNaming": "Naming type for executables:",
-		"onlyOneUTL": "Only allow one UTL to run",
-		"showGameId": "Show Game Id (thxx)",
+		"showVanilla": "Hiển thị lựa chọn chạy game gốc (không dùng THCRAP) trong danh sách patch",
+		"onlyOneExe": "Chỉ cho phép 1 exe chạy",
+		"label_gameNaming": "Kiểu đặt tên cho exe:",
+		"onlyOneUTL": "Chỉ cho phép 1 UTL chạy",
+		"showGameId": "Hiển thị ID game (thxx)",
 		"tabs": {
-			"general": "General",
-			"language": "Language"
+			"general": "Thiết lập chung",
+			"language": "Ngôn ngữ"
 		},
-		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
+		"namingType": ["thxx", "Viết tắt", "Tên ngắn", "Tên dài"]
 	},
 	"errors": {
 		"error": "Lỗi",
@@ -30,13 +30,13 @@
 			"thcrap_loader": "Không thể tìm thấy thcrap_loader.exe.\nXin để ứng dụng cùng thư mục!",
 			"gamesJs": "Không thể tìm thấy games.js.\nXin hãy thcrap_configure.exe trước!",
 			"patchStacks": "Không thể tìm thấy file hiệu chỉnh patch stack.\nXin hãy thcrap_configure.exe trước!",
-			"jsonParser": "Thiếu Newtonsoft.Json.dll. XIn hãy đảm bảo đã sao chép toàn bộ.",
-			"file": "{0} is missing. Please make sure this is fixed."
+			"jsonParser": "Thiếu Newtonsoft.Json.dll. Xin hãy đảm bảo đã sao chép toàn bộ.",
+			"file": "Thiếu {0}. Xin hãy đảm bảo đã khắc phục."
 		},
 		"oops": "Lỗi...",
 		"noneSelected": "Bạn chưa chọn file hiệu chỉnh (patch stack) hoặc game (executable)!\nXin hãy chọn một!",
 		"downloadError": "Không thể tải file ngôn ngữ từ from GitHub. Bạn đang:\n- không kết nối với internet\n- Phần mềm này đã bị bỏ hoang nên không còn tồn tại trên GitHub Repository.\n- Trong một tương lai với GitHub hoặc Internet không tồn tại.",
-		"alreadyRunning": "The program is already running. Either disable this check in the settings or close the program."
+		"alreadyRunning": "Phần mềm đang chạy. Xin hãy huỷ lựa chọn này trong phần thiết lập hoặc tắt phần mềm."
 	},
 	"popup": {
 		"hideLauncher": {
@@ -59,7 +59,7 @@
 			[
 				"Ứng dụng",
 				"Tạo shortcut lên desktop",
-				"Create Shortcut for Start Menu",
+				"Tạo Shortcut lên Start Menu",
 				"Tuỳ chỉnh...",
 				"-",
 				"Tái khởi động",
@@ -84,16 +84,16 @@
 					"Yêu cầu chức năng",
 					"Khác"
 				],
-				"Donate"
+				"Quyên góp"
 			],
 			[
 				"Trợ giúp",
 				"Phím tắt"
 			]
 		],
-		"vanilla": "Vanilla",
-		"custom": "Environment Custom Program",
-		"hided": "The program has been minimized to the notification tray and is still running in the background.",
+		"vanilla": "Mặc định",
+		"custom": "Phần mềm môi trường tuỳ chỉnh",
+		"hided": "Phần mềm này đã được thu nhỏ vào thanh thông báo và đang chạy nền.",
 		"tooltips": {
 			"startButton": "Khởi động thcrap với tuỳ chỉnh đã chọn",
 			"sortAZ": "Sắ xếp theo thứ tự bảng chữ cái",
@@ -101,10 +101,10 @@
 			"filterByType": "Lọc theo loại",
 			"patchLB": "Chọn hiệu chỉnh (patch stack)",
 			"gameLB": "Chọn game (executable)",
-			"patchFav": "Add patch stack to favourites (or use F2 if it's the active selection)",
-			"gamesFav": "Add executable or exe to favourites (or use F2 if it's the active selection)",
-			"random": "Select a random element",
-			"delete": "Delete the selected patch stack from disk"
+			"patchFav": "Đưa patch stack vào mục yêu thích (hoặc dùng F2 nếu là lựa chọn chủ động)",
+			"gamesFav": "Đưa exe vào mục yêu thích (hoặc dùng F2 nếu là lựa chọn chủ động)",
+			"random": "Chọn yếu tố ngẫu nhiên",
+			"delete": "Xoá patch stack đã chọn khỏi ổ đĩa"
 		}
 	}
 }

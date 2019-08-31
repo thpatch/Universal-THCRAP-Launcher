@@ -1523,13 +1523,8 @@ namespace Universal_THCRAP_Launcher
 
                 if (!lb.Equals(patchListBox)) return;
                 {
-                    string s = lb.SelectedItem.ToString();
+                    string s = lb.SelectedItem.ToString().Replace("★", "").Trim();
                     if (Configuration1.ShowVanilla && lb.SelectedIndex == 0) s = @"VANILLA";
-                    if (Configuration1.HidePatchExtension)
-                    {
-                        if (_jsFiles.Contains(s)) s += ".js";
-                        if (_thcrapFiles.Contains(s)) s += ".thcrap";
-                    }
                     Favourites1.Patches.Remove(s);
                     PopulatePatchList();
                 }

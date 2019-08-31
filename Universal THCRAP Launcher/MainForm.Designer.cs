@@ -66,7 +66,6 @@ namespace Universal_THCRAP_Launcher
             this.gitHubPageTS = new System.Windows.Forms.ToolStripMenuItem();
             this.feedbackTS = new System.Windows.Forms.ToolStripMenuItem();
             this.bugReportTS = new System.Windows.Forms.ToolStripMenuItem();
-            this.featureRequestTS = new System.Windows.Forms.ToolStripMenuItem();
             this.otherTS = new System.Windows.Forms.ToolStripMenuItem();
             this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpTS = new System.Windows.Forms.ToolStripMenuItem();
@@ -444,7 +443,6 @@ namespace Universal_THCRAP_Launcher
             this.feedbackTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.feedbackTS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bugReportTS,
-            this.featureRequestTS,
             this.otherTS});
             this.feedbackTS.Name = "feedbackTS";
             this.feedbackTS.Size = new System.Drawing.Size(180, 22);
@@ -458,15 +456,6 @@ namespace Universal_THCRAP_Launcher
             this.bugReportTS.Size = new System.Drawing.Size(180, 22);
             this.bugReportTS.Text = "Bug Report";
             this.bugReportTS.Click += new System.EventHandler(this.bugReportTS_Click);
-            // 
-            // featureRequestTS
-            // 
-            this.featureRequestTS.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.featureRequestTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.featureRequestTS.Name = "featureRequestTS";
-            this.featureRequestTS.Size = new System.Drawing.Size(180, 22);
-            this.featureRequestTS.Text = "Feature Request";
-            this.featureRequestTS.Click += new System.EventHandler(this.featureRequestTS_Click);
             // 
             // otherTS
             // 
@@ -598,7 +587,6 @@ namespace Universal_THCRAP_Launcher
         private ToolStripMenuItem gitHubPageTS;
         private ToolStripMenuItem feedbackTS;
         private ToolStripMenuItem bugReportTS;
-        private ToolStripMenuItem featureRequestTS;
         private ToolStripMenuItem otherTS;
         private ListBox patchListBox;
         private Button btn_AddFavorite0;

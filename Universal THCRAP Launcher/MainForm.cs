@@ -1344,8 +1344,8 @@ namespace Universal_THCRAP_Launcher
             {
                 id = "thcrap";
                 string s = "\"" + patchListBox.SelectedItem.ToString().Replace(" ★", "");
-                if (Configuration1.HidePatchExtension && _jsFiles.Contains(s)) s += ".js";
-                if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s))
+                if (Configuration1.HidePatchExtension && _jsFiles.Contains(s.Replace("\"", ""))) s += ".js";
+                if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s.Replace("\"", "")))
                     s += ".thcrap";
                 s += "\" ";
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★", "").Trim(), out string s1);

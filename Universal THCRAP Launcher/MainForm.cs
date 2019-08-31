@@ -38,6 +38,8 @@ namespace Universal_THCRAP_Launcher
 
         #region Global variables
 
+        private const char HOTFIX_SUFFIX = 'a';
+
         private const string CONFIG_FILE = "utl_config.json";
         private readonly Image _custom = new Bitmap(Resources.Custom);
         private readonly Image _game = new Bitmap(Resources.Game);
@@ -844,7 +846,7 @@ namespace Universal_THCRAP_Launcher
         {
             dynamic objLangRes = I18N.LangResource.mainForm;
 
-            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.');
+            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.') + HOTFIX_SUFFIX;
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton?.ToString());
             toolTip1.SetToolTip(btn_sortAZ1, objLangRes.tooltips.sortAZ?.ToString());
             toolTip1.SetToolTip(btn_sortAZ2, objLangRes.tooltips.sortAZ?.ToString());
@@ -1035,8 +1037,11 @@ namespace Universal_THCRAP_Launcher
             {
                 foreach (string patch in Favourites1.Patches)
                 {
+                    string fpatch = patch;
                     if (patch == @"VANILLA") continue;
-                    var jsi = new JumpListElement(game, patch);
+                    if (Configuration1.HidePatchExtension && _jsFiles.Contains(patch)) fpatch = patch + ".js";
+                    if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patch)) fpatch = patch + ".thcrap";
+                    var jsi = new JumpListElement(game, fpatch);
                     jsi.Click += (async delegate { await StartThcrap(jsi.ToString(), game); });
                     contextMenuStrip1.Items.Add(jsi);
                 }
@@ -1064,7 +1069,7 @@ namespace Universal_THCRAP_Launcher
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
             log.Write("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
                             "\nUniversal THCRAP Launcher Log File" +
-                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') +
+                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') + HOTFIX_SUFFIX +
                             $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
                             $"\nBuilt by: {Resources.BuildUser.Split('\n')[0]} ({Resources.BuildUser.Split('\n')[1]})" +
                             "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
@@ -1381,6 +1386,7 @@ namespace Universal_THCRAP_Launcher
         /// <returns></returns>
         private async Task StartThcrap(string s, string game)
         {
+            log.WriteLine($"Starting thcrap with {s} as arguments.");
             var process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s, RedirectStandardOutput = true, UseShellExecute = false } };
             process.OutputDataReceived += Process_OutputDataReceived;
             process.Start();
@@ -1455,14 +1461,24 @@ namespace Universal_THCRAP_Launcher
                     sw.Stop();
                     return;
                 }
-            } while (gameProcess == null);
+            } while (gameProcess == null || (gameName == "th07" && gameProcess.MainWindowTitle == "")); //Touhou 7 is a bit bugy and needs to be rescanned.
             sw.Stop();
             log.WriteLine("Found game, took: " + sw.Elapsed + " // Can't redirect output of the game that's launched through thcrap, use thcrap.");
-            gameProcess.WaitForInputIdle();
-            gameName = gameProcess.MainWindowTitle;
-            progress.Report(() => { Text +=$@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}"; });
+            string foundName = "";
+            progress.Report(() => { Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}"; });
+            do
+            {
+                gameProcess.Refresh();
+                if (gameProcess.HasExited) {
+                    progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", ""); });
+                    return;
+                };
+                Thread.Sleep(500);
+                foundName = gameProcess.MainWindowTitle;
+            } while (foundName == "");
+            progress.Report(() => { Text = Text.Replace(gameName, foundName); });
             gameProcess.WaitForExit();
-            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", ""); });
+            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {foundName}", ""); });
         }
         /// <summary>
         /// Add the selected item in the given listbox to the favorites.

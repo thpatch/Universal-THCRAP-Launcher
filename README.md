@@ -11,8 +11,8 @@ UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP
 ## Installation
  - Extract the files from `utl.rar`.
  - Place the files next to `thcrap_configure.exe` and `thcrap_launcher.exe` in the `bin` folder.
- - If you just upgraded from before the restructurization of thcrap run `restructure_utl.bat`. This will move your previos utl files to their right place.
- - Run `Universal THCRAP Launcher.exe`.
+ - If you JUST UPGRADED from before the restructurization of thcrap run `restructure_utl.bat` FROM THE MAIN THCRAP FOLDER. This will move your previous utl files to their right place.
+ - Run `Universal THCRAP Launcher.exe` in the `bin` folder.
  - The program will create a launcher in the main thcrap directory for you.
  - You can delete any other shortcut in the main directory. While the two exes in the main directory of thcrap have some extra functionality in them with installing redistributes (fancy word for common requirements by programs), you will usually won't need that functionality more than once and the ones in the `bin` folder can be executed from the launcher.
  

@@ -10,8 +10,11 @@ UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP
 
 ## Installation
  - Extract the files from `utl.rar`.
- - Place the files next to `thcrap_configure.exe` and `thcrap_launcher.exe`.
+ - Place the files next to `thcrap_configure.exe` and `thcrap_launcher.exe` in the `bin` folder.
+ - If you just upgraded from before the restructurization of thcrap run `restructure_utl.bat`. This will move your previos utl files to their right place.
  - Run `Universal THCRAP Launcher.exe`.
+ - The program will create a launcher in the main thcrap directory for you.
+ - You can delete any other shortcut in the main directory. While the two exes in the main directory of thcrap have some extra functionality in them with installing redistributes (fancy word for common requirements by programs), you will usually won't need that functionality more than once and the ones in the `bin` folder can be executed from the launcher.
  
 ## Images
  - Screenshot of program:  
@@ -22,10 +25,8 @@ UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP
  ![Language Tab](https://i.imgur.com/FAfylHl.png)
  - Supported Languages:  
  ![Supported Languages](https://i.imgur.com/BozBook.png)
- - Using the Program:  
+ - Using the Program (outdated):  
  ![Using the Program](https://i.imgur.com/B1KyHDF.gif)
- - Opening German with Keyboard:  
- ![Opening German with Keyboard](https://i.imgur.com/t7kAdem.gif)
 
 ## Adding/Updating Languages
 The language files are in the [langs folder](https://github.com/Tudi20/Universal-THCRAP-Launcher/tree/master/langs).

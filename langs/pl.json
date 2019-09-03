@@ -97,13 +97,13 @@
 			"startButton": "Włącz THCRAP z wybranymi ustawieniami",
 			"sortAZ": "Sortuj alfabetycznie",
 			"filterFav": "Filtruj według ulubionych",
-			"filterByType": "Filter według typu",
+			"filterByType": "Filtruj według typu",
 			"patchLB": "Wybierz konfigurację",
 			"gameLB": "Wybierz grę",
 			"patchFav": "Dodaj konfigurację do ulubionych (lub naciśnij F2)",
 			"gamesFav": "Dodaj grę do ulubionych (lub naciśnij F2)",
 			"random": "Wybierz losowy",
-			"delete": "Delete the selected patch stack from disk"
+			"delete": "Usuń wybraną konfigurację z dysku"
 		}
 	}
 }

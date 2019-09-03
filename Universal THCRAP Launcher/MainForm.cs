@@ -1076,7 +1076,7 @@ namespace Universal_THCRAP_Launcher
                             "\nCurrent Date: " + DateTime.Now +
                             "\nDo these files below exists:" +
                             $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
-                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t\t{File.Exists(FAVORITE_FILE)}\t\t\t{File.Exists(GAMES_FILE)}" +
+                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t\t{File.Exists(GAMES_FILE)}" +
                             "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
 
             #endregion
@@ -1159,6 +1159,10 @@ namespace Universal_THCRAP_Launcher
                 ErrorAndExit(I18N.LangResource.errors.alreadyRunning);
                 return false;
             }
+
+            if (!File.Exists($@"..\{I18N.LangResource.shCreate.file?.ToString()}.lnk"))
+                CreateShortcut("..");
+
             return true;
         }
         /// <summary>
@@ -1321,6 +1325,23 @@ namespace Universal_THCRAP_Launcher
             var shell = new WshShell();
 
             string shortcutAddress = (string)shell.SpecialFolders.Item(ref targetSpecialFolder) + "\\" +
+                                     I18N.LangResource.shCreate.file?.ToString() + ".lnk";
+            var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+            shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
+            shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
+            shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
+            shortcut.Save();
+            log.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
+        }
+        /// <summary>
+        /// Create a shortcut at the specified location.
+        /// </summary>
+        /// <param name="folder">The folder to create the shortcut in. Should NOT end with a path seperator.</param>
+        private void CreateShortcut(string folder)
+        {
+            var shell = new WshShell();
+
+            string shortcutAddress = folder + "\\" +
                                      I18N.LangResource.shCreate.file?.ToString() + ".lnk";
             var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
             shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();

@@ -38,9 +38,12 @@ namespace Universal_THCRAP_Launcher
 
         #region Global variables
 
-        private const char HOTFIX_SUFFIX = 'a';
+        private const string HOTFIX_SUFFIX = "";
 
-        private const string CONFIG_FILE = "utl_config.json";
+        private const string CONFIG_FILE = @"..\config\utl_config.json";
+        private const string FAVORITE_FILE = @"..\config\favorite.json";
+        private const string GAMES_FILE = @"..\config\games.js";
+
         private readonly Image _custom = new Bitmap(Resources.Custom);
         private readonly Image _game = new Bitmap(Resources.Game);
 
@@ -64,7 +67,7 @@ namespace Universal_THCRAP_Launcher
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
 
-        private Log log = new Log("utl-log.txt");
+        private Log log = new Log(@"..\logs\utl-log.txt");
 
         #endregion
 
@@ -72,7 +75,11 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            InitChecks();
+            if (!InitChecks())
+            {
+                Application.Exit();
+                return;
+            }
             InitData();
             DownloadCurrentLanguage();
 
@@ -405,7 +412,7 @@ namespace Universal_THCRAP_Launcher
             Show();
         }
 
-        private void openGamesListTS_Click(object sender, EventArgs e) => Process.Start("games.js");
+        private void openGamesListTS_Click(object sender, EventArgs e) => Process.Start(GAMES_FILE);
         private void openFolderTS_Click(object sender, EventArgs e) => Process.Start(Directory.GetCurrentDirectory());
 
         private void CreateShortcutDesktopTS_Click(object sender, EventArgs e) => CreateShortcut("Desktop");
@@ -612,14 +619,6 @@ namespace Universal_THCRAP_Launcher
             }
         }
 
-        private static void DeleteOutdatedConfig()
-        {
-            if (!File.Exists("utl_config.js")) return;
-            if (!File.Exists(CONFIG_FILE)) File.Move("utl_config.js", CONFIG_FILE);
-            File.Delete("utl_config.js");
-            
-        }
-
         /// <summary>
         ///     Selects the items based on the configuration
         /// </summary>
@@ -705,7 +704,7 @@ namespace Universal_THCRAP_Launcher
             File.WriteAllText(CONFIG_FILE, output);
 
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
-            File.WriteAllText("favourites.js", output);
+            File.WriteAllText(FAVORITE_FILE, output);
 
             log.WriteLine(
                             $"Config file has been successfully updated. Caller method was " +
@@ -752,8 +751,9 @@ namespace Universal_THCRAP_Launcher
             patchListBox.Items.Clear();
 
             //Load patch stacks
-            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.js").ToList();
-            _thcrapFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.thcrap").ToList();
+            const string PATCHES_FOLDER = @"\..\config\";
+            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + PATCHES_FOLDER, "*.js").ToList();
+            _thcrapFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + PATCHES_FOLDER, "*.thcrap").ToList();
 
             //Give error if there are no patch configurations
             if (_jsFiles.Count == 0 && _thcrapFiles.Count == 0) ErrorAndExit(I18N.LangResource.errors.missing.patchStacks);
@@ -761,11 +761,9 @@ namespace Universal_THCRAP_Launcher
 
             #region  Fix patch stack list
             for (int i = 0; i < _jsFiles.Count; i++)
-                _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + "\\", "");
+                _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + PATCHES_FOLDER, "");
             _jsFiles.Remove("games.js");
             _jsFiles.Remove("config.js");
-            // ReSharper disable once StringLiteralTypo
-            _jsFiles.Remove("favourites.js");
             if (Configuration1.HidePatchExtension)
             {
                 for (int i = 0; i < _jsFiles.Count; i++)
@@ -1058,12 +1056,13 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         /// Does checks to make sure everything is in place before starting the program
         /// </summary>
-        private void InitChecks()
+        private bool InitChecks()
         {
             if (Environment.CurrentDirectory == @"C:\Windows\system32")
             {
                 MessageBox.Show("The application was launched from Windows/system32. This was probably because you used the Windows jumplist.\nIf you know how to fix the jumplist, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", "There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
+                return false;
             }
             #region Log File Beginning
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
@@ -1076,8 +1075,8 @@ namespace Universal_THCRAP_Launcher
                             "\nDirectory of Exe: " + exeDir +
                             "\nCurrent Date: " + DateTime.Now +
                             "\nDo these files below exists:" +
-                            $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\t{CONFIG_FILE}\tfavourites.js\tgames.js?" +
-                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t\t{File.Exists("favourites.js")}\t\t\t{File.Exists("games.js")}" +
+                            $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
+                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t\t{File.Exists(FAVORITE_FILE)}\t\t\t{File.Exists(GAMES_FILE)}" +
                             "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
 
             #endregion
@@ -1099,6 +1098,7 @@ namespace Universal_THCRAP_Launcher
                     if (!item.Contains("\"jsonParser\"")) continue;
                     MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
+                    return false;
                 }
             }
 
@@ -1110,8 +1110,6 @@ namespace Universal_THCRAP_Launcher
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
                 dconfig = JsonConvert.DeserializeObject(raw, settings);
             }
-
-            DeleteOutdatedConfig();
 
             if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
@@ -1143,14 +1141,25 @@ namespace Universal_THCRAP_Launcher
 
             //Give error if not next to thcrap_loader.exe
             bool fileExists = File.Exists("thcrap_loader.exe");
-            if (!fileExists) ErrorAndExit(I18N.LangResource.errors.missing.thcrap_loader);
+            if (!fileExists)
+            {
+                ErrorAndExit(I18N.LangResource.errors.missing.thcrap_loader);
+                return false;
+            }
 
-            //Give error if no games.js file
-            if (!File.Exists("games.js")) ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
+            //Give error if no games file
+            if (!File.Exists(GAMES_FILE))
+            {
+                ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
+                return false;
+            }
 
             if (Configuration1.OnlyAllowOneUtl && Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
+            {
                 ErrorAndExit(I18N.LangResource.errors.alreadyRunning);
-
+                return false;
+            }
+            return true;
         }
         /// <summary>
         /// Initialized data into the global variables and etc.
@@ -1159,16 +1168,16 @@ namespace Universal_THCRAP_Launcher
         {
 
             //Load favorites
-            if (File.Exists("favourites.js"))
+            if (File.Exists(FAVORITE_FILE))
             {
-                string file = File.ReadAllText("favourites.js");
+                string file = File.ReadAllText(FAVORITE_FILE);
                 Favourites1 = JsonConvert.DeserializeObject<Favourites>(file);
             }
 
             //Load full names for games
-            if (File.Exists(@"nmlgc\script_latin\stringdefs.js"))
+            if (File.Exists(@"..\repos\nmlgc\script_latin\stringdefs.js"))
             {
-                string file = File.ReadAllText(@"nmlgc\script_latin\stringdefs.js");
+                string file = File.ReadAllText(@"..\repos\nmlgc\script_latin\stringdefs.js");
                 var stringdef = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
                 foreach (KeyValuePair<string, string> variable in stringdef)
                 {
@@ -1184,26 +1193,26 @@ namespace Universal_THCRAP_Launcher
                     }
                 }
             }
-            else log.WriteLine(@"nmlgc\script_latin\stringdefs.js does not exists!");
-            if (Directory.Exists(@"nmlgc\base_tasofro"))
+            else log.WriteLine(@"repos\nmlgc\script_latin\stringdefs.js does not exists!");
+            if (Directory.Exists(@"..\repos\nmlgc\base_tasofro"))
             {
-                foreach (string file in Directory.EnumerateFiles(@"nmlgc\base_tasofro"))
+                foreach (string file in Directory.EnumerateFiles(@"..\repos\nmlgc\base_tasofro"))
                 {
                     string raw = File.ReadAllText(file);
                     if (!raw.Contains("title")) continue;
                     dynamic content = JsonConvert.DeserializeObject(raw);
                     if (content.title is null) continue;
                     string title = content.title.ToString();
-                    string key = file.Replace(".js", "").Replace(@"nmlgc\base_tasofro\", "");
+                    string key = file.Replace(".js", "").Replace(@"..\repos\nmlgc\base_tasofro\", "");
                     if (key.Equals("patch")) continue; //We don't need the name of the base_tasofro patch
                     GameFullNameDictionary.Add(key, title);
                     log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
                 }
             }
-            else log.WriteLine(@"nmlgc\base_tasofro does not exists!");
+            else log.WriteLine(@"repos\nmlgc\base_tasofro does not exists!");
 
             //Load executables
-            string rawFile = File.ReadAllText("games.js");
+            string rawFile = File.ReadAllText(GAMES_FILE);
             _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawFile);
         }
         /// <summary>
@@ -1268,8 +1277,11 @@ namespace Universal_THCRAP_Launcher
         private static string GetPrettyTouhouName(string id, GameNameType nameType = GameNameType.ShortName)
         {
             GameFullNameDictionary.TryGetValue(id.Replace("_custom", ""), out string name);
-            name = name?.Replace("~", "-").Replace("～", "-");
-            if (id.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
+            if (name != null)
+            {
+                name = name.Replace("~", "-").Replace("～", "-");
+                if (id.Contains("_custom")) name += " ~ " + I18N.LangResource.mainForm?.custom?.ToString();
+            }
             switch (nameType)
             {
                 case GameNameType.Initials:
@@ -1576,7 +1588,7 @@ namespace Universal_THCRAP_Launcher
 
     public static class I18N
     {
-        public static readonly string I18NDir = Directory.GetCurrentDirectory() + @"\i18n\utl\";
+        public static readonly string I18NDir = Directory.GetCurrentDirectory() + @"\..\i18n\utl\";
 
         public static dynamic LangResource { get; private set; }
 

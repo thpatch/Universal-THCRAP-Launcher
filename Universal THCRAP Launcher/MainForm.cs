@@ -38,7 +38,7 @@ namespace Universal_THCRAP_Launcher
 
         #region Global variables
 
-        private const char HOTFIX_SUFFIX = 'a';
+        private const char HOTFIX_SUFFIX = 'b';
 
         private const string CONFIG_FILE = "utl_config.json";
         private readonly Image _custom = new Bitmap(Resources.Custom);

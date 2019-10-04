@@ -55,6 +55,7 @@ namespace Universal_THCRAP_Launcher
             UpdateLang();
             UpdateCredits();
             _mf.PopulateGames();
+            _mf.PopulatePatchList();
         }
         private void Btn_dwnlAllLangs_Click(object sender, EventArgs e)
         {

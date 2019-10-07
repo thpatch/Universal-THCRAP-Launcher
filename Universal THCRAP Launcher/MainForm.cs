@@ -37,7 +37,7 @@ namespace Universal_THCRAP_Launcher
         }
 
         #region Global variables
-        private const string HOTFIX_SUFFIX = "";
+        private const string HOTFIX_SUFFIX = "a";
 
         private const string CONFIG_FILE = @"..\config\utl_config.json";
         private const string FAVORITE_FILE = @"..\config\favorite.json";
@@ -414,9 +414,9 @@ namespace Universal_THCRAP_Launcher
         private void openGamesListTS_Click(object sender, EventArgs e) => Process.Start(GAMES_FILE);
         private void openFolderTS_Click(object sender, EventArgs e) => Process.Start(Directory.GetCurrentDirectory());
 
-        private void CreateShortcutDesktopTS_Click(object sender, EventArgs e) => CreateShortcut("Desktop");
+        private void CreateShortcutDesktopTS_Click(object sender, EventArgs e) => CreateShortcut((object)"Desktop");
 
-        private void CreateShortcutStartMenuTS_Click(object sender, EventArgs e) => CreateShortcut("Programs");
+        private void CreateShortcutStartMenuTS_Click(object sender, EventArgs e) => CreateShortcut((object)"Programs");
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e)
         {
@@ -1346,8 +1346,8 @@ namespace Universal_THCRAP_Launcher
             shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
             shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
             shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
+            log.WriteLine($"==\nTrying to Create Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
             shortcut.Save();
-            log.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
         }
         /// <summary>
         /// Starts thcrap with the selected patch stack and executable

@@ -1,0 +1,109 @@
+{
+	"metadata": {
+		"authors": ["0klux"],
+		"native": "Português Brasileiro",
+		"english": "Brazilian Portuguese"
+	},
+	"settingsForm": {
+		"settings": "Configurações",
+		"language": "Idioma",
+		"closeOnExit": "Fechar quando o jogo iniciar",
+		"langCredits": "Traduzido por {0}.",
+		"and": "e",
+		"downloadAll": "Baixar todos os Idiomas",
+		"downloading": "Baixando...",
+		"hidePatchExtension": "Ocultar extensões da lista de patches",
+		"showVanilla": "Mostrar a opção de executar o jogo original Vanilla (sem THCRAP)",
+		"onlyOneExe": "Somente permitir um executável aberto",
+		"label_gameNaming": "Tipo de nomenclatura para executáveis:",
+		"onlyOneUTL": "Permitir somente uma instância do UTL aberto",
+		"showGameId": "Mostrar o ID do Jogo (thXX)",
+		"tabs": {
+			"general": "Geral",
+			"language": "Idioma"
+		},
+		"namingType": ["thXX", "Iniciais", "Nome Curto", "Nome Longo"]
+	},
+	"errors": {
+		"error": "Erro",
+		"missing": {
+			"thcrap_loader": "thcrap_loader.exe não pôde ser encontrado.\nCertifique-se de colocar este aplicativo próximo dele!",
+			"gamesJs": "games.js não pôde ser encontrado.\nCertifique-se de já ter executado o thcrap_configure.exe!",
+			"patchStacks": "Nenhuma configuração de patch ou patch stack foi encontrado.\nCertifique-se de já ter executado o thcrap_configure.exe!",
+			"jsonParser": "Newtonsoft.Json.dll não encontrado. Certifique-se de que este arquivo também foi extraído.",
+			"file": "{0} está faltando. Certifique-se que isso está consertado."
+		},
+		"oops": "Algo deu errado...",
+		"noneSelected": "Nenhuma configuração de patch (patch stack) ou executável selecionado!\nPor favor selecione um!",
+		"downloadError": "Os arquivos de idioma não puderam ser baixados. Ou você:\n- Não está conectado à internet\n- Ou este programa ficou tão ultrapassado que o Repositório dele no Github já nem existe mais.\n- Está em um futuro onde o Github ou a internet não existem.",
+		"alreadyRunning": "O programa já está aberto. Desative essa opção nas configurações ou feche este programa."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Atenção",
+			"text": "O Inicializador desaparecerá durante configuração..."
+		},
+		"kbSh": {
+			"caption": "Atalhos do teclado",
+			"text": "Alt + F4: Fechar Programa (atalho padrão do Windows)\nCtrl + R: Reiniciar programa\nCtrl + O: Abrir configuração de patch selecionada\nF1: Mostrar os atalhos do teclado (esta janela)\nF2: Adicionar o item selecionado aos favoritos"
+		}
+	},
+	"shCreate": {
+		"file": "Inicializador THCRAP Universal",
+		"desc": "Atalho para ITU"
+	},
+	"mainForm": {
+		"utl": "Inicializador THCRAP Universal",
+		"running": "Executando:",
+		"menuStrip": [
+			[
+				"App",
+				"Criar Atalho na Área de trabalho",
+				"Criar Atalho no Menu Iniciar",
+				"Configurações...",
+				"-",
+				"Reiniciar",
+				"Sair"
+			],
+			[
+				"THCRAP",
+				"Abrir a Configuração do THCRAP",
+				[
+					"Abrir...",
+					"Abrir Pasta",
+					"Abrir Lista de Jogos (games.js)",
+					"Abrir a Configuração de Patch Selecionada"
+				]
+			],
+			[
+				"GitHub",
+				"Página do Github",
+				[
+					"Feedback",
+					"Relatar Bugs",
+					"Outros"
+				],
+				"Doar"
+			],
+			[
+				"Ajuda",
+				"Atalhos do Teclado"
+			]
+		],
+		"vanilla": "Vanilla",
+		"custom": "Environment Custom Program",
+		"hided": "O programa foi minimizado para a área de notificações e ainda está sendo executado em segundo plano.",
+		"tooltips": {
+			"startButton": "Iniciar executável com a configuração selecionada",
+			"sortAZ": "Organizar em ordem alfabética",
+			"filterFav": "Filtrar por favoritos",
+			"filterByType": "Filtrar por tipo",
+			"patchLB": "Escolher a configuração de patch",
+			"gameLB": "Escolher o executável",
+			"patchFav": "Adicionar configuração de patch para os favoritos (ou use F2 se ele já estiver selecionado)",
+			"gamesFav": "Adicionar o executável ou exe aos favoritos (ou use F2 se ele já estiver selecionado)",
+			"random": "Selecionar aleatoriamente um elemento",
+			"delete": "Deletar a configuração de patch selecionada do disco"
+		}
+	}
+}

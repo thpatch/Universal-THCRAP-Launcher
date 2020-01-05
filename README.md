@@ -1,6 +1,6 @@
 # Universal THCRAP Launcher (UTL)
 [![Build status](https://ci.appveyor.com/api/projects/status/fyrq8utgva8b1e8o?svg=true)](https://ci.appveyor.com/project/Tudi20/universal-thcrap-launcher)
-[![CodeFactor](https://www.codefactor.io/repository/github/tudi20/universal-thcrap-launcher/badge)](https://www.codefactor.io/repository/github/tudi20/universal-thcrap-launcher)
+[![CodeFactor](https://www.codefactor.io/repository/github/thpatch/universal-thcrap-launcher/badge)](https://www.codefactor.io/repository/github/thpatch/universal-thcrap-launcher)
 [![GitHub release](https://img.shields.io/github/release/thpatch/Universal-THCRAP-Launcher.svg)](https://github.com/thpatch/Universal-THCRAP-Launcher/releases)
 [![GitHub stars](https://img.shields.io/github/stars/thpatch/Universal-THCRAP-Launcher.svg)](https://github.com/thpatch/Universal-THCRAP-Launcher)
 [![GitHub license](https://img.shields.io/github/license/thpatch/Universal-THCRAP-Launcher.svg)](https://github.com/thpatch/Universal-THCRAP-Launcher/blob/master/UNLICENSE.txt)

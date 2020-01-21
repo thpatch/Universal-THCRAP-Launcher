@@ -1128,8 +1128,15 @@ namespace Universal_THCRAP_Launcher
             }
 
             //Load language
-            Configuration.Lang = dconfig.Lang ?? "en.json";
-            Configuration.Lang = Configuration.Lang == "null" ? "en.json" : Configuration.Lang;
+            if (dconfig == null || string.IsNullOrEmpty(dconfig.Lang))
+            {
+                Configuration.Lang = "en.json";
+            }
+            else
+            {
+                Configuration.Lang = dconfig.Lang;
+            }
+
             I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
 
             /* Windows Vista style JumpList requirements. This feature has been chosen to be NOT supported by UTL.

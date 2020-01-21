@@ -467,7 +467,7 @@ namespace Universal_THCRAP_Launcher
                                     $"Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
 
-                if (Configuration1.SplitterDistance == null)
+                if (Configuration1.SplitterDistance == 0)
                 {
                     Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
                     log.WriteLine($"Configuration1.SplitterDistance has been set to {Configuration1.SplitterDistance}");

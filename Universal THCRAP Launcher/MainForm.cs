@@ -102,7 +102,6 @@ namespace Universal_THCRAP_Launcher
             {
                 case Keys.F12:
                     throw new Exception("This exception is for Debug purposes. Please don't press F12.");
-                    break;
                 case Keys.F3:
                     UpdateDisplayStrings();
                     break;
@@ -1312,7 +1311,6 @@ namespace Universal_THCRAP_Launcher
                     return id;
                 default:
                     throw new ArgumentOutOfRangeException();
-                    break;
             }
             return Configuration1.ShowGameId ? id + ": " + name : name;
         }

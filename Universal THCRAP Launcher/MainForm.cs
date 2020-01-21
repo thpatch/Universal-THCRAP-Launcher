@@ -102,7 +102,6 @@ namespace Universal_THCRAP_Launcher
             {
                 case Keys.F12:
                     throw new Exception("This exception is for Debug purposes. Please don't press F12.");
-                    break;
                 case Keys.F3:
                     UpdateDisplayStrings();
                     break;
@@ -468,7 +467,7 @@ namespace Universal_THCRAP_Launcher
                                     $"Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
 
-                if (Configuration1.SplitterDistance == null)
+                if (Configuration1.SplitterDistance == 0)
                 {
                     Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
                     log.WriteLine($"Configuration1.SplitterDistance has been set to {Configuration1.SplitterDistance}");
@@ -1129,8 +1128,15 @@ namespace Universal_THCRAP_Launcher
             }
 
             //Load language
-            Configuration.Lang = dconfig.Lang ?? "en.json";
-            Configuration.Lang = Configuration.Lang == "null" ? "en.json" : Configuration.Lang;
+            if (dconfig == null || string.IsNullOrEmpty(dconfig.Lang))
+            {
+                Configuration.Lang = "en.json";
+            }
+            else
+            {
+                Configuration.Lang = dconfig.Lang;
+            }
+
             I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
 
             /* Windows Vista style JumpList requirements. This feature has been chosen to be NOT supported by UTL.
@@ -1312,7 +1318,6 @@ namespace Universal_THCRAP_Launcher
                     return id;
                 default:
                     throw new ArgumentOutOfRangeException();
-                    break;
             }
             return Configuration1.ShowGameId ? id + ": " + name : name;
         }

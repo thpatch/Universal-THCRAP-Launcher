@@ -37,7 +37,7 @@ namespace Universal_THCRAP_Launcher
         }
 
         #region Global variables
-        private const string HOTFIX_SUFFIX = "a";
+        private const string HOTFIX_SUFFIX = "b";
 
         private const string CONFIG_FILE = @"..\config\utl_config.json";
         private const string FAVORITE_FILE = @"..\config\favorite.json";

@@ -111,7 +111,7 @@ namespace Universal_THCRAP_Launcher
                     return;
                 case Keys.Enter:
                     UpdateConfigFile();
-                    await StartThcrap();
+                    StartThcrap();
                     break;
                 case Keys.F2:
                     AddFavorite((ListBox)sender);
@@ -205,7 +205,7 @@ namespace Universal_THCRAP_Launcher
                 log.WriteLine("Couldn't update splitter releated GUI:\n\t" + ex.ToString());
             }
         }
-        private async void startButton_Click(object sender, EventArgs e) => await StartThcrap();
+        private void startButton_Click(object sender, EventArgs e) => StartThcrap();
         private void Btn_AddFavorite0_Click(object sender, EventArgs e) => AddFavorite(patchListBox);
         private void Btn_AddFavorite1_Click(object sender, EventArgs e) => AddFavorite(gameListBox);
 
@@ -691,7 +691,7 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         ///     Writes the configuration and favorites to file
         /// </summary>
-        public void UpdateConfigFile([CallerMemberName] string caller = "")
+        public void UpdateConfigFile()
         {
             if (Environment.CurrentDirectory == @"C:\Windows\system32") return;
             UpdateConfig();
@@ -705,9 +705,7 @@ namespace Universal_THCRAP_Launcher
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
             File.WriteAllText(FAVORITE_FILE, output);
 
-            log.WriteLine(
-                            $"Config file has been successfully updated. Caller method was " +
-                            caller);
+            log.WriteLine("Config file has been successfully updated.");
         }
 
         #endregion
@@ -1039,7 +1037,7 @@ namespace Universal_THCRAP_Launcher
                     if (Configuration1.HidePatchExtension && _jsFiles.Contains(patch)) fpatch = patch + ".js";
                     if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(patch)) fpatch = patch + ".thcrap";
                     var jsi = new JumpListElement(game, fpatch);
-                    jsi.Click += (async delegate { await StartThcrap(jsi.ToString(), game); });
+                    jsi.Click += (delegate { StartThcrap(jsi.ToString(), game); });
                     contextMenuStrip1.Items.Add(jsi);
                 }
             }
@@ -1398,10 +1396,10 @@ namespace Universal_THCRAP_Launcher
             if (Configuration1.ExitAfterStartup) Application.Exit();
             var progress = new Progress<Action>();
             progress.ProgressChanged += ExecuteReportAction;
-            List<Task> tasks = new List<Task> { Task.Run(() => ScanRunningProcess(process, progress, id)) };
+            List<Task> tasks = new List<Task> { Task.Factory.StartNew(() => ScanRunningProcess(process, progress, id) )};
             _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★", ""), out string gameName);
-            if (patchListBox.SelectedItem.ToString() != $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") tasks.Add(Task.Run(() => ScanRunningTouhou(gameName, progress)));
-            await Task.WhenAll(tasks);
+            if (patchListBox.SelectedItem.ToString() != $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") tasks.Add(Task.Factory.StartNew(() => ScanRunningTouhou(gameName, progress)));
+            Task.WaitAll(tasks.ToArray());
             Enabled = true;
         }
         /// <summary>
@@ -1427,12 +1425,12 @@ namespace Universal_THCRAP_Launcher
             var progress = new Progress<Action>();
             progress.ProgressChanged += ExecuteReportAction;
             var tasks = new List<Task> {
-                                                  Task.Run(() => ScanRunningProcess(process, progress, "thcrap")),
-                                                  Task.Run(() => ScanRunningTouhou(game, progress))
+                                                  Task.Factory.StartNew(() => ScanRunningProcess(process, progress, "thcrap")),
+                                                  Task.Factory.StartNew(() => ScanRunningTouhou(game, progress))
                                               };
             //MessageBox.Show("");
             
-            await Task.WhenAll(tasks);
+            Task.WaitAll(tasks.ToArray());
 
             Enabled = true;
             Thread.Sleep(1000);

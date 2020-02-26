@@ -13,16 +13,16 @@
 		"downloadAll": "Unduh Semua Bahasa",
 		"downloading": "Mengunduh ....",
 		"hidePatchExtension": "Sembunyikan ekstensi dari daftar patch",
-		"showVanilla": "Show Vanilla (THCRAP-less) launch option in patch list",
-		"onlyOneExe": "Only allow one executable to run",
-		"label_gameNaming": "Naming type for executables:",
-		"onlyOneUTL": "Only allow one UTL to run",
-		"showGameId": "Show Game Id (thxx)",
+		"showVanilla": "Tampilkan pintasan tanpa patch di daftar patch",
+		"onlyOneExe": "Hanya izinkan satu file eksekusi",
+		"label_gameNaming": "Jenis penamaan untuk program yang berjalan:",
+		"onlyOneUTL": "Hanya izinkan satu eksekusi UTL",
+		"showGameId": "Tampilkan ID gim (thxx)",
 		"tabs": {
-			"general": "General",
-			"language": "Language"
+			"general": "Umum",
+			"language": "Bahasa"
 		},
-		"namingType": ["thxx", "Initials", "Short Name", "Long Name"]
+		"namingType": ["thxx", "Inisial", "Nama Pendek", "Nama Panjang"]
 	},
 	"errors": {
 		"error": "Kesalahan",
@@ -31,12 +31,12 @@
 			"gamesJs": "games.js tidak dapat ditemukan.\nHarap jalankan thcrap_configure.exe terlebih dahulu!",
 			"patchStacks": "File tumpukan patch tidak dapat ditemukan.\nHarap jalankan thcrap_configure.exe terlebih dahulu!",
 			"jsonParser": "Newtonsoft.Json.dll tidak ditemukan. Pastikan filenya telah tersalin.",
-			"file": "{0} is missing. Please make sure this is fixed."
+			"file": "{0} hilang. Pastikan pemasangan lengkap."
 		},
 		"oops": "Ada yang salah ....",
 		"noneSelected": "Tidak ada konfigurasi (tumpukan patch) atau gim (file eksekusi) terpilih!\nHarap pilih salah satu!",
 		"downloadError": "Tidak dapat mengunduh file bahsa dari GitHub. Sekiranya Anda:\n- Tidak terhubung ke Internet.\n- Program ini telah usang sehingga penyimpanan GitHub telah tidak ada lagi.\n- Di masa depan di mana GitHub dan Internet tidak ada lagi.",
-		"alreadyRunning": "The program is already running. Either disable this check in the settings or close the program."
+		"alreadyRunning": "Program telah berjalan. Tutup program atau matikan pesan ini di pengaturan."
 	},
 	"popup": {
 		"hideLauncher": {
@@ -54,12 +54,12 @@
 	},
 	"mainForm": {
 		"utl": "Peluncur Universal THCRAP",
-		"running": "Running:",
+		"running": "Menjalankan:",
 		"menuStrip": [
 			[
 				"App",
 				"Buat pintasan Desktop",
-				"Create Shortcut for Start Menu",
+				"Buat pintasan di Start Menu",
 				"Pengaturan ....",
 				"-",
 				"Muat ulang",
@@ -83,7 +83,7 @@
 					"Laporkan bug",
 					"Lainnya"
 				],
-				"Donate"
+				"Donasi"
 			],
 			[
 				"Bantuan",
@@ -92,7 +92,7 @@
 		],
 		"vanilla": "Vanilla",
 		"custom": "Environment Custom Program",
-		"hided": "The program has been minimized to the notification tray and is still running in the background.",
+		"hided": "Program telah disimpan di baki notifikasi dan berjalan di latar belakang.",
 		"tooltips": {
 			"startButton": "Mulai thcrap dengan konfigurasi terpilih",
 			"sortAZ": "Urut berdasarkan Alfabet",
@@ -100,10 +100,10 @@
 			"filterByType": "Filter berdasarkan Tipe",
 			"patchLB": "Pilih konfigurasi (tumpukan patch)",
 			"gameLB": "Pilih gim (file eksekusi)",
-			"patchFav": "Add patch stack to favourites (or use F2 if it's the active selection)",
-			"gamesFav": "Add executable or exe to favourites (or use F2 if it's the active selection)",
-			"random": "Select a random element",
-			"delete": "Delete the selected patch stack from disk"
+			"patchFav": "Tambahkan tumpukan patch ke favorit (atau tekan F2 saat terseleksi)",
+			"gamesFav": "Tambahkan file exe ke favorit (atau tekan F2 saat terseleksi)",
+			"random": "Pilih elemen acak",
+			"delete": "Hapus patch terpilih dari penyimpanan"
 		}
 	}
 }

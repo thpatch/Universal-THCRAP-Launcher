@@ -32,3 +32,6 @@ UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP
 ## Adding/Updating Languages
 The language files are in the [langs folder](https://github.com/thpatch/Universal-THCRAP-Launcher/tree/master/langs).
 Just send a push request, and I will have a look-trough and will accept the push request.
+
+## Licensing
+JSON.Net is licensed under the MIT license

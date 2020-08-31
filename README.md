@@ -9,6 +9,7 @@
 UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP](https://github.com/thpatch/thcrap) creates by being a program that allows you to choose a patch configuration (list of mods and translations on top of each other) and an executable file (game or custom.exe) to run trough THCRAP.
 
 ## Installation
+ - If your Windows version is lesser than Win8.1, make sure to have at [.NET Framework 4.5.1](https://dotnet.microsoft.com/download/dotnet-framework).
  - Download UTL from [here](https://github.com/thpatch/Universal-THCRAP-Launcher/releases).
  - Extract the files from `utl.rar`.
  - Place the files next to `thcrap_configure.exe` and `thcrap_launcher.exe` in the `bin` folder.

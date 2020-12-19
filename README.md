@@ -27,8 +27,6 @@ UTL is a third-party program that replaces the clutter of shortcuts that [THCRAP
  ![Language Tab](https://i.imgur.com/FAfylHl.png)
  - Supported Languages:  
  ![Supported Languages](https://i.imgur.com/BozBook.png)
- - Using the Program (outdated):  
- ![Using the Program](https://i.imgur.com/B1KyHDF.gif)
 
 ## Adding/Updating Languages
 The language files are in the [langs folder](https://github.com/thpatch/Universal-THCRAP-Launcher/tree/master/langs).

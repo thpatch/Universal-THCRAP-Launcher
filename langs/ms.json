@@ -13,10 +13,10 @@
 		"downloadAll": "Muat turun kesemua bahasa",
 		"downloading": "Memuat turun...",
 		"hidePatchExtension": "Sembunyikan sambungan dalam senarai tampalan",
-		"showVanilla": "Tunjuk Vanila (Tanpa THCRAP) pilihan pelancaran dalam senarai tampalan",
+		"showVanilla": "Tunjuk Vanila (Tanpa THCRAP) dalam senarai tampalan",
 		"onlyOneExe": "Hanya satu program dapat berjalan",
 		"label_gameNaming": "Jenis penamaan untuk program:",
-		"onlyOneUTL": "Hanya satu UTL dapat berjalan",
+		"onlyOneUTL": "Hanya satu pelancar berjalan",
 		"showGameId": "Tunjukkan Id Permainan (thxx)",
 		"tabs": {
 			"general": "Umum",
@@ -83,7 +83,7 @@
 					"Lapor Pepijat",
 					"Lain-lain"
 				],
-				"Derma"
+				"Sokong saya"
 			],
 			[
 				"Bantuan",
@@ -92,7 +92,7 @@
 		],
 		"vanilla": "Vanila",
 		"custom": "Tetapan Luaran",
-		"hided": "Program ini telah diminimumkan ke dulang pemberitahuan dan masih berjalan di latar belakang.",
+		"hided": "Program ini telah diminimumkan ke dulang pemberitahuan dan berjalan di latar belakang.",
 		"tooltips": {
 			"startButton": "Mula program dengan tetapan yang dipilih",
 			"sortAZ": "Isih mengikut susunan abjad",

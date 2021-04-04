@@ -840,7 +840,7 @@ namespace Universal_THCRAP_Launcher
         {
             dynamic objLangRes = I18N.LangResource.mainForm;
 
-            Text = objLangRes.utl + @" " + Application.ProductVersion;
+            Text = objLangRes.utl + @" " + Application.ProductVersion.Substring(0, Application.ProductVersion.LastIndexOf('.'));
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton?.ToString());
             toolTip1.SetToolTip(btn_sortAZ1, objLangRes.tooltips.sortAZ?.ToString());
             toolTip1.SetToolTip(btn_sortAZ2, objLangRes.tooltips.sortAZ?.ToString());

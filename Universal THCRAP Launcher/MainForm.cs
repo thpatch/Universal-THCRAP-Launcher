@@ -37,7 +37,6 @@ namespace Universal_THCRAP_Launcher
         }
 
         #region Global variables
-        private const string HOTFIX_SUFFIX = "c";
 
         private const string CONFIG_FILE = @"..\config\utl_config.json";
         private const string FAVORITE_FILE = @"..\config\favorite.json";
@@ -841,7 +840,7 @@ namespace Universal_THCRAP_Launcher
         {
             dynamic objLangRes = I18N.LangResource.mainForm;
 
-            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.') + HOTFIX_SUFFIX;
+            Text = objLangRes.utl + @" " + Application.ProductVersion.TrimStart('0', '.');
             toolTip1.SetToolTip(startButton, objLangRes.tooltips.startButton?.ToString());
             toolTip1.SetToolTip(btn_sortAZ1, objLangRes.tooltips.sortAZ?.ToString());
             toolTip1.SetToolTip(btn_sortAZ2, objLangRes.tooltips.sortAZ?.ToString());
@@ -1065,7 +1064,7 @@ namespace Universal_THCRAP_Launcher
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
             log.Write("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
                             "\nUniversal THCRAP Launcher Log File" +
-                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') + HOTFIX_SUFFIX +
+                            "\nVersion: " + Application.ProductVersion.TrimStart('0', '.') +
                             $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
                             $"\nBuilt by: {Resources.BuildUser.Split('\n')[0]} ({Resources.BuildUser.Split('\n')[1]})" +
                             "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +

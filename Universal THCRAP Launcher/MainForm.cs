@@ -1112,11 +1112,22 @@ namespace Universal_THCRAP_Launcher
 
             if (I18N.LangNumber() == 0)
             {
+                string os_lang = System.Globalization.CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
                 try
                 {
-                    string lang =
-                        ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
-                    File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                    try
+                    {
+                        string lang =
+                            ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + os_lang + ".json");
+                        File.WriteAllText(I18N.I18NDir + @"\" + os_lang + ".json", lang);
+                    }
+                    catch (WebException wex)
+                    {
+                        log.WriteLine($"Couldn't download the language file for {os_lang}, due to {wex.Message} a.k.a {wex.Response} . Trying to download English...");
+                        string lang =
+                            ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
+                        File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -79,6 +79,7 @@ namespace Universal_THCRAP_Launcher
                 Application.Exit();
                 return;
             }
+
             InitData();
             DownloadCurrentLanguage();
 
@@ -1566,6 +1567,7 @@ namespace Universal_THCRAP_Launcher
                 }
             }
         }
+        
         /// <summary>
         /// Downloads a website into a string.
         /// <para>Thank you, Stackoverflow.</para>
@@ -1574,12 +1576,20 @@ namespace Universal_THCRAP_Launcher
         /// <returns></returns>
         private static string ReadTextFromUrl(string url)
         {
-            // Assume UTF8, but detect BOM - could also honor response charset I suppose
+            string data;
+
+            //Set Security
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+
             using (WebClient client = new WebClient())
-            using (Stream stream = client.OpenRead(url))
-            using (StreamReader textReader =
-                new StreamReader(stream ?? throw new ArgumentNullException(nameof(url) + " returned a null stream."),
-                                 Encoding.UTF8, true)) { return textReader.ReadToEnd(); }
+            {
+                client.Encoding = Encoding.UTF8;
+                data = client.DownloadString(url);
+            }
+            return data;
+            
         }
         /// <summary>
         /// Displays a <see cref="MessageBox"/> with <seealso cref="MessageBoxButtons.OK"/>, <seealso cref="MessageBoxIcon.Error"/> and  

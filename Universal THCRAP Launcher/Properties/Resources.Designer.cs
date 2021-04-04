@@ -61,7 +61,7 @@ namespace Universal_THCRAP_Launcher.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2020. 01. 05. 20:26:12,13 
+        ///   Looks up a localized string similar to 2021. 04. 05.  0:13:35,51 
         ///Central Europe Standard Time.
         /// </summary>
         internal static string BuildDate {

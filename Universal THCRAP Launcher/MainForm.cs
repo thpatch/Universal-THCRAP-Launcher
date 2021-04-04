@@ -1110,23 +1110,24 @@ namespace Universal_THCRAP_Launcher
 
             if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
+            string lang_code = System.Globalization.CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
             if (I18N.LangNumber() == 0)
             {
-                string os_lang = System.Globalization.CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
                 try
                 {
                     try
                     {
                         string lang =
-                            ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + os_lang + ".json");
-                        File.WriteAllText(I18N.I18NDir + @"\" + os_lang + ".json", lang);
+                            ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + lang_code + ".json");
+                        File.WriteAllText(I18N.I18NDir + @"\" + lang_code + ".json", lang);
                     }
                     catch (WebException wex)
                     {
-                        log.WriteLine($"Couldn't download the language file for {os_lang}, due to {wex.Message} a.k.a {wex.Response} . Trying to download English...");
+                        log.WriteLine($"Couldn't download the language file for {lang_code}, due to {wex.Message} a.k.a {wex.Response} . Trying to download English...");
                         string lang =
                             ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
                         File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                        lang_code = "en";
                     }
                 }
                 catch (Exception ex)
@@ -1140,7 +1141,7 @@ namespace Universal_THCRAP_Launcher
             //Load language
             if (dconfig == null || dconfig.Lang == null || !(dconfig is string) || dconfig.Lang.Trim() == "")
             {
-                Configuration.Lang = "en.json";
+                Configuration.Lang = lang_code + ".json";
             }
             else
             {

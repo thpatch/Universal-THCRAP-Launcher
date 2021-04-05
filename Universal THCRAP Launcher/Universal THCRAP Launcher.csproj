@@ -70,7 +70,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -86,10 +86,10 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>BC72646AA59FDF7BB72B128F4257BE2F2473C22B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D3312BF3AE0D1F112DE1916859D2F9A021CA4A76</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Universal THCRAP Launcher_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Universal THCRAP Launcher_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -173,6 +173,7 @@
       <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\AbstractCactus_Icon_01.ico" />
+    <None Include="Universal THCRAP Launcher_1_TemporaryKey.pfx" />
     <None Include="Universal THCRAP Launcher_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

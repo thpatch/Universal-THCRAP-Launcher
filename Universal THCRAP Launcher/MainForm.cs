@@ -1072,7 +1072,7 @@ namespace Universal_THCRAP_Launcher
                             "\nCurrent Date: " + DateTime.Now +
                             "\nDo these files below exists:" +
                             $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
-                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t\t{File.Exists(GAMES_FILE)}" +
+                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t{File.Exists(GAMES_FILE)}" +
                             "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
 
             #endregion

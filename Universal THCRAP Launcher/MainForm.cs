@@ -1198,24 +1198,24 @@ namespace Universal_THCRAP_Launcher
             if (File.Exists(@"..\repos\nmlgc\script_latin\stringdefs.js"))
             {
                 string file = File.ReadAllText(@"..\repos\nmlgc\script_latin\stringdefs.js");
+                log.WriteLine(@"Found repos\nmlgc\script_latin\stringdefs.js!");
                 var stringdef = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
                 foreach (KeyValuePair<string, string> variable in stringdef)
                 {
                     if (Regex.IsMatch(variable.Key, "^th[0-9]{2,3}$"))
                     {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
                     }
                     if (variable.Key.Equals("alcostg"))
                     {
                         GameFullNameDictionary.Add(variable.Key, variable.Value);
-                        log.WriteLine(string.Format("Found pretty name for {0} as {1}", variable.Key, variable.Value));
                     }
                 }
             }
             else log.WriteLine(@"repos\nmlgc\script_latin\stringdefs.js does not exists!");
             if (Directory.Exists(@"..\repos\nmlgc\base_tasofro"))
             {
+                log.WriteLine(@"Found repos\nmlgc\base_tasofro!");
                 foreach (string file in Directory.EnumerateFiles(@"..\repos\nmlgc\base_tasofro"))
                 {
                     string raw = File.ReadAllText(file);
@@ -1226,7 +1226,6 @@ namespace Universal_THCRAP_Launcher
                     string key = file.Replace(".js", "").Replace(@"..\repos\nmlgc\base_tasofro\", "");
                     if (key.Equals("patch")) continue; //We don't need the name of the base_tasofro patch
                     GameFullNameDictionary.Add(key, title);
-                    log.WriteLine(string.Format("Found pretty name for {0} as {1}", key, title));
                 }
             }
             else log.WriteLine(@"repos\nmlgc\base_tasofro does not exists!");

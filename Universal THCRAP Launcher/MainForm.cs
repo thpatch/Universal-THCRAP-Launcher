@@ -1149,13 +1149,13 @@ namespace Universal_THCRAP_Launcher
             }
 
             //Load language
-            if (dconfig == null || dconfig.Lang == null || !(dconfig is string) || dconfig.Lang.Trim() == "")
+            if (dconfig == null || !(dconfig is dynamic) || String.IsNullOrEmpty((string)(dconfig.Lang.Value)))
             {
                 Configuration.Lang = lang_code + ".json";
             }
             else
             {
-                Configuration.Lang = dconfig.Lang;
+                Configuration.Lang = dconfig.Lang.Value;
             }
 
             I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
@@ -1482,11 +1482,10 @@ namespace Universal_THCRAP_Launcher
                 if (process.HasExited) return;
             } while (id != "thcrap" && !process.MainWindowTitle.Contains(gameName) || process.MainWindowTitle.Contains("vpatch") || process.MainWindowTitle == "");
             process.WaitForInputIdle();
-            string processName = process.MainWindowTitle;
-            log.WriteLine($"{process.ProcessName} is running with title {processName}.");
-            progress.Report(() => { Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}"; });
+            log.WriteLine($"{process.ProcessName} is running.");
+            progress.Report(() => { Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {process.ProcessName}"; });
             process.WaitForExit();
-            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {processName}", ""); });
+            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {process.ProcessName}", ""); });
         }
         /// <summary>
         /// Scans the running game (if that's not set in as a process in which case <see cref="ScanRunningProcess(Process, IProgress{Action}, string)"/> might be better.
@@ -1522,21 +1521,9 @@ namespace Universal_THCRAP_Launcher
             } while (gameProcess == null || (gameName == "th07" && gameProcess.MainWindowTitle == "")); //Touhou 7 is a bit bugy and needs to be rescanned.
             sw.Stop();
             log.WriteLine("Found game, took: " + sw.Elapsed + " // Can't redirect output of the game that's launched through thcrap, use thcrap.");
-            string foundName = "";
             progress.Report(() => { Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}"; });
-            do
-            {
-                gameProcess.Refresh();
-                if (gameProcess.HasExited) {
-                    progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", ""); });
-                    return;
-                };
-                Thread.Sleep(500);
-                foundName = gameProcess.MainWindowTitle;
-            } while (foundName == "");
-            progress.Report(() => { Text = Text.Replace(gameName, foundName); });
             gameProcess.WaitForExit();
-            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {foundName}", ""); });
+            progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", ""); });
         }
         /// <summary>
         /// Add the selected item in the given listbox to the favorites.

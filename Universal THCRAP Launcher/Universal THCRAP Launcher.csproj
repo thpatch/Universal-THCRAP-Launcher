@@ -173,8 +173,6 @@
       <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\AbstractCactus_Icon_01.ico" />
-    <None Include="Universal THCRAP Launcher_1_TemporaryKey.pfx" />
-    <None Include="Universal THCRAP Launcher_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Custom.png" />

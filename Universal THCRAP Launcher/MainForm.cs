@@ -1123,29 +1123,7 @@ namespace Universal_THCRAP_Launcher
             string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
             if (I18N.LangNumber() == 0)
             {
-                try
-                {
-                    try
-                    {
-                        string lang =
-                            ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + lang_code + ".json");
-                        File.WriteAllText(I18N.I18NDir + @"\" + lang_code + ".json", lang);
-                    }
-                    catch (WebException wex)
-                    {
-                        log.WriteLine($"Couldn't download the language file for {lang_code}, due to {wex.Message} . Trying to download English...");
-                        string lang =
-                            ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
-                        File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
-                        lang_code = "en";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
-                    MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
-                                    @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                lang_code = DownloadTranslation(lang_code);
             }
 
             //Load language
@@ -1192,6 +1170,42 @@ namespace Universal_THCRAP_Launcher
 
             return true;
         }
+
+        /// <summary>
+        /// Tries to download the given language, if it fails, tries to download English.
+        /// </summary>
+        /// <param name="lang_code">The two letter ISO code for the language to try to download first</param>
+        /// <returns>The two letter ISO code for the language sucessfully downloaded</returns>
+        private string DownloadTranslation(string lang_code)
+        {
+            try
+            {
+                try
+                {
+                    string lang =
+                        ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + lang_code + ".json");
+                    File.WriteAllText(I18N.I18NDir + @"\" + lang_code + ".json", lang);
+                }
+                catch (WebException wex)
+                {
+                    log.WriteLine($"Couldn't download the language file for {lang_code}, due to {wex.Message} . Trying to download English...");
+                    string lang =
+                        ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
+                    File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
+                    lang_code = "en";
+                }
+            }
+            catch (Exception ex)
+            {
+                log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
+                MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
+                                @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+
+            return lang_code;
+        }
+
         /// <summary>
         /// Initialized data into the global variables and etc.
         /// </summary>

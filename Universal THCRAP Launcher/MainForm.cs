@@ -1120,7 +1120,7 @@ namespace Universal_THCRAP_Launcher
 
             if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
-            string lang_code = System.Globalization.CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
+            string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
             if (I18N.LangNumber() == 0)
             {
                 try

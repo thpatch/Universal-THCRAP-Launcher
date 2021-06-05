@@ -262,3 +262,7 @@ __pycache__/
 
 # VS Code
 *.code-workspace
+
+# Ignore BuildDate and BuildUser
+**/BuildDate.txt
+**/BuildUser.txt

@@ -28,7 +28,11 @@ namespace Universal_THCRAP_Launcher
                 return;
             }
 
-            fs = new FileStream(logFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);
+            // Delete log file if larger than 1 MB
+            if (File.Exists(logFile) && new System.IO.FileInfo(logFile).Length >= 0x100000)
+                File.Delete(logFile);
+
+            fs = new FileStream(logFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
             sw = new StreamWriter(fs);
         }
 

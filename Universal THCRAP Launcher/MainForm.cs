@@ -1081,7 +1081,7 @@ namespace Universal_THCRAP_Launcher
                             "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
                             "\nDirectory of Exe: " + exeDir +
                             "\nCurrent Date: " + DateTime.Now +
-                            "\nDo these files below exists:" +
+                            "\nDo these files below exist:" +
                             $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
                             $"\n{File.Exists("thcrap_configure.exe")}\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t{File.Exists(GAMES_FILE)}" +
                             "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
@@ -1133,6 +1133,12 @@ namespace Universal_THCRAP_Launcher
             else
             {
                 Configuration.Lang = dconfig.Lang.Value;
+                if (!File.Exists(I18N.I18NDir + Configuration.Lang))
+                {
+                    log.WriteLine($"Language is set to {Configuration.Lang}, but it's not downloaded. This can definitely go wrong,\n" +
+                        $"so let's set it back to English...");
+                    Configuration.Lang = "en.json";
+                }
             }
 
 

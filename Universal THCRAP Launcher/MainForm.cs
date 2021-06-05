@@ -1110,21 +1110,20 @@ namespace Universal_THCRAP_Launcher
             }
 
             //Load config
+            string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
             if (File.Exists(CONFIG_FILE))
             {
                 var settings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
                 string raw = File.ReadAllText(CONFIG_FILE);
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
                 dconfig = JsonConvert.DeserializeObject(raw, settings);
-            }
-
-            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
-
-            string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-            if (I18N.LangNumber() == 0)
+            } else
             {
                 lang_code = DownloadTranslation(lang_code);
             }
+
+            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
             //Load language
             if (dconfig == null || !(dconfig is dynamic) || String.IsNullOrEmpty((string)(dconfig.Lang.Value)))
@@ -1135,6 +1134,7 @@ namespace Universal_THCRAP_Launcher
             {
                 Configuration.Lang = dconfig.Lang.Value;
             }
+
 
             I18N.UpdateLangResource(I18N.I18NDir + Configuration.Lang);
 

@@ -1133,7 +1133,7 @@ namespace Universal_THCRAP_Launcher
                     }
                     catch (WebException wex)
                     {
-                        log.WriteLine($"Couldn't download the language file for {lang_code}, due to {wex.Message} a.k.a {wex.Response} . Trying to download English...");
+                        log.WriteLine($"Couldn't download the language file for {lang_code}, due to {wex.Message} . Trying to download English...");
                         string lang =
                             ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
                         File.WriteAllText(I18N.I18NDir + @"\en.json", lang);

@@ -1,0 +1,109 @@
+{
+	"metadata": {
+		"authors": ["AdriLez"],
+		"native": "Français",
+		"english": "French"
+	},
+	"settingsForm": {
+		"settings": "Paramètres",
+		"language": "Langue",
+		"closeOnExit": "Fermer quand le jeu se lance",
+		"langCredits": "Traduit par {0}.",
+		"and": "et",
+		"downloadAll": "Télécharger Toutes les Langues",
+		"downloading": "Téléchargement...",
+		"hidePatchExtension": "Masquer l'extension dans la liste de patchs",
+		"showVanilla": "Montrer les options de lancement Vanilla (sans THCRAP) dans la liste de patchs",
+		"onlyOneExe": "Autoriser un seul éxécutable à la fois",
+		"label_gameNaming": "Type de nommage pour les exécutables:",
+		"onlyOneUTL": "Autoriser un seul UTL à la fois",
+		"showGameId": "Montrer l'ID du Jeu (thXX)",
+		"tabs": {
+			"general": "Général",
+			"language": "Langue"
+		},
+		"namingType": ["thXX", "Initiales", "Nom Court", "Nom Long"]
+	},
+	"errors": {
+		"error": "Erreur",
+		"missing": {
+			"thcrap_loader": "thcrap_loader.exe n'a pas pu être trouvé.\nAssurez-vous de mettre l'application à côté!",
+			"gamesJs": "games.js n'a pas pu être trouvé.\nAssurez-vous de lancer thcrap_configure.exe d'abord!",
+			"patchStacks": "Aucune librairie de patch n'a pu être trouvée.\nAssurez-vous de lancer thcrap_configure.exe d'abord!",
+			"jsonParser": "Newtonsoft.Json.dll est manquant. Assurez-vous qu'il a bien aussi été copié.",
+			"file": "{0} est manquant. Assurez-vous que ce soit corrigé."
+		},
+		"oops": "Quelque chose s'est mal passé...",
+		"noneSelected": "Aucune librairie de patch ou éxécutable selectionné!\nVeuillez en sélectionner un!",
+		"downloadError": "Couldn't download language files from GitHub. Vous êtes soit:\n- Pas Connecté à Internet\n- Ce programme est devenu tellement obsolète que le Dépôt GitHub n'existe plus.\n- Dans un futur où GitHub ou Internet n'existe plus.",
+		"alreadyRunning": "Le programme est déjà en cours. Désactivez cette vérification dans les paramètres ou fermez le programme."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Remarque",
+			"text": "Le Lanceur disparaît lors de la configuration..."
+		},
+		"kbSh": {
+			"caption": "Keyboard Shortcuts",
+			"text": "Alt + F4: Fermer l'Application (raccourci Windows par défaut)\nCtrl + R: Redémarrer l'Application\nCtrl + O: Ouvrir la librairie de patch selcetionnée\nF1: Afficher les Raccourcis Clavier (cette fenêtre)\nF2: Ajouter aux favoris l'objet selectionné dans la liste selectionnée"
+		}
+	},
+	"shCreate": {
+		"file": "Lanceur Universel THCRAP",
+		"desc": "Raccourci pour UTL"
+	},
+	"mainForm": {
+		"utl": "Lanceur Universel THCRAP",
+		"running": "En cours:",
+		"menuStrip": [
+			[
+				"App",
+				"Créer un Raccourci sur le Bureau",
+				"Créer un Raccourci pour le Menu Démarrer",
+				"Paramètres...",
+				"-",
+				"Redémarrer",
+				"Quitter"
+			],
+			[
+				"THCRAP",
+				"Ouvrir THCRAP Configuration",
+				[
+					"Ouvrir...",
+					"Ouvrir Dossier",
+					"Ouvrir la Liste des Jeux (games.js)",
+					"Ouvrir la librairie de patch selectionnée"
+				]
+			],
+			[
+				"GitHub",
+				"Page GitHub",
+				[
+					"Feedback",
+					"Signaler un Bug",
+					"Autre"
+				],
+				"Faire un don"
+			],
+			[
+				"Aide",
+				"Raccourcis Clavier"
+			]
+		],
+		"vanilla": "Vanilla",
+		"custom": "Environnement Programme Personnalisé",
+		"hided": "Le programme a été réduit dans la barre de notification et s'exécute toujours en arrière-plan.",
+		"tooltips": {
+			"startButton": "Lancer l'éxécutable avec les paramètres sélectionnés",
+			"sortAZ": "Trier par ordre alphabétique",
+			"filterFav": "Filtrer par favoris",
+			"filterByType": "Filtrer par Type",
+			"patchLB": "Choisir la librairie de patch",
+			"gameLB": "Choisir l'éxécutable",
+			"patchFav": "Ajouter une librairie de patch aux favoris (ou utiliser F2 si c'est la sélection active)",
+			"gamesFav": "Ajouter un éxécutable ou exe aux favoris (ou utiliser F2 si c'est la sélection active)",
+			"random": "Selectionner un élément aléatoire",
+			"delete": "Supprimer la librairie de patch du disque"
+		}
+	}
+}

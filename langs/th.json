@@ -1,0 +1,109 @@
+{
+	"metadata": {
+		"authors": ["PuadThubXD"],
+		"native": "ภาษาไทย",
+		"english": "Thai"
+	},
+	"settingsForm": {
+		"settings": "การตั้งค่า",
+		"language": "ภาษา",
+		"closeOnExit": "ปิดเมื่อเกมเริ่ม",
+		"langCredits": "แปลโดย {0}",
+		"and": "และ",
+		"downloadAll": "ดาวน์โหลดทุกภาษา",
+		"downloading": "กำลังดาวน์โหลด...",
+		"hidePatchExtension": "ซ่อนสกุลไฟล์ในรายชื่อ patch",
+		"showVanilla": "แสดงตัวเลือกการเล่นแบบวานิลลา (ไม่มี THCrap) ในรายชื่อ patch",
+		"onlyOneExe": "อนุญาตให้รันไฟล์ executable แค่หนึ่งโปรเซส",
+		"label_gameNaming": "ประเภทการตั้งชื่อสำหรับไฟล์ executable:",
+		"onlyOneUTL": "อนุญาตให้รันไฟล์ UTL แค่หนึ่งโปรเซส",
+		"showGameId": "แสดงไอดีเกม (thXX)",
+		"tabs": {
+			"general": "ทั่วไป",
+			"language": "ภาษา"
+		},
+		"namingType": ["thXX", "ตัวย่อ", "ชื่อสั้น", "ชื่อยาว"]
+	},
+	"errors": {
+		"error": "ข้อผิดพลาด",
+		"missing": {
+			"thcrap_loader": "ไม่สามารถตรวจพบ thcrap_loader.exe\nตรวจสอบให้แน่ใจว่าได้วางแอปพลิเคชั่นไว้ในโฟลเดอร์เดียวกัน",
+			"gamesJs": "ไม่สามารถตรวจพบ games.js\nตรวจสอบให้แน่ใจว่าได้รัน thcrap_configure.exe ก่อนแล้ว",
+			"patchStacks": "ไม่สามารถตรวจพบ patch stacks.\nตรวจสอบให้แน่ใจว่าได้รัน thcrap_configure.exe ก่อนแล้ว",
+			"jsonParser": "Newtonsoft.Json.dll หายไป ตรวจสอบให้แน่ใจว่าได้คัดลอกมาพร้อมกัน",
+			"file": "{0} หายไป ตรวจสอบให้แน่ใจว่าได้รับการแก้ไขแล้ว"
+		},
+		"oops": "บางอย่างผิดพลาด...",
+		"noneSelected": "ไม่ได้เลือก patch stack หรือไฟล์ executable\nกรุณาเลือกมาหนึ่งอย่าง",
+		"downloadError": "ไม่สามารถดาวน์โหลดไฟล์ภาษาจาก GitHub นั่นหมายความว่า:\n- คุณไม่ได้เชื่อมต่ออินเตอร์เน็ต\n- โปรแกรมไม่ได้รับการเหลียวแลจน repository บน GitHub หายไป\n- คุณอยู่ในอนาคตที่ไม่มี GitHub หรืออินเตอร์เน็ต",
+		"alreadyRunning": "โปรแกรมกำลังรันอยู่ ปิดการตรวงสอบนี้ในการตั้งค่าหรือปิดโปรแกรม"
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "แจ้งเตือน",
+			"text": "Launcher จะหายไประหว่างการกำหนดค่า..."
+		},
+		"kbSh": {
+			"caption": "ปุ่มลัด",
+			"text": "Alt + F4: ปิดแอปพลิเคชั่น (ปุ่มลัดเริ่มต้นของ Windows)\nCtrl + R: รีสตาร์ทแอปพลิเคชั่น\nCtrl + O: เปิด patch stack ที่เลือก\nF1: แสดงปุ่มลัด (หน้าต่างนี้)\nF2: เพิ่มไอเท็มที่เลือกสู่รายการโปรดของรายการที่เลือก"
+		}
+	},
+	"shCreate": {
+		"file": "Universal THCRAP Launcher",
+		"desc": "ทางลัดสำหรับ UTL"
+	},
+	"mainForm": {
+		"utl": "Universal THCRAP Launcher",
+		"running": "กำลังรัน:",
+		"menuStrip": [
+			[
+				"แอป",
+				"สร้างทางลัดบนเดสก์ท็อป",
+				"สร้างทางลัดสำหรับเมนูเริ่ม",
+				"ตั้งค่า...",
+				"-",
+				"รีสตาร์ท",
+				"ออก"
+			],
+			[
+				"THCRAP",
+				"เปิดตัวกำหนดค่า THCRAP",
+				[
+					"เปิด...",
+					"เปิดโฟลเดอร์",
+					"เปิดรายชื่อเกม (games.js)",
+					"เปิด patch stack ที่เลือก"
+				]
+			],
+			[
+				"GitHub",
+				"หน้า GitHub",
+				[
+					"การตอบรับ",
+					"รายงานบั๊ก",
+					"อื่น ๆ"
+				],
+				"บริจาค"
+			],
+			[
+				"ช่วยเหลือ",
+				"ปุ่มลัด"
+			]
+		],
+		"vanilla": "วานิลลา",
+		"custom": "โปรแกรมสภาพแวดล้อมที่กำหนดเอง",
+		"hided": "โปรแกรมนี้ถูกย่อสู่ถาดการแจ้งเตือนและกำลังรันอยู่ในพื้นหลัง",
+		"tooltips": {
+			"startButton": "เริ่มไฟล์ executable ด้วยการตั้งค่าที่เลือก",
+			"sortAZ": "จัดเรียงตามลำดับอักษร",
+			"filterFav": "กรองโดยรายการโปรด",
+			"filterByType": "กรองโดยประเภท",
+			"patchLB": "เลือก patch stack",
+			"gameLB": "เลือกไฟล์ executable",
+			"patchFav": "เพิ่ม patch stack สู่รายการโปรด (หรือใช้ F2 หากเป็นการเลือกแบบ active)",
+			"gamesFav": "เพิ่มไฟล์ executable สู้รายการโปรด (หรือใช้ F2 หากเป็นการเลือกแบบ active)",
+			"random": "เลือกแบบสุ่ม",
+			"delete": "ลบ patch stack ที่เลือกจากดิสก์"
+		}
+	}
+}

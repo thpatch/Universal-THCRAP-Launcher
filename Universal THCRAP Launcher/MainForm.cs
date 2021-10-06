@@ -1112,6 +1112,8 @@ namespace Universal_THCRAP_Launcher
             //Load config
             string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
+            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
+
             if (File.Exists(CONFIG_FILE))
             {
                 var settings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
@@ -1122,8 +1124,6 @@ namespace Universal_THCRAP_Launcher
             {
                 lang_code = DownloadTranslation(lang_code);
             }
-
-            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
 
             //Load language
             if (dconfig == null || !(dconfig is dynamic) || String.IsNullOrEmpty((string)(dconfig.Lang.Value)))

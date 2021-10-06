@@ -1126,7 +1126,7 @@ namespace Universal_THCRAP_Launcher
             }
 
             //Load language
-            if (dconfig == null || !(dconfig is dynamic) || String.IsNullOrEmpty((string)(dconfig.Lang.Value)))
+            if (dconfig == null || String.IsNullOrEmpty((string)(dconfig.Lang.Value)))
             {
                 Configuration.Lang = lang_code + ".json";
             }

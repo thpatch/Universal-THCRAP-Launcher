@@ -402,7 +402,7 @@ namespace Universal_THCRAP_Launcher
             MessageBox.Show(I18N.LangResource.popup.hideLauncher.text?.ToString(),
                             I18N.LangResource.popup.hideLauncher.caption?.ToString(), MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
-            Process p = Process.Start("thcrap_configure.exe");
+            Process p = Process.Start("thcrap_configure_v3.exe");
             if (p == null)
             {
                 MessageBox.Show(I18N.LangResource.errors.oops?.ToString(), I18N.LangResource.errors.error?.ToString());

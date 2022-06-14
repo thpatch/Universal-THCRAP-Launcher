@@ -73,12 +73,6 @@ namespace Universal_THCRAP_Launcher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (!InitChecks())
-            {
-                Application.Exit();
-                return;
-            }
-
             InitData();
             DownloadCurrentLanguage();
 
@@ -703,6 +697,10 @@ namespace Universal_THCRAP_Launcher
             output += ",\n  \"Lang\": " +
                       JsonConvert.SerializeObject(Configuration.Lang, Formatting.Indented,
                                                   new JsonSerializerSettings()) + "\n}";
+
+            string dirName = Path.GetDirectoryName(CONFIG_FILE);
+            if (!Directory.Exists(dirName))
+                Directory.CreateDirectory(dirName);
             File.WriteAllText(CONFIG_FILE, output);
 
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
@@ -1060,77 +1058,97 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region Methods less releated to the GUI
-        /// <summary>
-        /// Does checks to make sure everything is in place before starting the program
-        /// </summary>
-        private bool InitChecks()
+        private void PrintLogsHeader(string exeDir)
         {
-            if (Environment.CurrentDirectory == @"C:\Windows\system32")
-            {
-                MessageBox.Show("The application was launched from Windows/system32. This was probably because you used the Windows jumplist.\nIf you know how to fix the jumplist, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", "There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-                return false;
-            }
-            #region Log File Beginning
-            string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
             log.Write("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
-                            "\nUniversal THCRAP Launcher Log File" +
-                            "\nVersion: " + Application.ProductVersion +
-                            $"\nBuild Date: {Resources.BuildDate.Split('\r')[0]} ({Resources.BuildDate.Split('\n')[1]})" +
-                            $"\nBuilt by: {Resources.BuildUser.Split('\n')[0]} ({Resources.BuildUser.Split('\n')[1]})" +
-                            "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
-                            "\nDirectory of Exe: " + exeDir +
-                            "\nCurrent Date: " + DateTime.Now +
-                            "\nDo these files below exist:" +
-                            $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
-                            $"\n{File.Exists("thcrap_configure.exe")}\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t{File.Exists(GAMES_FILE)}" +
-                            "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
+                      "\nUniversal THCRAP Launcher Log File" +
+                      "\nVersion: " + Application.ProductVersion +
+                      $"\nBuild Date: {Resources.BuildDate.Trim()}" +
+                      $"\nBuilt by: {Resources.BuildUser.Trim()}" +
+                      "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
+                      "\nDirectory of Exe: " + exeDir +
+                      "\nCurrent Date: " + DateTime.Now +
+                      "\nDo these files below exist:" +
+                      $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
+                      $"\n{File.Exists("thcrap_configure.exe")}\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t{File.Exists(GAMES_FILE)}" +
+                      "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
+        }
 
-            #endregion
-
-            Configuration1 = new Configuration();
-            dynamic dconfig = null;
-
+        bool CheckForNewtonsoftJson(string exeDir)
+        {
             //Give error if Newtonsoft.Json.dll isn't found.
-            if (!File.Exists(exeDir + "Newtonsoft.Json.dll"))
+            if (File.Exists(exeDir + "Newtonsoft.Json.dll"))
             {
-                //Read parser-less, the error message.
-                if (Configuration.Lang == null) Configuration.Lang = "en.json";
-                string[] lines =
-                    File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
+                return true;
+            }
+            log.WriteLine("Newtonsoft.Json.dll not found, exiting...");
+
+            //Read parser-less, the error message.
+            if (Configuration.Lang == null) Configuration.Lang = "en.json";
+
+            string errorTitle = "Error";
+            string errorMessage = "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well.";
+            if (File.Exists(I18N.I18NDir + Configuration.Lang))
+            {
+                string[] lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
                 foreach (string item in lines)
                 {
-                    var error = "Error";
-                    if (item.Contains("\"error\"")) error = item.Split('"')[3];
-                    if (!item.Contains("\"jsonParser\"")) continue;
-                    MessageBox.Show(item.Split('"')[3], error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
-                    return false;
+                    if (item.Contains("\"error\""))
+                        errorTitle = item.Split('"')[3];
+                    if (item.Contains("\"jsonParser\""))
+                        errorMessage = item.Split('"')[3];
                 }
             }
 
-            //Load config
-            string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            MessageBox.Show(errorMessage, errorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
 
-            if (!Directory.Exists(I18N.I18NDir)) Directory.CreateDirectory(I18N.I18NDir);
-
+        object LoadConfig()
+        {
             if (File.Exists(CONFIG_FILE))
             {
                 var settings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
                 string raw = File.ReadAllText(CONFIG_FILE);
                 Configuration1 = JsonConvert.DeserializeObject<Configuration>(raw, settings);
-                dconfig = JsonConvert.DeserializeObject(raw, settings);
-            } else
+                if (Configuration1 != null)
+                {
+                    return JsonConvert.DeserializeObject(raw, settings);
+                }
+            }
+
+            Configuration1 = new Configuration();
+            return null;
+        }
+
+        /// <summary>
+        /// Does checks to make sure everything is in place before starting the program
+        /// </summary>
+        public bool InitChecks()
+        {
+            if (Environment.CurrentDirectory == @"C:\Windows\system32")
             {
-                lang_code = DownloadTranslation(lang_code);
+                MessageBox.Show("The application was launched from Windows/system32. This was probably because you used the Windows jumplist.\nIf you know how to fix the jumplist, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", "There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
+
+            PrintLogsHeader(exeDir);
+            if (!CheckForNewtonsoftJson(exeDir))
+            {
+                return false;
+            }
+
+            dynamic dconfig = LoadConfig();
+
+            string lang_code = DownloadTranslation();
+            if (lang_code == null)
+            {
+                return false;
             }
 
             //Load language
-            if (dconfig == null || String.IsNullOrEmpty((string)(dconfig.Lang.Value)))
-            {
-                Configuration.Lang = lang_code + ".json";
-            }
-            else
+            if (!String.IsNullOrEmpty((string)dconfig?.Lang?.Value))
             {
                 Configuration.Lang = dconfig.Lang.Value;
                 if (!File.Exists(I18N.I18NDir + Configuration.Lang))
@@ -1139,6 +1157,10 @@ namespace Universal_THCRAP_Launcher
                         $"so let's set it back to English...");
                     Configuration.Lang = "en.json";
                 }
+            }
+            else
+            {
+                Configuration.Lang = lang_code + ".json";
             }
 
 
@@ -1151,28 +1173,26 @@ namespace Universal_THCRAP_Launcher
             */
 
             //Give error if not next to thcrap_loader.exe
-            bool fileExists = File.Exists("thcrap_loader.exe");
-            if (!fileExists)
+            if (!File.Exists("thcrap_loader.exe"))
             {
-                ErrorAndExit(I18N.LangResource.errors.missing.thcrap_loader);
+                MessageBox.Show(I18N.LangResource?.errors?.missing?.thcrap_loader);
                 return false;
             }
 
             //Give error if no games file
             if (!File.Exists(GAMES_FILE))
             {
-                ErrorAndExit(I18N.LangResource.errors.missing.gamesJs);
+                MessageBox.Show(I18N.LangResource?.errors?.missing?.gamesJs);
                 return false;
             }
 
             if (Configuration1.OnlyAllowOneUtl && Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
             {
-                ErrorAndExit(I18N.LangResource.errors.alreadyRunning);
+                MessageBox.Show(I18N.LangResource?.errors?.alreadyRunning);
                 return false;
             }
 
-            if (!File.Exists($@"..\{I18N.LangResource.shCreate.file?.ToString()}.lnk"))
-                CreateShortcut("..");
+            CreateShortcut("..");
 
             return true;
         }
@@ -1180,23 +1200,37 @@ namespace Universal_THCRAP_Launcher
         /// <summary>
         /// Tries to download the given language, if it fails, tries to download English.
         /// </summary>
-        /// <param name="lang_code">The two letter ISO code for the language to try to download first</param>
         /// <returns>The two letter ISO code for the language sucessfully downloaded</returns>
-        private string DownloadTranslation(string lang_code)
+        private string DownloadTranslation()
         {
+            string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            if (File.Exists(I18N.I18NDir + @"\" + lang_code + ".json"))
+            {
+                // Nothing to do
+                return lang_code;
+            }
+
+            if (!Directory.Exists(I18N.I18NDir))
+            {
+                Directory.CreateDirectory(I18N.I18NDir);
+            }
+
             try
             {
+                string lang_url_base = "https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/";
                 try
                 {
-                    string lang =
-                        ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" + lang_code + ".json");
+                    string lang_url = lang_url_base + lang_code + ".json";
+                    log.WriteLine($"Downloading {lang_url}...");
+                    string lang = ReadTextFromUrl(lang_url);
                     File.WriteAllText(I18N.I18NDir + @"\" + lang_code + ".json", lang);
                 }
                 catch (WebException wex)
                 {
                     log.WriteLine($"Couldn't download the language file for {lang_code}, due to {wex.Message} . Trying to download English...");
                     string lang =
-                        ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json");
+                        ReadTextFromUrl(lang_url_base + "en.json");
                     File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
                     lang_code = "en";
                 }
@@ -1206,7 +1240,7 @@ namespace Universal_THCRAP_Launcher
                 log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
                 MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
                                 @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
+                return null;
             }
 
             return lang_code;
@@ -1369,14 +1403,8 @@ namespace Universal_THCRAP_Launcher
         {
             var shell = new WshShell();
 
-            string shortcutAddress = (string)shell.SpecialFolders.Item(ref targetSpecialFolder) + "\\" +
-                                     I18N.LangResource.shCreate.file?.ToString() + ".lnk";
-            var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
-            shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
-            shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
-            shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
-            shortcut.Save();
-            log.WriteLine($"==\nCreated Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
+            string shortcutDir = (string)shell.SpecialFolders.Item(ref targetSpecialFolder);
+            CreateShortcut(shortcutDir);
         }
         /// <summary>
         /// Create a shortcut at the specified location.
@@ -1388,6 +1416,9 @@ namespace Universal_THCRAP_Launcher
 
             string shortcutAddress = folder + "\\" +
                                      I18N.LangResource.shCreate.file?.ToString() + ".lnk";
+            if (File.Exists(shortcutAddress))
+                return;
+
             var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
             shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
             shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
@@ -1647,41 +1678,6 @@ namespace Universal_THCRAP_Launcher
     }
 
     #region Helper Classes
-
-    public static class I18N
-    {
-        public static readonly string I18NDir = Directory.GetCurrentDirectory() + @"\..\i18n\utl\";
-
-        public static dynamic LangResource { get; private set; }
-
-
-        public static int LangNumber()
-        {
-            if (Directory.Exists(I18NDir)) return Directory.GetFiles(I18NDir).Length;
-
-            return 0;
-        }
-
-        private static dynamic GetLangResource(string filePath)
-        {
-            string raw = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject(raw);
-        }
-
-        public static void UpdateLangResource(string filePath)
-        {
-            try
-            {
-                LangResource = GetLangResource(filePath);
-                Configuration.Lang = filePath.Replace(I18NDir, "");
-            }
-            catch (JsonReaderException e)
-            {
-                MessageBox.Show(e.Message, @"JSON Parser Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
-        }
-    }
 
     public class Configuration
     {

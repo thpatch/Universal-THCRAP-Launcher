@@ -32,6 +32,10 @@ namespace Universal_THCRAP_Launcher
             if (File.Exists(logFile) && new System.IO.FileInfo(logFile).Length >= 0x100000)
                 File.Delete(logFile);
 
+            string dirName = Path.GetDirectoryName(logFile);
+            if (!Directory.Exists(dirName))
+                Directory.CreateDirectory(dirName);
+
             fs = new FileStream(logFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
             sw = new StreamWriter(fs);
         }
@@ -56,12 +60,18 @@ namespace Universal_THCRAP_Launcher
 
         ~Log()
         {
-            sw.Flush();
-            fs.Flush();
-            sw.Close();
-            fs.Close();
-            sw.Dispose();
-            fs.Dispose();
+            if (sw != null)
+            {
+                sw.Flush();
+                sw.Close();
+                sw.Dispose();
+            }
+            if (fs != null)
+            {
+                fs.Flush();
+                fs.Close();
+                fs.Dispose();
+            }
         }
     }
 }

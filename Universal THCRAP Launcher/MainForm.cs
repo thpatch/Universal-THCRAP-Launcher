@@ -1444,13 +1444,14 @@ namespace Universal_THCRAP_Launcher
             {
                 _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace("★", "").Trim(), out string s1);
                 _gamesDictionary.TryGetValue(s1 ?? throw new InvalidOperationException(), out string game);
+                String gameDirectory = game.Substring(0, game.LastIndexOf('/'));
                 id = s1;
                 if (game == null)
                 {
                     ErrorAndExit(I18N.LangResource.errors.oops?.ToString());
                     return;
                 }
-                process = new Process { StartInfo = { FileName = game, RedirectStandardOutput = true, UseShellExecute = false } };
+                process = new Process { StartInfo = { FileName = game, WorkingDirectory = gameDirectory, RedirectStandardOutput = true, UseShellExecute = false } };
                 process.OutputDataReceived += Process_OutputDataReceived;
                 log.WriteLine($"Game {game} started without thcrap.");
             }

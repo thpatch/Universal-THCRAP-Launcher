@@ -38,9 +38,10 @@ namespace Universal_THCRAP_Launcher
 
         #region Global variables
 
-        private const string CONFIG_FILE = @"..\config\utl_config.json";
-        private const string FAVORITE_FILE = @"..\config\favorite.json";
-        private const string GAMES_FILE = @"..\config\games.js";
+        private const string CONFIG_FOLDER = @"..\config\";
+        private const string CONFIG_FILE = CONFIG_FOLDER + @"utl_config.json";
+        private const string FAVORITE_FILE = CONFIG_FOLDER + @"favorite.json";
+        private const string GAMES_FILE = CONFIG_FOLDER + @"games.js";
 
         private readonly Image _custom = new Bitmap(Resources.Custom);
         private readonly Image _game = new Bitmap(Resources.Game);
@@ -417,7 +418,7 @@ namespace Universal_THCRAP_Launcher
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e)
         {
-            string path = Directory.GetCurrentDirectory() + @"/" +
+            string path = Directory.GetCurrentDirectory() + @"\" + CONFIG_FOLDER +
                           patchListBox.SelectedItem.ToString().Replace(" ★", "");
             if (Configuration1.HidePatchExtension)
             {

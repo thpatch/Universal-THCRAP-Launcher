@@ -1175,20 +1175,20 @@ namespace Universal_THCRAP_Launcher
             //Give error if not next to thcrap_loader.exe
             if (!File.Exists("thcrap_loader.exe"))
             {
-                MessageBox.Show(I18N.LangResource?.errors?.missing?.thcrap_loader);
+                MessageBox.Show(I18N.LangResource?.errors?.missing?.thcrap_loader.ToString());
                 return false;
             }
 
             //Give error if no games file
             if (!File.Exists(GAMES_FILE))
             {
-                MessageBox.Show(I18N.LangResource?.errors?.missing?.gamesJs);
+                MessageBox.Show(I18N.LangResource?.errors?.missing?.gamesJs.ToString());
                 return false;
             }
 
             if (Configuration1.OnlyAllowOneUtl && Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
             {
-                MessageBox.Show(I18N.LangResource?.errors?.alreadyRunning);
+                MessageBox.Show(I18N.LangResource?.errors?.alreadyRunning.ToString());
                 return false;
             }
 

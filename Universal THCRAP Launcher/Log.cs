@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Security.Permissions;
 using System.Security;
+using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace Universal_THCRAP_Launcher
 {
-    class Log
+    internal class Log
     {
-        private FileStream fs;
-        private StreamWriter sw;
+        private readonly FileStream _fs;
+        private readonly StreamWriter _sw;
 
         public Log(string logFile)
         {
@@ -29,48 +25,48 @@ namespace Universal_THCRAP_Launcher
             }
 
             // Delete log file if larger than 1 MB
-            if (File.Exists(logFile) && new System.IO.FileInfo(logFile).Length >= 0x100000)
+            if (File.Exists(logFile) && new FileInfo(logFile).Length >= 0x100000)
                 File.Delete(logFile);
 
             string dirName = Path.GetDirectoryName(logFile);
             if (!Directory.Exists(dirName))
                 Directory.CreateDirectory(dirName);
 
-            fs = new FileStream(logFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-            sw = new StreamWriter(fs);
+            _fs = new FileStream(logFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            _sw = new StreamWriter(_fs);
         }
 
         public void WriteLine(object text)
         {
             Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] " + text);
-            if (sw == null) return;
-            sw.WriteLine($"[{DateTime.Now.ToLongTimeString()}] " + text);
-            sw.Flush();
-            fs.Flush();
+            if (_sw == null) return;
+            _sw.WriteLine($"[{DateTime.Now.ToLongTimeString()}] " + text);
+            _sw.Flush();
+            _fs.Flush();
         }
 
         public void Write(object text)
         {
             Console.Write(text);
-            if (sw == null) return;
-            sw.Write(text);
-            sw.Flush();
-            fs.Flush();
+            if (_sw == null) return;
+            _sw.Write(text);
+            _sw.Flush();
+            _fs.Flush();
         }
 
         ~Log()
         {
-            if (sw != null)
+            if (_sw != null)
             {
-                sw.Flush();
-                sw.Close();
-                sw.Dispose();
+                _sw.Flush();
+                _sw.Close();
+                _sw.Dispose();
             }
-            if (fs != null)
+            if (_fs != null)
             {
-                fs.Flush();
-                fs.Close();
-                fs.Dispose();
+                _fs.Flush();
+                _fs.Close();
+                _fs.Dispose();
             }
         }
     }

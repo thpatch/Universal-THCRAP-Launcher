@@ -1,20 +1,20 @@
-﻿using IWshRuntimeLibrary;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IWshRuntimeLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Universal_THCRAP_Launcher.Properties;
 using File = System.IO.File;
 
@@ -24,7 +24,7 @@ using File = System.IO.File;
  * and the quality of code is very bad. If you want to be able to get this working, ensure:
  * NuGet packages are working.
  * Both "code behinds" have been loaded up in th editor once.
- * In Debug tab the working directory has been set to thcrap's directory.
+ * In Debug tab the working directory has been set to the thcrap directory.
  */
 
 namespace Universal_THCRAP_Launcher
@@ -66,7 +66,7 @@ namespace Universal_THCRAP_Launcher
         public static Configuration Configuration1 { get; private set; }
         private Favourites Favourites1 { get; set; } = new Favourites(new List<string>(), new List<string>());
 
-        private Log log = new Log(@"..\logs\utl-log.txt");
+        private readonly Log _log = new Log(@"..\logs\utl-log.txt");
 
         #endregion
 
@@ -123,10 +123,10 @@ namespace Universal_THCRAP_Launcher
                 if (btn_sortAZ2.Location.X < btnDeletePatch.Location.X + btnDeletePatch.Width + 20)
                     splitContainer1.SplitterDistance = btnDeletePatch.Location.X + btnDeletePatch.Width + 4;
                 if (btn_Random2.Location.X + btn_Random2.Width > splitContainer1.Location.X + splitContainer1.Width)
-                    splitContainer1.SplitterDistance = startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 25;
-                UpdateSplitContainerReleatedGUI();
+                    splitContainer1.SplitterDistance = startButton.Location.X + startButton.Width - btn_Random2.Width * 5 - _resizeConstants[4] * 4 + 25;
+                UpdateSplitContainerReleatedGui();
             }
-            catch (Exception ex) { log.WriteLine($"{ex}"); }
+            catch (Exception ex) { _log.WriteLine($"{ex}"); }
 
             if (WindowState != FormWindowState.Minimized) return;
             Hide();
@@ -140,7 +140,7 @@ namespace Universal_THCRAP_Launcher
         private void MainForm_Closing(object sender, FormClosingEventArgs e)
         {
             UpdateConfigFile();
-            log.WriteLine($"Program closed.");
+            _log.WriteLine("Program closed.");
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -165,6 +165,7 @@ namespace Universal_THCRAP_Launcher
             SetDesktopLocation(Configuration1.Window.Location[0], Configuration1.Window.Location[1]);
             Size = new Size(Configuration1.Window.Size[0], Configuration1.Window.Size[1]);
             WindowState = Configuration1.WindowState;
+
             #endregion
 
             ReadConfig();
@@ -178,31 +179,29 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region GUI Element Events
+
         private void SplitContainer1_SplitterMoving(object sender, SplitterCancelEventArgs e)
         {
             if (e.SplitX < btnDeletePatch.Location.X + btnDeletePatch.Width)
             {
                 Cursor.Position = new Point(Location.X + btnDeletePatch.Location.X + btnDeletePatch.Width + _resizeConstants[4] + 4, Cursor.Position.Y);
             }
-            if (e.SplitX > startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 20)
-                Cursor.Position = new Point(Location.X + startButton.Location.X + startButton.Width - (btn_Random2.Width * 5) - (_resizeConstants[4] * 4) + 37, Cursor.Position.Y);
+            if (e.SplitX > startButton.Location.X + startButton.Width - btn_Random2.Width * 5 - _resizeConstants[4] * 4 + 20)
+                Cursor.Position = new Point(Location.X + startButton.Location.X + startButton.Width - btn_Random2.Width * 5 - _resizeConstants[4] * 4 + 37, Cursor.Position.Y);
         }
         private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
             Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
             try
             {
-                UpdateSplitContainerReleatedGUI();
+                UpdateSplitContainerReleatedGui();
             }
             catch (Exception ex)
             {
-                log.WriteLine("Couldn't update splitter releated GUI:\n\t" + ex.ToString());
+                _log.WriteLine("Couldn't update splitter related GUI:\n\t" + ex);
             }
         }
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            _ = Task.Run(StartThcrap);
-        }
+        private void startButton_Click(object sender, EventArgs e) => _ = Task.Run(StartThcrap);
 
         private void Btn_AddFavorite0_Click(object sender, EventArgs e) => AddFavorite(patchListBox);
         private void Btn_AddFavorite1_Click(object sender, EventArgs e) => AddFavorite(gameListBox);
@@ -242,7 +241,7 @@ namespace Universal_THCRAP_Launcher
             if (Configuration1.HidePatchExtension && _jsFiles.Contains(s)) s += ".js";
             if (Configuration1.HidePatchExtension && _thcrapFiles.Contains(s)) s += ".thcrap";
             File.Delete(s);
-            log.WriteLine($"Patch {s} has been deleted.");
+            _log.WriteLine($"Patch {s} has been deleted.");
             if (s.Contains(".js")) _jsFiles.Remove(s);
             if (s.Contains(".thcrap")) _thcrapFiles.Remove(s);
             PopulatePatchList();
@@ -380,10 +379,6 @@ namespace Universal_THCRAP_Launcher
                                                                                     "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
                                                                                     "new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D");
 
-        private void featureRequestTS_Click(object sender, EventArgs e) => Process.Start(
-                                                                                         "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
-                                                                                         "new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D");
-
         private void otherTS_Click(object sender, EventArgs e) =>
             Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/new");
 
@@ -438,8 +433,8 @@ namespace Universal_THCRAP_Launcher
 
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            Console.WriteLine(sender.ToString() + ": " + e.Data);
-            log.WriteLine(sender.ToString() + ": " + e.Data);
+            Console.WriteLine(sender + @": " + e.Data);
+            _log.WriteLine(sender + @": " + e.Data);
         }
 
         #endregion
@@ -456,45 +451,45 @@ namespace Universal_THCRAP_Launcher
                 if (Configuration.Lang == null)
                 {
                     Configuration.Lang = "en.json";
-                    log.WriteLine($"Configuration.Lang has been set to {Configuration.Lang}");
+                    _log.WriteLine($"Configuration.Lang has been set to {Configuration.Lang}");
                 }
 
                 if (Configuration1.LastGame == null)
                 {
                     Configuration1.LastGame = _displayNameToThxxDictionary.Count != 0 ? _displayNameToThxxDictionary.Keys.ElementAt(0) : _gamesDictionary.Keys.ElementAt(0);
-                    log.WriteLine(
-                                    $"Configuration1.LastGame has been set to {Configuration1.LastGame}");
+                    _log.WriteLine(
+                                  $"Configuration1.LastGame has been set to {Configuration1.LastGame}");
                 }
 
                 if (Configuration1.SplitterDistance == 0)
                 {
                     Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
-                    log.WriteLine($"Configuration1.SplitterDistance has been set to {Configuration1.SplitterDistance}");
+                    _log.WriteLine($"Configuration1.SplitterDistance has been set to {Configuration1.SplitterDistance}");
                 }
 
                 if (Configuration1.LastConfig == null && _jsFiles.Count > 0)
                 {
                     Configuration1.LastConfig = _jsFiles[0];
-                    log.WriteLine(
-                                    $"Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
+                    _log.WriteLine(
+                                  $"Configuration1.LastConfig has been set to {Configuration1.LastConfig}");
                 }
 
                 if (Configuration1.IsDescending == null)
                 {
                     string[] a = { "false", "false" };
                     Configuration1.IsDescending = a;
-                    log.WriteLine(
-                                    $"Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
-                                    Configuration1.IsDescending[1]);
+                    _log.WriteLine(
+                                  $"Configuration1.IsDescending has been set to {Configuration1.IsDescending[0]}, " +
+                                  Configuration1.IsDescending[1]);
                 }
 
                 if (Configuration1.OnlyFavorites == null)
                 {
                     string[] a = { "false", "false" };
                     Configuration1.OnlyFavorites = a;
-                    log.WriteLine(
-                                    $"Configuration1.OnlyFavorites has been set to {Configuration1.OnlyFavorites[0]}, " +
-                                    Configuration1.OnlyFavorites[1]);
+                    _log.WriteLine(
+                                  $"Configuration1.OnlyFavorites has been set to {Configuration1.OnlyFavorites[0]}, " +
+                                  Configuration1.OnlyFavorites[1]);
                 }
 
                 if (Configuration1.Window == null)
@@ -505,18 +500,18 @@ namespace Universal_THCRAP_Launcher
                         Location = new[] { Location.X, Location.Y }
                     };
                     Configuration1.Window = window;
-                    log.WriteLine(
-                                    $"Configuration1.Window has been set with the following properties:");
-                    log.WriteLine(
-                                    $"Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
-                    log.WriteLine(
-                                    $"Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+                    _log.WriteLine(
+                                  "Configuration1.Window has been set with the following properties:");
+                    _log.WriteLine(
+                                  $"Configuration1.Window.Size: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+                    _log.WriteLine(
+                                  $"Configuration1.Window.Location: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
                 }
                 if (Configuration1.Window.Location[0] == -32000)
                 {
-                    for (int i = 0; i < 2; i++)
+                    for (var i = 0; i < 2; i++)
                         Configuration1.Window.Location[i] = 0;
-                    log.WriteLine("Configuration1.Window.Location has been set offscreen by that nasty bug. Resetting it.");
+                    _log.WriteLine("Configuration1.Window.Location has been set offscreen by that nasty bug. Resetting it.");
                 }
                 SetDefaultSorting();
                 SetDefaultFavButtonState();
@@ -538,21 +533,21 @@ namespace Universal_THCRAP_Launcher
         {
             //Default exe type button state
             btn_filterByType.BackgroundImage = _gameAndCustom;
-            for (int i = 0; i < Configuration1.FilterExeType; i++)
+            for (var i = 0; i < Configuration1.FilterExeType; i++)
             {
-                log.WriteLine($"Configuration1.FilterExeType");
-                filterByType_button_Click("DefaultSettings", new EventArgs());
+                _log.WriteLine("Configuration1.FilterExeType");
+                filterByType_button_Click("DefaultSettings", EventArgs.Empty);
             }
         }
 
         private void SetDefaultFavButtonState()
         {
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
                 if (Configuration1.OnlyFavorites[i] == "true")
                 {
-                    log.WriteLine(
-                                    $"Configuration1.OnlyFavorites was true for listBox{i}");
+                    _log.WriteLine(
+                                  $"Configuration1.OnlyFavorites was true for listBox{i}");
                     if (i == 0)
                     {
                         btn_filterFav1.BackgroundImage = _star;
@@ -701,13 +696,13 @@ namespace Universal_THCRAP_Launcher
 
             string dirName = Path.GetDirectoryName(CONFIG_FILE);
             if (!Directory.Exists(dirName))
-                Directory.CreateDirectory(dirName);
+                Directory.CreateDirectory(dirName ?? CONFIG_FOLDER);
             File.WriteAllText(CONFIG_FILE, output);
 
             output = JsonConvert.SerializeObject(Favourites1, Formatting.Indented);
             File.WriteAllText(FAVORITE_FILE, output);
 
-            log.WriteLine("Config file has been successfully updated.");
+            _log.WriteLine("Config file has been successfully updated.");
         }
 
         #endregion
@@ -724,7 +719,7 @@ namespace Universal_THCRAP_Launcher
             {
                 try
                 {
-                    var name = GetPrettyTouhouName(item.Key, Configuration1.NamingForGames);
+                    string name = GetPrettyTouhouName(item.Key, Configuration1.NamingForGames);
                     gameListBox.Items.Add(name ?? throw new InvalidOperationException());
                     _displayNameToThxxDictionary.Add(name, item.Key);
                     if (Favourites1.Games.Contains(item.Key))
@@ -732,7 +727,7 @@ namespace Universal_THCRAP_Launcher
                 }
                 catch (Exception e)
                 {
-                    log.WriteLine($"Couldn't add {item.Key} to the games listbox:\n\t{e}");
+                    _log.WriteLine($"Couldn't add {item.Key} to the games listbox:\n\t{e}");
                 }
             }
 
@@ -747,7 +742,7 @@ namespace Universal_THCRAP_Launcher
 
             if (gameListBox.SelectedIndex == -1 && gameListBox.Items.Count > 0) gameListBox.SelectedIndex = 0;
             LogListBoxes();
-            if (Form.ActiveForm != null) FillJumpList();
+            if (ActiveForm != null) FillJumpList();
         }
 
         private void GetPatchList()
@@ -757,27 +752,29 @@ namespace Universal_THCRAP_Launcher
             patchListBox.Items.Clear();
 
             //Load patch stacks
-            const string PATCHES_FOLDER = @"\..\config\";
-            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + PATCHES_FOLDER, "*.js").ToList();
-            _thcrapFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + PATCHES_FOLDER, "*.thcrap").ToList();
+            const string patchesFolder = @"\..\config\";
+            _jsFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + patchesFolder, "*.js").ToList();
+            _thcrapFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + patchesFolder, "*.thcrap").ToList();
 
             //Give error if there are no patch configurations
             if (_jsFiles.Count == 0 && _thcrapFiles.Count == 0) ErrorAndExit(I18N.LangResource.errors.missing.patchStacks);
 
 
-            #region  Fix patch stack list
-            for (int i = 0; i < _jsFiles.Count; i++)
-                _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + PATCHES_FOLDER, "");
+            #region Fix patch stack list
+
+            for (var i = 0; i < _jsFiles.Count; i++)
+                _jsFiles[i] = _jsFiles[i].Replace(Directory.GetCurrentDirectory() + patchesFolder, "");
             _jsFiles.Remove("games.js");
             _jsFiles.Remove("config.js");
             if (Configuration1.HidePatchExtension)
             {
-                for (int i = 0; i < _jsFiles.Count; i++)
+                for (var i = 0; i < _jsFiles.Count; i++)
                     _jsFiles[i] = _jsFiles[i].Replace(".js", "");
-                for (int i = 0; i < _thcrapFiles.Count; i++)
+                for (var i = 0; i < _thcrapFiles.Count; i++)
                     _thcrapFiles[i] = _thcrapFiles[i].Replace(".thcrap", "");
 
             }
+
             #endregion
         }
 
@@ -809,9 +806,9 @@ namespace Universal_THCRAP_Launcher
 
             if (patchListBox.SelectedIndex == -1 && patchListBox.Items.Count > 0) patchListBox.SelectedIndex = 0;
             LogListBoxes();
-            if (Form.ActiveForm != null) FillJumpList();
+            if (ActiveForm != null) FillJumpList();
         }
-        private void UpdateSplitContainerReleatedGUI()
+        private void UpdateSplitContainerReleatedGui()
         {
             patchListBox.Size = new Size(splitContainer1.Panel1.Width - 1, splitContainer1.Panel1.Height - 1);
             gameListBox.Size = new Size(splitContainer1.Panel2.Width - 1, splitContainer1.Panel2.Height - 1);
@@ -867,13 +864,13 @@ namespace Universal_THCRAP_Launcher
 
             // - TODO: Refactor this code
             menuStrip1.Items[0].Text = objLangRes.menuStrip[0][0];
-            for (int i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[0]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[0]).DropDownItems.Count; i++)
             {
                 ((ToolStripMenuItem)menuStrip1.Items[0]).DropDownItems[i].Text = objLangRes.menuStrip[0][i + 1];
             }
 
             menuStrip1.Items[1].Text = objLangRes.menuStrip[1][0];
-            for (int i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems.Count; i++)
             {
                 if (objLangRes.menuStrip[1][i + 1] is JValue)
                 {
@@ -884,7 +881,7 @@ namespace Universal_THCRAP_Launcher
                 {
                     ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems[i]).Text =
                         objLangRes.menuStrip[1][i + 1][0];
-                    for (int j = 0;
+                    for (var j = 0;
                          j < ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[1]).DropDownItems[i])
                             .DropDownItems.Count;
                          j++)
@@ -896,7 +893,7 @@ namespace Universal_THCRAP_Launcher
             }
 
             menuStrip1.Items[2].Text = objLangRes.menuStrip[2][0];
-            for (int i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems.Count; i++)
             {
                 if (objLangRes.menuStrip[2][i + 1] is JValue)
                 {
@@ -907,7 +904,7 @@ namespace Universal_THCRAP_Launcher
                 {
                     ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems[i]).Text =
                         objLangRes.menuStrip[2][i + 1][0];
-                    for (int j = 0;
+                    for (var j = 0;
                          j < ((ToolStripMenuItem)((ToolStripMenuItem)menuStrip1.Items[2]).DropDownItems[i])
                             .DropDownItems.Count;
                          j++)
@@ -919,7 +916,7 @@ namespace Universal_THCRAP_Launcher
             }
 
             menuStrip1.Items[3].Text = objLangRes.menuStrip[3][0];
-            for (int i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[3]).DropDownItems.Count; i++)
+            for (var i = 0; i < ((ToolStripMenuItem)menuStrip1.Items[3]).DropDownItems.Count; i++)
             {
                 ((ToolStripMenuItem)menuStrip1.Items[3]).DropDownItems[i].Text = objLangRes.menuStrip[3][i + 1];
             }
@@ -1018,12 +1015,9 @@ namespace Universal_THCRAP_Launcher
             Application.Exit();
         }
 
-        private static void ShowKeyboardShortcuts()
-        {
-            MessageBox.Show(I18N.LangResource.popup.kbSh.text?.ToString(),
-                            I18N.LangResource.popup.kbSh.caption?.ToString(), MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-        }
+        private static void ShowKeyboardShortcuts() => MessageBox.Show(I18N.LangResource.popup.kbSh.text?.ToString(),
+                                                                       I18N.LangResource.popup.kbSh.caption?.ToString(), MessageBoxButtons.OK,
+                                                                       MessageBoxIcon.Information);
 
         private static void SelectRandomInListBox(ListBox lb)
         {
@@ -1049,10 +1043,10 @@ namespace Universal_THCRAP_Launcher
                     jsi.Click += delegate
                     {
                         _ = Task.Run(delegate
-                           {
-                               StartThcrap(jsi.ToString(), game);
-                           }
-                        );
+                                     {
+                                         StartThcrap(jsi.ToString(), game);
+                                     }
+                                    );
                     };
                     contextMenuStrip1.Items.Add(jsi);
                 }
@@ -1066,36 +1060,34 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region Methods less releated to the GUI
-        private void PrintLogsHeader(string exeDir)
-        {
-            log.Write("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
-                      "\nUniversal THCRAP Launcher Log File" +
-                      "\nVersion: " + Application.ProductVersion +
-                      $"\nBuild Date: {Resources.BuildDate.Trim()}" +
-                      $"\nBuilt by: {Resources.BuildUser.Trim()}" +
-                      "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
-                      "\nDirectory of Exe: " + exeDir +
-                      "\nCurrent Date: " + DateTime.Now +
-                      "\nDo these files below exist:" +
-                      $"\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
-                      $"\n{File.Exists("thcrap_configure.exe")}\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t{File.Exists(GAMES_FILE)}" +
-                      "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
-        }
 
-        bool CheckForNewtonsoftJson(string exeDir)
+        private void PrintLogsHeader(string exeDir) => _log.Write("\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――" +
+                                                                 "\nUniversal THCRAP Launcher Log File" +
+                                                                 "\nVersion: " + Application.ProductVersion +
+                                                                 $"\nBuild Date: {Resources.BuildDate.Trim()}" +
+                                                                 $"\nBuilt by: {Resources.BuildUser.Trim()}" +
+                                                                 "\n++++++\nWorking Directory: " + Environment.CurrentDirectory +
+                                                                 "\nDirectory of Exe: " + exeDir +
+                                                                 "\nCurrent Date: " + DateTime.Now +
+                                                                 "\nDo these files below exist:" +
+                                                                 "\nthcrap_configure.exe\tNewtonsoft.Json.dll\tCONFIG_FILE\tFAVORITE_FILE\tGAMES_FILE ?" +
+                                                                 $"\n{File.Exists("thcrap_configure.exe")}\t\t\t{File.Exists(exeDir + "Newtonsoft.Json.dll")}\t\t\t{File.Exists(CONFIG_FILE)}\t\t{File.Exists(FAVORITE_FILE)}\t\t{File.Exists(GAMES_FILE)}" +
+                                                                 "\n――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\n");
+
+        private bool CheckForNewtonsoftJson(string exeDir)
         {
             //Give error if Newtonsoft.Json.dll isn't found.
             if (File.Exists(exeDir + "Newtonsoft.Json.dll"))
             {
                 return true;
             }
-            log.WriteLine("Newtonsoft.Json.dll not found, exiting...");
+            _log.WriteLine("Newtonsoft.Json.dll not found, exiting...");
 
             //Read parser-less, the error message.
             if (Configuration.Lang == null) Configuration.Lang = "en.json";
 
-            string errorTitle = "Error";
-            string errorMessage = "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well.";
+            var errorTitle = "Error";
+            var errorMessage = "Newtonsoft.Json.dll is missing. Please make sure it has been copied over as well.";
             if (File.Exists(I18N.I18NDir + Configuration.Lang))
             {
                 string[] lines = File.ReadAllLines(I18N.I18NDir + Configuration.Lang);
@@ -1112,7 +1104,7 @@ namespace Universal_THCRAP_Launcher
             return false;
         }
 
-        object LoadConfig()
+        private object LoadConfig()
         {
             if (File.Exists(CONFIG_FILE))
             {
@@ -1130,13 +1122,15 @@ namespace Universal_THCRAP_Launcher
         }
 
         /// <summary>
-        /// Does checks to make sure everything is in place before starting the program
+        ///     Does checks to make sure everything is in place before starting the program
         /// </summary>
         public bool InitChecks()
         {
             if (Environment.CurrentDirectory == @"C:\Windows\system32")
             {
-                MessageBox.Show("The application was launched from Windows/system32. This was probably because you used the Windows jumplist.\nIf you know how to fix the jumplist, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", "There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // TODO: Make jump-list actually work
+                MessageBox.Show(@"The application was launched from Windows/system32. This was probably because you used the Windows jump-list.
+If you know how to fix the jump-list, you're welcome to give a pull request. Otherwise, just right-click in the notification tray.", @"There's a bug in the code, that idk how to fix", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
@@ -1149,26 +1143,26 @@ namespace Universal_THCRAP_Launcher
 
             dynamic dconfig = LoadConfig();
 
-            string lang_code = DownloadTranslation();
-            if (lang_code == null)
+            string langCode = DownloadTranslation();
+            if (langCode == null)
             {
                 return false;
             }
 
             //Load language
-            if (!String.IsNullOrEmpty((string)dconfig?.Lang?.Value))
+            if (!string.IsNullOrEmpty((string)dconfig?.Lang?.Value))
             {
                 Configuration.Lang = dconfig.Lang.Value;
                 if (!File.Exists(I18N.I18NDir + Configuration.Lang))
                 {
-                    log.WriteLine($"Language is set to {Configuration.Lang}, but it's not downloaded. This can definitely go wrong,\n" +
-                        $"so let's set it back to English...");
+                    _log.WriteLine($"Language is set to {Configuration.Lang}, but it's not downloaded. This can definitely go wrong,\n" +
+                                  "so let's set it back to English...");
                     Configuration.Lang = "en.json";
                 }
             }
             else
             {
-                Configuration.Lang = lang_code + ".json";
+                Configuration.Lang = langCode + ".json";
             }
 
 
@@ -1206,17 +1200,17 @@ namespace Universal_THCRAP_Launcher
         }
 
         /// <summary>
-        /// Tries to download the given language, if it fails, tries to download English.
+        ///     Tries to download the given language, if it fails, tries to download English.
         /// </summary>
-        /// <returns>The two letter ISO code for the language sucessfully downloaded</returns>
+        /// <returns>The two letter ISO code for the language successfully downloaded</returns>
         private string DownloadTranslation()
         {
-            string lang_code = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            string langCode = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
-            if (File.Exists(I18N.I18NDir + @"\" + lang_code + ".json"))
+            if (File.Exists(I18N.I18NDir + @"\" + langCode + ".json"))
             {
                 // Nothing to do
-                return lang_code;
+                return langCode;
             }
 
             if (!Directory.Exists(I18N.I18NDir))
@@ -1226,36 +1220,36 @@ namespace Universal_THCRAP_Launcher
 
             try
             {
-                string lang_url_base = "https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/";
+                var langUrlBase = "https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/";
                 try
                 {
-                    string lang_url = lang_url_base + lang_code + ".json";
-                    log.WriteLine($"Downloading {lang_url}...");
-                    string lang = ReadTextFromUrl(lang_url);
-                    File.WriteAllText(I18N.I18NDir + @"\" + lang_code + ".json", lang);
+                    string langUrl = langUrlBase + langCode + ".json";
+                    _log.WriteLine($"Downloading {langUrl}...");
+                    string lang = ReadTextFromUrl(langUrl);
+                    File.WriteAllText(I18N.I18NDir + @"\" + langCode + ".json", lang);
                 }
                 catch (WebException wex)
                 {
-                    log.WriteLine($"Couldn't download the language file for {lang_code}, due to {wex.Message} . Trying to download English...");
+                    _log.WriteLine($"Couldn't download the language file for {langCode}, due to {wex.Message} . Trying to download English...");
                     string lang =
-                        ReadTextFromUrl(lang_url_base + "en.json");
+                        ReadTextFromUrl(langUrlBase + "en.json");
                     File.WriteAllText(I18N.I18NDir + @"\en.json", lang);
-                    lang_code = "en";
+                    langCode = "en";
                 }
             }
             catch (Exception ex)
             {
-                log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
+                _log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
                 MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
                                 @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
-            return lang_code;
+            return langCode;
         }
 
         /// <summary>
-        /// Initialized data into the global variables and etc.
+        ///     Initialized data into the global variables and etc.
         /// </summary>
         private void InitData()
         {
@@ -1271,7 +1265,7 @@ namespace Universal_THCRAP_Launcher
             if (File.Exists(@"..\repos\nmlgc\script_latin\stringdefs.js"))
             {
                 string file = File.ReadAllText(@"..\repos\nmlgc\script_latin\stringdefs.js");
-                log.WriteLine(@"Found repos\nmlgc\script_latin\stringdefs.js!");
+                _log.WriteLine(@"Found repos\nmlgc\script_latin\stringdefs.js!");
                 var stringdef = JsonConvert.DeserializeObject<Dictionary<string, string>>(file);
                 foreach (KeyValuePair<string, string> variable in stringdef)
                 {
@@ -1285,30 +1279,30 @@ namespace Universal_THCRAP_Launcher
                     }
                 }
             }
-            else log.WriteLine(@"repos\nmlgc\script_latin\stringdefs.js does not exists!");
+            else _log.WriteLine(@"repos\nmlgc\script_latin\stringdefs.js does not exists!");
             if (Directory.Exists(@"..\repos\nmlgc\base_tasofro"))
             {
-                log.WriteLine(@"Found repos\nmlgc\base_tasofro!");
+                _log.WriteLine(@"Found repos\nmlgc\base_tasofro!");
                 foreach (string file in Directory.EnumerateFiles(@"..\repos\nmlgc\base_tasofro"))
                 {
                     string raw = File.ReadAllText(file);
                     if (!raw.Contains("title")) continue;
                     dynamic content = JsonConvert.DeserializeObject(raw);
-                    if (content.title is null) continue;
+                    if (content?.title is null) continue;
                     string title = content.title.ToString();
                     string key = file.Replace(".js", "").Replace(@"..\repos\nmlgc\base_tasofro\", "");
-                    if (key.Equals("patch")) continue; //We don't need the name of the base_tasofro patch
+                    if (key.Equals("patch")) continue; // We don't need the name of the base_tasofro patch
                     GameFullNameDictionary.Add(key, title);
                 }
             }
-            else log.WriteLine(@"repos\nmlgc\base_tasofro does not exists!");
+            else _log.WriteLine(@"repos\nmlgc\base_tasofro does not exists!");
 
             //Load executables
             string rawFile = File.ReadAllText(GAMES_FILE);
             _gamesDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawFile);
         }
         /// <summary>
-        /// Download the currently set language in Configuration
+        ///     Download the currently set language in Configuration
         /// </summary>
         private void DownloadCurrentLanguage()
         {
@@ -1321,47 +1315,47 @@ namespace Universal_THCRAP_Launcher
             }
             catch (Exception ex)
             {
-                log.WriteLine($"Couldn't connect to GitHub for language update.\nReason: {ex}");
+                _log.WriteLine($"Couldn't connect to GitHub for language update.\nReason: {ex}");
             }
         }
 
         private void LogListBoxes()
         {
-            log.WriteLine($"Selected Indices: {patchListBox.SelectedIndex} | {gameListBox.SelectedIndex}");
-            log.WriteLine($"Listboxes:");
-            log.Write("\tPatches: ");
-            foreach (var item in patchListBox.Items)
-                log.Write($"{item}, ");
-            log.Write("\n\tGames: ");
-            foreach (var item in gameListBox.Items)
-                log.Write($"{item}, ");
-            log.Write("\n");
+            _log.WriteLine($"Selected Indices: {patchListBox.SelectedIndex} | {gameListBox.SelectedIndex}");
+            _log.WriteLine("Listboxes:");
+            _log.Write("\tPatches: ");
+            foreach (object item in patchListBox.Items)
+                _log.Write($"{item}, ");
+            _log.Write("\n\tGames: ");
+            foreach (object item in gameListBox.Items)
+                _log.Write($"{item}, ");
+            _log.Write("\n");
         }
         /// <summary>
-        /// Logs the current configuration to the console and log file
+        ///     Logs the current configuration to the console and log file
         /// </summary>
         private void LogConfiguration()
         {
-            log.WriteLine($"MainForm Loaded with the following Configuration:");
-            log.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
-            log.WriteLine($"\tLastGame: {Configuration1.LastGame}");
-            log.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
-            log.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
-            log.WriteLine($"\tLang: {Configuration.Lang}");
-            log.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
-            log.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
-            log.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
-            log.WriteLine($"\tSplitterDistance: {Configuration1.SplitterDistance}");
-            log.WriteLine($"\tShowGameId: {Configuration1.ShowGameId}");
-            log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
-            log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
-            log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
-            log.WriteLine($"\tWindow:");
-            log.WriteLine($"\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
-            log.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
+            _log.WriteLine("MainForm Loaded with the following Configuration:");
+            _log.WriteLine($"\tLastConfig: {Configuration1.LastConfig}");
+            _log.WriteLine($"\tLastGame: {Configuration1.LastGame}");
+            _log.WriteLine($"\tFilterExeType: {Configuration1.FilterExeType}");
+            _log.WriteLine($"\tHidePatchExtension: {Configuration1.HidePatchExtension}");
+            _log.WriteLine($"\tLang: {Configuration.Lang}");
+            _log.WriteLine($"\tExitAfterStartup: {Configuration1.ExitAfterStartup}");
+            _log.WriteLine($"\tOnlyAllowOneExecutable: {Configuration1.OnlyAllowOneExecutable}");
+            _log.WriteLine($"\tOnlyAllowOneUtl: {Configuration1.OnlyAllowOneUtl}");
+            _log.WriteLine($"\tSplitterDistance: {Configuration1.SplitterDistance}");
+            _log.WriteLine($"\tShowGameId: {Configuration1.ShowGameId}");
+            _log.WriteLine($"\tIsDescending: {Configuration1.IsDescending[0]} | {Configuration1.IsDescending[1]}");
+            _log.WriteLine($"\tOnlyFavorites: {Configuration1.OnlyFavorites[0]} | {Configuration1.OnlyFavorites[1]}");
+            _log.WriteLine($"\tWindowsState: {Configuration1.WindowState}");
+            _log.WriteLine("\tWindow:");
+            _log.WriteLine($"\t\tLocation: {Configuration1.Window.Location[0]}, {Configuration1.Window.Location[1]}");
+            _log.WriteLine($"\t\tSize: {Configuration1.Window.Size[0]}, {Configuration1.Window.Size[1]}");
         }
         /// <summary>
-        /// Based on the given game id (thxxx) it returns the game's name in the given GameNameType.
+        ///     Based on the given game id (TH???) it returns the game's name in the given GameNameType.
         /// </summary>
         /// <param name="id">The game id to get the name of.</param>
         /// <param name="nameType">The GameNameType to get the name in.</param>
@@ -1380,9 +1374,7 @@ namespace Universal_THCRAP_Launcher
                     if (name != null)
                     {
                         var initials = new Regex(@"(\b[a-zA-Z])[a-zA-Z]* ?");
-                        if (name.Contains('-'))
-                            name = initials.Replace(name.Split('-')[1], "$1");
-                        else name = initials.Replace(name, "$1");
+                        name = initials.Replace(name.Contains('-') ? name.Split('-')[1] : name, "$1");
                         name = name.Replace("~", " ~").Trim();
                     }
                     else
@@ -1390,8 +1382,7 @@ namespace Universal_THCRAP_Launcher
                     break;
                 case GameNameType.ShortName:
                     if (name == null) name = id;
-                    if (!name.Contains('-')) name = name.Trim();
-                    else name = name.Split('-')[1].Trim();
+                    name = !name.Contains('-') ? name.Trim() : name.Split('-')[1].Trim();
                     break;
                 case GameNameType.LongName:
                     name = name ?? id;
@@ -1404,20 +1395,20 @@ namespace Universal_THCRAP_Launcher
             return Configuration1.ShowGameId ? id + ": " + name : name;
         }
         /// <summary>
-        /// Creates shortcut to a special folder. <see cref="Environment.SpecialFolder"/> for the list of special folders.
+        ///     Creates shortcut to a special folder. <see cref="Environment.SpecialFolder" /> for the list of special folders.
         /// </summary>
         /// <param name="targetSpecialFolder">The special folder to create the shortcut in.</param>
         private void CreateShortcut(object targetSpecialFolder)
         {
             var shell = new WshShell();
 
-            string shortcutDir = (string)shell.SpecialFolders.Item(ref targetSpecialFolder);
+            var shortcutDir = (string)shell.SpecialFolders.Item(ref targetSpecialFolder);
             CreateShortcut(shortcutDir);
         }
         /// <summary>
-        /// Create a shortcut at the specified location.
+        ///     Create a shortcut at the specified location.
         /// </summary>
-        /// <param name="folder">The folder to create the shortcut in. Should NOT end with a path seperator.</param>
+        /// <param name="folder">The folder to create the shortcut in. Should NOT end with a path separator.</param>
         private void CreateShortcut(string folder)
         {
             try
@@ -1433,17 +1424,17 @@ namespace Universal_THCRAP_Launcher
                 shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
                 shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
                 shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
-                log.WriteLine(
-                    $"==\nTrying to Create Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
+                _log.WriteLine(
+                              $"==\nTrying to Create Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
                 shortcut.Save();
             }
             catch (Exception ex)
             {
-                log.WriteLine($"Couldn't create shortcut.\nReason: {ex}");
+                _log.WriteLine($"Couldn't create shortcut.\nReason: {ex}");
             }
         }
         /// <summary>
-        /// Starts thcrap with the selected patch stack and executable
+        ///     Starts thcrap with the selected patch stack and executable
         /// </summary>
         private void StartThcrap()
         {
@@ -1468,7 +1459,7 @@ namespace Universal_THCRAP_Launcher
                 }
                 process = new Process { StartInfo = { FileName = game, RedirectStandardOutput = true, UseShellExecute = false } };
                 process.OutputDataReceived += Process_OutputDataReceived;
-                log.WriteLine($"Game {game} started without thcrap.");
+                _log.WriteLine($"Game {game} started without thcrap.");
             }
             else
             {
@@ -1483,45 +1474,46 @@ namespace Universal_THCRAP_Launcher
                 s = s.Trim();
                 process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s, RedirectStandardOutput = true, UseShellExecute = false } };
                 process.OutputDataReceived += Process_OutputDataReceived;
-                log.WriteLine($"Starting thcrap with {s}");
+                _log.WriteLine($"Starting thcrap with {s}");
             }
 
             process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
             var progress = new Progress<Action>();
             progress.ProgressChanged += ExecuteReportAction;
-            List<Task> tasks = new List<Task> { Task.Factory.StartNew(() => ScanRunningProcess(process, progress, id)) };
+            var tasks = new List<Task> { Task.Factory.StartNew(() => ScanRunningProcess(process, progress, id)) };
             _displayNameToThxxDictionary.TryGetValue(gameListBox.SelectedItem.ToString().Replace(" ★", ""), out string gameName);
             if (patchListBox.SelectedItem.ToString() != $@"[{I18N.LangResource.mainForm.vanilla.ToString()}]") tasks.Add(Task.Factory.StartNew(() => ScanRunningTouhou(gameName, progress)));
             Task.WaitAll(tasks.ToArray());
             Enabled = true;
         }
         /// <summary>
-        /// Added to <see cref="Progress{Action}"/>. It executes the returend action as progress. 
-        /// <para>"This is tad more thread-safe."</para>
+        ///     Added to <see cref="Progress{Action}" />. It executes the returned action as progress.
+        ///     <para>"This is tad more thread-safe."</para>
         /// </summary>
         /// <param name="sender">The sender object, you know the usual event listener stuff</param>
         /// <param name="action">The action to invoke when the progress reported even gets called</param>
         private void ExecuteReportAction(object sender, Action action) => action.Invoke();
         /// <summary>
-        /// Starts thcrap but with a given argument s and scans for the given game.
+        ///     Starts thcrap but with a given argument s and scans for the given game.
         /// </summary>
         /// <param name="s">Arguments for thcrap_loader.exe</param>
-        /// <param name="game">The game id (thxxx) that will be scanned</param>
+        /// <param name="game">The game id (th???) that will be scanned</param>
         /// <returns></returns>
         private void StartThcrap(string s, string game)
         {
-            log.WriteLine($"Starting thcrap with {s} as arguments.");
+            _log.WriteLine($"Starting thcrap with {s} as arguments.");
             var process = new Process { StartInfo = { FileName = "thcrap_loader.exe", Arguments = s, RedirectStandardOutput = true, UseShellExecute = false } };
             process.OutputDataReceived += Process_OutputDataReceived;
             process.Start();
             if (Configuration1.ExitAfterStartup) Application.Exit();
             var progress = new Progress<Action>();
             progress.ProgressChanged += ExecuteReportAction;
-            var tasks = new List<Task> {
-                                                  Task.Factory.StartNew(() => ScanRunningProcess(process, progress, "thcrap")),
-                                                  Task.Factory.StartNew(() => ScanRunningTouhou(game, progress))
-                                              };
+            var tasks = new List<Task>
+            {
+                Task.Factory.StartNew(() => ScanRunningProcess(process, progress, "thcrap")),
+                Task.Factory.StartNew(() => ScanRunningTouhou(game, progress))
+            };
             //MessageBox.Show("");
 
             Task.WaitAll(tasks.ToArray());
@@ -1533,11 +1525,12 @@ namespace Universal_THCRAP_Launcher
             Activate();
         }
         /// <summary>
-        /// Scans the process passed in on how it's doing, and reports to <see cref="Progress{Action}"/> to change the title of the window.
+        ///     Scans the process passed in on how it's doing, and reports to <see cref="Progress{Action}" /> to change the title
+        ///     of the window.
         /// </summary>
         /// <param name="process">Process to scan</param>
         /// <param name="progress">The progress reporter</param>
-        /// <param name="id">The game id (thxxx) or "thcrap"</param>
+        /// <param name="id">The game id (th???) or "thcrap"</param>
         private void ScanRunningProcess(Process process, IProgress<Action> progress, string id)
         {
             if (Configuration1.OnlyAllowOneExecutable) Enabled = false;
@@ -1549,16 +1542,20 @@ namespace Universal_THCRAP_Launcher
                 if (process.HasExited) return;
             } while (id != "thcrap" && !process.MainWindowTitle.Contains(gameName) || process.MainWindowTitle.Contains("vpatch") || process.MainWindowTitle == "");
             process.WaitForInputIdle();
-            log.WriteLine($"{process.ProcessName} is running.");
+            _log.WriteLine($"{process.ProcessName} is running.");
             progress.Report(() => { Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {process.ProcessName}"; });
             process.WaitForExit();
             progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {process.ProcessName}", ""); });
         }
         /// <summary>
-        /// Scans the running game (if that's not set in as a process in which case <see cref="ScanRunningProcess(Process, IProgress{Action}, string)"/> might be better.
+        ///     Scans the running game (if that's not set in as a process in which case
+        ///     <see cref="ScanRunningProcess(Process, IProgress{Action}, string)" /> might be better.
         /// </summary>
-        /// <param name="gameName">The game id (thxxx)</param>
-        /// <param name="progress">A <see cref="Progress{Action}"/> that it will report to change <see cref="Form.Text"/> to include the title of the process.</param>
+        /// <param name="gameName">The game id (th???)</param>
+        /// <param name="progress">
+        ///     A <see cref="Progress{Action}" /> that it will report to change <see cref="Form.Text" /> to
+        ///     include the title of the process.
+        /// </param>
         private void ScanRunningTouhou(string gameName, IProgress<Action> progress)
         {
             if (gameName == null) throw new ArgumentNullException(nameof(gameName));
@@ -1567,7 +1564,7 @@ namespace Universal_THCRAP_Launcher
             _gamesDictionary.TryGetValue(gameName, out string gameFile);
             string[] splitted = gameFile?.Split('/');
             if (splitted != null) gameFile = splitted[splitted.Length - 1].Split('.')[0];
-            if (gameFile.Equals("vpatch")) gameFile = gameName;
+            if (!(gameFile is null) && gameFile.Equals(@"vpatch")) gameFile = gameName;
             var sw = new Stopwatch();
             sw.Start();
             do
@@ -1575,25 +1572,25 @@ namespace Universal_THCRAP_Launcher
                 try
                 {
                     gameProcess = Process.GetProcessesByName(gameFile)[0];
-                    foreach (Process item in Process.GetProcessesByName(gameFile)) log.WriteLine($"Game Found for {gameFile} with ID: " + item.Id);
-                    if (Process.GetProcessesByName(gameFile).Length > 1) log.WriteLine(@"Looks like you're running two of the same game somehow. You're magic, but I am going to assume the first game.");
+                    foreach (Process item in Process.GetProcessesByName(gameFile)) _log.WriteLine($"Game Found for {gameFile} with ID: " + item.Id);
+                    if (Process.GetProcessesByName(gameFile).Length > 1) _log.WriteLine(@"Looks like you're running two of the same game somehow. You're magic, but I am going to assume the first game.");
                 }
                 catch { Thread.Sleep(10); }
                 if (sw.Elapsed.CompareTo(new TimeSpan(0, 1, 0)) > 0)
                 {
-                    log.WriteLine("Finding game timed out. Couldn't find: " + gameFile);
+                    _log.WriteLine("Finding game timed out. Couldn't find: " + gameFile);
                     sw.Stop();
                     return;
                 }
-            } while (gameProcess == null || (gameName == "th07" && gameProcess.MainWindowTitle == "")); //Touhou 7 is a bit bugy and needs to be rescanned.
+            } while (gameProcess == null || gameName == "th07" && gameProcess.MainWindowTitle == ""); // Touhou 7 is a bit buggy and needs to be rescanned.
             sw.Stop();
-            log.WriteLine("Found game, took: " + sw.Elapsed + " // Can't redirect output of the game that's launched through thcrap, use thcrap.");
+            _log.WriteLine("Found game, took: " + sw.Elapsed + " // Can't redirect output of the game that's launched through thcrap, use thcrap.");
             progress.Report(() => { Text += $@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}"; });
             gameProcess.WaitForExit();
             progress.Report(() => { Text = Text.Replace($@" | {I18N.LangResource.mainForm?.running?.ToString()} {gameName}", ""); });
         }
         /// <summary>
-        /// Add the selected item in the given listbox to the favorites.
+        ///     Add the selected item in the given listbox to the favorites.
         /// </summary>
         /// <param name="lb">Listbox that the item is selected in</param>
         private void AddFavorite(ListBox lb)
@@ -1602,7 +1599,7 @@ namespace Universal_THCRAP_Launcher
             {
                 if (lb.Equals(patchListBox))
                 {
-                    string s = lb.Items[lb.SelectedIndex].ToString();
+                    var s = lb.Items[lb.SelectedIndex].ToString();
                     if (Configuration1.HidePatchExtension)
                     {
                         if (_jsFiles.Contains(s)) s += ".js";
@@ -1616,7 +1613,7 @@ namespace Universal_THCRAP_Launcher
 
                 if (lb.Equals(gameListBox))
                 {
-                    string s = lb.Items[lb.SelectedIndex].ToString();
+                    var s = lb.Items[lb.SelectedIndex].ToString();
                     _displayNameToThxxDictionary.TryGetValue(s, out s);
                     Favourites1.Games.Add(s);
                     PopulateGames();
@@ -1642,10 +1639,10 @@ namespace Universal_THCRAP_Launcher
                 }
             }
         }
-        
+
         /// <summary>
-        /// Downloads a website into a string.
-        /// <para>Thank you, Stackoverflow.</para>
+        ///     Downloads a website into a string.
+        ///     <para>Thank you, StackOverflow.</para>
         /// </summary>
         /// <param name="url">The URL of the website to download.</param>
         /// <returns></returns>
@@ -1655,49 +1652,41 @@ namespace Universal_THCRAP_Launcher
 
             //Set Security
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
 
-            using (WebClient client = new WebClient())
+            using (var client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
                 data = client.DownloadString(url);
             }
             return data;
-            
+
         }
         /// <summary>
-        /// Displays a <see cref="MessageBox"/> with <seealso cref="MessageBoxButtons.OK"/>, <seealso cref="MessageBoxIcon.Error"/> and  
-        /// localized caption using <see cref="I18N.LangResource"/>.
+        ///     Displays a <see cref="MessageBox" /> with <seealso cref="MessageBoxButtons.OK" />,
+        ///     <seealso cref="MessageBoxIcon.Error" /> and
+        ///     localized caption using <see cref="I18N.LangResource" />.
         /// </summary>
-        /// <param name="errorMessage">The message that should displayed in the <see cref="MessageBox"/>. Should come from <see cref="I18N.LangResource"/>.</param>
+        /// <param name="errorMessage">
+        ///     The message that should displayed in the <see cref="MessageBox" />. Should come from
+        ///     <see cref="I18N.LangResource" />.
+        /// </param>
         private void ErrorAndExit(dynamic errorMessage)
         {
             MessageBox.Show(text: errorMessage?.ToString(), caption: I18N.LangResource?.errors?.error?.ToString(),
                             buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
-            log.WriteLine($"{errorMessage?.ToString()}");
+            _log.WriteLine($"{errorMessage?.ToString()}");
             Application.Exit();
-        }
-        /// <summary>
-        /// Checks if the given file is missing, and if yes shows an error then exists
-        /// </summary>
-        /// <param name="fileName">The filename to check</param>
-        private void CheckForMissingFile(string fileName)
-        {
-            if (!File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName))
-                ErrorAndExit(String.Format(I18N.LangResource?.errors?.missing?.file?.ToString(), fileName));
         }
 
         #endregion
-
-        
     }
 
     #region Helper Classes
 
     public class Configuration
     {
-        public Configuration() => NamingForGames = GameNameType.ShortName;
         public bool ExitAfterStartup { get; set; }
         public string LastConfig { get; set; }
         public string LastGame { get; set; }
@@ -1709,7 +1698,7 @@ namespace Universal_THCRAP_Launcher
         public bool HidePatchExtension { get; set; }
         public bool ShowVanilla { get; set; }
         public bool OnlyAllowOneExecutable { get; set; }
-        public GameNameType NamingForGames { get; set; }
+        public GameNameType NamingForGames { get; set; } = GameNameType.ShortName;
         public bool MinimizeNotificationWasShown { get; set; }
         public bool OnlyAllowOneUtl { get; set; }
         public FormWindowState WindowState { get; set; }
@@ -1717,7 +1706,11 @@ namespace Universal_THCRAP_Launcher
         public bool ShowGameId { get; set; }
     }
 
-    public enum GameNameType { None = 0, Initials, ShortName, LongName }
+    public enum GameNameType
+    {
+        None = 0, Initials, ShortName,
+        LongName
+    }
 
     public class Window
     {
@@ -1757,5 +1750,6 @@ namespace Universal_THCRAP_Launcher
 
         public override string ToString() => "\"" + _patch + "\" " + _exec;
     }
+
     #endregion
 }

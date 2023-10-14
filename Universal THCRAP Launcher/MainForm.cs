@@ -721,11 +721,18 @@ namespace Universal_THCRAP_Launcher
             //Display executables
             foreach (KeyValuePair<string, string> item in _gamesDictionary)
             {
-                var name = GetPrettyTouhouName(item.Key, Configuration1.NamingForGames);
-                gameListBox.Items.Add(name ?? throw new InvalidOperationException());
-                _displayNameToThxxDictionary.Add(name, item.Key);
-                if (Favourites1.Games.Contains(item.Key))
-                    _favoritesWithDisplayName.Add(name);
+                try
+                {
+                    var name = GetPrettyTouhouName(item.Key, Configuration1.NamingForGames);
+                    gameListBox.Items.Add(name ?? throw new InvalidOperationException());
+                    _displayNameToThxxDictionary.Add(name, item.Key);
+                    if (Favourites1.Games.Contains(item.Key))
+                        _favoritesWithDisplayName.Add(name);
+                }
+                catch (Exception e)
+                {
+                    log.WriteLine($"Couldn't add {item.Key} to the games listbox:\n\t{e}");
+                }
             }
 
             AddStars(gameListBox, _favoritesWithDisplayName);

@@ -1412,19 +1412,27 @@ namespace Universal_THCRAP_Launcher
         /// <param name="folder">The folder to create the shortcut in. Should NOT end with a path seperator.</param>
         private void CreateShortcut(string folder)
         {
-            var shell = new WshShell();
+            try
+            {
+                var shell = new WshShell();
 
-            string shortcutAddress = folder + "\\" +
-                                     I18N.LangResource.shCreate.file?.ToString() + ".lnk";
-            if (File.Exists(shortcutAddress))
-                return;
+                string shortcutAddress = folder + "\\" +
+                                         I18N.LangResource.shCreate.file?.ToString() + ".lnk";
+                if (File.Exists(shortcutAddress))
+                    return;
 
-            var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
-            shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
-            shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
-            shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
-            log.WriteLine($"==\nTrying to Create Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
-            shortcut.Save();
+                var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+                shortcut.Description = I18N.LangResource.shCreate.desc?.ToString();
+                shortcut.TargetPath = Assembly.GetEntryAssembly()?.Location;
+                shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
+                log.WriteLine(
+                    $"==\nTrying to Create Shortcut:\nPath: {shortcutAddress}\nDescription: {shortcut.Description}\nTarget path: {shortcut.TargetPath}\nWorking directory: {shortcut.WorkingDirectory}\n==");
+                shortcut.Save();
+            }
+            catch (Exception ex)
+            {
+                log.WriteLine($"Couldn't create shortcut.\nReason: {ex}");
+            }
         }
         /// <summary>
         /// Starts thcrap with the selected patch stack and executable

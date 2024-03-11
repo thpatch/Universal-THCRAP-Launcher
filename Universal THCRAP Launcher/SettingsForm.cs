@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,6 +6,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+
 // ReSharper disable IdentifierTypo
 
 namespace Universal_THCRAP_Launcher
@@ -20,19 +21,12 @@ namespace Universal_THCRAP_Launcher
             _mf = mainForm;
         }
 
-        #region Globals
-        private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
-        private readonly Dictionary<string, string> _langFileToName = new Dictionary<string, string>();
-        //private readonly Dictionary<string, string> _downNameToPatch = new Dictionary<string, string>();
-        private int spaceWidth;
-
-        #endregion
-
         #region Form Events
+
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            
-            spaceWidth = comboBox_gamesNamingType.Location.X - label_GameNames.Location.X - label_GameNames.Width;
+
+            _spaceWidth = comboBox_gamesNamingType.Location.X - label_GameNames.Location.X - label_GameNames.Width;
             UpdateLang();
             cB_hidePatchExtension.Checked = MainForm.Configuration1.HidePatchExtension;
             closeOnExitCheckBox.Checked = MainForm.Configuration1.ExitAfterStartup;
@@ -43,14 +37,45 @@ namespace Universal_THCRAP_Launcher
             UpdateCredits();
             LoadLanguages();
         }
+
+        #endregion
+
+        #region GUI-less Methods
+
+        private static string ReadTextFromUrl(string url)
+        {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // Assume UTF8, but detect BOM - could also honor response charset I suppose
+            var client = new WebClient();
+            client.Headers.Add(HttpRequestHeader.UserAgent, "UTL");
+            Stream stream = client.OpenRead(url);
+            using (var textReader = new StreamReader(stream ?? throw new InvalidOperationException(), Encoding.UTF8, true))
+            {
+                return textReader.ReadToEnd();
+            }
+        }
+
+        #endregion
+
+        #region Globals
+
+        private readonly Dictionary<string, string> _langNameToFile = new Dictionary<string, string>();
+
+        private readonly Dictionary<string, string> _langFileToName = new Dictionary<string, string>();
+
+        //private readonly Dictionary<string, string> _downNameToPatch = new Dictionary<string, string>();
+        private int _spaceWidth;
+
         #endregion
 
         #region GUI events
+
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e) => UpdateAlign();
         private void closeOnExitCheckBox_CheckedChanged(object sender, EventArgs e) => MainForm.Configuration1.ExitAfterStartup = closeOnExitCheckBox.Checked;
         private void languageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _langNameToFile.TryGetValue(languageComboBox.SelectedItem.ToString(), out var file);
+            _langNameToFile.TryGetValue(languageComboBox.SelectedItem.ToString(), out string file);
             I18N.UpdateLangResource(file);
             UpdateLang();
             UpdateCredits();
@@ -65,11 +90,12 @@ namespace Universal_THCRAP_Launcher
             {
                 string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
                 dynamic objGh = JsonConvert.DeserializeObject(gh);
-                foreach (dynamic item in objGh)
-                {
-                    string langtxt = ReadTextFromUrl(item.download_url.ToString());
-                    File.WriteAllText(I18N.I18NDir + item.name, langtxt);
-                }
+                if (!(objGh is null))
+                    foreach (dynamic item in objGh)
+                    {
+                        string langtxt = ReadTextFromUrl(item.download_url.ToString());
+                        File.WriteAllText(I18N.I18NDir + item.name, langtxt);
+                    }
             }
             catch (Exception ex)
             {
@@ -112,32 +138,44 @@ namespace Universal_THCRAP_Launcher
             MainForm.Configuration1.OnlyAllowOneUtl = cB_onlyOneUTL.Checked;
             if (!cB_onlyOneUTL.Checked) return;
             Process[] processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName);
-            foreach (Process t in processes) if (t.Id != Process.GetCurrentProcess().Id) t.Kill();
+            foreach (Process t in processes)
+                if (t.Id != Process.GetCurrentProcess().Id)
+                    t.Kill();
         }
+
         #endregion
 
         #region GUI-releated Methods
+
         private void LoadLanguages()
         {
             #region LoadLanguages
+
             languageComboBox.Items.Clear();
             _langFileToName.Clear();
             _langNameToFile.Clear();
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Loading languages...");
-            foreach (var file in Directory.GetFiles(I18N.I18NDir))
+            foreach (string file in Directory.GetFiles(I18N.I18NDir))
             {
                 string raw = File.ReadAllText(file);
                 //Trace.WriteLine($"Language File: {file}. Here's the raw:\n{raw}");
                 try
                 {
                     dynamic langFile = JsonConvert.DeserializeObject(raw);
-                    Trace.WriteLine($"\tLoading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
-                    if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
-                        _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
-                    if (!_langFileToName.ContainsKey(file))
-                        _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
-                    if (!languageComboBox.Items.Contains($"{langFile.metadata.native} ({langFile.metadata.english})"))
-                        languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
+                    if (!(langFile is null))
+                    {
+                        Trace.WriteLine($"\tLoading Language:\n\tFile: {file}\n\tEnglish name: {langFile.metadata.english}");
+                        if (!_langNameToFile.ContainsKey($"{langFile.metadata.native} ({langFile.metadata.english})"))
+                            _langNameToFile.Add($"{langFile.metadata.native} ({langFile.metadata.english})", file);
+                        if (!_langFileToName.ContainsKey(file))
+                            _langFileToName.Add(file, $"{langFile.metadata.native} ({langFile.metadata.english})");
+                        if (!languageComboBox.Items.Contains($"{langFile.metadata.native} ({langFile.metadata.english})"))
+                            languageComboBox.Items.Add($"{langFile.metadata.native} ({langFile.metadata.english})");
+                    }
+                    else
+                    {
+                        Trace.WriteLine($"Couldn't load language file {file}.");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -145,14 +183,17 @@ namespace Universal_THCRAP_Launcher
                     MessageBox.Show(I18N.LangResource.errors.oops?.ToString() + Environment.CurrentDirectory, I18N.LangResource.errors.error?.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
             #endregion
             Trace.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Language loading ended.");
             #region Select appropiate lang
+
             if (Configuration.Lang == null)
                 languageComboBox.SelectedIndex = 0;
             else languageComboBox.SelectedItem = _langFileToName[I18N.I18NDir + Configuration.Lang];
             Debug.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Configuration.Lang is " + Configuration.Lang);
             Debug.WriteLine($"[{DateTime.Now.ToShortTimeString()}] Selected Language In GUI: " + languageComboBox.SelectedItem + " | " + languageComboBox.SelectedIndex);
+
             #endregion
         }
         private void UpdateLang()
@@ -178,25 +219,23 @@ namespace Universal_THCRAP_Launcher
 
         private void UpdateAlign()
         {
-            comboBox_gamesNamingType.Location = new Point(label_GameNames.Location.X + label_GameNames.Width + spaceWidth, comboBox_gamesNamingType.Location.Y);
-            comboBox_gamesNamingType.Size = new Size(tabControl.Width - comboBox_gamesNamingType.Location.X - spaceWidth - comboBox_gamesNamingType.Margin.Horizontal - tabControl.Margin.Horizontal*2, comboBox_gamesNamingType.Height);
-            languageComboBox.Location = new Point(label_GameNames.Location.X + languageLabel.Width + spaceWidth, languageComboBox.Location.Y);
-            languageComboBox.Size = new Size(tabControl.Width - languageComboBox.Location.X - spaceWidth - languageComboBox.Margin.Horizontal - tabControl.Margin.Horizontal*2, languageComboBox.Height);
-            btn_dwnlAllLangs.Size = new Size(tabControl.Width - btn_dwnlAllLangs.Location.X - spaceWidth - btn_dwnlAllLangs.Margin.Horizontal - tabControl.Margin.Horizontal*2, btn_dwnlAllLangs.Height);
+            comboBox_gamesNamingType.Location = new Point(label_GameNames.Location.X + label_GameNames.Width + _spaceWidth, comboBox_gamesNamingType.Location.Y);
+            comboBox_gamesNamingType.Size = new Size(tabControl.Width - comboBox_gamesNamingType.Location.X - _spaceWidth - comboBox_gamesNamingType.Margin.Horizontal - tabControl.Margin.Horizontal * 2, comboBox_gamesNamingType.Height);
+            languageComboBox.Location = new Point(label_GameNames.Location.X + languageLabel.Width + _spaceWidth, languageComboBox.Location.Y);
+            languageComboBox.Size = new Size(tabControl.Width - languageComboBox.Location.X - _spaceWidth - languageComboBox.Margin.Horizontal - tabControl.Margin.Horizontal * 2, languageComboBox.Height);
+            btn_dwnlAllLangs.Size = new Size(tabControl.Width - btn_dwnlAllLangs.Location.X - _spaceWidth - btn_dwnlAllLangs.Margin.Horizontal - tabControl.Margin.Horizontal * 2, btn_dwnlAllLangs.Height);
         }
 
         private void UpdateWidth()
         {
             Width = 0;
-            foreach (var item in tabPage_General.Controls)
+            foreach (object item in tabPage_General.Controls)
             {
-                if (!item.GetType().Equals(closeOnExitCheckBox.GetType())) continue;
-                var width = ((CheckBox)item).Location.X + ((CheckBox)item).Width + tabControl.Margin.Horizontal*2 + ((CheckBox)item).Margin.Horizontal + ((CheckBox)item).Padding.Horizontal;
-                if (width > Width)
-                {
-                    Width = width;
-                    tabControl.Width = width;
-                }
+                if (item.GetType() != closeOnExitCheckBox.GetType()) continue;
+                int width = ((CheckBox)item).Location.X + ((CheckBox)item).Width + tabControl.Margin.Horizontal * 2 + ((CheckBox)item).Margin.Horizontal + ((CheckBox)item).Padding.Horizontal;
+                if (width <= Width) continue;
+                Width = width;
+                tabControl.Width = width;
             }
         }
 
@@ -215,22 +254,7 @@ namespace Universal_THCRAP_Launcher
             }
             langCreditsLabel.Text = string.Format(I18N.LangResource.settingsForm.langCredits?.ToString(), credits);
         }
-        #endregion
 
-        #region GUI-less Methods
-        static string ReadTextFromUrl(string url)
-        {
-            ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            // Assume UTF8, but detect BOM - could also honor response charset I suppose
-            var client = new WebClient();
-            client.Headers.Add(HttpRequestHeader.UserAgent, "UTL");
-            var stream = client.OpenRead(url);
-            using (var textReader = new StreamReader(stream ?? throw new InvalidOperationException(), Encoding.UTF8, true))
-            {
-                return textReader.ReadToEnd();
-            }
-        }
         #endregion
     }
 }

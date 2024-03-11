@@ -1,0 +1,109 @@
+{
+	"metadata": {
+		"authors": ["MrAlexsfs"],
+		"native": "Svenska",
+		"english": "Swedish"
+	},
+	"settingsForm": {
+		"settings": "Inställningar",
+		"language": "Språk",
+		"closeOnExit": "Stäng när spelet startas",
+		"langCredits": "Översatt av {0}.",
+		"and": "och",
+		"downloadAll": "Hämta alla språk",
+		"downloading": "Hämtar...",
+		"hidePatchExtension": "Dölj alla filnamnstillägg i patch-listan",
+		"showVanilla": "Visa Vanilla-startalternativ (utan THCRAP) i patch-listan",
+		"onlyOneExe": "Tillåt endast en körbar fil åt gången",
+		"label_gameNaming": "Namntyp för körbara filer:",
+		"onlyOneUTL": "Tillåt endast en UTL-instans åt gången",
+		"showGameId": "Visa spel-id (thXX)",
+		"tabs": {
+			"general": "Allmänt",
+			"language": "Språk"
+		},
+		"namingType": ["thXX", "Initialer", "Kort namn", "Långt namn"]
+	},
+	"errors": {
+		"error": "Fel",
+		"missing": {
+			"thcrap_loader": "thcrap_loader.exe kunde inte hittas.\nSe till att den finns i samma mapp!",
+			"gamesJs": "games.js kunde inte hittas.\nSe till att köra thcrap_configure.exe först!",
+			"patchStacks": "Kunde inte hitta några patch-stacks.\nSe till att köra thcrap_configure.exe först!",
+			"jsonParser": "Newtonsoft.Json.dll saknas. Kontrollera att även den kopierades.",
+			"file": "{0} saknas. Rätta vänligen till det."
+		},
+		"oops": "Något gick fel...",
+		"noneSelected": "Inga patch-stacks eller körbara filer är valda!\nVar god välj en!",
+		"downloadError": "Kunde inte hämta språk från GitHub. Det kan ha en av följande orsaker:\n- Du är inte ansluten till internet\n- Det här programmet är så föråldrat att GitHub-repot inte längre finns.\n- Du lever i en framtid där GitHub eller internet inte längre finns.",
+		"alreadyRunning": "Programmet körs redan. Inaktivera antingen den här kontrollen i inställningarna eller stäng programmet."
+	},
+	"popup": {
+		"hideLauncher": {
+			"caption": "Meddelande",
+			"text": "Launchern försvinner under konfigurationen..."
+		},
+		"kbSh": {
+			"caption": "Tangentbordsgenvägar",
+			"text": "Alt + F4: Stäng programmet (standardgenväg i Windows)\nCtrl + R: Starta om programmet\nCtrl + O: Öppna vald patch-stack\nF1: Visa tangentbordsgenvägar (det här fönstret)\nF2: Lägg till det valda objektet från den valda listan i favoriter"
+		}
+	},
+	"shCreate": {
+		"file": "Universal THCRAP Launcher",
+		"desc": "Genväg för UTL"
+	},
+	"mainForm": {
+		"utl": "Universal THCRAP Launcher",
+		"running": "Körs:",
+		"menuStrip": [
+			[
+				"App",
+				"Lägg till skrivbordsgenväg",
+				"Lägg till genväg i startmenyn",
+				"Inställningar...",
+				"-",
+				"Starta om",
+				"Avsluta"
+			],
+			[
+				"THCRAP",
+				"Öppna THCRAP-konfigurering",
+				[
+					"Öppna...",
+					"Öppna mapp",
+					"Öppna spellista (games.js)",
+					"Öppna vald patch-stack"
+				]
+			],
+			[
+				"GitHub",
+				"GitHub-sida",
+				[
+					"Feedback",
+					"Rapportera buggar",
+					"Annat"
+				],
+				"Donera"
+			],
+			[
+				"Hjälp",
+				"Tangentbordsgenvägar"
+			]
+		],
+		"vanilla": "Vanilla",
+		"custom": "Environment Custom Program",
+		"hided": "Programmet har minimerats till meddelandefältet och körs fortfarande i bakgrunden.",
+		"tooltips": {
+			"startButton": "Starta körbar fil med valda inställningar",
+			"sortAZ": "Sortera i alfabetisk ordning",
+			"filterFav": "Filtrera efter favoriter",
+			"filterByType": "Filtrera efter typ",
+			"patchLB": "Välj patch-stack",
+			"gameLB": "Välj körbar fil",
+			"patchFav": "Lägg till patch-stack i favoriter",
+			"gamesFav": "Lägg till körbar fil eller exe i favoriter (eller tryck F2 om det är det aktiva valet)",
+			"random": "Välj ett slumpmässigt element",
+			"delete": "Ta bort vald patch-stack från disken"
+		}
+	}
+}

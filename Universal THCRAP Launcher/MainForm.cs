@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -413,6 +414,20 @@ namespace Universal_THCRAP_Launcher
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e)
         {
+            if (patchListBox.SelectedIndex == -1)
+            { 
+                SystemSounds.Hand.Play();
+                return;
+            }
+
+            string v;
+            v = (I18N.LangResource.mainForm.vanilla.ToString() is null) ? @"VANILLA" : I18N.LangResource.mainForm.vanilla.ToString();
+            if (patchListBox.SelectedItem.ToString().Contains(v))
+            {
+                SystemSounds.Hand.Play();
+                return;
+            }
+            
             string path = Directory.GetCurrentDirectory() + @"\" + CONFIG_FOLDER +
                           patchListBox.SelectedItem.ToString().Replace(" ★", "");
             if (Configuration1.HidePatchExtension)

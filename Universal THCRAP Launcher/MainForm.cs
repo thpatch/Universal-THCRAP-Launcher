@@ -376,14 +376,14 @@ namespace Universal_THCRAP_Launcher
         private void exitTS_Click(object sender, EventArgs e) => Application.Exit();
 
         private void bugReportTS_Click(object sender, EventArgs e) => Process.Start(
-                                                                                    "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
+                                                                                    "https://github.com/thpatch/Universal-THCRAP-Launcher/issues/" +
                                                                                     "new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D");
 
         private void otherTS_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/new");
+            Process.Start("https://github.com/thpatch/Universal-THCRAP-Launcher/issues/new");
 
         private void gitHubPageTS_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
+            Process.Start("https://github.com/thpatch/Universal-THCRAP-Launcher");
 
         private void DonateToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://ko-fi.com/tudi20");
 

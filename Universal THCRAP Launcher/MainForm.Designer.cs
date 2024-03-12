@@ -48,6 +48,7 @@ namespace Universal_THCRAP_Launcher
             this.btn_Random1 = new System.Windows.Forms.Button();
             this.btn_Random2 = new System.Windows.Forms.Button();
             this.btnDeletePatch = new System.Windows.Forms.Button();
+            this.TryNewLauncherLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.appTS = new System.Windows.Forms.ToolStripMenuItem();
             this.createShortcutDesktopTS = new System.Windows.Forms.ToolStripMenuItem();
@@ -273,6 +274,25 @@ namespace Universal_THCRAP_Launcher
             this.btnDeletePatch.UseVisualStyleBackColor = true;
             this.btnDeletePatch.Click += new System.EventHandler(this.BtnDeletePatch_Click);
             // 
+            // TryNewLauncherLabel
+            // 
+            this.TryNewLauncherLabel.AutoSize = true;
+            this.TryNewLauncherLabel.BackColor = System.Drawing.Color.Red;
+            this.TryNewLauncherLabel.Enabled = false;
+            this.TryNewLauncherLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TryNewLauncherLabel.ForeColor = System.Drawing.Color.Black;
+            this.TryNewLauncherLabel.Location = new System.Drawing.Point(11, 40);
+            this.TryNewLauncherLabel.MinimumSize = new System.Drawing.Size(312, 0);
+            this.TryNewLauncherLabel.Name = "TryNewLauncherLabel";
+            this.TryNewLauncherLabel.Size = new System.Drawing.Size(312, 72);
+            this.TryNewLauncherLabel.TabIndex = 13;
+            this.TryNewLauncherLabel.Text = "Try the new Launcher,\r\nthat is shipped with\r\nthe new release of THCRAP!\r\nThis lau" +
+    "ncher is no longer supported!";
+            this.TryNewLauncherLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip1.SetToolTip(this.TryNewLauncherLabel, "Click me to make this disappear!");
+            this.TryNewLauncherLabel.Visible = false;
+            this.TryNewLauncherLabel.Click += new System.EventHandler(this.TryNewLauncherLabel_Click);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -364,7 +384,7 @@ namespace Universal_THCRAP_Launcher
             this.openConfigureTS,
             this.openMenuTS});
             this.thcrapTS.Name = "thcrapTS";
-            this.thcrapTS.Size = new System.Drawing.Size(65, 20);
+            this.thcrapTS.Size = new System.Drawing.Size(64, 20);
             this.thcrapTS.Text = "THCRAP";
             // 
             // openConfigureTS
@@ -372,7 +392,7 @@ namespace Universal_THCRAP_Launcher
             this.openConfigureTS.BackColor = System.Drawing.SystemColors.ControlDark;
             this.openConfigureTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.openConfigureTS.Name = "openConfigureTS";
-            this.openConfigureTS.Size = new System.Drawing.Size(208, 22);
+            this.openConfigureTS.Size = new System.Drawing.Size(207, 22);
             this.openConfigureTS.Text = "Open THCRAP Configure";
             this.openConfigureTS.Click += new System.EventHandler(this.openConfigureTS_Click);
             // 
@@ -385,7 +405,7 @@ namespace Universal_THCRAP_Launcher
             this.openGamesListTS,
             this.openSelectedPatchConfigurationTS});
             this.openMenuTS.Name = "openMenuTS";
-            this.openMenuTS.Size = new System.Drawing.Size(208, 22);
+            this.openMenuTS.Size = new System.Drawing.Size(207, 22);
             this.openMenuTS.Text = "Open...";
             // 
             // openFolderTS
@@ -433,7 +453,7 @@ namespace Universal_THCRAP_Launcher
             this.gitHubPageTS.BackColor = System.Drawing.SystemColors.ControlDark;
             this.gitHubPageTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.gitHubPageTS.Name = "gitHubPageTS";
-            this.gitHubPageTS.Size = new System.Drawing.Size(180, 22);
+            this.gitHubPageTS.Size = new System.Drawing.Size(141, 22);
             this.gitHubPageTS.Text = "GitHub Page";
             this.gitHubPageTS.Click += new System.EventHandler(this.gitHubPageTS_Click);
             // 
@@ -445,7 +465,7 @@ namespace Universal_THCRAP_Launcher
             this.bugReportTS,
             this.otherTS});
             this.feedbackTS.Name = "feedbackTS";
-            this.feedbackTS.Size = new System.Drawing.Size(180, 22);
+            this.feedbackTS.Size = new System.Drawing.Size(141, 22);
             this.feedbackTS.Text = "Feedback...";
             // 
             // bugReportTS
@@ -453,7 +473,7 @@ namespace Universal_THCRAP_Launcher
             this.bugReportTS.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bugReportTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.bugReportTS.Name = "bugReportTS";
-            this.bugReportTS.Size = new System.Drawing.Size(180, 22);
+            this.bugReportTS.Size = new System.Drawing.Size(133, 22);
             this.bugReportTS.Text = "Bug Report";
             this.bugReportTS.Click += new System.EventHandler(this.bugReportTS_Click);
             // 
@@ -462,7 +482,7 @@ namespace Universal_THCRAP_Launcher
             this.otherTS.BackColor = System.Drawing.SystemColors.ControlDark;
             this.otherTS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.otherTS.Name = "otherTS";
-            this.otherTS.Size = new System.Drawing.Size(180, 22);
+            this.otherTS.Size = new System.Drawing.Size(133, 22);
             this.otherTS.Text = "Other";
             this.otherTS.Click += new System.EventHandler(this.otherTS_Click);
             // 
@@ -470,7 +490,7 @@ namespace Universal_THCRAP_Launcher
             // 
             this.donateToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlDark;
             this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
-            this.donateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.donateToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.donateToolStripMenuItem.Text = "Donate";
             this.donateToolStripMenuItem.Click += new System.EventHandler(this.DonateToolStripMenuItem_Click);
             // 
@@ -520,6 +540,7 @@ namespace Universal_THCRAP_Launcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.ClientSize = new System.Drawing.Size(334, 431);
+            this.Controls.Add(this.TryNewLauncherLabel);
             this.Controls.Add(this.btnDeletePatch);
             this.Controls.Add(this.btn_Random2);
             this.Controls.Add(this.btn_Random1);
@@ -598,6 +619,7 @@ namespace Universal_THCRAP_Launcher
         private ToolStripMenuItem createShortcutStartMenuTS;
         private ToolStripMenuItem donateToolStripMenuItem;
         private Button btnDeletePatch;
+        private Label TryNewLauncherLabel;
     }
 }
 

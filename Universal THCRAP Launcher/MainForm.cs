@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -76,6 +77,7 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Load(object sender, EventArgs e)
         {
             InitData();
+            CheckIfObsolote();
             DownloadCurrentLanguage();
 
             GetPatchList();
@@ -85,6 +87,7 @@ namespace Universal_THCRAP_Launcher
 
             LogConfiguration();
         }
+
         private void MainForm_Activated(object sender, EventArgs e) => FillJumpList();
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
@@ -261,6 +264,12 @@ namespace Universal_THCRAP_Launcher
             {
                 contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.AboveLeft);
             }
+        }
+
+        private void TryNewLauncherLabel_Click(object sender, EventArgs e)
+        {
+            TryNewLauncherLabel.Visible = false;
+            TryNewLauncherLabel.Enabled = false;
         }
 
         #region Sorting/Filtering Button Click Methods
@@ -723,6 +732,23 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region Methods Related to GUI
+
+        private void CheckIfObsolote()
+        {
+            var url = (@"https://api.github.com/repos/thpatch/Universal-THCRAP-Launcher");
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "request");
+            string response = client.GetStringAsync(url).Result;
+
+            dynamic json = JsonConvert.DeserializeObject(response);
+            
+            if (json.archived == "true")
+            { 
+                TryNewLauncherLabel.Visible = true;
+                TryNewLauncherLabel.Enabled = true;
+            }
+        }
 
         public void PopulateGames()
         {

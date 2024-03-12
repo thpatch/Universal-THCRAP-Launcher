@@ -739,15 +739,26 @@ namespace Universal_THCRAP_Launcher
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "request");
-            string response = client.GetStringAsync(url).Result;
 
-            dynamic json = JsonConvert.DeserializeObject(response);
-            
-            if (json.archived == "true")
-            { 
-                TryNewLauncherLabel.Visible = true;
-                TryNewLauncherLabel.Enabled = true;
+
+
+            try
+            {
+                string response = client.GetStringAsync(url).Result;
+                dynamic json = JsonConvert.DeserializeObject(response);
+
+                if (json.archived == "true")
+                {
+                    TryNewLauncherLabel.Visible = true;
+                    TryNewLauncherLabel.Enabled = true;
+                }
             }
+            catch (Exception e)
+            {
+                _log.WriteLine($"Couldn't check if the launcher is obsolote:\n\t{e}");
+            }
+            
+            
         }
 
         public void PopulateGames()

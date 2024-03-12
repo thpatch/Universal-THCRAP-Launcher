@@ -5,7 +5,9 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -75,6 +77,7 @@ namespace Universal_THCRAP_Launcher
         private void Form1_Load(object sender, EventArgs e)
         {
             InitData();
+            CheckIfObsolote();
             DownloadCurrentLanguage();
 
             GetPatchList();
@@ -84,6 +87,7 @@ namespace Universal_THCRAP_Launcher
 
             LogConfiguration();
         }
+
         private void MainForm_Activated(object sender, EventArgs e) => FillJumpList();
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
@@ -262,6 +266,12 @@ namespace Universal_THCRAP_Launcher
             }
         }
 
+        private void TryNewLauncherLabel_Click(object sender, EventArgs e)
+        {
+            TryNewLauncherLabel.Visible = false;
+            TryNewLauncherLabel.Enabled = false;
+        }
+
         #region Sorting/Filtering Button Click Methods
 
         private void sortAZButton1_Click(object sender, EventArgs e)
@@ -376,14 +386,14 @@ namespace Universal_THCRAP_Launcher
         private void exitTS_Click(object sender, EventArgs e) => Application.Exit();
 
         private void bugReportTS_Click(object sender, EventArgs e) => Process.Start(
-                                                                                    "https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/" +
+                                                                                    "https://github.com/thpatch/Universal-THCRAP-Launcher/issues/" +
                                                                                     "new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D");
 
         private void otherTS_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher/issues/new");
+            Process.Start("https://github.com/thpatch/Universal-THCRAP-Launcher/issues/new");
 
         private void gitHubPageTS_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/Tudi20/Universal-THCRAP-Launcher");
+            Process.Start("https://github.com/thpatch/Universal-THCRAP-Launcher");
 
         private void DonateToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://ko-fi.com/tudi20");
 
@@ -413,6 +423,20 @@ namespace Universal_THCRAP_Launcher
 
         private void openSelectedPatchConfigurationTS_Click(object sender, EventArgs e)
         {
+            if (patchListBox.SelectedIndex == -1)
+            { 
+                SystemSounds.Hand.Play();
+                return;
+            }
+
+            string v;
+            v = (I18N.LangResource.mainForm.vanilla.ToString() is null) ? @"VANILLA" : I18N.LangResource.mainForm.vanilla.ToString();
+            if (patchListBox.SelectedItem.ToString().Contains(v))
+            {
+                SystemSounds.Hand.Play();
+                return;
+            }
+            
             string path = Directory.GetCurrentDirectory() + @"\" + CONFIG_FOLDER +
                           patchListBox.SelectedItem.ToString().Replace(" ★", "");
             if (Configuration1.HidePatchExtension)
@@ -708,6 +732,34 @@ namespace Universal_THCRAP_Launcher
         #endregion
 
         #region Methods Related to GUI
+
+        private void CheckIfObsolote()
+        {
+            var url = (@"https://api.github.com/repos/thpatch/Universal-THCRAP-Launcher");
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "request");
+
+
+
+            try
+            {
+                string response = client.GetStringAsync(url).Result;
+                dynamic json = JsonConvert.DeserializeObject(response);
+
+                if (json.archived == "true")
+                {
+                    TryNewLauncherLabel.Visible = true;
+                    TryNewLauncherLabel.Enabled = true;
+                }
+            }
+            catch (Exception e)
+            {
+                _log.WriteLine($"Couldn't check if the launcher is obsolote:\n\t{e}");
+            }
+            
+            
+        }
 
         public void PopulateGames()
         {

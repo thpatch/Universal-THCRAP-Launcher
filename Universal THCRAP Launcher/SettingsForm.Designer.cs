@@ -95,7 +95,7 @@ namespace Universal_THCRAP_Launcher
             this.langCreditsLabel.Name = "langCreditsLabel";
             this.langCreditsLabel.Size = new System.Drawing.Size(110, 13);
             this.langCreditsLabel.TabIndex = 12;
-            this.langCreditsLabel.Text = "Translated by: Tudi20";
+            this.langCreditsLabel.Text = "Translated by: Thpatch";
             // 
             // btn_dwnlAllLangs
             // 

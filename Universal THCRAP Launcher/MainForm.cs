@@ -44,6 +44,9 @@ namespace Universal_THCRAP_Launcher
         private const string CONFIG_FILE = CONFIG_FOLDER + @"utl_config.json";
         private const string FAVORITE_FILE = CONFIG_FOLDER + @"favorite.json";
         private const string GAMES_FILE = CONFIG_FOLDER + @"games.js";
+        private const string DONATE_LINK = @"https://opencollective.com/thpatch/";
+        private const string REPO = @"thpatch/Universal-THCRAP-Launcher";
+
 
         private readonly Image _custom = new Bitmap(Resources.Custom);
         private readonly Image _game = new Bitmap(Resources.Game);
@@ -386,16 +389,16 @@ namespace Universal_THCRAP_Launcher
         private void exitTS_Click(object sender, EventArgs e) => Application.Exit();
 
         private void bugReportTS_Click(object sender, EventArgs e) => Process.Start(
-                                                                                    "https://github.com/thpatch/Universal-THCRAP-Launcher/issues/" +
+                                                                                    $"https://github.com/{REPO}/issues/" +
                                                                                     "new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D");
 
         private void otherTS_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/thpatch/Universal-THCRAP-Launcher/issues/new");
+            Process.Start($"https://github.com/{REPO}/issues/new");
 
         private void gitHubPageTS_Click(object sender, EventArgs e) =>
-            Process.Start("https://github.com/thpatch/Universal-THCRAP-Launcher");
+            Process.Start($"https://github.com/{REPO}");
 
-        private void DonateToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://ko-fi.com/tudi20");
+        private void DonateToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start(DONATE_LINK);
 
         private void openConfigureTS_Click(object sender, EventArgs e)
         {
@@ -548,7 +551,7 @@ namespace Universal_THCRAP_Launcher
             {
                 MessageBox.Show($@"1. If you're a developer: Don't forget to set the working directory to thcrap's directory. Your current working directory is: {Environment.CurrentDirectory}
 2. If you're a dev in the right working directory this is for you:{Environment.NewLine}====={Environment.NewLine}{e}{Environment.NewLine}=====
-3. If you're an end user, try reinstalling again carefully following the instructions this time or try pinging Tudi20 in Discord.");
+3. If you're an end user, try reinstalling again carefully following the instructions this time or you can ask in #support on Discord (https://discord.thpatch.net/).");
                 Application.Exit();
             }
         }
@@ -735,7 +738,7 @@ namespace Universal_THCRAP_Launcher
 
         private void CheckIfObsolote()
         {
-            var url = (@"https://api.github.com/repos/thpatch/Universal-THCRAP-Launcher");
+            var url = (@"https://api.github.com/repos/" + REPO);
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "request");
@@ -1270,9 +1273,10 @@ If you know how to fix the jump-list, you're welcome to give a pull request. Oth
                 Directory.CreateDirectory(I18N.I18NDir);
             }
 
+            const string langUrlBase = "https://raw.githubusercontent.com/" + REPO + "/master/langs/";
+
             try
-            {
-                var langUrlBase = "https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/";
+            {    
                 try
                 {
                     string langUrl = langUrlBase + langCode + ".json";
@@ -1292,7 +1296,7 @@ If you know how to fix the jump-list, you're welcome to give a pull request. Oth
             catch (Exception ex)
             {
                 _log.WriteLine($"Couldn't connect to GitHub for pulling down English language file.\nReason: {ex}");
-                MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
+                MessageBox.Show($@"No language files found and couldn't connect to GitHub to download English language file. Either put one manually into {I18N.I18NDir} or find out why you can't connect to {langUrlBase}en.json . Or use an older version of the program ¯\_(ツ)_/¯.",
                                 @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
@@ -1361,7 +1365,7 @@ If you know how to fix the jump-list, you're welcome to give a pull request. Oth
             try
             {
                 string newlang =
-                    ReadTextFromUrl("https://raw.githubusercontent.com/Tudi20/Universal-THCRAP-Launcher/master/langs/" +
+                    ReadTextFromUrl($"https://raw.githubusercontent.com/{REPO}/master/langs/" +
                                     Configuration.Lang);
                 File.WriteAllText(I18N.I18NDir + "\\" + Configuration.Lang, newlang);
             }

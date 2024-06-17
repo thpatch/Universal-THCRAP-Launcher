@@ -88,7 +88,7 @@ namespace Universal_THCRAP_Launcher
             btn_dwnlAllLangs.Enabled = false;
             try
             {
-                string gh = ReadTextFromUrl("https://api.github.com/repos/Tudi20/Universal-THCRAP-Launcher/contents/langs?ref=master");
+                string gh = ReadTextFromUrl("https://api.github.com/repos/thpatch/Universal-THCRAP-Launcher/contents/langs?ref=master");
                 dynamic objGh = JsonConvert.DeserializeObject(gh);
                 if (!(objGh is null))
                     foreach (dynamic item in objGh)

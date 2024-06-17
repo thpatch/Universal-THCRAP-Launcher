@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Universal THCRAP Launcher")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Tudi20 @ THPATCH")]
+[assembly: AssemblyCompany("Touhou Patch Center")]
 [assembly: AssemblyProduct("Universal THCRAP Launcher")]
-[assembly: AssemblyCopyright("Copyright © THPATCH 2020")]
+[assembly: AssemblyCopyright("Copyright ©THPATCH 2020-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -164,8 +164,6 @@ namespace Universal_THCRAP_Launcher
 
             #endregion
 
-            splitContainer1.SplitterDistance = Configuration1.SplitterDistance;
-
             #region Display
 
             //Change Form settings
@@ -174,6 +172,8 @@ namespace Universal_THCRAP_Launcher
             WindowState = Configuration1.WindowState;
 
             #endregion
+			
+			splitContainer1.SplitterDistance = Configuration1.SplitterDistance;
 
             ReadConfig();
 
@@ -198,7 +198,6 @@ namespace Universal_THCRAP_Launcher
         }
         private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            Configuration1.SplitterDistance = splitContainer1.SplitterDistance;
             try
             {
                 UpdateSplitContainerReleatedGui();
